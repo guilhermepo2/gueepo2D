@@ -1,0 +1,8 @@
+.vs/
+
+gueepo2D/bin/
+gueepo2D/binobj/
+
+*.sln
+*.vcxproj
+*.vcxproj.user
