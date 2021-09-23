@@ -9,6 +9,7 @@ workspace "gueepo2D"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}.%{cfg.architecture}"
 
 IncludeDirectories = {}
+IncludeDirectories["spdlog"] = "gueepo2D/thirdparty/spdlog-1.9.2/include"
 LibDir = {}
 
 project "gueepo2D"
@@ -23,13 +24,14 @@ project "gueepo2D"
 
     files
     {
-        "%{prj.location}/src/**.h",
-        "%{prj.location}/src/**.cpp",
+        "%{prj.location}/engine/**.h",
+        "%{prj.location}/engine/**.cpp",
     }
 
     includedirs
     {
-
+        "%{prj.location}/engine",
+        "%{IncludeDirectories.spdlog}"
     }
 
     libdirs
