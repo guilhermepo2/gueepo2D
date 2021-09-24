@@ -1,8 +1,12 @@
 .vs/
-
 gueepo2D/bin/
 gueepo2D/binobj/
 
+# Visual Studio 2019 Files
 *.sln
 *.vcxproj
 *.vcxproj.user
+*.vcxproj.filters
+
+# GNU Make
+Makefile
