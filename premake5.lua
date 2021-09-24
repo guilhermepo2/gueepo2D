@@ -1,3 +1,10 @@
+-- Dependencies
+-- By design, SDL2 is not distributed with the engine.
+-- https://www.libsdl.org/download-2.0.php
+-- these are the paths that I am using
+SDL2_INCLUDE_DIR = "gueepo2D/thirdparty/SDL2-2.0.16/include"
+SDL2_LIB_DIR = "gueepo2D/thirdparty/SDL2-2.0.16/lib/x64"
+
 workspace "gueepo2D"
     architecture "x64"
 
@@ -31,15 +38,17 @@ project "gueepo2D"
     includedirs
     {
         "%{prj.location}/engine",
-        "%{IncludeDirectories.spdlog}"
+        "%{IncludeDirectories.spdlog}",
+        "%{SDL2_INCLUDE_DIR}"
     }
 
     libdirs
     {
-
+        "%{SDL2_LIB_DIR}"
     }
 
-    links
-    {
-
-    }
+    filter "system:windows"
+        links
+        {
+            "SDL2.lib",
+        }

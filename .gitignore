@@ -10,3 +10,8 @@ gueepo2D/binobj/
 
 # GNU Make
 Makefile
+
+# SDL2
+# SDL2 is not distributed with the engine (at least not for now)
+SDL2.dll
+gueepo2D/thirdparty/SDL2-2.0.16/
