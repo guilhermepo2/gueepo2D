@@ -21,9 +21,9 @@ LibDir = {}
 
 project "gueepo2D"
     location "gueepo2D"
+    -- todo: maybe change this to a .dll? ( "SharedLib" )
     kind "ConsoleApp"
     language "C++"
-    cppdialect "C++17"
     warnings "Extra"
 
     targetdir("%{prj.location}/bin/" .. outputdir .. "/%{prj.name}")
@@ -48,7 +48,14 @@ project "gueepo2D"
     }
 
     filter "system:windows"
+        systemversion "latest"
+        cppdialect "C++17"
         links
         {
             "SDL2.lib",
+        }
+
+        defines
+        {
+            "GUEEPO_PLATFORM_WINDOWS"
         }
