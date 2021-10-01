@@ -17,11 +17,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}.%{cfg.architecture}"
 
 IncludeDirectories = {}
 IncludeDirectories["spdlog"] = "gueepo2D/thirdparty/spdlog-1.9.2/include"
+IncludeDirectories["rapidjson"] = "gueepo2D/thirdparty/rapidjson-1.1.0/include"
 LibDir = {}
 
 project "gueepo2D"
     location "gueepo2D"
-    -- todo: maybe change this to a .dll? ( "SharedLib" )
+    -- todo: change this to either a StaticLib or SharedLib
     kind "ConsoleApp"
     language "C++"
     warnings "Extra"
@@ -33,12 +34,16 @@ project "gueepo2D"
     {
         "%{prj.location}/engine/**.h",
         "%{prj.location}/engine/**.cpp",
+
+        -- todo: have the sandbox folder be its own project
+        "%{prj.location}/sandbox/Main.cpp"
     }
 
     includedirs
     {
         "%{prj.location}/engine",
         "%{IncludeDirectories.spdlog}",
+        "%{IncludeDirectories.rapidjson}",
         "%{SDL2_INCLUDE_DIR}"
     }
 

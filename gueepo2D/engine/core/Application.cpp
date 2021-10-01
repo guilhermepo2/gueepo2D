@@ -14,6 +14,13 @@ namespace gueepo {
 
 	void Application::Run() {
 		LOG_INFO("application is running!");
+		while (true) {
+			// calculate delta time
+			// handle events
+			// handle input
+			// handle update
+			// handle render
+		}
 	}
 
 }
