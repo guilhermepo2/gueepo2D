@@ -2,11 +2,13 @@
 -- By design, SDL2 is not distributed with the engine.
 -- https://www.libsdl.org/download-2.0.php
 -- these are the paths that I am using
-SDL2_INCLUDE_DIR = "gueepo2D/thirdparty/SDL2-2.0.16/include"
-SDL2_LIB_DIR = "gueepo2D/thirdparty/SDL2-2.0.16/lib/x64"
+SDL2_INCLUDE_DIR = "%{wks.location}/thirdparty/SDL2-2.0.16/include"
+SDL2_LIB_DIR = "%{wks.location}/thirdparty/SDL2-2.0.16/lib/x64"
 
 workspace "gueepo2D"
+    location "gueepo2D"
     architecture "x64"
+    startproject "Sandbox"
 
     configurations
     {
@@ -16,51 +18,10 @@ workspace "gueepo2D"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}.%{cfg.architecture}"
 
 IncludeDirectories = {}
-IncludeDirectories["spdlog"] = "gueepo2D/thirdparty/spdlog-1.9.2/include"
-IncludeDirectories["rapidjson"] = "gueepo2D/thirdparty/rapidjson-1.1.0/include"
+IncludeDirectories["spdlog"] = "%{wks.location}/thirdparty/spdlog-1.9.2/include"
+IncludeDirectories["rapidjson"] = "%{wks.location}/thirdparty/rapidjson-1.1.0/include"
 LibDir = {}
 
-project "gueepo2D"
-    location "gueepo2D"
-    -- todo: change this to either a StaticLib or SharedLib
-    kind "ConsoleApp"
-    language "C++"
-    warnings "Extra"
-
-    targetdir("%{prj.location}/bin/" .. outputdir .. "/%{prj.name}")
-    objdir("%{prj.location}/binobj/" .. outputdir .. "/%{prj.name}")
-
-    files
-    {
-        "%{prj.location}/engine/**.h",
-        "%{prj.location}/engine/**.cpp",
-
-        -- todo: have the sandbox folder be its own project
-        "%{prj.location}/sandbox/Main.cpp"
-    }
-
-    includedirs
-    {
-        "%{prj.location}/engine",
-        "%{IncludeDirectories.spdlog}",
-        "%{IncludeDirectories.rapidjson}",
-        "%{SDL2_INCLUDE_DIR}"
-    }
-
-    libdirs
-    {
-        "%{SDL2_LIB_DIR}"
-    }
-
-    filter "system:windows"
-        systemversion "latest"
-        cppdialect "C++17"
-        links
-        {
-            "SDL2.lib",
-        }
-
-        defines
-        {
-            "GUEEPO_PLATFORM_WINDOWS"
-        }
+group "gueepo2D"
+    include "gueepo2D/gueepo2D.lua"
+    include "gueepo2D/sandbox.lua"
