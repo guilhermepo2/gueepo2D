@@ -1,12 +1,12 @@
 #pragma once
 #include "core/Common.h"
-#include <string>
 
 namespace gueepo {
 	// #todo: have an event bus to buffer events and send them all at once instead of doing blocking events
 	enum class EventType {
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
+		// #todo: what's exactly the difference between tick and update? maybe just have Update
 		AppTick, AppUpdate, AppRender,
 		KeyPressed, KeyReleased,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
@@ -25,7 +25,6 @@ namespace gueepo {
 #define EVENT_CLASS_TYPE(t) static EventType GetStaticType() { return EventType::##t; } \
 							virtual EventType GetEventType() const override { return GetStaticType(); } \
 							virtual const char* GetName() const override { return #t; }
-#define EVENT_CLASS_CATEGORY(c) virtual int GetCategoryFlags() const override { return EventCategory::##c; }
 
 	class Event {
 		friend class EventDispatcher;

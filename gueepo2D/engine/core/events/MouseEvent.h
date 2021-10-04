@@ -10,8 +10,11 @@ namespace gueepo {
 
 		// #todo: override ToString();
 
-		EVENT_CLASS_TYPE(MouseMoved);
-		EVENT_CLASS_CATEGORY(EC_Mouse);
+		virtual int GetCategoryFlags() const override {
+			return static_cast<int>(EventCategory::EC_Mouse);
+		}
+
+		EVENT_CLASS_TYPE(MouseMoved)
 	private:
 		float m_MouseX;
 		float m_MouseY;
@@ -26,8 +29,11 @@ namespace gueepo {
 
 		// #todo: override ToString();
 
-		EVENT_CLASS_TYPE(MouseScrolled);
-		EVENT_CLASS_CATEGORY(EC_Mouse);
+		virtual int GetCategoryFlags() const override {
+			return static_cast<int>(EventCategory::EC_Mouse);
+		}
+
+		EVENT_CLASS_TYPE(MouseScrolled)
 	private:
 		float m_XOffset;
 		float m_YOffset;
@@ -36,7 +42,14 @@ namespace gueepo {
 	class MouseButtonEvent : public Event {
 	public:
 		inline int GetMouseButton() const { return m_Button; }
-		EVENT_CLASS_CATEGORY(EC_MouseButton | EC_Input | EC_Mouse);
+
+		virtual int GetCategoryFlags() const override {
+			return
+				static_cast<int>(EventCategory::EC_Mouse) |
+				static_cast<int>(EventCategory::EC_Input) |
+				static_cast<int>(EventCategory::EC_MouseButton);
+		}
+
 	protected:
 		MouseButtonEvent(int _button) : m_Button(_button) {}
 		int m_Button;
@@ -48,7 +61,7 @@ namespace gueepo {
 
 		// #todo: override ToString();
 
-		EVENT_CLASS_TYPE(MouseButtonPressed);
+		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
 	class MouseButtonReleasedEvent : public MouseButtonEvent {
@@ -57,7 +70,7 @@ namespace gueepo {
 
 		// #todo: override ToString();
 
-		EVENT_CLASS_TYPE(MouseButtonReleased);
+		EVENT_CLASS_TYPE(MouseButtonReleased)
 	};
 
 }
