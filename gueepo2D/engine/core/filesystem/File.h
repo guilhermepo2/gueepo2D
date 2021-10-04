@@ -1,6 +1,5 @@
 #pragma once
-// #todo precompiled header?
-#include <fstream>
+#include "gueepo2Dpch.h"
 
 namespace gueepo {
 	class File {

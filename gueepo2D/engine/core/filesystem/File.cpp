@@ -1,6 +1,6 @@
+#include "gueepo2Dpch.h"
 #include "File.h"
 #include "core/Log.h"
-#include <sstream>
 
 namespace gueepo {
 

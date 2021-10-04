@@ -7,6 +7,9 @@ project "gueepo2D"
     targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
     objdir("%{wks.location}/binobj/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "gueepo2Dpch.h"
+    pchsource "engine/gueepo2Dpch.cpp"
+
     files
     {
         "engine/**.h",

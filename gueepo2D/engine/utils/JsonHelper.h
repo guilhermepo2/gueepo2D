@@ -2,7 +2,6 @@
 
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
-#include <string>
 
 namespace gueepo::json {
 	static bool LoadJSON(const std::string& Filename, rapidjson::Document& OutDocument);
