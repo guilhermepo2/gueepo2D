@@ -1,7 +1,9 @@
 #pragma once
 
-#if PLATFORM_WINDOWS
-// #todo: include windows stuff (probably will have to do a bunch of platform checking here)
+#if GUEEPO_PLATFORM_WINDOWS
+#include <Windows.h>
+#elif GUEEPO_PLATFORM_LINUX
+#elif GUEEPO_PLATFORM_MACOS
 #endif
 
 #include <string>

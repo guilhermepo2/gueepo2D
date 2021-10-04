@@ -41,3 +41,15 @@ project "gueepo2D"
         {
             "GUEEPO_PLATFORM_WINDOWS"
         }
+    
+    filter "system:linux"
+        defines
+        {
+            "GUEEPO_PLATFORM_LINUX"
+        }
+    
+    filter "system:macosx"
+        defines
+        {
+            "GUEEPO_PLATFORM_MACOS"
+        }
