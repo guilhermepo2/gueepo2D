@@ -37,6 +37,7 @@ namespace gueepo {
 		inline bool IsInCategory(EventCategory c) {
 			return GetCategoryFlags() & static_cast<int>(c);
 		}
+		inline bool Handled() const { return m_Handled; }
 
 	protected:
 		bool m_Handled = false;

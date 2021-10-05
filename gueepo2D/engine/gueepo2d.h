@@ -17,3 +17,6 @@
 #include "core/events/ApplicationEvent.h"
 #include "core/events/KeyEvent.h"
 #include "core/events/MouseEvent.h"
+
+#include "core/layer/Layer.h"
+#include "core/layer/LayerStack.h"

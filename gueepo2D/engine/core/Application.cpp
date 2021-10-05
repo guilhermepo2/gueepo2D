@@ -14,17 +14,20 @@ namespace gueepo {
 		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
 	}
 
-	Application::~Application()
-	{
-
-	}
+	Application::~Application() {}
 
 	void Application::Run() {
 		m_bIsRunning = true;
 
 		LOG_INFO("application is running!");
 		while (m_bIsRunning) {
+			// #todo: calculate delta time
+			for (Layer* l : m_LayerStack) {
+				l->OnUpdate(.0f);
+			}
+
 			m_Window->Update();
+			
 			// calculate delta time
 			// handle events
 			// handle input
@@ -37,6 +40,22 @@ namespace gueepo {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT(Application::OnWindowResize));
+
+		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
+			if (e.Handled()) {
+				break;
+			}
+
+			(*it)->OnEvent(e);
+		}
+	}
+
+	void Application::PushLayer(Layer* l) {
+		m_LayerStack.PushLayer(l);
+	}
+
+	void Application::PushOverlay(Layer* l) {
+		m_LayerStack.PushOverlay(l);
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
