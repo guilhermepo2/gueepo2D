@@ -10,3 +10,8 @@
 #include <fstream>
 #include <sstream>
 #include <functional>
+
+// ================================
+// gueepo2D includes
+// ================================
+#include "core/Log.h"

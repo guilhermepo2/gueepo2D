@@ -1,7 +1,9 @@
 #pragma once
 
+#pragma warning(push, 0)
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
+#pragma warning(pop)
 
 namespace gueepo::json {
 	static bool LoadJSON(const std::string& Filename, rapidjson::Document& OutDocument);

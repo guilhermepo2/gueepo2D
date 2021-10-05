@@ -42,7 +42,7 @@ namespace gueepo::json {
 			return false;
 		}
 
-		OutFloat = Property.GetDouble();
+		OutFloat = static_cast<float>(Property.GetDouble());
 		return true;
 	}
 

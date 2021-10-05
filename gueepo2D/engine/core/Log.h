@@ -30,4 +30,4 @@ namespace gueepo {
 #undef assert
 #endif
 
-#define assert(x, ...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); __debugbreak; } }
+#define assert(x, ...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); } }

@@ -1,5 +1,4 @@
 #include "gueepo2Dpch.h"
-#include "core/Log.h"
 #include "SDL2Window.h"
 #include <SDL.h>
 
@@ -60,7 +59,10 @@ namespace gueepo {
 				m_EventCallback(event);
 			} break;
 			case SDL_MOUSEMOTION: {
-				MouseMovedEvent event(SDLEvent.motion.x, SDLEvent.motion.y);
+				MouseMovedEvent event(
+					static_cast<float>(SDLEvent.motion.x), 
+					static_cast<float>(SDLEvent.motion.y)
+				);
 				m_EventCallback(event);
 			} break;
 			case SDL_MOUSEBUTTONDOWN: {
@@ -72,7 +74,10 @@ namespace gueepo {
 				m_EventCallback(event);
 			} break;
 			case SDL_MOUSEWHEEL: {
-				MouseScrolledEvent event(SDLEvent.wheel.x, SDLEvent.wheel.y);
+				MouseScrolledEvent event(
+					static_cast<float>(SDLEvent.wheel.x), 
+					static_cast<float>(SDLEvent.wheel.y)
+				);
 				m_EventCallback(event);
 			} break;
 			}
