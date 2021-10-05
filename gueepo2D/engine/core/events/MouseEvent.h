@@ -8,7 +8,11 @@ namespace gueepo {
 		inline float GetX() const { return m_MouseX; }
 		inline float GetY() const { return m_MouseY; }
 
-		// #todo: override ToString();
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseMovedEvent (" << m_MouseX << ", " << m_MouseY << ")";
+			return ss.str();
+		}
 
 		virtual int GetCategoryFlags() const override {
 			return static_cast<int>(EventCategory::EC_Mouse);
@@ -21,13 +25,17 @@ namespace gueepo {
 	};
 
 	class MouseScrolledEvent : public Event {
-
+	public:
 		MouseScrolledEvent(float _x, float _y) : m_XOffset(_x), m_YOffset(_y) {}
 
 		inline float GetXOffset() const { return m_XOffset; }
 		inline float GetYOffset() const { return m_YOffset; }
 
-		// #todo: override ToString();
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseScrolledEvent (" << m_XOffset << ", " << m_YOffset << ")";
+			return ss.str();
+		}
 
 		virtual int GetCategoryFlags() const override {
 			return static_cast<int>(EventCategory::EC_Mouse);
@@ -59,7 +67,11 @@ namespace gueepo {
 	public:
 		MouseButtonPressedEvent(int _button) : MouseButtonEvent(_button) {}
 
-		// #todo: override ToString();
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseButtonPressedEvent (" << m_Button << ")";
+			return ss.str();
+		}
 
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
@@ -68,7 +80,11 @@ namespace gueepo {
 	public:
 		MouseButtonReleasedEvent(int _button) : MouseButtonEvent(_button) {}
 
-		// #todo: override ToString();
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseButtonReleasedEvent (" << m_Button << ")";
+			return ss.str();
+		}
 
 		EVENT_CLASS_TYPE(MouseButtonReleased)
 	};

@@ -3,6 +3,10 @@
 #include "SDL2Window.h"
 #include <SDL.h>
 
+#include "core/events/ApplicationEvent.h"
+#include "core/events/KeyEvent.h"
+#include "core/events/MouseEvent.h"
+
 // #todo maybe move this to a "OpenGLIncludes.h" ?
 static const int OPENGL_MAJOR_VERSION = 4;
 static const int OPENGL_MINOR_VERSION = 5;
@@ -22,14 +26,55 @@ namespace gueepo {
 	}
 
 	void SDL2Window::Update() {
-		SDL_Event Event;
-		while (SDL_PollEvent(&Event)) {
+		SDL_Event SDLEvent;
+		while (SDL_PollEvent(&SDLEvent)) {
 
-			switch (Event.type) {
-			case SDL_QUIT:
-				// dispatch quit event
-				// bIsRunning = false;
-				break;
+			switch (SDLEvent.type) {
+			case SDL_WINDOWEVENT: {
+				switch (SDLEvent.window.event) {
+				case SDL_WINDOWEVENT_SHOWN:
+				case SDL_WINDOWEVENT_HIDDEN:
+				case SDL_WINDOWEVENT_FOCUS_GAINED:
+				case SDL_WINDOWEVENT_ENTER:
+				case SDL_WINDOWEVENT_FOCUS_LOST:
+				case SDL_WINDOWEVENT_LEAVE:
+				case SDL_WINDOWEVENT_MOVED: {
+					// #todo: event not implemented yet!
+				} break;
+				case SDL_WINDOWEVENT_RESIZED: {
+					WindowResizeEvent event(SDLEvent.window.data1, SDLEvent.window.data2);
+					m_EventCallback(event);
+				} break;
+				}
+			} break;
+			case SDL_QUIT: {
+				WindowCloseEvent event;
+				m_EventCallback(event);
+			} break;
+			case SDL_KEYDOWN: {
+				KeyPressedEvent event(SDLEvent.key.keysym.sym, SDLEvent.key.repeat);
+				m_EventCallback(event);
+			} break;
+			case SDL_KEYUP: {
+				KeyReleasedEvent event(SDLEvent.key.keysym.sym);
+				m_EventCallback(event);
+			} break;
+			case SDL_MOUSEMOTION: {
+				MouseMovedEvent event(SDLEvent.motion.x, SDLEvent.motion.y);
+				m_EventCallback(event);
+			} break;
+			case SDL_MOUSEBUTTONDOWN: {
+				MouseButtonPressedEvent event(SDLEvent.button.button);
+				m_EventCallback(event);
+			} break;
+			case SDL_MOUSEBUTTONUP: {
+				MouseButtonReleasedEvent event(SDLEvent.button.button);
+				m_EventCallback(event);
+			} break;
+			case SDL_MOUSEWHEEL: {
+				MouseScrolledEvent event(SDLEvent.wheel.x, SDLEvent.wheel.y);
+				m_EventCallback(event);
+			} break;
 			}
 		}
 	}
@@ -68,7 +113,7 @@ namespace gueepo {
 			SDL_WINDOWPOS_CENTERED,
 			m_Width,
 			m_Height,
-			SDL_WINDOW_OPENGL // | SDL_WINDOW_RESIZABLE
+			SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
 		);
 
 		assert(m_Window, "unable to create window: {0}", SDL_GetError());
