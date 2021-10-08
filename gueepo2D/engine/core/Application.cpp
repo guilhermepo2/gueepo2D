@@ -27,12 +27,6 @@ namespace gueepo {
 			}
 
 			m_Window->Update();
-			
-			// calculate delta time
-			// handle events
-			// handle input
-			// handle update
-			// handle render
 		}
 	}
 
