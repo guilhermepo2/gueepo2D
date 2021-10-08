@@ -14,6 +14,10 @@ project "gueepo2D"
     {
         "engine/**.h",
         "engine/**.cpp",
+
+        -- imgui (todo: make its own project?)
+        -- "thirdparty/imgui-docking/*.h",
+        -- "thirdparty/imgui-docking/*.cpp"
     }
 
     includedirs
@@ -21,6 +25,8 @@ project "gueepo2D"
         "engine",
         "%{IncludeDirectories.spdlog}",
         "%{IncludeDirectories.rapidjson}",
+        "%{IncludeDirectories.glad}",
+        -- "%{IncludeDirectories.dearimgui}",
         "%{SDL2_INCLUDE_DIR}"
     }
 
@@ -29,12 +35,18 @@ project "gueepo2D"
         "%{SDL2_LIB_DIR}"
     }
 
+    links
+    {
+        "glad"
+    }
+
     filter "system:windows"
         systemversion "latest"
         cppdialect "C++17"
         links
         {
             "SDL2.lib",
+            "opengl32.lib"
         }
 
         defines

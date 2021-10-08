@@ -20,7 +20,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}.%{cfg.architecture}"
 IncludeDirectories = {}
 IncludeDirectories["spdlog"] = "%{wks.location}/thirdparty/spdlog-1.9.2/include"
 IncludeDirectories["rapidjson"] = "%{wks.location}/thirdparty/rapidjson-1.1.0/include"
+IncludeDirectories["glad"] = "%{wks.location}/thirdparty/glad/include"
+IncludeDirectories["dearimgui"] = "%{wks.location}/thirdparty/imgui-docking"
 LibDir = {}
+
+group "Dependencies"
+    include "gueepo2D/thirdparty/glad"
 
 group "gueepo2D"
     include "gueepo2D/gueepo2D.lua"

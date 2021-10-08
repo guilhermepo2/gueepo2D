@@ -1,5 +1,8 @@
 #include "gueepo2Dpch.h"
 #include "SDL2Window.h"
+
+// #todo: maybe glad shouldn't be here, but also kind of makes sense?
+#include <glad/glad.h>
 #include <SDL.h>
 
 #include "core/events/ApplicationEvent.h"
@@ -125,8 +128,16 @@ namespace gueepo {
 
 		SetVSync(true);
 
-		// #todo: initialize gl context here?
-		// #todo: load glad here?
+		// #todo: this is needed for glad - this should probably be moved to its own file (GraphicsContext, ModernOpenGLContext, or whatever)
+		SDL_GLContext t_context = SDL_GL_CreateContext(m_Window);
+		SDL_GL_MakeCurrent(m_Window, t_context);
+		// #todo: not sure if this is the best place to be loading glad
+		if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+			LOG_ERROR("unable to initialize glad! {0}", glGetError());
+		}
+		glGetError();
+		// -----------------------------------------------------------------------------------------------------------------------------------
+
 
 		LOG_INFO("window was created successfully! ({0}, {1}, {2})", m_Title, m_Width, m_Height);
 	}
