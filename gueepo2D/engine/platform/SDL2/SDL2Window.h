@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Window.h"
+#include "core/renderer/GraphicsContext.h"
 
 struct SDL_Window;
 
@@ -29,5 +30,6 @@ namespace gueepo {
 		EventCallback m_EventCallback;
 
 		SDL_Window* m_Window;
+		GraphicsContext* m_GraphicsContext;
 	};
 }
