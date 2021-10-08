@@ -17,5 +17,7 @@ namespace gueepo {
 			return new OpenGLContext(static_cast<SDL_Window*>(window));
 			break;
 		}
+
+		return nullptr;
 	}
 }

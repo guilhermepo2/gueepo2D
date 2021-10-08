@@ -14,10 +14,6 @@ project "gueepo2D"
     {
         "engine/**.h",
         "engine/**.cpp",
-
-        -- imgui (todo: make its own project?)
-        -- "thirdparty/imgui-docking/*.h",
-        -- "thirdparty/imgui-docking/*.cpp"
     }
 
     includedirs
@@ -26,7 +22,7 @@ project "gueepo2D"
         "%{IncludeDirectories.spdlog}",
         "%{IncludeDirectories.rapidjson}",
         "%{IncludeDirectories.glad}",
-        -- "%{IncludeDirectories.dearimgui}",
+        "%{IncludeDirectories.dearimgui}",
         "%{SDL2_INCLUDE_DIR}"
     }
 
@@ -37,7 +33,8 @@ project "gueepo2D"
 
     links
     {
-        "glad"
+        "glad",
+        "dearimgui"
     }
 
     filter "system:windows"

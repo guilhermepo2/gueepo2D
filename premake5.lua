@@ -26,6 +26,7 @@ LibDir = {}
 
 group "Dependencies"
     include "gueepo2D/thirdparty/glad"
+    include "gueepo2D/thirdparty/imgui-docking"
 
 group "gueepo2D"
     include "gueepo2D/gueepo2D.lua"
