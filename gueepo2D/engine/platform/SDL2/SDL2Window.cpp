@@ -1,13 +1,12 @@
 #include "gueepo2Dpch.h"
 #include "SDL2Window.h"
-
-// #todo: maybe glad shouldn't be here, but also kind of makes sense?
-#include <glad/glad.h>
 #include <SDL.h>
 
 #include "core/events/ApplicationEvent.h"
 #include "core/events/KeyEvent.h"
 #include "core/events/MouseEvent.h"
+#include "core/renderer/RendererAPI.h"
+#include "platform/OpenGL/OpenGLContext.h"
 
 // #todo maybe move this to a "OpenGLIncludes.h" ?
 static const int OPENGL_MAJOR_VERSION = 4;
@@ -126,17 +125,12 @@ namespace gueepo {
 
 		assert(m_Window, "unable to create window: {0}", SDL_GetError());
 
-		SetVSync(true);
+		// #todo: set this somewhere else?
+		RendererAPI::SetAPI(RendererAPI::API::OpenGL);
+		m_GraphicsContext = GraphicsContext::Create(m_Window);
+		m_GraphicsContext->Init();
 
-		// #todo: this is needed for glad - this should probably be moved to its own file (GraphicsContext, ModernOpenGLContext, or whatever)
-		SDL_GLContext t_context = SDL_GL_CreateContext(m_Window);
-		SDL_GL_MakeCurrent(m_Window, t_context);
-		// #todo: not sure if this is the best place to be loading glad
-		if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
-			LOG_ERROR("unable to initialize glad! {0}", glGetError());
-		}
-		glGetError();
-		// -----------------------------------------------------------------------------------------------------------------------------------
+		SetVSync(true);
 
 
 		LOG_INFO("window was created successfully! ({0}, {1}, {2})", m_Title, m_Width, m_Height);

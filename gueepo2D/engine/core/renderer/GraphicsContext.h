@@ -9,6 +9,6 @@ namespace gueepo {
 		virtual void Init() = 0;
 		virtual void Swap() = 0;
 
-		// #todo: Create?
+		static GraphicsContext* Create(void* window);
 	};
 }
