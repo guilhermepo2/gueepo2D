@@ -113,6 +113,8 @@ namespace gueepo {
 			SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 		}
 
+		LOG_INFO("sdl initialized, platform detected: {0}", SDL_GetPlatform());
+
 		// #todo have a parameter informing if should be resizable or not?!
 		m_Window = SDL_CreateWindow(
 			m_Title.c_str(),
