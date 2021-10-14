@@ -114,6 +114,11 @@ namespace gueepo {
 		}
 
 		LOG_INFO("sdl initialized, platform detected: {0}", SDL_GetPlatform());
+		int numVideoDrivers = SDL_GetNumVideoDrivers();
+		LOG_INFO("sdl initialized, number of devices available: {0}", numVideoDrivers);
+		for (int i = 0; i < numVideoDrivers; i++) {
+			LOG_INFO("\tdevice available: {0}", SDL_GetVideoDriver(i));
+		}
 
 		// #todo have a parameter informing if should be resizable or not?!
 		m_Window = SDL_CreateWindow(

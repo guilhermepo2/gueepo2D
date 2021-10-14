@@ -1,5 +1,8 @@
 #include <gueepo2d.h>
 
+// ================================================================================
+// example of user defined layers
+// ================================================================================
 class ExampleLayer : public gueepo::Layer {
 public:
 	ExampleLayer() : Layer("MyLayer") {}
@@ -13,6 +16,9 @@ public:
 	}
 };
 
+// ================================================================================
+// application class
+// ================================================================================
 class DummyApp : public gueepo::Application {
 public:
 	
@@ -24,6 +30,9 @@ public:
 	~DummyApp() { LOG_INFO("deleting dummy app"); }
 };
 
+// ================================================================================
+// entry point
+// ================================================================================
 gueepo::Application* gueepo::CreateApplication() {
 	return new DummyApp("dummy app!", 640, 360);
 }
