@@ -12,5 +12,51 @@ namespace gueepo::math {
 		Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
 		Vector3(const Vector3& _other) : x(_other.x), y(_other.y), z(_other.z) {}
 		// #todo: construct from vector2
+
+		Vector3 operator+(const Vector3& other) {
+			return Vector3(
+				this->x + other.x,
+				this->y + other.y,
+				this->z + other.z
+			);
+		}
+
+		Vector3 operator-(const Vector3& other) {
+			return Vector3(
+				this->x - other.x,
+				this->y - other.y,
+				this->z - other.z
+			);
+		}
+
+		Vector3 operator*(const float& scalar) {
+			return Vector3(
+				this->x * scalar,
+				this->y * scalar,
+				this->z * scalar
+			);
+		}
+
+		bool operator==(const Vector3& rhs) const {
+			return this->x == rhs.x &&
+				this->y == rhs.y &&
+				this->z == rhs.z;
+		}
+
+		bool operator!=(const Vector3& other) const {
+			return this->x != other.x ||
+				this->y != other.y ||
+				this->z != other.z;
+		}
+
+		friend Vector3 operator*(const float& lhs, const Vector3& rhs);
 	};
+}
+
+gueepo::math::Vector3 gueepo::math::operator*(const float& lhs, const gueepo::math::Vector3& rhs) {
+	return gueepo::math::Vector3(
+		lhs * rhs.x,
+		lhs * rhs.y,
+		lhs * rhs.z
+	);
 }
