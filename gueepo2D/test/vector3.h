@@ -1,8 +1,12 @@
 #pragma once
 #include "thirdparty/catch.hpp"
 #include "core/math/Vector3.h"
+#include "TestUtils.h"
 
 TEST_CASE("VECTOR3", "[math]") {
+	
+	gueepo::test::ResetRandomSeed();
+
 	SECTION("empty constructor") {
 		gueepo::math::Vector3 v;
 		REQUIRE(v.x == 0.0f);
@@ -83,12 +87,14 @@ TEST_CASE("VECTOR3", "[math]") {
 
 	SECTION("theorem 2.1") {
 		// given any two scalars a and b,
-		float a = 0.37f;
-		float b = 1.33f;
+		float a = static_cast<float>(gueepo::test::RandomInt(0, 10));
+		float b = static_cast<float>(gueepo::test::RandomInt(0, 10));
+		INFO("a: " << a);
+		INFO("b: " << b);
 		// and any three vectors, P, Q, and R
-		gueepo::math::Vector3 p(1.0f, 2.0f, 3.0f);
-		gueepo::math::Vector3 q(2.0f, 1.5f, 4.5f);
-		gueepo::math::Vector3 r(3.0f, 4.0f, 9.0f);
+		gueepo::math::Vector3 p = gueepo::test::RandomVector();
+		gueepo::math::Vector3 q = gueepo::test::RandomVector();
+		gueepo::math::Vector3 r = gueepo::test::RandomVector();
 		// the following properties hold
 
 		// (a)
@@ -127,10 +133,10 @@ TEST_CASE("VECTOR3", "[math]") {
 
 	SECTION("theorem 2.2") {
 		// given any scalar a
-		float a = 1.73f;
+		float a = static_cast<float>(gueepo::test::RandomInt(0, 10));
 		// and any two vectors p and q
-		gueepo::math::Vector3 p(8.98326f, 5.65836f, 5.54062f);
-		gueepo::math::Vector3 q(1.41782f, 2.42726f, 0.41432f);
+		gueepo::math::Vector3 p = gueepo::test::RandomVector();
+		gueepo::math::Vector3 q = gueepo::test::RandomVector();
 		gueepo::math::Vector3 z(0.0f, 0.0f, 0.0f);
 
 		// (a)
