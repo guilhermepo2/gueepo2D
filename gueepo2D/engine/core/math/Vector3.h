@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 namespace gueepo::math {
 	class Vector3 {
@@ -12,6 +13,27 @@ namespace gueepo::math {
 		Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
 		Vector3(const Vector3& _other) : x(_other.x), y(_other.y), z(_other.z) {}
 		// #todo: construct from vector2
+
+		float Magnitude() {
+			return sqrtf( (x*x) + (y*y) + (z*z) );
+		}
+
+		float GetLength() {
+			return Magnitude();
+		}
+
+		// normalize the vector
+		void Normalize() {
+			float l = Magnitude();
+			x /= l; y /= l; z /= l;
+		}
+		
+		// Returns a normalized copy
+		Vector3 GetNormalized() {
+			Vector3 normalized(x, y, z);
+			normalized.Normalize();
+			return normalized;
+		}
 
 		Vector3 operator+(const Vector3& other) {
 			return Vector3(
