@@ -60,7 +60,12 @@ TEST_CASE("VECTOR3", "[math]") {
 		gueepo::math::Vector3 a(2.0f, 3.0f, 4.0f);
 		float scalar = 3.0f;
 		gueepo::math::Vector3 result = a * scalar;
+		gueepo::math::Vector3 result2 = a * 2;
 		
+		REQUIRE(result2.x == 4.0f);
+		REQUIRE(result2.y == 6.0f);
+		REQUIRE(result2.z == 8.0f);
+
 		REQUIRE(result.x == 6.0f);
 		REQUIRE(result.y == 9.0f);
 		REQUIRE(result.z == 12.0f);
@@ -149,6 +154,52 @@ TEST_CASE("VECTOR3", "[math]") {
 		REQUIRE( ( (a*q).GetLength() ) == Approx( (abs(a) * q.GetLength() ) ) );
 		// (d)
 		REQUIRE( ( (p+q).GetLength() ) <= ( p.GetLength() + q.GetLength() ) );
+	}
+
+	SECTION("dot product") {
+		gueepo::math::Vector3 v1(1.0f, 2.0f, 3.0f);
+		gueepo::math::Vector3 v2(5.0f, 6.f, 7.0f);
+
+		float dotproduct = gueepo::math::Vector3::Dot(v1, v2);
+		REQUIRE(dotproduct == Approx(38.0f));
+
+		gueepo::math::Vector3 v3(1.0f, -1.0f, 1.0f);
+		gueepo::math::Vector3 v4(-2.0f, 2.0f, 2.0f);
+		float dotproduct2 = gueepo::math::Vector3::Dot(v3, v4);
+		REQUIRE(dotproduct2 == -2.0f);
+	}
+
+	SECTION("theorem 2.5") {
+		gueepo::math::Vector3 p = gueepo::test::RandomVector();
+		gueepo::math::Vector3 q = gueepo::test::RandomVector();
+		gueepo::math::Vector3 r = gueepo::test::RandomVector();
+		float scalar = static_cast<float>(gueepo::test::RandomInt());
+
+
+		// (a)
+		REQUIRE(gueepo::math::Vector3::Dot(p, q) == gueepo::math::Vector3::Dot(q, p));
+		// (b)
+		REQUIRE(gueepo::math::Vector3::Dot((scalar * p), q) == Approx(scalar * gueepo::math::Vector3::Dot(p, q)));
+		// (c)
+		REQUIRE(
+			gueepo::math::Vector3::Dot(p, (q + r)) ==
+			gueepo::math::Vector3::Dot(p, q) + gueepo::math::Vector3::Dot(p, r)
+		);
+		// (d)
+		REQUIRE(
+			gueepo::math::Vector3::Dot(p, p) ==
+			Approx(p.GetLength() * p.GetLength())
+		);
+		// (e)
+		REQUIRE(
+			abs(gueepo::math::Vector3::Dot(p, q)) <=
+			p.GetLength() * q.GetLength()
+		);
+
+	}
+
+	SECTION("cross product") {
+		
 	}
 }
 

@@ -20,10 +20,11 @@ namespace gueepo {
 		m_bIsRunning = true;
 
 		LOG_INFO("application is running!");
+		// #todo: call Application::Start here?
 		while (m_bIsRunning) {
 			// #todo: calculate delta time
 			for (Layer* l : m_LayerStack) {
-				l->OnUpdate(.0f);
+				l->OnUpdate(.1f);
 			}
 
 			m_Window->Update();

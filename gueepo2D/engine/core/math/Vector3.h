@@ -14,11 +14,11 @@ namespace gueepo::math {
 		Vector3(const Vector3& _other) : x(_other.x), y(_other.y), z(_other.z) {}
 		// #todo: construct from vector2
 
-		float Magnitude() {
+		float Magnitude() const {
 			return sqrtf( (x*x) + (y*y) + (z*z) );
 		}
 
-		float GetLength() {
+		float GetLength() const {
 			return Magnitude();
 		}
 
@@ -72,6 +72,25 @@ namespace gueepo::math {
 		}
 
 		friend Vector3 operator*(const float& lhs, const Vector3& rhs);
+
+		static float Dot(const Vector3& lhs, const Vector3& rhs) {
+			return (
+				(lhs.x * rhs.x) +
+				(lhs.y * rhs.y) +
+				(lhs.z * rhs.z)
+			);
+		}
+
+		static float Angle(const Vector3& lhs, const Vector3& rhs) {
+			float dot = Dot(lhs, rhs);
+			float lhsLength = lhs.GetLength();
+			float rhsLength = rhs.GetLength();
+			return (dot / (lhsLength * rhsLength));
+		}
+
+		static Vector3 Cross(const Vector3& lhs, const Vector3& rhs) {
+			return Vector3(0.0f);
+		}
 	};
 }
 
