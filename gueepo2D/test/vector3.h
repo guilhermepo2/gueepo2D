@@ -183,7 +183,7 @@ TEST_CASE("VECTOR3", "[math]") {
 		// (c)
 		REQUIRE(
 			gueepo::math::Vector3::Dot(p, (q + r)) ==
-			gueepo::math::Vector3::Dot(p, q) + gueepo::math::Vector3::Dot(p, r)
+			Approx(gueepo::math::Vector3::Dot(p, q) + gueepo::math::Vector3::Dot(p, r))
 		);
 		// (d)
 		REQUIRE(
@@ -199,6 +199,74 @@ TEST_CASE("VECTOR3", "[math]") {
 	}
 
 	SECTION("cross product") {
+		gueepo::math::Vector3 a(2.0f, 3.0f, 4.0f);
+		gueepo::math::Vector3 b(1.0f, 1.0f, 2.0f);
+		gueepo::math::Vector3 cross = gueepo::math::Vector3::Cross(a, b);
+
+		REQUIRE(cross.x == 2.0f);
+		REQUIRE(cross.y == 0.0f);
+		REQUIRE(cross.z == -1.0f);
+
+		gueepo::math::Vector3 c(3.0f, 2.0f, 1.0f);
+		gueepo::math::Vector3 d(1.0f, 2.0f, 3.0f);
+		gueepo::math::Vector3 cross2 = gueepo::math::Vector3::Cross(c, d);
+
+		REQUIRE(cross2.x == 4.0f);
+		REQUIRE(cross2.y == -8.0f);
+		REQUIRE(cross2.z == 4.0f);
+	}
+
+	SECTION("theorem 2.7") {
+		gueepo::math::Vector3 p(3.0f, 2.0f, 1.0f);
+		gueepo::math::Vector3 q(1.0f, 2.0f, 3.0f);
+
+		REQUIRE(gueepo::math::Vector3::Dot((gueepo::math::Vector3::Cross(p, q)), p) == 0);
+		REQUIRE(gueepo::math::Vector3::Dot((gueepo::math::Vector3::Cross(p, q)), q) == 0);
+	}
+
+	SECTION("theorem 2.9") {
+		gueepo::math::Vector3 p(3.0f, 2.0f, 1.0f);
+		gueepo::math::Vector3 q(1.0f, 2.0f, 3.0f);
+		gueepo::math::Vector3 r(2.0f, 1.0f, 1.0f);
+		float a = static_cast<float>(gueepo::test::RandomInt(1, 5));
+
+		// (a)
+		REQUIRE(
+			gueepo::math::Vector3::Cross(q, p) ==
+			( -1 * gueepo::math::Vector3::Cross(p,q))
+		);
+		// (b)
+		REQUIRE(
+			gueepo::math::Vector3::Cross(a*p, q) ==
+			(a * gueepo::math::Vector3::Cross(p, q))
+		);
+		// (c)
+		REQUIRE(
+			gueepo::math::Vector3::Cross(p, (q + r)) ==
+			gueepo::math::Vector3::Cross(p, q) + gueepo::math::Vector3::Cross(p, r)
+		);
+		// (d)
+		REQUIRE(
+			gueepo::math::Vector3::Cross(p, p) == gueepo::math::Vector3(0.0f)
+		);
+		// (e)
+		REQUIRE(
+			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(p,q), r) ==
+			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(r, p), q)
+		);
+		REQUIRE(
+			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(p, q), r) ==
+			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(q, r), p)
+		);
+		REQUIRE(
+			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(r, p), q) ==
+			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(q, r), p)
+		);
+		// (f)
+		REQUIRE(
+			gueepo::math::Vector3::Cross(p, gueepo::math::Vector3::Cross(q, p)) == 
+			gueepo::math::Vector3::Cross(gueepo::math::Vector3::Cross(p, q), p)
+		);
 		
 	}
 }

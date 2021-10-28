@@ -81,15 +81,12 @@ namespace gueepo::math {
 			);
 		}
 
-		static float Angle(const Vector3& lhs, const Vector3& rhs) {
-			float dot = Dot(lhs, rhs);
-			float lhsLength = lhs.GetLength();
-			float rhsLength = rhs.GetLength();
-			return (dot / (lhsLength * rhsLength));
-		}
-
 		static Vector3 Cross(const Vector3& lhs, const Vector3& rhs) {
-			return Vector3(0.0f);
+			return Vector3(
+				(lhs.y * rhs.z) - (lhs.z * rhs.y),
+				(lhs.z * rhs.x) - (lhs.x * rhs.z),
+				(lhs.x * rhs.y) - (lhs.y * rhs.x)
+			);
 		}
 	};
 }
