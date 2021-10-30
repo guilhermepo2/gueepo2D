@@ -2,6 +2,14 @@
 #include "Application.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/EventDispatcher.h"
+#include "core/TimeStep.h"
+
+// For now locking this to run at 60fps
+const unsigned int FPS = 60;
+const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
+
+// #todo: temp
+#include "SDL.h"
 
 namespace gueepo {
 
@@ -18,16 +26,24 @@ namespace gueepo {
 
 	void Application::Run() {
 		m_bIsRunning = true;
+		int TicksLastFrame = 0;
 
 		LOG_INFO("application is running!");
 		// #todo: call Application::Start here?
 		while (m_bIsRunning) {
-			// #todo: calculate delta time
-			for (Layer* l : m_LayerStack) {
-				l->OnUpdate(.1f);
-			}
+			float DeltaTime = static_cast<float>((timestep::GetTicks() - TicksLastFrame)) / 1000.0f;
+			TicksLastFrame = timestep::GetTicks();
 
+			for (Layer* l : m_LayerStack) {
+				l->OnUpdate(DeltaTime);
+			}
 			m_Window->Update();
+
+			// delaying until next frame so we can keep 60fps
+			int TimeToWait = FRAME_TARGET_TIME - (timestep::GetTicks() - TicksLastFrame);
+			if (TimeToWait > 0.0f && TimeToWait <= FRAME_TARGET_TIME) {
+				timestep::Sleep(TimeToWait);
+			}
 		}
 	}
 
