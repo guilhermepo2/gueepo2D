@@ -2,11 +2,14 @@
 #include "Application.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/EventDispatcher.h"
+#include "core/TimeStep.h"
+
+// For now locking this to run at 60fps
+const unsigned int FPS = 60;
+const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
 
 // #todo: temp
 #include "SDL.h"
-const unsigned int FPS = 60;
-const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
 
 namespace gueepo {
 
@@ -23,30 +26,24 @@ namespace gueepo {
 
 	void Application::Run() {
 		m_bIsRunning = true;
-		float TicksLastFrame = 0.0f;
+		int TicksLastFrame = 0;
 
 		LOG_INFO("application is running!");
 		// #todo: call Application::Start here?
 		while (m_bIsRunning) {
-
-			// #todo: this has to be in its own platform independent class
-			float DeltaTime = static_cast<float>((SDL_GetTicks() - TicksLastFrame)) / 1000.0f;
-			DeltaTime = (DeltaTime > 0.05f) ? 0.05f : DeltaTime;
-			TicksLastFrame = SDL_GetTicks();
-			// ----------------------------------------------------------
+			float DeltaTime = static_cast<float>((timestep::GetTicks() - TicksLastFrame)) / 1000.0f;
+			TicksLastFrame = timestep::GetTicks();
 
 			for (Layer* l : m_LayerStack) {
 				l->OnUpdate(DeltaTime);
 			}
 			m_Window->Update();
 
-			// ----------------------------------------------------------
 			// delaying until next frame so we can keep 60fps
-			int TimeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - TicksLastFrame);
+			int TimeToWait = FRAME_TARGET_TIME - (timestep::GetTicks() - TicksLastFrame);
 			if (TimeToWait > 0.0f && TimeToWait <= FRAME_TARGET_TIME) {
-				SDL_Delay(TimeToWait);
+				timestep::Sleep(TimeToWait);
 			}
-			// ----------------------------------------------------------
 		}
 	}
 
