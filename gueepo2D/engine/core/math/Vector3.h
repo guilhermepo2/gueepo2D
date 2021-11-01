@@ -88,6 +88,11 @@ namespace gueepo::math {
 				(lhs.x * rhs.y) - (lhs.y * rhs.x)
 			);
 		}
+
+		static const Vector3 Zero;
+		static const Vector3 Right;
+		static const Vector3 Up;
+		static const Vector3 Forward;
 	};
 }
 

@@ -24,3 +24,6 @@
 
 #include "core/renderer/RendererAPI.h"
 #include "core/renderer/GraphicsContext.h"
+
+#include "core/math/Vector3.h"
+#include "core/math/Matrix4.h"
