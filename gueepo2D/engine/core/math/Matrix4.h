@@ -13,6 +13,10 @@ namespace gueepo::math {
 			memcpy(mat, inMat, 16 * sizeof(float));
 		}
 
+		const float* GetValueData() {
+			return reinterpret_cast<const float*>(&mat[0][0]);
+		}
+
 		Matrix4 operator+(const Matrix4& other) {
 			Matrix4 ret;
 			ret.mat[0][0] = mat[0][0] + other.mat[0][0];
@@ -182,6 +186,7 @@ namespace gueepo::math {
 		}
 
 		// #todo: Matrix4 GetInverse()
+		// #todo: transform operations (translate, rotate, scale)
 
 		static const Matrix4 m4Identity;
 	};
