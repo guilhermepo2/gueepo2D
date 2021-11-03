@@ -70,7 +70,7 @@ namespace gueepo::math {
 	};
 }
 
-gueepo::math::Vector2 gueepo::math::operator*(const float& lhs, const Vector2& rhs) {
+gueepo::math::Vector2 gueepo::math::operator*(const float& lhs, const gueepo::math::Vector2& rhs) {
 	return gueepo::math::Vector2(
 		lhs * rhs.x,
 		lhs * rhs.y
