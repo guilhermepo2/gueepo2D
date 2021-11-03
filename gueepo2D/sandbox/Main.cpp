@@ -8,7 +8,8 @@ public:
 	ExampleLayer() : Layer("MyLayer") {}
 
 	void OnUpdate(float DeltaTime) override {
-		unreferenced(DeltaTime);
+		// unreferenced(DeltaTime);
+		LOG_INFO("DeltaTime: {0}", DeltaTime);
 	}
 
 	void OnEvent(gueepo::Event& e) override {
