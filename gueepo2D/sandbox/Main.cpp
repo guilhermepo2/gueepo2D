@@ -25,6 +25,7 @@ public:
 	DummyApp(const std::string& _Title, unsigned int _Width, unsigned int _Height) 
 		: Application(_Title, _Width, _Height) {
 		PushLayer(new ExampleLayer());
+		PushOverlay(new gueepo::ImGuiLayer());
 	}
 
 	~DummyApp() { LOG_INFO("deleting dummy app"); }
