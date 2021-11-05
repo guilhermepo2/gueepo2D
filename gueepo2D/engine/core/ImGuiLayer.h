@@ -21,6 +21,7 @@ namespace gueepo {
 		bool OnMouseButtonDown(MouseButtonPressedEvent& e);
 		bool OnKeyPressed(KeyPressedEvent& e);
 		bool OnKeyReleased(KeyReleasedEvent& e);
+		// bool OnKeyTyped(KeyTypedEvent& e);
 		bool OnWindowClosed(WindowCloseEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
 		// bool OnWindowMoved(KeyReleasedEvent& e);
