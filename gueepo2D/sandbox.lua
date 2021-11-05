@@ -20,6 +20,7 @@ project "Sandbox"
         "engine",
         "%{IncludeDirectories.spdlog}",
         "%{IncludeDirectories.rapidjson}",
+        "%{IncludeDirectories.dearimgui}",
         "%{SDL2_INCLUDE_DIR}"
     }
 

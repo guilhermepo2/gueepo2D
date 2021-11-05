@@ -1,4 +1,5 @@
 #include <gueepo2d.h>
+#include <imgui.h>
 
 // ================================================================================
 // example of user defined layers
@@ -14,6 +15,12 @@ public:
 	void OnEvent(gueepo::Event& e) override {
 		unreferenced(e);
 	}
+
+	void OnImGuiRender() {
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
+	}
 };
 
 // ================================================================================
@@ -25,7 +32,6 @@ public:
 	DummyApp(const std::string& _Title, unsigned int _Width, unsigned int _Height) 
 		: Application(_Title, _Width, _Height) {
 		PushLayer(new ExampleLayer());
-		PushOverlay(new gueepo::ImGuiLayer());
 	}
 
 	~DummyApp() { LOG_INFO("deleting dummy app"); }

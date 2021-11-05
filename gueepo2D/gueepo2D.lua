@@ -1,7 +1,7 @@
 project "gueepo2D"
     kind "StaticLib"
     language "C++"
-    staticruntime "On"
+    staticruntime "on"
     warnings "Extra"
 
     targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")

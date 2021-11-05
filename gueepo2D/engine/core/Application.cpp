@@ -3,6 +3,7 @@
 #include "core/events/ApplicationEvent.h"
 #include "core/events/EventDispatcher.h"
 #include "core/TimeStep.h"
+#include "core/ImGuiLayer.h"
 
 // For now locking this to run at 60fps
 const unsigned int FPS = 60;
@@ -25,6 +26,9 @@ namespace gueepo {
 		WindowConfiguration c = { _Title, _Width, _Height };
 		m_Window = std::unique_ptr<Window>(Window::CreateNewWindow(c));
 		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application() {}
@@ -43,6 +47,13 @@ namespace gueepo {
 				l->OnUpdate(DeltaTime);
 			}
 			m_Window->Update();
+
+			m_ImGuiLayer->Begin();
+			for (Layer* l : m_LayerStack) {
+				l->OnImGuiRender();
+			}
+			m_ImGuiLayer->End();
+
 
 			// delaying until next frame so we can keep 60fps
 			int TimeToWait = FRAME_TARGET_TIME - (timestep::GetTicks() - TicksLastFrame);

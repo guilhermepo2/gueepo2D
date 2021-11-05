@@ -10,22 +10,12 @@ namespace gueepo {
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void OnAttach();
-		void OnDetach();
-		void OnUpdate(float DeltaTime);
-		void OnEvent(Event& e);
+		void OnAttach() override;
+		void OnDetach() override;
+		void OnUpdate(float DeltaTime) override;
+		void OnImGuiRender() override;
 
-	private:
-
-		bool OnMouseWheel(MouseScrolledEvent& e);
-		bool OnMouseButtonDown(MouseButtonPressedEvent& e);
-		bool OnKeyPressed(KeyPressedEvent& e);
-		bool OnKeyReleased(KeyReleasedEvent& e);
-		// bool OnKeyTyped(KeyTypedEvent& e);
-		bool OnWindowClosed(WindowCloseEvent& e);
-		bool OnWindowResized(WindowResizeEvent& e);
-		// bool OnWindowMoved(KeyReleasedEvent& e);
-		// bool OnWindowFocusGained(KeyReleasedEvent& e);
-		// bool OnWindowFocusLost(KeyReleasedEvent& e);
+		void Begin();
+		void End();
 	};
 }

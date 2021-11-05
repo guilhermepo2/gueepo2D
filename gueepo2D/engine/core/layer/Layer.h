@@ -10,7 +10,7 @@ namespace gueepo {
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate(float DeltaTime) { unreferenced(DeltaTime); }
-		// #todo: OnImGuiRender ?
+		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& e) { unreferenced(e); }
 
 	private:

@@ -7,6 +7,7 @@ namespace gueepo {
 	class WindowCloseEvent;
 	class WindowResizeEvent;
 	class Layer;
+	class ImGuiLayer;
 
 	class Application {
 	public:
@@ -26,6 +27,7 @@ namespace gueepo {
 
 	private:
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_bIsRunning;
 		LayerStack m_LayerStack;
 
