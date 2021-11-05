@@ -17,6 +17,9 @@ namespace gueepo {
 
 		void PushLayer(Layer* l);
 		void PushOverlay(Layer* l);
+
+		inline static Application& Get() { return *s_Instance; }
+		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
@@ -25,6 +28,9 @@ namespace gueepo {
 		std::unique_ptr<Window> m_Window;
 		bool m_bIsRunning;
 		LayerStack m_LayerStack;
+
+	private:
+		static Application* s_Instance;
 	};
 
 	// This is to be defined on the client

@@ -15,7 +15,12 @@ namespace gueepo {
 
 #define BIND_EVENT(x) std::bind(&x, this, std::placeholders::_1)
 
+	Application* Application::s_Instance = nullptr;
+
 	Application::Application(const std::string& _Title, unsigned int _Width, unsigned int _Height) {
+
+		assert(s_Instance == nullptr, "application already exists!");
+		s_Instance = this;
 
 		WindowConfiguration c = { _Title, _Width, _Height };
 		m_Window = std::unique_ptr<Window>(Window::CreateNewWindow(c));
@@ -63,10 +68,12 @@ namespace gueepo {
 
 	void Application::PushLayer(Layer* l) {
 		m_LayerStack.PushLayer(l);
+		l->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* l) {
 		m_LayerStack.PushOverlay(l);
+		l->OnAttach();
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
