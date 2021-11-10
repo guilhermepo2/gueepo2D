@@ -12,6 +12,12 @@ public:
 		unreferenced(DeltaTime);
 	}
 
+	void OnInput(const gueepo::InputState& currentInputState) {
+		if (currentInputState.Mouse.WasMouseKeyPressedThisFrame(gueepo::Mousecode::MOUSE_LEFT)) {
+			LOG_INFO("Mouse Button Pressed!");
+		}
+	}
+
 	void OnEvent(gueepo::Event& e) override {
 		unreferenced(e);
 	}

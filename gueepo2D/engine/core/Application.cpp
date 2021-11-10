@@ -2,8 +2,9 @@
 #include "Application.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/EventDispatcher.h"
-#include "core/TimeStep.h"
 #include "core/ImGuiLayer.h"
+#include "core/input/Input.h"
+#include "core/TimeStep.h"
 
 // For now locking this to run at 60fps
 const unsigned int FPS = 60;
@@ -36,12 +37,23 @@ namespace gueepo {
 	void Application::Run() {
 		m_bIsRunning = true;
 		int TicksLastFrame = 0;
+		
+		InputSystem inputSystem;
+		inputSystem.Initialize();
 
 		LOG_INFO("application is running!");
 		// #todo: call Application::Start here?
 		while (m_bIsRunning) {
 			float DeltaTime = static_cast<float>((timestep::GetTicks() - TicksLastFrame)) / 1000.0f;
 			TicksLastFrame = timestep::GetTicks();
+
+			// process input before update
+			inputSystem.PrepareForUpdate();
+			inputSystem.Update();
+
+			for (Layer* l : m_LayerStack) {
+				l->OnInput(inputSystem.GetState());
+			}
 
 			for (Layer* l : m_LayerStack) {
 				l->OnUpdate(DeltaTime);
@@ -61,6 +73,8 @@ namespace gueepo {
 				timestep::Sleep(TimeToWait);
 			}
 		}
+
+		inputSystem.Shutdown();
 	}
 
 	void Application::OnEvent(Event& e) {

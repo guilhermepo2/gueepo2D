@@ -69,10 +69,3 @@ namespace gueepo::math {
 		static const Vector2 Up;
 	};
 }
-
-gueepo::math::Vector2 gueepo::math::operator*(const float& lhs, const gueepo::math::Vector2& rhs) {
-	return gueepo::math::Vector2(
-		lhs * rhs.x,
-		lhs * rhs.y
-	);
-}
