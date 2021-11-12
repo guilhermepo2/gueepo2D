@@ -10,9 +10,6 @@
 const unsigned int FPS = 60;
 const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
 
-// #todo: temp
-#include "SDL.h"
-
 namespace gueepo {
 
 #define BIND_EVENT(x) std::bind(&x, this, std::placeholders::_1)
@@ -46,7 +43,6 @@ namespace gueepo {
 		while (m_bIsRunning) {
 			float DeltaTime = static_cast<float>((timestep::GetTicks() - TicksLastFrame)) / 1000.0f;
 			TicksLastFrame = timestep::GetTicks();
-
 			// process input before update
 			inputSystem->PrepareForUpdate();
 			inputSystem->Update();
@@ -58,15 +54,14 @@ namespace gueepo {
 			for (Layer* l : m_LayerStack) {
 				l->OnUpdate(DeltaTime);
 			}
-			m_Window->Update();
 
 			m_ImGuiLayer->Begin();
 			for (Layer* l : m_LayerStack) {
 				l->OnImGuiRender();
 			}
 			m_ImGuiLayer->End();
-
-
+			
+			m_Window->Update();
 			// delaying until next frame so we can keep 60fps
 			int TimeToWait = FRAME_TARGET_TIME - (timestep::GetTicks() - TicksLastFrame);
 			if (TimeToWait > 0.0f && TimeToWait <= FRAME_TARGET_TIME) {
