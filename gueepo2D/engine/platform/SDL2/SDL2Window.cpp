@@ -84,6 +84,8 @@ namespace gueepo {
 			} break;
 			}
 		}
+
+		m_GraphicsContext->Swap();
 	}
 
 	void SDL2Window::SetVSync(bool _enabled) {
