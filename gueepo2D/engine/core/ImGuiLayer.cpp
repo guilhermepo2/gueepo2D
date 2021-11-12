@@ -68,7 +68,7 @@ namespace gueepo {
 	void ImGuiLayer::End() {
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
-		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+		io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow().GetWidth()), static_cast<float>(app.GetWindow().GetHeight()));
 
 		// #todo: this shouldn't be here!
 		glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);

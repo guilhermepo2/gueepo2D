@@ -1,24 +1,24 @@
 #include "gueepo2Dpch.h"
 #include "Input.h"
 #include "core/Log.h"
-#include <SDL.h>
 #include <cstring>
 
 namespace gueepo {
+
 	// -------------------------------------------
 	// Keyboard State
 	// -------------------------------------------
 	bool KeyboardState::GetKeyValue(Keycode key) const {
-		return m_CurrentState[key] == 1;
+		return CurrentState[key] == 1;
 	}
 
 	EButtonState KeyboardState::GetKeyState(Keycode key) const {
-		if (m_PreviousState[key] == 0) {
-			if (m_CurrentState[key] == 0) { return None; }
+		if (PreviousState[key] == 0) {
+			if (CurrentState[key] == 0) { return None; }
 			else { return Pressed; }
 		}
 		else {
-			if (m_CurrentState[key] == 0) { return Released; }
+			if (CurrentState[key] == 0) { return Released; }
 			else { return Held; }
 		}
 	}
@@ -31,18 +31,18 @@ namespace gueepo {
 	// Mouse State
 	// -------------------------------------------
 	bool MouseState::GetButtonValue(Mousecode code) const {
-		return (SDL_BUTTON(code) & m_MouseButtons == 1);
+		return ( (MOUSE_BUTTON(code) & MouseButtons) == 1);
 	}
 
 	EButtonState MouseState::GetButtonState(Mousecode code) const {
-		int mask = SDL_BUTTON(code);
+		int mask = MOUSE_BUTTON(code);
 
-		if (mask & m_MouseButtonsLastFrame == 0) {
-			if (mask & m_MouseButtons == 0) { return None; }
+		if ( (mask & MouseButtonsLastFrame) == 0) {
+			if ( (mask & MouseButtons) == 0) { return None; }
 			else { return Pressed; }
 		}
 		else {
-			if (mask & m_MouseButtons == 0) { return Released; }
+			if ((mask & MouseButtons) == 0) { return Released; }
 			else { return Held; }
 		}
 	}
@@ -54,43 +54,36 @@ namespace gueepo {
 	// -------------------------------------------
 	// Input System
 	// -------------------------------------------
-	bool InputSystem::Initialize() {
-		// Assign current state pointer
-		m_State.Keyboard.m_CurrentState = SDL_GetKeyboardState(nullptr);
-		memset(m_State.Keyboard.m_PreviousState, 0, SDL_NUM_SCANCODES);
+	bool InputSystem::Initialize() { 
+		memset(m_State.Keyboard.PreviousState, 0, NUM_KEYCODES);
+		m_State.Mouse.MouseButtons = 0;
+		m_State.Mouse.MouseButtonsLastFrame = 0;
 
-		// Initializing Mouse
-		m_State.Mouse.m_MouseButtons = 0;
-		m_State.Mouse.m_MouseButtonsLastFrame = 0;
-
+		s_Instance->Implementation_Initialize();
 		LOG_INFO("[input] input system initialized");
 		return true;
 	}
 
-	void InputSystem::Shutdown() { }
+	void InputSystem::Shutdown() {  
+		s_Instance->Implementation_Shutdown();
+	}
+	
+	void InputSystem::PrepareForUpdate() { 
+		memcpy(m_State.Keyboard.PreviousState, m_State.Keyboard.CurrentState, NUM_KEYCODES);
 
-	void InputSystem::PrepareForUpdate() {
-		memcpy(m_State.Keyboard.m_PreviousState, m_State.Keyboard.m_CurrentState, SDL_NUM_SCANCODES);
+		m_State.Mouse.MouseButtonsLastFrame = m_State.Mouse.MouseButtons;
+		m_State.Mouse.IsRelative = false;
+		m_State.Mouse.ScrollWheel = math::Vector2(0.0f, 0.0f);
 
-		// Mouse
-		m_State.Mouse.m_MouseButtonsLastFrame = m_State.Mouse.m_MouseButtons;
-		m_State.Mouse.m_IsRelative = false;
-		m_State.Mouse.m_ScrollWheel = math::Vector2(0.0f, 0.0f);
+		s_Instance->Implementation_PrepareForUpdate();
 	}
 
-	void InputSystem::Update() {
-		// Mouse
-		int x = 0, y = 0;
-		if (m_State.Mouse.m_IsRelative) { m_State.Mouse.m_MouseButtons = SDL_GetRelativeMouseState(&x, &y); }
-		else { m_State.Mouse.m_MouseButtons = SDL_GetMouseState(&x, &y); }
-
-		m_State.Mouse.m_MousePosition.x = static_cast<float>(x);
-		m_State.Mouse.m_MousePosition.y = static_cast<float>(y);
+	void InputSystem::Update() { 
+		s_Instance->Implementation_Update(); 
 	}
 
-	void InputSystem::SetRelativeMouseMode(bool Value) {
-		SDL_bool ValueToSet = Value ? SDL_TRUE : SDL_FALSE;
-		SDL_SetRelativeMouseMode(ValueToSet);
-		m_State.Mouse.m_IsRelative = Value;
+	void InputSystem::SetRelativeMouseMode(bool Value) { 
+		s_Instance->Implementation_SetRelativeMouseMode(Value);
+		m_State.Mouse.IsRelative = Value;
 	}
 }

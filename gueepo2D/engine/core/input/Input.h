@@ -1,20 +1,10 @@
 #pragma once
 #include "KeyboardCodes.h"
 #include "MouseCodes.h"
-
-// #todo: first step of this is making it work with SDL
-// second step is moving all the SDL code to a platform specific file
-#include <SDL_scancode.h>
-#include <SDL_gamecontroller.h>
-#include <SDL_mouse.h>
-
 #include "core/math/Vector2.h"
+#include "core/Common.h"
 
 namespace gueepo {
-
-	namespace math {
-		class Vector2;
-	}
 
 	enum EButtonState {
 		None = 0,
@@ -29,16 +19,18 @@ namespace gueepo {
 	class KeyboardState {
 	public:
 		friend class InputSystem;
-		bool GetKeyValue(Keycode key) const;
-		EButtonState GetKeyState(Keycode key) const;
 
 		bool IsKeyDown(Keycode key) const;
 		bool WasKeyPressedThisFrame(Keycode key) const;
 		bool WasKeyReleasedThisFrame(Keycode key) const;
 
 	private:
-		const Uint8* m_CurrentState;
-		Uint8 m_PreviousState[NUM_SCANCODES];
+		bool GetKeyValue(Keycode key) const;
+		EButtonState GetKeyState(Keycode key) const;
+
+	public:
+		const uint8_t* CurrentState;
+		uint8_t PreviousState[NUM_KEYCODES];
 	};
 
 	// -------------------------------------------
@@ -46,23 +38,21 @@ namespace gueepo {
 	// -------------------------------------------
 	class MouseState {
 	public:
-		friend class InputSystem;
-		const math::Vector2 GetPosition() const { return m_MousePosition; }
-
-		bool GetButtonValue(Mousecode code) const;
-		EButtonState GetButtonState(Mousecode code) const;
-
+		const math::Vector2 GetPosition() const { return MousePosition; }
 		bool IsMouseKeyDown(Mousecode code) const;
 		bool WasMouseKeyPressedThisFrame(Mousecode code) const;
 		bool WasKMouseKeyReleasedThisFrame(Mousecode code) const;
 
-
 	private:
-		math::Vector2 m_MousePosition;
-		math::Vector2 m_ScrollWheel;
-		Uint32 m_MouseButtons;
-		Uint32 m_MouseButtonsLastFrame;
-		bool m_IsRelative;
+		bool GetButtonValue(Mousecode code) const;
+		EButtonState GetButtonState(Mousecode code) const;
+
+	public:
+		bool IsRelative = false;
+		math::Vector2 MousePosition;
+		math::Vector2 ScrollWheel;
+		uint32_t MouseButtons = 0;
+		uint32_t MouseButtonsLastFrame = 0;
 	};
 
 	// -------------------------------------------
@@ -82,11 +72,18 @@ namespace gueepo {
 		void Shutdown();
 		void PrepareForUpdate();
 		void Update();
-
 		void SetRelativeMouseMode(bool Value);
 		const InputState& GetState() const { return m_State; }
 
-	private:
+	protected:
+		virtual bool Implementation_Initialize() { return false; }
+		virtual void Implementation_Shutdown() {}
+		virtual void Implementation_PrepareForUpdate() {}
+		virtual void Implementation_Update() {}
+		virtual void Implementation_SetRelativeMouseMode(bool Value) { unreferenced(Value); }
 		InputState m_State;
+
+	public:
+		static InputSystem* s_Instance;
 	};
 }

@@ -38,8 +38,8 @@ namespace gueepo {
 		m_bIsRunning = true;
 		int TicksLastFrame = 0;
 		
-		InputSystem inputSystem;
-		inputSystem.Initialize();
+		InputSystem* inputSystem = InputSystem::s_Instance;
+		inputSystem->Initialize();
 
 		LOG_INFO("application is running!");
 		// #todo: call Application::Start here?
@@ -48,11 +48,11 @@ namespace gueepo {
 			TicksLastFrame = timestep::GetTicks();
 
 			// process input before update
-			inputSystem.PrepareForUpdate();
-			inputSystem.Update();
+			inputSystem->PrepareForUpdate();
+			inputSystem->Update();
 
 			for (Layer* l : m_LayerStack) {
-				l->OnInput(inputSystem.GetState());
+				l->OnInput(inputSystem->GetState());
 			}
 
 			for (Layer* l : m_LayerStack) {
@@ -74,7 +74,7 @@ namespace gueepo {
 			}
 		}
 
-		inputSystem.Shutdown();
+		inputSystem->Shutdown();
 	}
 
 	void Application::OnEvent(Event& e) {

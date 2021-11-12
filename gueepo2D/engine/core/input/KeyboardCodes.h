@@ -271,6 +271,6 @@ namespace gueepo {
                                KEYCODE_AUDIOREWIND = 285,
                                KEYCODE_AUDIOFASTFORWARD = 286,
 
-                               NUM_SCANCODES = 512 /**< not a key, just marks the number of scancodes for array bounds */
+                               NUM_KEYCODES = 512 /**< not a key, just marks the number of scancodes for array bounds */
     } Keycode;
 }
