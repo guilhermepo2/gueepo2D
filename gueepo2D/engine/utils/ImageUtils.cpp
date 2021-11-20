@@ -9,17 +9,18 @@
 
 namespace gueepo {
 
-	unsigned char* LoadImage(const char* path, int& outImageWidth, int& outImageHeight, int& outComponentsPerPixel, int stride) {
+	unsigned char* g_LoadImage(const char* path, int& outImageWidth, int& outImageHeight, int& outComponentsPerPixel, int stride) {
 		unsigned char* data = stbi_load(path, &outImageWidth, &outImageHeight, &outComponentsPerPixel, stride);
 
 		if (data == nullptr) {
 			LOG_ERROR("couldn't load image: {0}", path);
 		}
 
+		LOG_INFO("image {0} was loaded", path);
 		return data;
 	}
 
-	bool FreeImage(void* data) {
+	bool g_FreeImage(void* data) {
 		if (data == nullptr) {
 			return false;
 		}
@@ -28,7 +29,7 @@ namespace gueepo {
 		return true;
 	}
 
-	bool SaveImage(const char* path, int width, int height, int comp, const void* data, int stride) {
+	bool g_SaveImage(const char* path, int width, int height, int comp, const void* data, int stride) {
 		int savingStatus = stbi_write_png(path, width, height, comp, data, stride);
 		
 		if (savingStatus == 0) {
