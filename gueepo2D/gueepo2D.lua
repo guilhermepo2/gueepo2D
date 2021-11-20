@@ -23,6 +23,7 @@ project "gueepo2D"
         "%{IncludeDirectories.rapidjson}",
         "%{IncludeDirectories.glad}",
         "%{IncludeDirectories.dearimgui}",
+        "%{IncludeDirectories.stb}",
         "%{SDL2_INCLUDE_DIR}"
     }
 
