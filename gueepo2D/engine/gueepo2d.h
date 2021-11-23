@@ -32,3 +32,5 @@
 #include "core/input/Input.h"
 
 #include "core/ImGuiLayer.h"
+
+#include "core/renderer/Shader.h"

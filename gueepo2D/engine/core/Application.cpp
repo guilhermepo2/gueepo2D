@@ -6,8 +6,10 @@
 #include "core/input/Input.h"
 #include "core/TimeStep.h"
 
+// #all temp
 #include <SDL.h>
 #include <glad/glad.h>
+#include "core/renderer/Shader.h"
 
 // For now locking this to run at 60fps
 const unsigned int FPS = 60;
@@ -57,42 +59,7 @@ namespace gueepo {
 		// build and compile our shader program
 		// ------------------------------------
 		// vertex shader
-		unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-		glCompileShader(vertexShader);
-		// check for shader compile errors
-		int success;
-		char infoLog[512];
-		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-			LOG_WARN("ERROR::SHADER::VERTEX::COMPILATION_FAILED: {0}\n", infoLog);
-		}
-		// fragment shader
-		unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-		glCompileShader(fragmentShader);
-		// check for shader compile errors
-		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-			LOG_WARN("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED: {0}\n", infoLog);
-		}
-		// link shaders
-		unsigned int shaderProgram = glCreateProgram();
-		glAttachShader(shaderProgram, vertexShader);
-		glAttachShader(shaderProgram, fragmentShader);
-		glLinkProgram(shaderProgram);
-		// check for linking errors
-		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-		if (!success) {
-			glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-			LOG_WARN("ERROR::SHADER::PROGRAM::LINKING_FAILED: {0}\n", infoLog);
-		}
-		glDeleteShader(vertexShader);
-		glDeleteShader(fragmentShader);
+		Shader* ourShader = new Shader(vertexShaderSource, fragmentShaderSource);
 
 		// set up vertex data (and buffer(s)) and configure vertex attributes
 		// ------------------------------------------------------------------
@@ -152,8 +119,7 @@ namespace gueepo {
 			}
 			m_ImGuiLayer->End();
 
-			
-			glUseProgram(shaderProgram);
+			ourShader->Bind();
 			glBindVertexArray(VAO);
 			// glDrawArrays(GL_TRIANGLES, 0, 3);
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
