@@ -137,12 +137,16 @@ namespace gueepo {
 				l->OnUpdate(DeltaTime);
 			}
 
+			glClearColor(0.1, 0.1, 0.1, 0.1);
+			glClear(GL_COLOR_BUFFER_BIT);
+
 			m_ImGuiLayer->Begin();
 			for (Layer* l : m_LayerStack) {
 				l->OnImGuiRender();
 			}
 			m_ImGuiLayer->End();
 
+			
 			glUseProgram(shaderProgram);
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 3);
