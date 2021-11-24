@@ -61,13 +61,7 @@ namespace gueepo {
 			"   FragColor = vec4(v_Position + 0.5, 1.0f);\n"
 			"}\n\0";
 
-		// build and compile our shader program
-		// ------------------------------------
-		// vertex shader
 		Shader* ourShader = new Shader(vertexShaderSource, fragmentShaderSource);
-
-		// set up vertex data (and buffer(s)) and configure vertex attributes
-		// ------------------------------------------------------------------
 		float vertices[] = {
 			-0.5f, -0.5f, 0.0f, // left  
 			 0.5f, -0.5f, 0.0f, // right 
@@ -80,14 +74,13 @@ namespace gueepo {
 		glBindVertexArray(VAO);
 
 		VertexBuffer* ourVertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
-
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 		
 		unsigned int indices[3] = { 0, 1, 2 };
 		// create buffer here
-		IndexBuffer* ourIndexBuffer = IndexBuffer::Create(indices, sizeof(indices));
+		IndexBuffer* ourIndexBuffer = IndexBuffer::Create(indices, 3);
 
 		LOG_INFO("application is running!");
 		while (m_bIsRunning) {
