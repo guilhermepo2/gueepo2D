@@ -22,11 +22,7 @@ public:
 		unreferenced(e);
 	}
 
-	void OnImGuiRender() {
-		ImGui::Begin("Test");
-		ImGui::Text("Hello World");
-		ImGui::End();
-	}
+	void OnImGuiRender() { }
 };
 
 // ================================================================================

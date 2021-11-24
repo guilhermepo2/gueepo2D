@@ -10,6 +10,8 @@
 #include <SDL.h>
 #include <glad/glad.h>
 #include "core/renderer/Shader.h"
+#include "core/renderer/IndexBuffer.h"
+#include "core/renderer/VertexBuffer.h"
 
 // For now locking this to run at 60fps
 const unsigned int FPS = 60;
@@ -45,15 +47,18 @@ namespace gueepo {
 
 		const char* vertexShaderSource = "#version 330 core\n"
 			"layout (location = 0) in vec3 aPos;\n"
+			"out vec3 v_Position;\n"
 			"void main()\n"
 			"{\n"
 			"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+			"	v_Position = aPos;\n"
 			"}\0";
 		const char* fragmentShaderSource = "#version 330 core\n"
 			"out vec4 FragColor;\n"
+			"in vec3 v_Position;\n"
 			"void main()\n"
 			"{\n"
-			"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+			"   FragColor = vec4(v_Position + 0.5, 1.0f);\n"
 			"}\n\0";
 
 		// build and compile our shader program
@@ -69,30 +74,20 @@ namespace gueepo {
 			 0.0f,  0.5f, 0.0f  // top   
 		};
 
-		unsigned int VBO, VAO, IBO;
+		unsigned int VAO;
 		glGenVertexArrays(1, &VAO);
-		glGenBuffers(1, &VBO);
 		// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 		glBindVertexArray(VAO);
 
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		VertexBuffer* ourVertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 		
 		unsigned int indices[3] = { 0, 1, 2 };
-		glGenBuffers(1, &IBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-		// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-		glBindVertexArray(0);
+		// create buffer here
+		IndexBuffer* ourIndexBuffer = IndexBuffer::Create(indices, sizeof(indices));
 
 		LOG_INFO("application is running!");
 		while (m_bIsRunning) {
