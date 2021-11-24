@@ -61,7 +61,7 @@ namespace gueepo {
 			"   FragColor = vec4(v_Position + 0.5, 1.0f);\n"
 			"}\n\0";
 
-		Shader* ourShader = new Shader(vertexShaderSource, fragmentShaderSource);
+		Shader* ourShader = Shader::Create(vertexShaderSource, fragmentShaderSource);
 		float vertices[] = {
 			-0.5f, -0.5f, 0.0f, // left  
 			 0.5f, -0.5f, 0.0f, // right 
@@ -110,7 +110,7 @@ namespace gueepo {
 			ourShader->Bind();
 			glBindVertexArray(VAO);
 			// glDrawArrays(GL_TRIANGLES, 0, 3);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, ourIndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			m_Window->Update();
 			// delaying until next frame so we can keep 60fps

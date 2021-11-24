@@ -4,16 +4,10 @@
 namespace gueepo {
 	class Shader {
 	public:
-		Shader(const std::string& vertexSource, const std::string& fragmentSource);
-		~Shader();
+		virtual ~Shader() {}
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 
-		void Bind() const;
-		void Unbind() const;
-
-	private:
-		uint32_t m_ShaderProgramID;
-		bool CompileShader(const char* shaderSource, unsigned int shaderType, unsigned int& outShader);
-		bool IsShaderCompiled(unsigned int shader);
-		bool IsShaderProgramValid();
+		static Shader* Create(const std::string& vertexSource, const std::string& fragmentSource);
 	};
 }
