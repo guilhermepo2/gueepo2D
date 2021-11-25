@@ -24,6 +24,9 @@
 
 #include "core/renderer/RendererAPI.h"
 #include "core/renderer/GraphicsContext.h"
+#include "core/renderer/VertexBuffer.h"
+#include "core/renderer/IndexBuffer.h"
+#include "core/renderer/Shader.h"
 
 #include "core/math/Vector2.h"
 #include "core/math/Vector3.h"
@@ -32,5 +35,3 @@
 #include "core/input/Input.h"
 
 #include "core/ImGuiLayer.h"
-
-#include "core/renderer/Shader.h"

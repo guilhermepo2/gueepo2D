@@ -12,12 +12,36 @@
 #include "core/renderer/Shader.h"
 #include "core/renderer/IndexBuffer.h"
 #include "core/renderer/VertexBuffer.h"
+#include "core/renderer/BufferLayout.h"
 
 // For now locking this to run at 60fps
 const unsigned int FPS = 60;
 const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
 
 namespace gueepo {
+
+	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type) {
+		switch (type) {
+		case ShaderDataType::Float:
+		case ShaderDataType::Float2:
+		case ShaderDataType::Float3:
+		case ShaderDataType::Float4:
+		case ShaderDataType::Mat3:
+		case ShaderDataType::Mat4:
+			return GL_FLOAT;
+		case ShaderDataType::Int:
+		case ShaderDataType::Int2:
+		case ShaderDataType::Int3:
+		case ShaderDataType::Int4:
+			return GL_INT;
+		case ShaderDataType::Bool:
+			return GL_BOOL;
+		case ShaderDataType::None:
+		default:
+			break;
+
+		}
+	}
 
 #define BIND_EVENT(x) std::bind(&x, this, std::placeholders::_1)
 
@@ -45,27 +69,34 @@ namespace gueepo {
 		InputSystem* inputSystem = InputSystem::s_Instance;
 		inputSystem->Initialize();
 
-		const char* vertexShaderSource = "#version 330 core\n"
-			"layout (location = 0) in vec3 aPos;\n"
-			"out vec3 v_Position;\n"
-			"void main()\n"
-			"{\n"
-			"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-			"	v_Position = aPos;\n"
-			"}\0";
+		const char* vertexShaderSource = R"(
+			# version 330 core
+			layout (location = 0) in vec3 aPos;
+			layout (location = 1) in vec4 a_Color;
+			out vec3 v_Position;
+			out vec4 v_Color;
+
+			void main()
+			{
+				gl_Position = vec4(aPos, 1.0);
+				v_Position = aPos;
+				v_Color = a_Color;
+			}
+		)";
 		const char* fragmentShaderSource = "#version 330 core\n"
 			"out vec4 FragColor;\n"
 			"in vec3 v_Position;\n"
+			"in vec4 v_Color;\n"
 			"void main()\n"
 			"{\n"
-			"   FragColor = vec4(v_Position + 0.5, 1.0f);\n"
+			"   FragColor = v_Color;\n"
 			"}\n\0";
 
 		Shader* ourShader = Shader::Create(vertexShaderSource, fragmentShaderSource);
 		float vertices[] = {
-			-0.5f, -0.5f, 0.0f, // left  
-			 0.5f, -0.5f, 0.0f, // right 
-			 0.0f,  0.5f, 0.0f  // top   
+			-0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f, 1.0f, // left  
+			 0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f, 1.0f, // right 
+			 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f, 1.0f // top   
 		};
 
 		unsigned int VAO;
@@ -74,12 +105,30 @@ namespace gueepo {
 		glBindVertexArray(VAO);
 
 		VertexBuffer* ourVertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
+		{
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "a_Position"},
+				{ ShaderDataType::Float4, "a_Color"},
+			};
+			ourVertexBuffer->SetLayout(layout);
+		}
+
+		uint32_t index = 0;
+		for (const auto& element : ourVertexBuffer->GetLayout()) {
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(
+				index, 
+				element.GetCount(), 
+				ShaderDataTypeToOpenGLBaseType(element.Type), 
+				element.Normalized ? GL_TRUE : GL_FALSE, 
+				ourVertexBuffer->GetLayout().GetStride(),
+				(const void*)element.Offset
+			);
+			index++;
+		}
 		
 		unsigned int indices[3] = { 0, 1, 2 };
-		// create buffer here
 		IndexBuffer* ourIndexBuffer = IndexBuffer::Create(indices, 3);
 
 		LOG_INFO("application is running!");
