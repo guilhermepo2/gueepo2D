@@ -135,7 +135,6 @@ namespace gueepo {
 		assert(m_Window, "unable to create window: {0}", SDL_GetError());
 
 		// #todo: set this somewhere else?
-		RendererAPI::SetAPI(RendererAPI::API::OpenGL);
 		m_GraphicsContext = GraphicsContext::Create(m_Window);
 		m_GraphicsContext->Init();
 

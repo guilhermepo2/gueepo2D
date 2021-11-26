@@ -12,6 +12,7 @@ namespace gueepo {
 		virtual void OnDetach() {}
 		virtual void OnUpdate(float DeltaTime) { unreferenced(DeltaTime); }
 		virtual void OnInput(const InputState& currentInputState) { unreferenced(currentInputState); }
+		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& e) { unreferenced(e); }
 

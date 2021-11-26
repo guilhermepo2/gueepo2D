@@ -1,6 +1,10 @@
 #pragma once
+#include "core/math/Vector3.h"
 
 namespace gueepo {
+
+	class VertexArray;
+
 	class RendererAPI {
 	public:
 
@@ -12,8 +16,14 @@ namespace gueepo {
 			Metal = 4
 		};
 
-		static API GetAPI() { return s_API; }
-		static void SetAPI(API _API) { s_API = _API; }
+	public:
+		virtual void SetClearColor(const math::Vector3& color) = 0;
+		virtual void Clear() = 0;
+
+		virtual void DrawIndexed(VertexArray* vertexArray) = 0;
+
+		inline static API GetAPI() { return s_API; }
+
 	private:
 		static API s_API;
 	};

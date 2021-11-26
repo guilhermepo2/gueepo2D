@@ -95,11 +95,3 @@ namespace gueepo::math {
 		static const Vector3 Forward;
 	};
 }
-
-gueepo::math::Vector3 gueepo::math::operator*(const float& lhs, const gueepo::math::Vector3& rhs) {
-	return gueepo::math::Vector3(
-		lhs * rhs.x,
-		lhs * rhs.y,
-		lhs * rhs.z
-	);
-}
