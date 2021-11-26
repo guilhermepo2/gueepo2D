@@ -13,35 +13,13 @@
 #include "core/renderer/IndexBuffer.h"
 #include "core/renderer/VertexBuffer.h"
 #include "core/renderer/BufferLayout.h"
+#include "core/renderer/VertexArray.h"
 
 // For now locking this to run at 60fps
 const unsigned int FPS = 60;
 const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
 
 namespace gueepo {
-
-	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type) {
-		switch (type) {
-		case ShaderDataType::Float:
-		case ShaderDataType::Float2:
-		case ShaderDataType::Float3:
-		case ShaderDataType::Float4:
-		case ShaderDataType::Mat3:
-		case ShaderDataType::Mat4:
-			return GL_FLOAT;
-		case ShaderDataType::Int:
-		case ShaderDataType::Int2:
-		case ShaderDataType::Int3:
-		case ShaderDataType::Int4:
-			return GL_INT;
-		case ShaderDataType::Bool:
-			return GL_BOOL;
-		case ShaderDataType::None:
-		default:
-			break;
-
-		}
-	}
 
 #define BIND_EVENT(x) std::bind(&x, this, std::placeholders::_1)
 
@@ -92,6 +70,23 @@ namespace gueepo {
 			"   FragColor = v_Color;\n"
 			"}\n\0";
 
+		const char* sq_vertexShaderSource = R"(
+			# version 330 core
+			layout (location = 0) in vec3 aPos;
+			out vec3 v_Position;
+
+			void main()
+			{
+				gl_Position = vec4(aPos, 1.0);
+			}
+		)";
+		const char* sq_fragmentShaderSource = "#version 330 core\n"
+			"out vec4 FragColor;\n"
+			"void main()\n"
+			"{\n"
+			"   FragColor = vec4(0.2, 0.3, 0.8, 1.0);\n"
+			"}\n\0";
+
 		Shader* ourShader = Shader::Create(vertexShaderSource, fragmentShaderSource);
 		float vertices[] = {
 			-0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f, 1.0f, // left  
@@ -99,11 +94,7 @@ namespace gueepo {
 			 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f, 1.0f // top   
 		};
 
-		unsigned int VAO;
-		glGenVertexArrays(1, &VAO);
-		// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-		glBindVertexArray(VAO);
-
+		VertexArray* ourVertexArray = VertexArray::Create();
 		VertexBuffer* ourVertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
 
 		{
@@ -113,23 +104,36 @@ namespace gueepo {
 			};
 			ourVertexBuffer->SetLayout(layout);
 		}
+		ourVertexArray->AddVertexBuffer(ourVertexBuffer);
 
-		uint32_t index = 0;
-		for (const auto& element : ourVertexBuffer->GetLayout()) {
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(
-				index, 
-				element.GetCount(), 
-				ShaderDataTypeToOpenGLBaseType(element.Type), 
-				element.Normalized ? GL_TRUE : GL_FALSE, 
-				ourVertexBuffer->GetLayout().GetStride(),
-				(const void*)element.Offset
-			);
-			index++;
-		}
-		
 		unsigned int indices[3] = { 0, 1, 2 };
 		IndexBuffer* ourIndexBuffer = IndexBuffer::Create(indices, 3);
+		ourVertexArray->SetIndexBuffer(ourIndexBuffer);
+		ourVertexArray->Unbind(); 
+
+		Shader* sq_Shader = Shader::Create(sq_vertexShaderSource, sq_fragmentShaderSource);
+		VertexArray* squareVA = VertexArray::Create();
+		float squareVertices[3 * 4] = {
+			-0.75f, -0.75f, 0.0f,
+			 0.75f, -0.75f, 0.0f,
+			 0.75f,  0.75f, 0.0f,
+			 -0.75f,  0.75f, 0.0f 
+		};
+
+		VertexBuffer* squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
+
+		{
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "a_Position"},
+			};
+			squareVB->SetLayout(layout);
+		}
+		squareVA->AddVertexBuffer(squareVB);
+
+		unsigned int sq_indices[6] = { 0, 1, 2, 2, 3, 0 };
+		IndexBuffer* sq_IndexBuffer = IndexBuffer::Create(sq_indices, 6);
+		squareVA->SetIndexBuffer(sq_IndexBuffer);
+		squareVA->Unbind();
 
 		LOG_INFO("application is running!");
 		while (m_bIsRunning) {
@@ -156,10 +160,15 @@ namespace gueepo {
 			}
 			m_ImGuiLayer->End();
 
+			sq_Shader->Bind();
+			squareVA->Bind();
+			glDrawElements(GL_TRIANGLES, squareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
 			ourShader->Bind();
-			glBindVertexArray(VAO);
-			// glDrawArrays(GL_TRIANGLES, 0, 3);
-			glDrawElements(GL_TRIANGLES, ourIndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			ourVertexArray->Bind();
+			glDrawElements(GL_TRIANGLES, ourVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
+			
 
 			m_Window->Update();
 			// delaying until next frame so we can keep 60fps
