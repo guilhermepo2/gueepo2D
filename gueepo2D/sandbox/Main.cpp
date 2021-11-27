@@ -47,6 +47,10 @@ gueepo::VertexArray* triangleVA = nullptr;
 gueepo::VertexArray* squareVA = nullptr;
 
 // ================================================================================
+// Test Functions
+void TestLoadSaveImage();
+
+// ================================================================================
 // example of user defined layers
 // ================================================================================
 class ExampleLayer : public gueepo::Layer {
@@ -148,6 +152,7 @@ public:
 	DummyApp(const std::string& _Title, unsigned int _Width, unsigned int _Height) 
 		: Application(_Title, _Width, _Height) {
 		PushLayer(new ExampleLayer());
+		TestLoadSaveImage();
 	}
 
 	~DummyApp() { LOG_INFO("deleting dummy app"); }
@@ -157,5 +162,20 @@ public:
 // entry point
 // ================================================================================
 gueepo::Application* gueepo::CreateApplication() {
-	return new DummyApp("dummy app!", 640, 360);
+	return new DummyApp("dummy app!", 1024, 768);
+}
+
+// ================================================================================
+// ================================================================================
+//	TEST FUNCTIONS
+// ================================================================================
+// ================================================================================
+
+void TestLoadSaveImage() {
+	int w;
+	int h;
+	int comp;
+	unsigned char* image = gueepo::g_LoadImage("assets/whataweek.png", w, h, comp);
+	gueepo::g_SaveImage("assets/whataweek2.png", w, h, comp, image);
+	gueepo::g_FreeImage(image);
 }

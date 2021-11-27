@@ -22,6 +22,7 @@ IncludeDirectories["spdlog"] = "%{wks.location}/thirdparty/spdlog-1.9.2/include"
 IncludeDirectories["rapidjson"] = "%{wks.location}/thirdparty/rapidjson-1.1.0/include"
 IncludeDirectories["glad"] = "%{wks.location}/thirdparty/glad/include"
 IncludeDirectories["dearimgui"] = "%{wks.location}/thirdparty/imgui-docking"
+IncludeDirectories["stb"] = "%{wks.location}/thirdparty/stb"
 LibDir = {}
 
 group "Dependencies"
