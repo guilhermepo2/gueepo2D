@@ -9,7 +9,8 @@
 
 namespace gueepo {
 
-	unsigned char* g_LoadImage(const char* path, int& outImageWidth, int& outImageHeight, int& outComponentsPerPixel, int stride) {
+	unsigned char* g_LoadImage(const char* path, int& outImageWidth, int& outImageHeight, int& outComponentsPerPixel, int stride, bool flip) {
+		stbi_set_flip_vertically_on_load(flip ? 1 : 0);
 		unsigned char* data = stbi_load(path, &outImageWidth, &outImageHeight, &outComponentsPerPixel, stride);
 
 		if (data == nullptr) {

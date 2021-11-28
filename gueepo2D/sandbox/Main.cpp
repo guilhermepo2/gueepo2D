@@ -27,24 +27,30 @@ const char* fragmentShaderSource = "#version 330 core\n"
 const char* sq_vertexShaderSource = R"(
 			# version 330 core
 			layout (location = 0) in vec3 aPos;
+			layout (location = 1) in vec2 aTexCoord;
 			out vec3 v_Position;
+			out vec2 v_TexCoord;
 
 			void main()
 			{
 				gl_Position = vec4(aPos, 1.0);
+				v_TexCoord = aTexCoord;
 			}
 		)";
 const char* sq_fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"in vec2 v_TexCoord;\n"
+"uniform sampler2D textureSampler;"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(0.2, 0.3, 0.8, 1.0);\n"
+"   FragColor = texture(textureSampler, v_TexCoord);\n"
 "}\n\0";
 
 gueepo::Shader* triangleShader = nullptr;
 gueepo::Shader* squareShader = nullptr;
 gueepo::VertexArray* triangleVA = nullptr;
 gueepo::VertexArray* squareVA = nullptr;
+gueepo::Texture* duckTexture = nullptr;
 
 // ================================================================================
 // Test Functions
@@ -60,6 +66,7 @@ public:
 	void OnAttach() override {
 		triangleShader = gueepo::Shader::Create(vertexShaderSource, fragmentShaderSource);
 		squareShader = gueepo::Shader::Create(sq_vertexShaderSource, sq_fragmentShaderSource);
+		duckTexture = gueepo::Texture::Create("./assets/duck_brown.png");
 
 		float vertices[] = {
 			-0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f, 1.0f,
@@ -67,11 +74,11 @@ public:
 			 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f, 1.0f
 		};
 
-		float squareVertices[3 * 4] = {
-			-0.75f, -0.75f, 0.0f,
-			 0.75f, -0.75f, 0.0f,
-			 0.75f,  0.75f, 0.0f,
-			 -0.75f,  0.75f, 0.0f
+		float squareVertices[5 * 4] = {
+			 -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			  0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 
+			 -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		unsigned int indices[3] = { 0, 1, 2 };
@@ -106,6 +113,7 @@ public:
 		{
 			gueepo::BufferLayout layout = {
 				{ gueepo::ShaderDataType::Float3, "a_Position"},
+				{ gueepo::ShaderDataType::Float2, "a_TexCoord"}
 			};
 			squareVB->SetLayout(layout);
 		}
@@ -134,10 +142,11 @@ public:
 	}
 
 	virtual void OnRender() {
+		duckTexture->Bind();
 		squareShader->Bind();
 		gueepo::Renderer::Submit(squareVA);
-		triangleShader->Bind();
-		gueepo::Renderer::Submit(triangleVA);
+		// triangleShader->Bind();
+		// gueepo::Renderer::Submit(triangleVA);
 	}
 
 	void OnImGuiRender() { }
@@ -152,7 +161,6 @@ public:
 	DummyApp(const std::string& _Title, unsigned int _Width, unsigned int _Height) 
 		: Application(_Title, _Width, _Height) {
 		PushLayer(new ExampleLayer());
-		TestLoadSaveImage();
 	}
 
 	~DummyApp() { LOG_INFO("deleting dummy app"); }
@@ -163,19 +171,4 @@ public:
 // ================================================================================
 gueepo::Application* gueepo::CreateApplication() {
 	return new DummyApp("dummy app!", 1024, 768);
-}
-
-// ================================================================================
-// ================================================================================
-//	TEST FUNCTIONS
-// ================================================================================
-// ================================================================================
-
-void TestLoadSaveImage() {
-	int w;
-	int h;
-	int comp;
-	unsigned char* image = gueepo::g_LoadImage("assets/whataweek.png", w, h, comp);
-	gueepo::g_SaveImage("assets/whataweek2.png", w, h, comp, image);
-	gueepo::g_FreeImage(image);
 }

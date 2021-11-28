@@ -30,6 +30,7 @@
 #include "core/renderer/VertexBuffer.h"
 #include "core/renderer/IndexBuffer.h"
 #include "core/renderer/Shader.h"
+#include "core/renderer/Texture.h"
 
 #include "core/math/Vector2.h"
 #include "core/math/Vector3.h"
