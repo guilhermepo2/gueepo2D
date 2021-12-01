@@ -1,29 +1,6 @@
 #include <gueepo2d.h>
 #include <imgui.h>
 
-const char* vertexShaderSource = R"(
-			# version 330 core
-			layout (location = 0) in vec3 aPos;
-			layout (location = 1) in vec4 a_Color;
-			out vec3 v_Position;
-			out vec4 v_Color;
-
-			void main()
-			{
-				gl_Position = vec4(aPos, 1.0);
-				v_Position = aPos;
-				v_Color = a_Color;
-			}
-		)";
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"in vec3 v_Position;\n"
-"in vec4 v_Color;\n"
-"void main()\n"
-"{\n"
-"   FragColor = v_Color;\n"
-"}\n\0";
-
 const char* sq_vertexShaderSource = R"(
 			# version 330 core
 			layout (location = 0) in vec3 aPos;
@@ -49,9 +26,7 @@ const char* sq_fragmentShaderSource = "#version 330 core\n"
 "   FragColor = texture(textureSampler, v_TexCoord);\n"
 "}\n\0";
 
-gueepo::Shader* triangleShader = nullptr;
 gueepo::Shader* squareShader = nullptr;
-gueepo::VertexArray* triangleVA = nullptr;
 gueepo::VertexArray* squareVA = nullptr;
 gueepo::Texture* duckTexture = nullptr;
 gueepo::OrtographicCamera* cam;
@@ -64,7 +39,6 @@ public:
 	ExampleLayer() : Layer("MyLayer") {}
 
 	void OnAttach() override {
-		triangleShader = gueepo::Shader::Create(vertexShaderSource, fragmentShaderSource);
 		squareShader = gueepo::Shader::Create(sq_vertexShaderSource, sq_fragmentShaderSource);
 		duckTexture = gueepo::Texture::Create("./assets/duck_brown.png");
 
@@ -83,25 +57,6 @@ public:
 
 		unsigned int indices[3] = { 0, 1, 2 };
 		unsigned int sq_indices[6] = { 0, 1, 2, 2, 3, 0 };
-
-		// =================================================================
-		// triangle
-		// =================================================================
-		triangleVA = gueepo::VertexArray::Create();
-		gueepo::VertexBuffer* triangleVB = gueepo::VertexBuffer::Create(vertices, sizeof(vertices));
-		{
-			gueepo::BufferLayout layout = {
-				{ gueepo::ShaderDataType::Float3, "a_Position"},
-				{ gueepo::ShaderDataType::Float4, "a_Color"},
-			};
-			triangleVB->SetLayout(layout);
-		}
-		triangleVA->AddVertexBuffer(triangleVB);
-
-		
-		gueepo::IndexBuffer* triangleIB = gueepo::IndexBuffer::Create(indices, 3);
-		triangleVA->SetIndexBuffer(triangleIB);
-		triangleVA->Unbind();
 
 		// =================================================================
 		// square
@@ -145,11 +100,7 @@ public:
 		gueepo::Renderer::BeginScene(*cam);
 
 		duckTexture->Bind();
-		squareShader->Bind();
-		squareShader->SetMat4("u_ViewProjection", cam->GetViewProjectionMatrix());
-		gueepo::Renderer::Submit(squareVA);
-		// triangleShader->Bind();
-		// gueepo::Renderer::Submit(triangleVA);
+		gueepo::Renderer::Submit(squareVA, squareShader);
 
 		gueepo::Renderer::EndScene();
 	}
@@ -166,7 +117,9 @@ public:
 	DummyApp(const std::string& _Title, unsigned int _Width, unsigned int _Height) 
 		: Application(_Title, _Width, _Height) {
 		PushLayer(new ExampleLayer());
+
 		cam = new gueepo::OrtographicCamera(2, 2);
+		cam->SetBackgroundColor(0.5f, 0.5f, 0.5f, 1.0f);
 	}
 
 	~DummyApp() { LOG_INFO("deleting dummy app"); }

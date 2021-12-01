@@ -16,6 +16,14 @@ namespace gueepo {
 		const math::Vector3& GetPosition() const { return m_cameraPosition; }
 		void SetPosition(const math::Vector3 position) { m_cameraPosition = position; RecalculateViewMatrix(); }
 
+		const Color& GetBackGroundColor() const { return m_cameraBackgroundColor; }
+		void SetBackgroundColor(float r, float g, float b, float a) {
+			m_cameraBackgroundColor.rgba[0] = r;
+			m_cameraBackgroundColor.rgba[1] = g;
+			m_cameraBackgroundColor.rgba[2] = b;
+			m_cameraBackgroundColor.rgba[3] = a;
+		}
+
 		const math::Matrix4 GetView() const { return m_cameraView; }
 		const math::Matrix4 GetProjectionMatrix() const { return m_cameraProjection; }
 		const math::Matrix4 GetViewProjectionMatrix() const { return m_cameraViewProjection; }

@@ -58,8 +58,8 @@ namespace gueepo {
 			}
 
 			// #todo: have a way to set the color to be cleared (maybe put it on the camera)
-			RenderCommand::SetClearColor(gueepo::math::Vector3(0.1f, 0.1f, 0.1f));
-			RenderCommand::Clear();
+			// RenderCommand::SetClearColor(gueepo::math::Vector3(0.1f, 0.1f, 0.1f));
+			// RenderCommand::Clear();
 			for (Layer* l : m_LayerStack) {
 				// Renderer::BeginScene(cam);
 				l->OnRender();
