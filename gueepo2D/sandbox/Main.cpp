@@ -28,12 +28,15 @@ const char* sq_vertexShaderSource = R"(
 			# version 330 core
 			layout (location = 0) in vec3 aPos;
 			layout (location = 1) in vec2 aTexCoord;
+
+			uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 			out vec2 v_TexCoord;
 
 			void main()
 			{
-				gl_Position = vec4(aPos, 1.0);
+				gl_Position = u_ViewProjection * vec4(aPos, 1.0);
 				v_TexCoord = aTexCoord;
 			}
 		)";
@@ -51,10 +54,7 @@ gueepo::Shader* squareShader = nullptr;
 gueepo::VertexArray* triangleVA = nullptr;
 gueepo::VertexArray* squareVA = nullptr;
 gueepo::Texture* duckTexture = nullptr;
-
-// ================================================================================
-// Test Functions
-void TestLoadSaveImage();
+gueepo::OrtographicCamera* cam;
 
 // ================================================================================
 // example of user defined layers
@@ -142,11 +142,16 @@ public:
 	}
 
 	virtual void OnRender() {
+		gueepo::Renderer::BeginScene(*cam);
+
 		duckTexture->Bind();
 		squareShader->Bind();
+		squareShader->SetMat4("u_ViewProjection", cam->GetViewProjectionMatrix());
 		gueepo::Renderer::Submit(squareVA);
 		// triangleShader->Bind();
 		// gueepo::Renderer::Submit(triangleVA);
+
+		gueepo::Renderer::EndScene();
 	}
 
 	void OnImGuiRender() { }
@@ -161,6 +166,7 @@ public:
 	DummyApp(const std::string& _Title, unsigned int _Width, unsigned int _Height) 
 		: Application(_Title, _Width, _Height) {
 		PushLayer(new ExampleLayer());
+		cam = new gueepo::OrtographicCamera(2, 2);
 	}
 
 	~DummyApp() { LOG_INFO("deleting dummy app"); }
