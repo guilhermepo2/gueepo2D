@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector3.h"
 
 namespace gueepo::math {
 	class Matrix4 {
@@ -187,6 +188,11 @@ namespace gueepo::math {
 
 		// #todo: Matrix4 GetInverse()
 		// #todo: transform operations (translate, rotate, scale)
+
+		// from Mathematics for 3D Game Programming and Computer Graphics
+		static Matrix4 CreateOrtographicProjection(float l, float r, float b, float t, float zFar = -10.0f, float zNear = 10.0f);
+		static Matrix4 CreateTranslation(const Vector3& translation);
+		static Matrix4 CreateInverse(const Matrix4& other);
 
 		static const Matrix4 m4Identity;
 	};

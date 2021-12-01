@@ -9,6 +9,7 @@ namespace gueepo {
 
 		void Bind() const;
 		void Unbind() const;
+		void SetMat4(const std::string& name, math::Matrix4 mat) const;
 
 	private:
 		uint32_t m_ShaderProgramID;

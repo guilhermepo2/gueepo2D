@@ -1,6 +1,7 @@
 #include "gueepo2Dpch.h"
 #include "OpenGLShader.h"
 #include <glad/glad.h>
+#include "core/math/Matrix4.h"
 
 namespace gueepo {
 
@@ -30,6 +31,15 @@ namespace gueepo {
 
 	void OpenGLShader::Unbind() const {
 		glUseProgram(0);
+	}
+
+	void OpenGLShader::SetMat4(const std::string& name, math::Matrix4 mat) const {
+		glUniformMatrix4fv(
+			glGetUniformLocation(m_ShaderProgramID, name.c_str()),
+			1,
+			GL_FALSE,
+			mat.GetValueData()
+		);
 	}
 
 	bool OpenGLShader::CompileShader(const char* shaderSource, unsigned int shaderType, unsigned int& outShader) {

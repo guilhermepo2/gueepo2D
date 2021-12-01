@@ -31,6 +31,8 @@
 #include "core/renderer/IndexBuffer.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/Texture.h"
+#include "core/renderer/Color.h"
+#include "core/renderer/OrtographicCamera.h"
 
 #include "core/math/Vector2.h"
 #include "core/math/Vector3.h"

@@ -34,6 +34,7 @@ namespace gueepo {
 	Application::~Application() {}
 
 	void Application::Run() {
+
 		m_bIsRunning = true;
 		int TicksLastFrame = 0;
 		
@@ -60,9 +61,9 @@ namespace gueepo {
 			RenderCommand::SetClearColor(gueepo::math::Vector3(0.1f, 0.1f, 0.1f));
 			RenderCommand::Clear();
 			for (Layer* l : m_LayerStack) {
-				Renderer::BeginScene();
+				// Renderer::BeginScene(cam);
 				l->OnRender();
-				Renderer::EndScene();
+				// Renderer::EndScene();
 			}
 
 			m_ImGuiLayer->Begin();
