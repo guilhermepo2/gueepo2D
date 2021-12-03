@@ -12,11 +12,10 @@ namespace gueepo {
 		m_SceneData->ViewProjection = sceneCamera.GetViewProjectionMatrix();
 
 		RenderCommand::SetClearColor(
-			math::Vector3(
-				sceneCamera.GetBackGroundColor().rgba[0],
-				sceneCamera.GetBackGroundColor().rgba[1],
-				sceneCamera.GetBackGroundColor().rgba[2]
-				)
+			sceneCamera.GetBackGroundColor().rgba[0],
+			sceneCamera.GetBackGroundColor().rgba[1],
+			sceneCamera.GetBackGroundColor().rgba[2],
+			sceneCamera.GetBackGroundColor().rgba[3]
 		);
 		RenderCommand::Clear();
 	}

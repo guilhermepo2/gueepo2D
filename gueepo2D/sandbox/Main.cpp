@@ -30,6 +30,7 @@ gueepo::Shader* squareShader = nullptr;
 gueepo::VertexArray* squareVA = nullptr;
 gueepo::Texture* duckTexture = nullptr;
 gueepo::OrtographicCamera* cam;
+float backgroundColor[4];
 
 // ================================================================================
 // example of user defined layers
@@ -97,6 +98,7 @@ public:
 	}
 
 	virtual void OnRender() {
+		cam->SetBackgroundColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], backgroundColor[3]);
 		gueepo::Renderer::BeginScene(*cam);
 
 		duckTexture->Bind();
@@ -105,7 +107,11 @@ public:
 		gueepo::Renderer::EndScene();
 	}
 
-	void OnImGuiRender() { }
+	void OnImGuiRender() { 
+		ImGui::Begin("color");
+		ImGui::ColorEdit4("clear color", backgroundColor);
+		ImGui::End();
+	}
 };
 
 // ================================================================================
@@ -119,7 +125,7 @@ public:
 		PushLayer(new ExampleLayer());
 
 		cam = new gueepo::OrtographicCamera(2, 2);
-		cam->SetBackgroundColor(0.5f, 0.5f, 0.5f, 1.0f);
+		cam->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
 	}
 
 	~DummyApp() { LOG_INFO("deleting dummy app"); }
