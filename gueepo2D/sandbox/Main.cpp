@@ -40,6 +40,27 @@ float scale = 16.0f;
 float objScale = 1.0f;
 float rotation;
 
+class Transform {
+public:
+	gueepo::math::Vector2 position;
+	float rotation;
+	gueepo::math::Vector2 scale;
+
+	Transform() {
+		position = gueepo::math::Vector2(0.0f, 0.0f);
+		rotation = 0.0f;
+		scale = gueepo::math::Vector2(1.0f, 1.0f);
+	}
+
+	gueepo::math::Matrix4 GetTransformMatrix() {
+		return gueepo::math::Matrix4::CreateScale(scale)
+			* gueepo::math::Matrix4::CreateRotation(rotation * gueepo::math::DEG_TO_RAD)
+			* gueepo::math::Matrix4::CreateTranslation(position);
+	}
+};
+
+Transform duckTransform;
+
 // ================================================================================
 // example of user defined layers
 // ================================================================================
@@ -93,6 +114,12 @@ public:
 
 	void OnUpdate(float DeltaTime) override {
 		unreferenced(DeltaTime);
+
+		duckTransform.position.x = xPos;
+		duckTransform.position.y = yPos;
+		duckTransform.rotation = rotation;
+		duckTransform.scale.x = objScale;
+		duckTransform.scale.y = objScale;
 	}
 
 	void OnInput(const gueepo::InputState& currentInputState) {
@@ -110,11 +137,8 @@ public:
 		gueepo::Renderer::BeginScene(*cam);
 
 		duckTexture->Bind();
-		gueepo::math::Matrix4 textureScale = gueepo::math::Matrix4::CreateScale(gueepo::math::Vector3(scale, scale, 0.0f));
-		gueepo::math::Matrix4 translationMatrix = gueepo::math::Matrix4::CreateTranslation(gueepo::math::Vector3(xPos, yPos, 0.0f));
-		gueepo::math::Matrix4 rotationMatrix = gueepo::math::Matrix4::CreateRotation(rotation * gueepo::math::DEG_TO_RAD);
-		gueepo::math::Matrix4 objectScale = gueepo::math::Matrix4::CreateScale(gueepo::math::Vector3(objScale, objScale, 0.0f));
-		transform = textureScale * (objectScale * rotationMatrix * translationMatrix);
+		gueepo::math::Matrix4 textureScale = gueepo::math::Matrix4::CreateScale(gueepo::math::Vector2(scale, scale));
+		transform = textureScale * (duckTransform.GetTransformMatrix());
 		squareShader->SetMat4("u_Transform", transform);
 		gueepo::Renderer::Submit(squareVA, squareShader);
 

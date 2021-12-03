@@ -34,6 +34,9 @@ namespace gueepo::math {
 		return translationMatrix;
 	}
 
+	gueepo::math::Matrix4 Matrix4::CreateTranslation(const Vector2& translation) {
+		return gueepo::math::Matrix4::CreateTranslation(Vector3(translation.x, translation.y, 0.0f));
+	}
 
 	gueepo::math::Matrix4 Matrix4::CreateScale(const Vector3& scale) {
 		Matrix4 scaleMatrix;
@@ -42,6 +45,10 @@ namespace gueepo::math {
 		scaleMatrix.mat[2][3] = scale.z;
 		scaleMatrix.mat[3][3] = 1.0f;
 		return scaleMatrix;
+	}
+
+	gueepo::math::Matrix4 Matrix4::CreateScale(const Vector2& scale) {
+		return Matrix4::CreateScale(Vector3(scale.x, scale.y, 0.0f));
 	}
 
 	gueepo::math::Matrix4 Matrix4::CreateRotation(float rotation) {
