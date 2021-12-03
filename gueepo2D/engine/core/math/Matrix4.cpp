@@ -1,5 +1,6 @@
 #include "gueepo2Dpch.h"
 #include "Matrix4.h"
+#include "Math.h"
 
 namespace gueepo::math {
 	static float _internal_m4Identity[4][4] = {
@@ -31,6 +32,25 @@ namespace gueepo::math {
 		translationMatrix.mat[3][1] = translation.y;
 		translationMatrix.mat[3][2] = translation.z;
 		return translationMatrix;
+	}
+
+
+	gueepo::math::Matrix4 Matrix4::CreateScale(const Vector3& scale) {
+		Matrix4 scaleMatrix;
+		scaleMatrix.mat[0][0] = scale.x;
+		scaleMatrix.mat[1][1] = scale.y;
+		scaleMatrix.mat[2][3] = scale.z;
+		scaleMatrix.mat[3][3] = 1.0f;
+		return scaleMatrix;
+	}
+
+	gueepo::math::Matrix4 Matrix4::CreateRotation(float rotation) {
+		Matrix4 rotationMatrix;
+		rotationMatrix.mat[0][0] = cosf(rotation);
+		rotationMatrix.mat[0][1] = sinf(rotation);
+		rotationMatrix.mat[1][0] = -sinf(rotation);
+		rotationMatrix.mat[1][1] = cosf(rotation);
+		return rotationMatrix;
 	}
 
 	// from game programming in cpp book

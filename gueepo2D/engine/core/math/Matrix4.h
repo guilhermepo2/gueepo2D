@@ -192,6 +192,8 @@ namespace gueepo::math {
 		// from Mathematics for 3D Game Programming and Computer Graphics
 		static Matrix4 CreateOrtographicProjection(float l, float r, float b, float t, float zFar = -10.0f, float zNear = 10.0f);
 		static Matrix4 CreateTranslation(const Vector3& translation);
+		static Matrix4 CreateScale(const Vector3& scale);
+		static Matrix4 CreateRotation(float rotation);
 		static Matrix4 CreateInverse(const Matrix4& other);
 
 		static const Matrix4 m4Identity;

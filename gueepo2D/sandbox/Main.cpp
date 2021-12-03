@@ -7,13 +7,14 @@ const char* sq_vertexShaderSource = R"(
 			layout (location = 1) in vec2 aTexCoord;
 
 			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
 
 			out vec3 v_Position;
 			out vec2 v_TexCoord;
 
 			void main()
 			{
-				gl_Position = u_ViewProjection * vec4(aPos, 1.0);
+				gl_Position = u_ViewProjection * u_Transform * vec4(aPos, 1.0);
 				v_TexCoord = aTexCoord;
 			}
 		)";
@@ -31,6 +32,13 @@ gueepo::VertexArray* squareVA = nullptr;
 gueepo::Texture* duckTexture = nullptr;
 gueepo::OrtographicCamera* cam;
 float backgroundColor[4];
+
+gueepo::math::Matrix4 transform;
+float xPos;
+float yPos;
+float scale = 16.0f;
+float objScale = 1.0f;
+float rotation;
 
 // ================================================================================
 // example of user defined layers
@@ -102,6 +110,12 @@ public:
 		gueepo::Renderer::BeginScene(*cam);
 
 		duckTexture->Bind();
+		gueepo::math::Matrix4 textureScale = gueepo::math::Matrix4::CreateScale(gueepo::math::Vector3(scale, scale, 0.0f));
+		gueepo::math::Matrix4 translationMatrix = gueepo::math::Matrix4::CreateTranslation(gueepo::math::Vector3(xPos, yPos, 0.0f));
+		gueepo::math::Matrix4 rotationMatrix = gueepo::math::Matrix4::CreateRotation(rotation * gueepo::math::DEG_TO_RAD);
+		gueepo::math::Matrix4 objectScale = gueepo::math::Matrix4::CreateScale(gueepo::math::Vector3(objScale, objScale, 0.0f));
+		transform = textureScale * (objectScale * rotationMatrix * translationMatrix);
+		squareShader->SetMat4("u_Transform", transform);
 		gueepo::Renderer::Submit(squareVA, squareShader);
 
 		gueepo::Renderer::EndScene();
@@ -110,6 +124,11 @@ public:
 	void OnImGuiRender() { 
 		ImGui::Begin("color");
 		ImGui::ColorEdit4("clear color", backgroundColor);
+		ImGui::DragFloat("xPos", &xPos, 1.0f, -500.0f, 500.0f);
+		ImGui::DragFloat("yPos", &yPos, 1.0f, -500.0f, 500.0f);
+		ImGui::DragFloat("tex scale", &scale, 1.0f, 16.0f, 256.0f);
+		ImGui::DragFloat("obj scale", &objScale, 1.0f, 1.0f, 5.0f);
+		ImGui::DragFloat("rotation", &rotation, 1.0f, 0.0f, 360.0f);
 		ImGui::End();
 	}
 };
@@ -124,7 +143,7 @@ public:
 		: Application(_Title, _Width, _Height) {
 		PushLayer(new ExampleLayer());
 
-		cam = new gueepo::OrtographicCamera(2, 2);
+		cam = new gueepo::OrtographicCamera(1024, 768);
 		cam->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
 	}
 
