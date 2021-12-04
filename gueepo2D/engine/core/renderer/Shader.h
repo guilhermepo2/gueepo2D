@@ -12,5 +12,6 @@ namespace gueepo {
 		virtual void SetMat4(const std::string& name, math::Matrix4 mat) const = 0;
 
 		static Shader* Create(const std::string& vertexSource, const std::string& fragmentSource);
+		static Shader* CreateFromFile(const std::string& vertexFile, const std::string& fragmentFile);
 	};
 }

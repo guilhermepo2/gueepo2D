@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "RendererAPI.h"
 #include "platform/OpenGL/OpenGLShader.h"
+#include "core/filesystem/File.h"
 
 namespace gueepo {
 	Shader* Shader::Create(const std::string& vertexSource, const std::string& fragmentSource) {
@@ -19,4 +20,22 @@ namespace gueepo {
 			break;
 		}
 	}
+
+	gueepo::Shader* Shader::CreateFromFile(const std::string& vertexFile, const std::string& fragmentFile) {
+		File* vertexShader = new File(vertexFile);
+		File* fragmentShader = new File(fragmentFile);
+
+		if (vertexShader->IsValid() && fragmentShader->IsValid()) {
+			Shader* s = Shader::Create(vertexShader->GetStringContent(), fragmentShader->GetStringContent());
+			delete vertexShader;
+			delete fragmentShader;
+			return s;
+		}
+		else {
+			LOG_ERROR("couldn't create shader from files {0} and {1}", vertexFile, fragmentFile);
+		}
+
+		return nullptr;
+	}
+
 }
