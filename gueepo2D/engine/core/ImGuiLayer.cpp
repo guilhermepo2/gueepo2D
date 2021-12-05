@@ -55,6 +55,7 @@ namespace gueepo {
 	void ImGuiLayer::OnUpdate(float DeltaTime) {
 		ImGuiIO& io = ImGui::GetIO();
 		io.DeltaTime = DeltaTime;
+		
 	}
 
 	void ImGuiLayer::OnImGuiRender() {}

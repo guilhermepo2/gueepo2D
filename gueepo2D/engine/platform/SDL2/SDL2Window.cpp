@@ -8,6 +8,11 @@
 #include "core/renderer/RendererAPI.h"
 #include "platform/OpenGL/OpenGLContext.h"
 
+
+// #todo: is there a better way to do this?
+#include "imgui.h"
+#include "platform/SDL2/imgui_impl_sdl.h"
+
 // #todo maybe move this to a "OpenGLIncludes.h" ?
 static const int OPENGL_MAJOR_VERSION = 4;
 static const int OPENGL_MINOR_VERSION = 5;
@@ -29,6 +34,10 @@ namespace gueepo {
 	void SDL2Window::Update() {
 		SDL_Event SDLEvent;
 		while (SDL_PollEvent(&SDLEvent)) {
+			
+			// #todo: hmm.... if we are using SDL window I can assume that Dear ImGui will also be using SDL, right?
+			// #todo: is there a way to check if it's initialized or something?
+			ImGui_ImplSDL2_ProcessEvent(&SDLEvent);
 
 			switch (SDLEvent.type) {
 			case SDL_WINDOWEVENT: {
@@ -84,7 +93,9 @@ namespace gueepo {
 			} break;
 			}
 		}
+	}
 
+	void SDL2Window::Swap() {
 		m_GraphicsContext->Swap();
 	}
 

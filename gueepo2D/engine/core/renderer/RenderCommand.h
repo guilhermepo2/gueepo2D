@@ -12,9 +12,7 @@ namespace gueepo {
 
 		inline static void Clear() { s_RendererAPI->Clear(); }
 
-		inline static void DrawIndexed(VertexArray* vertexArray) {
-			s_RendererAPI->DrawIndexed(vertexArray);
-		}
+		inline static void DrawIndexed(VertexArray* vertexArray) { s_RendererAPI->DrawIndexed(vertexArray); }
 
 	private:
 		static RendererAPI* s_RendererAPI;

@@ -34,7 +34,7 @@ namespace gueepo {
 	}
 
 	void OpenGLTexture::Bind(uint32_t slot /*= 0*/) const {
-		glBindTextureUnit(0, m_textureID);
+		glBindTextureUnit(slot, m_textureID);
 	}
 
 }

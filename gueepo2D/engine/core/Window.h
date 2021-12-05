@@ -19,6 +19,7 @@ namespace gueepo {
 		using EventCallback = std::function<void(Event&)>;
 		virtual ~Window() = default;
 		virtual void Update() = 0;
+		virtual void Swap() = 0;
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
 

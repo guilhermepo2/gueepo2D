@@ -23,6 +23,7 @@ namespace gueepo {
 			return GL_BOOL;
 		case ShaderDataType::None:
 		default:
+			return 0;
 			break;
 
 		}

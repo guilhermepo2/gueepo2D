@@ -47,6 +47,7 @@ namespace gueepo {
 			TicksLastFrame = timestep::GetTicks();
 			// process input before update
 			inputSystem->PrepareForUpdate();
+			m_Window->Update();
 			inputSystem->Update();
 
 			for (Layer* l : m_LayerStack) {
@@ -72,8 +73,8 @@ namespace gueepo {
 			}
 			m_ImGuiLayer->End();
 
-			
-			m_Window->Update();
+	
+			m_Window->Swap();
 
 			// delaying until next frame so we can keep 60fps
 			int TimeToWait = FRAME_TARGET_TIME - (timestep::GetTicks() - TicksLastFrame);
