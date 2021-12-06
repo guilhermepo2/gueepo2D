@@ -1,62 +1,15 @@
-#include <gueepo2d.h>
+/*
 #include <imgui.h>
+#include "GameObject.h"
+#include "Broughlike.h"
+*/
 
+/*
 gueepo::Shader* squareShader = nullptr;
 gueepo::VertexArray* squareVA = nullptr;
 gueepo::Texture* duckTexture = nullptr;
 gueepo::OrtographicCamera* cam;
 float backgroundColor[4];
-
-// dear imgui debug stuff
-bool bShowImGui = false;
-float xPos;
-float yPos;
-float scale = 16.0f;
-float objScale = 1.0f;
-float rotation;
-
-class Transform {
-public:
-	gueepo::math::Vector2 position;
-	float rotation;
-	gueepo::math::Vector2 scale;
-
-	Transform() {
-		position = gueepo::math::Vector2(0.0f, 0.0f);
-		rotation = 0.0f;
-		scale = gueepo::math::Vector2(1.0f, 1.0f);
-	}
-
-	gueepo::math::Matrix4 GetTransformMatrix() {
-		return gueepo::math::Matrix4::CreateScale(scale)
-			* gueepo::math::Matrix4::CreateRotation(rotation * gueepo::math::DEG_TO_RAD)
-			* gueepo::math::Matrix4::CreateTranslation(position);
-	}
-};
-
-class GameObject {
-public:
-	void Render() {
-		m_tex->Bind();
-		gueepo::math::Matrix4 textureScale = gueepo::math::Matrix4::CreateScale(gueepo::math::Vector2(scale, scale));
-		gueepo::math::Matrix4 transform = textureScale * (m_Transform.GetTransformMatrix());
-		squareShader->SetMat4("u_Transform", transform);
-		gueepo::Renderer::Submit(squareVA, squareShader);
-	}
-
-	void SetPosition(gueepo::math::Vector2 position) {
-		m_Transform.position = position;
-	}
-
-	void SetTexture(gueepo::Texture* t) {
-		m_tex = t;
-	}
-
-private:
-	Transform m_Transform;
-	gueepo::Texture* m_tex;
-};
-
 GameObject duck1;
 GameObject duck2;
 
@@ -114,9 +67,7 @@ public:
 	}
 
 	void OnInput(const gueepo::InputState& currentInputState) {
-		if (currentInputState.Keyboard.WasKeyPressedThisFrame(gueepo::Keycode::KEYCODE_I)) {
-			bShowImGui = !bShowImGui;
-		}
+		unreferenced(currentInputState);
 	}
 
 	void OnEvent(gueepo::Event& e) override {
@@ -126,23 +77,12 @@ public:
 	virtual void OnRender() {
 		cam->SetBackgroundColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], backgroundColor[3]);
 		gueepo::Renderer::BeginScene(*cam);
-		duck1.Render();
-		duck2.Render();
+		duck1.Render(squareShader, squareVA);
+		duck2.Render(squareShader, squareVA);
 		gueepo::Renderer::EndScene();
 	}
 
-	void OnImGuiRender() { 
-		if (bShowImGui) {
-			ImGui::Begin("debug properties");
-			ImGui::ColorEdit4("clear color", backgroundColor);
-			ImGui::DragFloat("xPos", &xPos, 1.0f, -500.0f, 500.0f);
-			ImGui::DragFloat("yPos", &yPos, 1.0f, -500.0f, 500.0f);
-			ImGui::DragFloat("tex scale", &scale, 1.0f, 16.0f, 256.0f);
-			ImGui::DragFloat("obj scale", &objScale, 1.0f, 1.0f, 5.0f);
-			ImGui::DragFloat("rotation", &rotation, 1.0f, 0.0f, 360.0f);
-			ImGui::End();
-		}
-	}
+	void OnImGuiRender() {  }
 };
 
 // ================================================================================
@@ -161,10 +101,4 @@ public:
 
 	~DummyApp() { LOG_INFO("deleting dummy app"); }
 };
-
-// ================================================================================
-// entry point
-// ================================================================================
-gueepo::Application* gueepo::CreateApplication() {
-	return new DummyApp("dummy app!", 640, 360);
-}
+*/
