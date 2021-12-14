@@ -2,8 +2,8 @@
 -- By design, SDL2 is not distributed with the engine.
 -- https://www.libsdl.org/download-2.0.php
 -- these are the paths that I am using
-SDL2_INCLUDE_DIR = "%{wks.location}/thirdparty/SDL2-2.0.16/include"
-SDL2_LIB_DIR = "%{wks.location}/thirdparty/SDL2-2.0.16/lib/x64"
+SDL2_INCLUDE_DIR = "%{wks.location}/thirdparty/SDL2-2.0.18/include"
+SDL2_LIB_DIR = "%{wks.location}/thirdparty/SDL2-2.0.18/lib/x64"
 
 workspace "gueepo2D"
     location "gueepo2D"

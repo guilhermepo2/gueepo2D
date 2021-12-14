@@ -1,5 +1,6 @@
 #pragma once
 #include "Event.h"
+#include <sstream>
 
 namespace gueepo {
 
@@ -16,6 +17,7 @@ namespace gueepo {
 
 		std::string ToString() const override {
 			std::stringstream ss;
+
 			ss << "WindowResizeEvent (" << m_Width << ", " << m_Height << ")";
 			return ss.str();
 		}
