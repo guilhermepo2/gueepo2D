@@ -15,8 +15,13 @@ namespace gueepo {
 	}
 
 	void GameObject::SetPosition(math::Vector2 pos) {
-		transform->position = pos;
+		SetPosition(pos.x, pos.y);
 
+	}
+
+	void GameObject::SetPosition(float x, float y) {
+		transform->position.x = x;
+		transform->position.y = y;
 	}
 
 	void GameObject::Translate(float dx, float dy) {

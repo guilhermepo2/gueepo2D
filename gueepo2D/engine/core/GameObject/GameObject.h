@@ -15,6 +15,7 @@ namespace gueepo {
 		SpriteComponent* sprite;
 
 		void SetTexture(Texture* t);
+		void SetPosition(float x, float y);
 		void SetPosition(math::Vector2 pos);
 		void Translate(float dx, float dy);
 		void Translate(math::Vector2 ds);

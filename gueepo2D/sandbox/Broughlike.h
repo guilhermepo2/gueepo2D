@@ -19,7 +19,7 @@ public:
 		PushLayer(new BroughlikeGameLayer());
 	}
 
-	Broughlike() : Broughlike("broughlike", 640, 360) {}
+	Broughlike() : Broughlike("broughlike", 960, 540) {}
 
 	~Broughlike() {}
 };
@@ -29,5 +29,4 @@ public:
 // ================================================================================
 gueepo::Application* gueepo::CreateApplication() {
 	return new Broughlike();
-	// return new DummyApp("dummy app!", 640, 360);
 }
