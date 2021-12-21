@@ -17,6 +17,14 @@ namespace gueepo {
 
 		IsShaderProgramValid();
 
+		// #todo maybe this shouldn't be here?
+		// setting the shader to use 16 textures
+		glUseProgram(m_ShaderProgramID);
+		auto loc = glGetUniformLocation(m_ShaderProgramID, "u_textureSampler");
+		int samplers[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+		glUniform1iv(loc, 16, samplers);
+		// -------------------------------------------------------------------------
+
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
 	}

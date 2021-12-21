@@ -8,6 +8,8 @@ namespace gueepo {
 
 	OpenGLTexture::OpenGLTexture(const std::string& path) {
 		
+		m_path = path;
+
 		int channels = 0;
 		unsigned char* imageData = g_LoadImage(path.c_str(), m_width, m_height, channels);
 		m_format = channels == 4 ? GL_RGBA : GL_RGB;
