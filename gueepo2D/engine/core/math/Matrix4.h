@@ -91,6 +91,8 @@ namespace gueepo::math {
 			return ret;
 		}
 
+		friend Vector3 operator*(const Matrix4& m, const Vector3& other);
+
 		friend Matrix4 operator*(const float& lhs, const Matrix4& rhs);
 
 		// multiplying matrices, not fun!

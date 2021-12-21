@@ -179,6 +179,15 @@ namespace gueepo::math {
 
 }
 
+gueepo::math::Vector3 gueepo::math::operator*(const gueepo::math::Matrix4& m, const gueepo::math::Vector3& other) {
+	Vector3 returnValue;
+	returnValue.x = (m.mat[0][0] * other.x) + (m.mat[1][0] * other.y) + (m.mat[2][0] * other.z) + (m.mat[3][0] * 1);
+	returnValue.y = (m.mat[0][1] * other.x) + (m.mat[1][1] * other.y) + (m.mat[2][1] * other.z) + (m.mat[3][1] * 1);
+	returnValue.z = (m.mat[0][2] * other.x) + (m.mat[1][2] * other.y) + (m.mat[2][2] * other.z) + (m.mat[3][2] * 1);
+
+	return returnValue;
+}
+
 gueepo::math::Matrix4 gueepo::math::operator*(const float& lhs, const gueepo::math::Matrix4& rhs) {
 	gueepo::math::Matrix4 ret;
 	ret.mat[0][0] = rhs.mat[0][0] * lhs;
