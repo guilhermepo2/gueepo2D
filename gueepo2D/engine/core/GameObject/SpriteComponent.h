@@ -18,13 +18,7 @@
 */
 
 namespace gueepo {
-	class SpriteComponent : public Component {
-	public:
-		static Shader* defaultSpriteShader;
-		static VertexArray* defaultVertexArray;
-		static void InitializeDefaults();
-
-	
+	class SpriteComponent : public Component {	
 	public:
 		Texture* texture;
 		int DrawOrder = 1;
@@ -32,20 +26,15 @@ namespace gueepo {
 		bool FlipHorizontal = false;
 		bool FlipVertical = false;
 
-		SpriteComponent() : texture(nullptr) { InitializeDefaults(); }
-		SpriteComponent(Texture* tex, int drawOrder = 1) : texture(tex), DrawOrder(drawOrder) { InitializeDefaults(); }
+		SpriteComponent() : texture(nullptr) {}
+		SpriteComponent(Texture* tex, int drawOrder = 1) : texture(tex), DrawOrder(drawOrder) {}
 
 		void Render() override {
-			texture->Bind();
 			TransformComponent* t = Owner->GetComponentOfType<TransformComponent>();
-
-			assert(t != nullptr, "trying to render something without a transform?!")
-
+			assert(t != nullptr, "trying to render something without a transform?!");
 			math::Matrix4 textureScale = math::Matrix4::CreateScale(math::Vector2(texture->GetWidth(), texture->GetHeight()));
 			math::Matrix4 transformMatrix = textureScale * t->GetTransformMatrix();
-			defaultSpriteShader->SetMat4("u_Transform", transformMatrix);
-			// have to set the shader matrix here?!
-			Renderer::Submit(defaultVertexArray, defaultSpriteShader);
+			Renderer::Draw(transformMatrix, texture);
 		}
 	};
 }

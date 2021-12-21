@@ -20,6 +20,7 @@ gueepo::GameObject* GetRandomPassableTile();
 bool IsTilePassable(float x, float y);
 
 void BroughlikeGameLayer::OnAttach() {
+	gueepo::Renderer::Initialize();
 	gueepo::Random::Init();
 
 	cam = new gueepo::OrtographicCamera(320, 180);
@@ -62,7 +63,7 @@ void BroughlikeGameLayer::OnAttach() {
 }
 
 void BroughlikeGameLayer::OnDetach() {
-
+	gueepo::Renderer::Shutdown();
 }
 
 void BroughlikeGameLayer::OnInput(const gueepo::InputState& currentInputState) {
@@ -96,9 +97,7 @@ void BroughlikeGameLayer::OnEvent(gueepo::Event& e) {
 	unreferenced(e);
 }
 
-void BroughlikeGameLayer::OnRender() {
-	// #todo: I don't like having this BeginScene() and EndScene() here
-	// this should be abstracted in the engine (on an ECS system or something like that)
+void BroughlikeGameLayer::OnRender() {	
 	gueepo::Renderer::BeginScene(*cam);
 
 	for (gueepo::GameObject* tile : m_WallsAndFloor) {
@@ -124,8 +123,8 @@ gueepo::GameObject* GetRandomPassableTile() {
 	TileComponent* tilecomponent = tile->GetComponentOfType<TileComponent>();
 
 	while (!tile->GetComponentOfType<TileComponent>()->passable) {
-		x = gueepo::Random::Int() % TILE_HORIZONTAL;
-		y = gueepo::Random::Int() % TILE_VERTICAL;
+		x = gueepo::math::abs(gueepo::Random::Int() % TILE_HORIZONTAL);
+		y = gueepo::math::abs(gueepo::Random::Int() % TILE_VERTICAL);
 		tile = m_WallsAndFloor[(x * TILE_HORIZONTAL) + y];
 	}
 

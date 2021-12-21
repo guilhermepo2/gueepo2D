@@ -3,10 +3,12 @@
 out vec4 v_FragColor;
 
 in vec2 v_TexCoord;
+in float v_TextureSlot;
 
-uniform sampler2D u_textureSampler;
+uniform sampler2D u_textureSampler[16];
 
 void main()
 {
-    v_FragColor = texture(u_textureSampler, v_TexCoord);
+    int index = int(v_TextureSlot);
+    v_FragColor = texture(u_textureSampler[index], v_TexCoord);
 }

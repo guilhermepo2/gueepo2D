@@ -10,21 +10,23 @@
 namespace gueepo {
 
 	class OrtographicCamera;
+	class Texture;
 
 	class Renderer {
 	public:
+
+		static void Initialize();
+		static void Shutdown();
+
 		static void BeginScene(OrtographicCamera& sceneCamera);
 		static void EndScene();
 		static void Submit(VertexArray* vertexArray, Shader* shader);
-		// static void Flush();
+		static void Draw(const math::Matrix4& transform, Texture* texture);
+		static void Flush();
 
 		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
 	protected:
-		struct SceneData {
-			math::Matrix4 ViewProjection;
-		};
-
-		static SceneData* m_SceneData;
+		
 	};
 }
