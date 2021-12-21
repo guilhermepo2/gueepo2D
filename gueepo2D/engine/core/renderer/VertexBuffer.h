@@ -13,6 +13,7 @@ namespace gueepo {
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() = 0;
 
+		static VertexBuffer* Create(uint32_t size);
 		static VertexBuffer* Create(float* vertices, uint32_t size);
 	};
 }
