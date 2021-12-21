@@ -11,6 +11,8 @@ namespace gueepo {
 		void Bind() const override;
 		void Unbind() const override;
 
+		virtual void SetData(const void* data, uint32_t size) override;
+
 		virtual void SetLayout(const BufferLayout& layout) override { m_layout = layout; }
 		virtual const BufferLayout& GetLayout() override { return m_layout; }
 

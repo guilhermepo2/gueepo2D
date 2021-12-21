@@ -7,7 +7,6 @@ namespace gueepo {
 
 	gueepo::VertexBuffer* VertexBuffer::Create(uint32_t size) {
 		switch (RendererAPI::GetAPI()) {
-			switch (RendererAPI::GetAPI()) {
 			case RendererAPI::API::OpenGL: {
 				return new OpenGLVertexBuffer(size);
 			} break;
@@ -19,7 +18,6 @@ namespace gueepo {
 				LOG_ERROR("API NOT SUPPORTED!");
 				return nullptr;
 				break;
-			}
 		}
 	}
 
