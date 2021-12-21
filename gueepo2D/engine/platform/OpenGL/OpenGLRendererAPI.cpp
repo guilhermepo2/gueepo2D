@@ -29,4 +29,13 @@ namespace gueepo {
 		);
 	}
 
+	void OpenGLRendererAPI::DrawIndexed(VertexArray* vertexArray, uint32_t count) {
+		glDrawElements(
+			GL_TRIANGLES,
+			count,
+			GL_UNSIGNED_INT,
+			nullptr
+		);
+	}
+
 }
