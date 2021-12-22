@@ -148,6 +148,7 @@ namespace gueepo {
 		// #todo: set this somewhere else?
 		m_GraphicsContext = GraphicsContext::Create(m_Window);
 		m_GraphicsContext->Init();
+		SDL_SetWindowTitle(m_Window, std::string(m_Title + " <" + m_GraphicsContext->GraphicsContextString() + ">").c_str());
 
 		SetVSync(true);
 

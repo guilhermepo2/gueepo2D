@@ -9,6 +9,7 @@ namespace gueepo {
 		OpenGLContext(SDL_Window* _windowRef);
 		virtual void Init() override;
 		virtual void Swap() override;
+		virtual std::string GraphicsContextString() override;
 
 	private:
 		SDL_Window* m_WindowRef;

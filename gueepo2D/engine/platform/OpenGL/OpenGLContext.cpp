@@ -32,4 +32,11 @@ namespace gueepo {
 		SDL_GL_SwapWindow(m_WindowRef);
 	}
 
+	std::string OpenGLContext::GraphicsContextString() {
+		std::string version = std::string((const char*)glGetString(GL_VERSION));
+		std::string versionNumbersOnly = version.substr(0, version.find(' '));
+
+		return "OpenGL " + std::string((const char*)glGetString(GL_VENDOR)) + " " + versionNumbersOnly;
+	}
+
 }
