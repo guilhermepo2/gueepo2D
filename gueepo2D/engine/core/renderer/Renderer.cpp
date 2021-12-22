@@ -9,14 +9,12 @@ namespace gueepo {
 	struct QuadVertex {
 		gueepo::math::Vector3 Position;
 		gueepo::math::Vector2 TexCoord;
-		float TextureSlot;
+		float TextureSlot = 0.0f;
 	};
 
 	static struct {
 		// Camera Data
 		math::Matrix4 ViewProjection;
-
-		// #todo: texture slots? max texture slots, texture slots, texture slot index
 
 		// Maximum
 		static const uint32_t MaxQuads = 1000;
@@ -25,9 +23,9 @@ namespace gueepo {
 		static const uint32_t MaxTextureSlots = 16;
 
 		// Defaults
-		Shader* defaultSpriteShader;
-		VertexBuffer* defaultVertexBuffer;
-		VertexArray* defaultVertexArray;
+		Shader* defaultSpriteShader = nullptr;
+		VertexBuffer* defaultVertexBuffer = nullptr;
+		VertexArray* defaultVertexArray = nullptr;
 		math::Vector3 quadVertexPosition[4];
 
 		std::array<Texture*, MaxTextureSlots> TextureSlots;
@@ -35,8 +33,12 @@ namespace gueepo {
 		
 		// quad vertex counting
 		uint32_t quadIndexCount = 0;
-		QuadVertex* quadVertexBase;
-		QuadVertex* quadVertexPtrPosition;
+		QuadVertex* quadVertexBase = nullptr;
+		QuadVertex* quadVertexPtrPosition = nullptr;
+
+		struct {
+			uint32_t DrawCalls;
+		} RenderStats = { 0 };
 	} s_RenderData;
 
 	void Renderer::Initialize() {
@@ -81,7 +83,6 @@ namespace gueepo {
 
 	}
 
-	// #todo: BeginScene should receive and camera and any environment data
 	void Renderer::BeginScene(OrtographicCamera& sceneCamera) {
 		s_RenderData.ViewProjection = sceneCamera.GetViewProjectionMatrix();
 
@@ -92,9 +93,21 @@ namespace gueepo {
 			sceneCamera.GetBackGroundColor().rgba[3]
 		);
 		RenderCommand::Clear();
+		
+		s_RenderData.RenderStats.DrawCalls = 0;
+		StartBatch();
+	}
 
+	void Renderer::StartBatch() {
+		s_RenderData.TextureSlotIndex = 0;
 		s_RenderData.quadIndexCount = 0;
 		s_RenderData.quadVertexPtrPosition = s_RenderData.quadVertexBase;
+	}
+
+	void Renderer::NextBatch() {
+		LOG_INFO("more quads or more textures than the maximum! flushing and starting a new batch!");
+		Flush();
+		StartBatch();
 	}
 
 	void Renderer::EndScene() {
@@ -109,6 +122,14 @@ namespace gueepo {
 	}
 
 	void Renderer::Draw(const math::Matrix4& transform, Texture* texture) {
+
+		if (
+			s_RenderData.quadIndexCount >= s_RenderData.MaxIndices ||
+			s_RenderData.TextureSlotIndex >= s_RenderData.MaxTextureSlots
+			) {
+			NextBatch();
+		}
+
 		float textureSlot = -1.0f;
 
 		// searching for the texture on the array
@@ -150,7 +171,7 @@ namespace gueepo {
 		s_RenderData.defaultVertexBuffer->SetData(s_RenderData.quadVertexBase, dataSize);
 
 		// binding all textures
-		for (size_t i = 0; i < s_RenderData.TextureSlotIndex; i++) {
+		for (uint32_t i = 0; i < s_RenderData.TextureSlotIndex; i++) {
 			s_RenderData.TextureSlots[i]->Bind(i);
 		}
 
@@ -158,7 +179,7 @@ namespace gueepo {
 		s_RenderData.defaultSpriteShader->SetMat4("u_ViewProjection", s_RenderData.ViewProjection);
 		s_RenderData.defaultVertexArray->Bind();
 		RenderCommand::DrawIndexed(s_RenderData.defaultVertexArray, s_RenderData.quadIndexCount);
-		// increment draw calls
+		s_RenderData.RenderStats.DrawCalls++;
 	}
 
 }

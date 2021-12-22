@@ -26,7 +26,9 @@ namespace gueepo {
 
 		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
-	protected:
+	private:
+		static void StartBatch();
+		static void NextBatch();
 		
 	};
 }
