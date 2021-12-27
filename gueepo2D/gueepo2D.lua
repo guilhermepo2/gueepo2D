@@ -1,4 +1,5 @@
 project "gueepo2D"
+    location "engine"
     kind "StaticLib"
     language "C++"
     staticruntime "on"

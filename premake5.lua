@@ -28,8 +28,8 @@ LibDir = {}
 group "Dependencies"
     include "gueepo2D/thirdparty/glad"
     include "gueepo2D/thirdparty/imgui-docking"
+group ""
 
-group "gueepo2D"
-    include "gueepo2D/gueepo2D.lua"
-    include "gueepo2D/gueepo2D_tests.lua"
-    include "gueepo2D/sandbox.lua"
+include "gueepo2D/gueepo2D.lua"
+include "gueepo2D/gueepo2D_tests.lua"
+include "gueepo2D/sandbox.lua"

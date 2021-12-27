@@ -1,4 +1,5 @@
 project "glad"
+    location ""
     kind "StaticLib"
     language "C"
     staticruntime "on"
