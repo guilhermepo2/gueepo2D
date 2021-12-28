@@ -18,6 +18,7 @@ static const float MOVEMENT_AMOUNT = 16.0f;
 
 gueepo::GameObject* GetRandomPassableTile();
 bool IsTilePassable(float x, float y);
+void GenerateDungeon();
 
 void BroughlikeGameLayer::OnAttach() {
 	gueepo::Renderer::Initialize();
@@ -34,29 +35,7 @@ void BroughlikeGameLayer::OnAttach() {
 	m_playerObject = new gueepo::GameObject(s_playerTexture, "Player");
 	m_playerObject->SetScale(2.0f, 2.0f);
 
-	m_WallsAndFloor.resize(TILE_HORIZONTAL * TILE_VERTICAL);
-	for (int i = 0; i < TILE_HORIZONTAL; i++) {
-		for (int j = 0; j < TILE_VERTICAL; j++) {
-			gueepo::GameObject* temp = new gueepo::GameObject(s_groundTexture, "Ground");
-			TileComponent& tile = temp->AddComponent<TileComponent>(i * TILE_SIZE, j * TILE_SIZE, true);
-
-			if (i == 0 || j == 0 || i == TILE_HORIZONTAL - 1 || j == TILE_VERTICAL - 1) {
-				temp->SetTexture(s_wallTexture);
-				tile.SetPassable(false);
-			}
-
-			if (gueepo::Random::Float() < 0.2f) {
-				temp->SetTexture(s_wallTexture);
-				tile.SetPassable(false);
-			}
-
-			temp->SetScale(2.0f, 2.0f);
-			temp->SetPosition(i * TILE_SIZE, j * TILE_SIZE);
-			m_WallsAndFloor[ (i * TILE_HORIZONTAL) + j] = temp;
-		}
-	}
-
-	// todo: habe to validate the dungeon
+	GenerateDungeon();
 
 	gueepo::GameObject* startingTile = GetRandomPassableTile();
 	m_playerObject->SetPosition(startingTile->transform->position);
@@ -140,4 +119,38 @@ bool IsTilePassable(float x, float y) {
 	}
 
 	return false;
+}
+
+void GenerateDungeon() {
+	m_WallsAndFloor.resize(TILE_HORIZONTAL * TILE_VERTICAL);
+	for (int i = 0; i < TILE_HORIZONTAL; i++) {
+		for (int j = 0; j < TILE_VERTICAL; j++) {
+			gueepo::GameObject* temp = new gueepo::GameObject(s_groundTexture, "Ground");
+			TileComponent& tile = temp->AddComponent<TileComponent>(i * TILE_SIZE, j * TILE_SIZE, true);
+
+			if (i == 0 || j == 0 || i == TILE_HORIZONTAL - 1 || j == TILE_VERTICAL - 1 || gueepo::Random::Float() < 0.2f) {
+				temp->SetTexture(s_wallTexture);
+				tile.SetPassable(false);
+			}
+
+			temp->SetScale(2.0f, 2.0f);
+			temp->SetPosition(i * TILE_SIZE, j * TILE_SIZE);
+			m_WallsAndFloor[(i * TILE_HORIZONTAL) + j] = temp;
+		}
+	}
+
+	// #todo: validate the dungeon
+	gueepo::GameObject* startingTile = GetRandomPassableTile();
+	std::vector<gueepo::GameObject*> exploredTiles;
+	std::vector<gueepo::GameObject*> tilesToBeExplored;
+	tilesToBeExplored.push_back(startingTile);
+
+	while (tilesToBeExplored.size() > 0) {
+		gueepo::GameObject* currentTile = tilesToBeExplored.back();
+		tilesToBeExplored.pop_back();
+		exploredTiles.push_back(currentTile);
+
+		// check "currentTile" neighbors and add them to "tilesToBeExplored" if the tile isn't on any of the tiles
+		currentTile->transform->position;
+	}
 }
