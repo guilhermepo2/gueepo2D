@@ -8,6 +8,9 @@ gueepo2D/binobj/
 *.vcxproj.user
 *.vcxproj.filters
 
+# CMake
+build/
+
 # GNU Make
 Makefile
 
