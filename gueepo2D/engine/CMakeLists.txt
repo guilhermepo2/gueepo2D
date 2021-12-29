@@ -3,6 +3,9 @@ project(gueepo2D-engine VERSION 0.1 DESCRIPTION "gueepo2D game engine v0.1 (alph
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(PLATFORM_SDL2 true CACHE BOOL "Use SDL2 Platform Backend")
+set(GRAPHICS_OPENGL true CACHE BOOL "Use OpenGL Graphics Backend")
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ../thirdparty/spdlog-1.9.2/include
@@ -60,6 +63,15 @@ add_library(gueepo2D-engine STATIC
 )
 
 target_link_libraries(gueepo2D-engine glad dearimgui)
+
+if(PLATFORM_SDL2)
+    target_link_libraries(gueepo2D-engine SDL2.lib)
+    include_directories(../thirdparty/SDL2-2.0.18/include)
+endif()
+
+if(GRAPHICS_OPENGL)
+    target_link_libraries(gueepo2D-engine opengl32.lib)
+endif()
 
 target_precompile_headers(gueepo2D-engine 
     PUBLIC gueepo2Dpch.h
