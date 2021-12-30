@@ -20,21 +20,25 @@ Soon™
 - Windows (x64) with OpenGL (SDL2)
 
 Currently that's the only platform/backend available, here's a roadmap:
+
 ### Platforms
-- [ ] **Windows (x86)** - Still thinking about it.
+- [ ] **Windows (x86)** ( Still thinking about it. )
 - [ ] **Linux**
 - [ ] **macOS**
 
-### Renderer Backends
+### Graphics Backends
 - [ ] DirectX 11
-- [ ] DirectX 12
 - [ ] Vulkan
 - [ ] Metal
 
+## Requirements
+- C++ 17
+- CMake 3.10+
+
 ## Building
 1. Download the repository `git clone --recursive https://github.com/guilhermepo2/gueepo2D.git`
-2. Set up `SDL2_INCLUDE_DIR` and `SDL2_LIB_DIR` on `premake5.lua` *(I will write better on this soon!)*
-3. Run `genproj_vs2019.bat` on the scripts folder.
+2. Run cmake `cmake -Bbuild .` - You can download and manually set `SDL2_PATH` on `CMakeLists.txt` on the `engine/` folder, if that's not defined, CMake will download SDL2 2.0.18 automatically.
+3. Open `gueepo2D.sln` on the `build/` folder.
 
 ## Learning/Documentation
 As stated, this is a project that is still very early in its conception. It is on my mind to have some sort of online documentation explaining the architecture as well as how to make things using this, sample projects are in my mind as well.
