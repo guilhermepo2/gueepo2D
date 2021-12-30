@@ -1,21 +1,9 @@
-cmake_minimum_required(VERSION 3.10)
 project(gueepo2D-engine VERSION 0.1 DESCRIPTION "gueepo2D game engine v0.1 (alpha?)")
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(PLATFORM_SDL2 true CACHE BOOL "Use SDL2 Platform Backend")
 set(GRAPHICS_OPENGL true CACHE BOOL "Use OpenGL Graphics Backend")
 
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ../thirdparty/spdlog-1.9.2/include
-    ../thirdparty/glad/include
-    ../thirdparty/imgui-docking
-    ../thirdparty/rapidjson-1.1.0/include
-    ../thirdparty/stb
-)
-
-add_library(gueepo2D-engine STATIC
+add_library(${PROJECT_NAME} STATIC
     gueepo2Dpch.cpp
 
     core/Application.cpp
@@ -62,17 +50,30 @@ add_library(gueepo2D-engine STATIC
     utils/JsonHelper.cpp
 )
 
-target_link_libraries(gueepo2D-engine glad dearimgui)
+target_include_directories (${PROJECT_NAME}
+    PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/spdlog-1.9.2/include>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/glad/include>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/imgui-docking>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/rapidjson-1.1.0/include>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/stb>
+)
+
+target_link_libraries(${PROJECT_NAME} glad dearimgui)
 
 if(PLATFORM_SDL2)
-    target_link_libraries(gueepo2D-engine SDL2.lib)
-    include_directories(../thirdparty/SDL2-2.0.18/include)
+    target_link_libraries(${PROJECT_NAME} SDL2.lib)
+    target_include_directories(${PROJECT_NAME}
+        PUBLIC
+        ${PROJECT_SOURCE_DIR}/../thirdparty/SDL2-2.0.18/include
+    )
 endif()
 
 if(GRAPHICS_OPENGL)
-    target_link_libraries(gueepo2D-engine opengl32.lib)
+    target_link_libraries(${PROJECT_NAME} opengl32.lib)
 endif()
 
-target_precompile_headers(gueepo2D-engine 
+target_precompile_headers(${PROJECT_NAME}
     PUBLIC gueepo2Dpch.h
 )
