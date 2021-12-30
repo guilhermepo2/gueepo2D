@@ -1,6 +1,6 @@
 project(dearimgui)
 
-add_library(dearimgui
+add_library(${PROJECT_NAME}
     imconfig.h
     imgui_demo.cpp
     imgui_draw.cpp

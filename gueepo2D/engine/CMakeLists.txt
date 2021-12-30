@@ -2,6 +2,7 @@ project(gueepo2D-engine VERSION 0.1 DESCRIPTION "gueepo2D game engine v0.1 (alph
 
 set(PLATFORM_SDL2 true CACHE BOOL "Use SDL2 Platform Backend")
 set(GRAPHICS_OPENGL true CACHE BOOL "Use OpenGL Graphics Backend")
+set(SDL2_PATH thirdparty/SDL2-2.0.18 CACHE INTERNAL "path do SDL2 root")
 
 add_library(${PROJECT_NAME} STATIC
     gueepo2Dpch.cpp
@@ -66,12 +67,14 @@ if(PLATFORM_SDL2)
     target_link_libraries(${PROJECT_NAME} SDL2.lib)
     target_include_directories(${PROJECT_NAME}
         PUBLIC
-        ${PROJECT_SOURCE_DIR}/../thirdparty/SDL2-2.0.18/include
+        ${PROJECT_SOURCE_DIR}/../${SDL2_PATH}/include
     )
+    add_compile_definitions(GUEEPO2D_PLATFORM_SDL2)
 endif()
 
 if(GRAPHICS_OPENGL)
     target_link_libraries(${PROJECT_NAME} opengl32.lib)
+    add_compile_definitions(GUEEPO2D_GRAPHICS_OPENGL)
 endif()
 
 target_precompile_headers(${PROJECT_NAME}

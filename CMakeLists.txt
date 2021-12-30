@@ -6,9 +6,10 @@ project(gueepo2D)
 # ${CMAKE_SOURCE_DIR}
 # ${CMAKE_CURRENT_BINARY_DIR}
 
-# this should be in a dependencies subproject
+# dependencies
 add_subdirectory(gueepo2D/thirdparty/glad)
 add_subdirectory(gueepo2D/thirdparty/imgui-docking)
+
 add_subdirectory(gueepo2D/engine)
 add_subdirectory(gueepo2D/sandbox)
 
