@@ -13,20 +13,17 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_directories(${PROJECT_NAME}
     PUBLIC
-        ${PROJECT_SOURCE_DIR}/../${SDL2_PATH}/lib/x64
+        ${SDL2_PATH}/lib/x64
 )
 
 target_link_libraries(${PROJECT_NAME} gueepo2D-engine)
 
-if(EXISTS ${PROJECT_SOURCE_DIR}/../${SDL2_PATH}/lib/x64/SDL2.dll)
-    message("Copiando SDL...")
+if(EXISTS ${SDL2_PATH}/lib/x64/SDL2.dll)
+    message("copying SDL2... " ${SDL2_PATH} "/lib/x64/SDL2/dll")
     add_custom_command(
         TARGET gueepo2D-sandbox POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/../${SDL2_PATH}/lib/x64/SDL2.dll $<TARGET_FILE_DIR:gueepo2D-sandbox>/../
+        COMMAND ${CMAKE_COMMAND} -E copy ${SDL2_PATH}/lib/x64/SDL2.dll $<TARGET_FILE_DIR:gueepo2D-sandbox>/../
     )
-else()
-    message(WARNING "could not find SDL2.dll!")
-    message(WARNING ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/assets)

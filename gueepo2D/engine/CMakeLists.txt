@@ -2,7 +2,7 @@ project(gueepo2D-engine VERSION 0.1 DESCRIPTION "gueepo2D game engine v0.1 (alph
 
 set(PLATFORM_SDL2 true CACHE BOOL "Use SDL2 Platform Backend")
 set(GRAPHICS_OPENGL true CACHE BOOL "Use OpenGL Graphics Backend")
-set(SDL2_PATH thirdparty/SDL2-2.0.18 CACHE INTERNAL "path do SDL2 root")
+# optional: SDL2_PATH can be defined here, it has to be an absolute path to SDL2 root folder (i.e. D:/workspace/SDL2-2.0.18)
 
 add_library(${PROJECT_NAME} STATIC
     gueepo2Dpch.cpp
@@ -64,11 +64,30 @@ target_include_directories (${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} glad dearimgui)
 
 if(PLATFORM_SDL2)
+
+    if(EXISTS SDL2_PATH)
+        message("found SDL2_PATH")
+        set(SDL2_FOUND true)
+    else()
+        set(SDL2_FOUND false)
+    endif()
+
+    if(NOT ${SDL2_FOUND})
+        message("downloading SDL2...")
+        
+        include(FetchContent)
+        FetchContent_Declare(
+            SDL2
+            URL     https://www.libsdl.org/release/SDL2-devel-2.0.18-VC.zip
+            URL_MD5 701b791e8d3f39d018acb2be4be4b0b5
+        )
+        FetchContent_MakeAvailable(SDL2)
+        message("SDL2 SOURCE DIR: " ${sdl2_SOURCE_DIR})
+        set(SDL2_PATH ${sdl2_SOURCE_DIR} CACHE INTERNAL "sdl2 root path")
+    endif()
+
     target_link_libraries(${PROJECT_NAME} SDL2.lib)
-    target_include_directories(${PROJECT_NAME}
-        PUBLIC
-        ${PROJECT_SOURCE_DIR}/../${SDL2_PATH}/include
-    )
+    target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_PATH}/include)
     add_compile_definitions(GUEEPO2D_PLATFORM_SDL2)
 endif()
 
