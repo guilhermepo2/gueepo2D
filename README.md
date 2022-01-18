@@ -8,10 +8,16 @@
 # gueepo2D
 gueepo2D is a simple 2D game engine, aimed towards being easy to use and easy to read!
 
-## Design Motivations
-1. Easy to use.
-2. Easy to read.
-3. Multiplatform.
+## Requirements
+- C++ 17+
+- CMake 3.10+
+- SDL2.0.18+
+
+## Building
+0. Download and install [https://cmake.org/](CMake) if you don't have it already.
+1. Download the repository `git clone --recursive https://github.com/guilhermepo2/gueepo2D.git`
+2. Run CMake `cmake -Bbuild .`, or run it with VSCode or a GUI tool. You can download and manually set `SDL2_PATH` on `CMakeLists.txt` on the `engine/` folder, if that's not defined, CMake will download SDL2 2.0.18 automatically.
+3. Open `gueepo2D.sln` on the `build/` folder.
 
 ## Features
 Soon™
@@ -31,17 +37,8 @@ Currently that's the only platform/backend available, here's a roadmap:
 - [ ] Vulkan
 - [ ] Metal
 
-## Requirements
-- C++ 17
-- CMake 3.10+
-
-## Building
-1. Download the repository `git clone --recursive https://github.com/guilhermepo2/gueepo2D.git`
-2. Run cmake `cmake -Bbuild .` - You can download and manually set `SDL2_PATH` on `CMakeLists.txt` on the `engine/` folder, if that's not defined, CMake will download SDL2 2.0.18 automatically.
-3. Open `gueepo2D.sln` on the `build/` folder.
-
 ## Learning/Documentation
-As stated, this is a project that is still very early in its conception. It is on my mind to have some sort of online documentation explaining the architecture as well as how to make things using this, sample projects are in my mind as well.
+As stated, this is a project that is still very early in its conception. It is on my mind to have some sort of online documentation explaining the architecture as well as how to make things using it. Sample projects are on my mind as well.
 
 ## How to Contribute
 Soon™
