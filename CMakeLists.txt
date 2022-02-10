@@ -3,10 +3,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 project(gueepo2D)
 
-# ${CMAKE_SOURCE_DIR}
-# ${CMAKE_CURRENT_BINARY_DIR}
-
-# dependencies
 add_subdirectory(gueepo2D/thirdparty/glad)
 add_subdirectory(gueepo2D/thirdparty/imgui-docking)
 
