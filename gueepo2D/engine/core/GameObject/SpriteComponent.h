@@ -32,7 +32,18 @@ namespace gueepo {
 		void Render() override {
 			TransformComponent* t = Owner->GetComponentOfType<TransformComponent>();
 			assert(t != nullptr, "trying to render something without a transform?!");
-			math::Matrix4 textureScale = math::Matrix4::CreateScale(math::Vector2(texture->GetWidth(), texture->GetHeight()));
+
+			math::Vector2 textureScaleVec(texture->GetWidth(), texture->GetHeight());
+			
+			if (FlipHorizontal) {
+				textureScaleVec.x *= -1;
+			}
+
+			if (FlipVertical) {
+				textureScaleVec.y *= -1;
+			}
+
+			math::Matrix4 textureScale = math::Matrix4::CreateScale(textureScaleVec);
 			math::Matrix4 transformMatrix = textureScale * t->GetTransformMatrix();
 			Renderer::Draw(transformMatrix, texture);
 		}
