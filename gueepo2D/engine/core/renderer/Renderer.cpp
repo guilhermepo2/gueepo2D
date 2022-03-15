@@ -121,7 +121,7 @@ namespace gueepo {
 		RenderCommand::DrawIndexed(vertexArray);
 	}
 
-	void Renderer::Draw(const math::Matrix4& transform, Texture* texture) {
+	void Renderer::Draw(const math::Matrix4& transform, const math::Vector2& textureCoordMin, const math::Vector2& textureCoordMax, Texture* texture) {
 
 		if (
 			s_RenderData.quadIndexCount >= s_RenderData.MaxIndices ||
@@ -149,11 +149,12 @@ namespace gueepo {
 		}
 
 		size_t quadVertexCount = 4;
+
 		math::Vector2 textureCoords[] = {
-			{ 0.0f, 0.0f },
-			{ 1.0f, 0.0f },
-			{ 1.0f, 1.0f },
-			{ 0.0f, 1.0f }
+			{ textureCoordMin.x, textureCoordMin.y },
+			{ textureCoordMax.x, textureCoordMin.y },
+			{ textureCoordMax.x, textureCoordMax.y },
+			{ textureCoordMin.x, textureCoordMax.y }
 		};
 
 		for (size_t i = 0; i < quadVertexCount; i++) {
@@ -164,6 +165,10 @@ namespace gueepo {
 		}
 
 		s_RenderData.quadIndexCount += 6;
+	}
+
+	void Renderer::Draw(const math::Matrix4 & transform, Texture * texture) {
+		Draw(transform, math::Vector2(0.0f), math::Vector2(1.0f), texture);
 	}
 
 	void Renderer::Flush() {
