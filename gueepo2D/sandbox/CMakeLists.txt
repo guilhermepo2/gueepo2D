@@ -1,9 +1,7 @@
 project(gueepo2D-sandbox)
 
 add_executable(${PROJECT_NAME}
-    Broughlike.h
-    Broughlike.cpp
-    TileComponent.h
+    Sandbox.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
