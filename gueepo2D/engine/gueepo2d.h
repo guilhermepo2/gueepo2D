@@ -11,6 +11,8 @@
 #include "core/Application.h"
 #include "core/Window.h"
 
+#include "core/Containers/String.h"
+
 #include "core/events/Event.h"
 #include "core/events/EventDispatcher.h"
 #include "core/events/ApplicationEvent.h"

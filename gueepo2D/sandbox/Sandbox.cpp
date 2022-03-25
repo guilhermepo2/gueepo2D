@@ -23,6 +23,9 @@ void SampleLayer::OnAttach() {
 	s_Camera = new gueepo::OrtographicCamera(960, 540);
 	s_Camera->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
 	s_TemplateTexture = gueepo::Texture::Create("./assets/Template.png");
+
+	gueepo::String myString("Jalapeno Poppers");
+	LOG_INFO("{0}", myString.GetCRCValue());
 }
 
 void SampleLayer::OnRender() {

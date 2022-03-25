@@ -10,6 +10,10 @@ add_library(${PROJECT_NAME} STATIC
     core/Application.cpp
     core/ImGuiLayer.cpp
     core/Log.cpp
+
+    core/Containers/String.h
+    core/Containers/String.cpp
+
     core/filesystem/File.cpp
     core/GameObject/Entity.cpp
     core/GameObject/GameObject.cpp
