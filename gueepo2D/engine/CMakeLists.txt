@@ -1,4 +1,4 @@
-project(gueepo2D-engine VERSION 0.1 DESCRIPTION "gueepo2D game engine v0.1 (alpha?)")
+project(gueepo2D-engine VERSION 0.1 DESCRIPTION "gueepo2D game engine v0.1")
 
 set(PLATFORM_SDL2 true CACHE BOOL "Use SDL2 Platform Backend")
 set(GRAPHICS_OPENGL true CACHE BOOL "Use OpenGL Graphics Backend")

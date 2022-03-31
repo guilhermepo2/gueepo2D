@@ -3,6 +3,30 @@
 static gueepo::Texture* s_TemplateTexture = nullptr;
 static gueepo::OrtographicCamera* s_Camera = nullptr;
 
+typedef struct {
+	gueepo::Texture* tex;
+	gueepo::math::Vector2 SourceRectMin;
+	gueepo::math::Vector2 SourceRectMax;
+
+	gueepo::math::Vector2 GetSize() {
+		return SourceRectMax - SourceRectMin;
+	}
+
+	gueepo::math::Vector2 GetCoordMin() {
+		return gueepo::math::Vector2(
+			SourceRectMin.x / tex->GetWidth(), 
+			SourceRectMin.y / tex->GetHeight()
+		);
+	}
+
+	gueepo::math::Vector2 GetCoordMax() {
+		return gueepo::math::Vector2(
+			SourceRectMax.x / tex->GetWidth(),
+			SourceRectMax.y / tex->GetHeight()
+		);
+	}
+} t_subtexture;
+
 class SampleLayer : public gueepo::Layer {
 public:
 	SampleLayer() : Layer("sample layer") {}
@@ -29,28 +53,37 @@ void SampleLayer::OnAttach() {
 }
 
 void SampleLayer::OnRender() {
-	gueepo::Renderer::BeginScene(*s_Camera); // SHOULD BE DONE BY THE ENGINE?!
+	gueepo::Renderer::BeginScene(*s_Camera); // SHOULD BE DONE BY THE ENGINE?! // it should be done by the engine.
 
 	gueepo::math::Vector2 textureScale = gueepo::math::Vector2(s_TemplateTexture->GetWidth() * 2, s_TemplateTexture->GetHeight() * 2);
 	gueepo::math::Matrix4 textureScaleMatrix = gueepo::math::Matrix4::CreateScale(textureScale);
-	
-	// TEMPORARY
-	int tile_x = 0;
-	int tile_y = 3;
+
+	t_subtexture mySprite;
+	mySprite.tex = s_TemplateTexture;
+
+#if 1
+	// Option 1. Setting hard positions for coordinates
+	mySprite.SourceRectMin.x = 16;
+	mySprite.SourceRectMin.y = 32;
+	mySprite.SourceRectMax.x = 32;
+	mySprite.SourceRectMax.y = 48;
+#else
+	// Option 2. Based on tile position and tile size
+	int tile_x = 1;
+	int tile_y = 2;
 	int TileWidth = 16;
 	int TileHeight = 16;
-	float tw = (float)TileWidth / s_TemplateTexture->GetWidth();
-	float th = (float)TileHeight / s_TemplateTexture->GetHeight();
 
-	float min_x = tile_x * tw;
-	float min_y = tile_y * th;
-	float max_x = (tile_x + 1) * tw;
-	float max_y = (tile_y + 1) * th;
+	mySprite.SourceRectMin.x = tile_x * TileWidth;
+	mySprite.SourceRectMin.y = tile_y * TileHeight;
+	mySprite.SourceRectMax.x = (tile_x + 1) * TileWidth;
+	mySprite.SourceRectMax.y = (tile_y + 1) * TileHeight;
+#endif
 
-	gueepo::math::Vector2 coordMin = gueepo::math::Vector2(min_x, min_y);
-	gueepo::math::Vector2 coordMax = gueepo::math::Vector2(max_x, max_y);
+	// Subtexture(Texture* tex, Rect sourceRect)							-> SourceRectangle will be used to calculate TextureCoordinates
+	// Subtexture(Texture* tex, Vector2 TilePosition, Vector2 TileSize)		-> TilePosition and TileSize are used to calculate SourceRect (vec2 min and vec2 max)
 
-	gueepo::Renderer::Draw(textureScaleMatrix, coordMin, coordMax, s_TemplateTexture);
+	gueepo::Renderer::Draw(gueepo::math::Matrix4::CreateScale(mySprite.GetSize() * 5), mySprite.GetCoordMin(), mySprite.GetCoordMax(), mySprite.tex);
 
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?!
 }
