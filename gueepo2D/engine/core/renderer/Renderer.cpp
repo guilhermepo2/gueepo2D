@@ -4,7 +4,32 @@
 #include "core/renderer/OrtographicCamera.h"
 #include "core/renderer/Texture.h"
 
+// Specific Renderer APIs
+#include "platform/OpenGL/OpenGLRendererAPI.h"
+
 namespace gueepo {
+
+	static RendererAPI* s_RendererAPI = nullptr;
+
+	static RendererAPI* InitRendererAPI() {
+		
+		switch (RendererAPI::GetAPI()) {
+		case RendererAPI::API::None:
+			LOG_ERROR("RENDERER API 'NONE' NOT IMPLEMENTED!");
+			break;
+		case RendererAPI::API::OpenGL:
+			return new OpenGLRendererAPI();
+			break;
+		case RendererAPI::API::DirectX:
+		case RendererAPI::API::Vulkan:
+		case RendererAPI::API::Metal:
+			LOG_ERROR("RENDERER API NOT IMPLEMENTED!");
+			break;
+			
+		}
+
+		return nullptr;
+	}
 
 	struct QuadVertex {
 		gueepo::math::Vector3 Position;
@@ -42,6 +67,14 @@ namespace gueepo {
 	} s_RenderData;
 
 	void Renderer::Initialize() {
+		
+		s_RendererAPI = InitRendererAPI();
+
+		if (s_RendererAPI == nullptr) {
+			LOG_ERROR("Error initializing Renderer API");
+			return;
+		}
+
 		s_RenderData.defaultVertexArray = VertexArray::Create();
 		s_RenderData.defaultVertexBuffer = VertexBuffer::Create(s_RenderData.MaxVertices * sizeof(QuadVertex));
 		s_RenderData.defaultVertexBuffer->SetLayout({
@@ -86,13 +119,13 @@ namespace gueepo {
 	void Renderer::BeginScene(OrtographicCamera& sceneCamera) {
 		s_RenderData.ViewProjection = sceneCamera.GetViewProjectionMatrix();
 
-		RenderCommand::SetClearColor(
+		s_RendererAPI->SetClearColor(
 			sceneCamera.GetBackGroundColor().rgba[0],
 			sceneCamera.GetBackGroundColor().rgba[1],
 			sceneCamera.GetBackGroundColor().rgba[2],
 			sceneCamera.GetBackGroundColor().rgba[3]
 		);
-		RenderCommand::Clear();
+		s_RendererAPI->Clear();
 		
 		s_RenderData.RenderStats.DrawCalls = 0;
 		StartBatch();
@@ -118,7 +151,7 @@ namespace gueepo {
 		shader->Bind();
 		shader->SetMat4("u_ViewProjection", s_RenderData.ViewProjection);
 		vertexArray->Bind();
-		RenderCommand::DrawIndexed(vertexArray);
+		s_RendererAPI->DrawIndexed(vertexArray);
 	}
 
 	void Renderer::Draw(const math::Matrix4& transform, const math::Vector2& textureCoordMin, const math::Vector2& textureCoordMax, Texture* texture) {
@@ -183,7 +216,7 @@ namespace gueepo {
 		s_RenderData.defaultSpriteShader->Bind();
 		s_RenderData.defaultSpriteShader->SetMat4("u_ViewProjection", s_RenderData.ViewProjection);
 		s_RenderData.defaultVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_RenderData.defaultVertexArray, s_RenderData.quadIndexCount);
+		s_RendererAPI->DrawIndexed(s_RenderData.defaultVertexArray, s_RenderData.quadIndexCount);
 		s_RenderData.RenderStats.DrawCalls++;
 	}
 

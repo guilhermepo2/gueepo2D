@@ -25,7 +25,6 @@
 #include "core/layer/LayerStack.h"
 
 #include "core/renderer/Renderer.h"
-#include "core/renderer/RenderCommand.h"
 #include "core/renderer/RendererAPI.h"
 #include "core/renderer/GraphicsContext.h"
 #include "core/renderer/VertexArray.h"

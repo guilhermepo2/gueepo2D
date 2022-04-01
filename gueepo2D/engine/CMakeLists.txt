@@ -29,7 +29,6 @@ add_library(${PROJECT_NAME} STATIC
     core/renderer/IndexBuffer.cpp
     core/renderer/IndexBuffer.cpp
     core/renderer/OrtographicCamera.cpp
-    core/renderer/RenderCommand.cpp
     core/renderer/Renderer.cpp
     core/renderer/RendererAPI.cpp
     core/renderer/Shader.cpp
