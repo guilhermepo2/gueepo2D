@@ -1,8 +1,8 @@
 #include "gueepo2Dpch.h"
 #include "ImGuiLayer.h"
+
 #include "Application.h"
 #include "core/events/EventDispatcher.h"
-
 // #todo: maybe I can change this to #include "thirdparty/imgui-docking/backends/(...)" ?
 // #also: this is temporary stuff
 #include "platform/SDL2/imgui_impl_sdl.h"

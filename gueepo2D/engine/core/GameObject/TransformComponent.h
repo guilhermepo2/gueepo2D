@@ -16,11 +16,9 @@ namespace gueepo {
 
 		TransformComponent(const math::Vector2& _position, const float& _rotation, const math::Vector2& _scale) : position(_position), rotation(_rotation), scale(_scale) {}
 
-		// todo:
-		// rotate(ds)
-		// translate(ds)
-		// set scale sign
-		// get transform matrix?
+		// TODO: rotate(ds)
+		// TODO: translate(ds)
+		// TODO: set scale sign
 
 		math::Matrix4 GetTransformMatrix() {
 			return math::Matrix4::CreateScale(scale)

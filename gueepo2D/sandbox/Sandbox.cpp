@@ -43,7 +43,7 @@ void SampleLayer::OnAttach() {
 	s_player3 = new gueepo::GameObject(s_TemplateTexture, "Player");
 	s_player3->SetPosition(200.0, -64.0f);
 	s_player3->SetScale(3.0f, 3.0f);
-	s_player3->sprite->RebuildSourceRectangle(1, 2, 16, 16);
+	s_player3->sprite->RebuildSourceRectangle(1, 1, 16, 16);
 }
 
 void SampleLayer::OnRender() {

@@ -9,14 +9,6 @@
 #include "core/renderer/VertexArray.h"
 #include "core/renderer/Renderer.h"
 
-/*
-* The signature for the Submit function (submitting stuff to render) is:
-*	Submit(VertexArray*, Shader*)
-* now, since this is a 2D game engine, we can assume default VAs and default Shaders, but
-* we have to keep in mind  away to be able to customize or change this, or whatever
-* Ideally a sprite component would have a "Material" which would have its own shader, and mayhaps its own VA (because we need to inform the vertex buffer layout
-*/
-
 namespace gueepo {
 	class SpriteComponent : public Component {	
 	public:

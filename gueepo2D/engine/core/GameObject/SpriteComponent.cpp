@@ -17,7 +17,7 @@ namespace gueepo {
 
 	void SpriteComponent::RebuildSourceRectangle() {
 		sourceRectangle.min = math::Vector2::Zero;
-		sourceRectangle.max = math::Vector2(texture->GetWidth(), texture->GetHeight());
+		sourceRectangle.max = math::Vector2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()));
 	}
 
 	void SpriteComponent::RebuildSourceRectangle(math::Vector2 min, math::Vector2 max) {
@@ -26,10 +26,10 @@ namespace gueepo {
 	}
 
 	void SpriteComponent::RebuildSourceRectangle(int tile_x, int tile_y, int tile_width, int tile_height) {
-		sourceRectangle.min.x = tile_x * tile_width;
-		sourceRectangle.min.y = tile_y * tile_height;
-		sourceRectangle.max.x = (tile_x + 1) * tile_width;
-		sourceRectangle.max.y = (tile_y + 1) * tile_height;
+		sourceRectangle.min.x = static_cast<float>(tile_x * tile_width);
+		sourceRectangle.min.y = static_cast<float>(tile_y * tile_height);
+		sourceRectangle.max.x = static_cast<float>((tile_x + 1) * tile_width);
+		sourceRectangle.max.y = static_cast<float>((tile_y + 1) * tile_height);
 	}
 
 	void SpriteComponent::Render() {

@@ -1,5 +1,6 @@
 #include "gueepo2Dpch.h"
 #include "Application.h"
+
 #include "core/events/ApplicationEvent.h"
 #include "core/events/EventDispatcher.h"
 #include "core/ImGuiLayer.h"
@@ -7,8 +8,6 @@
 #include "core/TimeStep.h"
 #include "core/renderer/Renderer.h"
 
-
-// For now locking this to run at 60fps
 const unsigned int FPS = 60;
 const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
 

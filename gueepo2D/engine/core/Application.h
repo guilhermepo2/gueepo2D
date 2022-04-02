@@ -1,4 +1,11 @@
+
+// ----------------------------------------------------------
+// gueepo2D: Application.h
+// Defines an application that can use the engine resources
+// ----------------------------------------------------------
+
 #pragma once
+
 #include "Window.h"
 #include "core/layer/LayerStack.h"
 
