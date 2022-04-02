@@ -3,29 +3,9 @@
 static gueepo::Texture* s_TemplateTexture = nullptr;
 static gueepo::OrtographicCamera* s_Camera = nullptr;
 
-typedef struct {
-	gueepo::Texture* tex;
-	gueepo::math::Vector2 SourceRectMin;
-	gueepo::math::Vector2 SourceRectMax;
-
-	gueepo::math::Vector2 GetSize() {
-		return SourceRectMax - SourceRectMin;
-	}
-
-	gueepo::math::Vector2 GetCoordMin() {
-		return gueepo::math::Vector2(
-			SourceRectMin.x / tex->GetWidth(), 
-			SourceRectMin.y / tex->GetHeight()
-		);
-	}
-
-	gueepo::math::Vector2 GetCoordMax() {
-		return gueepo::math::Vector2(
-			SourceRectMax.x / tex->GetWidth(),
-			SourceRectMax.y / tex->GetHeight()
-		);
-	}
-} t_subtexture;
+static gueepo::GameObject* s_player1 = nullptr;
+static gueepo::GameObject* s_player2 = nullptr;
+static gueepo::GameObject* s_player3 = nullptr;
 
 class SampleLayer : public gueepo::Layer {
 public:
@@ -48,42 +28,30 @@ void SampleLayer::OnAttach() {
 	s_Camera->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
 	s_TemplateTexture = gueepo::Texture::Create("./assets/Template.png");
 
-	gueepo::String myString("Jalapeno Poppers");
-	LOG_INFO("{0}", myString.GetCRCValue());
+	// This uses the default sprite constructor, should draw the entire texture
+	s_player1 = new gueepo::GameObject(s_TemplateTexture, "Player");
+	s_player1->SetPosition(0.0, 0.0f);
+	s_player1->SetScale(3.0f, 3.0f);
+
+	// This simulates using the sprite constructor that gives a min and a max for the source rectangle
+	s_player2 = new gueepo::GameObject(s_TemplateTexture, "Player");
+	s_player2->SetPosition(200.0, 64.0f);
+	s_player2->SetScale(3.0f, 3.0f);
+	s_player2->sprite->RebuildSourceRectangle(gueepo::math::Vector2(16, 32), gueepo::math::Vector2(32, 48));
+
+	// This simulates using the sprite constructor that gives tile position and tile size
+	s_player3 = new gueepo::GameObject(s_TemplateTexture, "Player");
+	s_player3->SetPosition(200.0, -64.0f);
+	s_player3->SetScale(3.0f, 3.0f);
+	s_player3->sprite->RebuildSourceRectangle(1, 2, 16, 16);
 }
 
 void SampleLayer::OnRender() {
-	gueepo::Renderer::BeginScene(*s_Camera); // SHOULD BE DONE BY THE ENGINE?! // it should be done by the engine.
+	gueepo::Renderer::BeginScene(*s_Camera);
 
-	gueepo::math::Vector2 textureScale = gueepo::math::Vector2(s_TemplateTexture->GetWidth() * 2, s_TemplateTexture->GetHeight() * 2);
-	gueepo::math::Matrix4 textureScaleMatrix = gueepo::math::Matrix4::CreateScale(textureScale);
-
-	t_subtexture mySprite;
-	mySprite.tex = s_TemplateTexture;
-
-#if 1
-	// Option 1. Setting hard positions for coordinates
-	mySprite.SourceRectMin.x = 16;
-	mySprite.SourceRectMin.y = 32;
-	mySprite.SourceRectMax.x = 32;
-	mySprite.SourceRectMax.y = 48;
-#else
-	// Option 2. Based on tile position and tile size
-	int tile_x = 1;
-	int tile_y = 2;
-	int TileWidth = 16;
-	int TileHeight = 16;
-
-	mySprite.SourceRectMin.x = tile_x * TileWidth;
-	mySprite.SourceRectMin.y = tile_y * TileHeight;
-	mySprite.SourceRectMax.x = (tile_x + 1) * TileWidth;
-	mySprite.SourceRectMax.y = (tile_y + 1) * TileHeight;
-#endif
-
-	// Subtexture(Texture* tex, Rect sourceRect)							-> SourceRectangle will be used to calculate TextureCoordinates
-	// Subtexture(Texture* tex, Vector2 TilePosition, Vector2 TileSize)		-> TilePosition and TileSize are used to calculate SourceRect (vec2 min and vec2 max)
-
-	gueepo::Renderer::Draw(gueepo::math::Matrix4::CreateScale(mySprite.GetSize() * 5), mySprite.GetCoordMin(), mySprite.GetCoordMax(), mySprite.tex);
+	s_player1->Render();
+	s_player2->Render();
+	s_player3->Render();
 
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?!
 }

@@ -25,27 +25,30 @@ namespace gueepo {
 		// todo: color (should be in the material?)
 		bool FlipHorizontal = false;
 		bool FlipVertical = false;
+		math::Rect sourceRectangle;
 
 		SpriteComponent() : texture(nullptr) {}
-		SpriteComponent(Texture* tex, int drawOrder = 1) : texture(tex), DrawOrder(drawOrder) {}
 
-		void Render() override {
-			TransformComponent* t = Owner->GetComponentOfType<TransformComponent>();
-			assert(t != nullptr, "trying to render something without a transform?!");
+		/* Assumes that sourceRectangle is (0,0) (textureWidth, textureHeight)*/
+		SpriteComponent(Texture* tex, int drawOrder = 1);
 
-			math::Vector2 textureScaleVec(texture->GetWidth(), texture->GetHeight());
-			
-			if (FlipHorizontal) {
-				textureScaleVec.x *= -1;
-			}
+		/* Explicitly passes sourceRectangle min and max points */
+		SpriteComponent(Texture* tex, math::Vector2 min, math::Vector2 max, int drawOrder = 1);
 
-			if (FlipVertical) {
-				textureScaleVec.y *= -1;
-			}
+		/* 
+			Calculates the source rectangle given the tile position and tile size
+			Not the best function signature, but hopefully this won't be used a lot :)
+		*/
+		SpriteComponent(Texture* tex, int tile_x, int tile_y, int tile_width, int tile_height, int drawOrder = 1);
 
-			math::Matrix4 textureScale = math::Matrix4::CreateScale(textureScaleVec);
-			math::Matrix4 transformMatrix = textureScale * t->GetTransformMatrix();
-			Renderer::Draw(transformMatrix, texture);
-		}
+		void RebuildSourceRectangle();
+		void RebuildSourceRectangle(math::Vector2 min, math::Vector2 max);
+		void RebuildSourceRectangle(int tile_x, int tile_y, int tile_width, int tile_height);
+
+		void Render() override;
+
+	private:
+		math::Vector2 GetTexCoordsMin() const;
+		math::Vector2 GetTexCoordsMax() const;
 	};
 }

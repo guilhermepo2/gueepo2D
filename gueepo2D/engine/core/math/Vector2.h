@@ -65,6 +65,7 @@ namespace gueepo::math {
 		}
 
 		static const Vector2 Zero;
+		static const Vector2 One;
 		static const Vector2 Right;
 		static const Vector2 Up;
 	};
