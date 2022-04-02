@@ -58,10 +58,13 @@ set(HEADERS
     "core/GameObject/Entity.h"
     "core/GameObject/Component.h"
     "core/GameObject/TransformComponent.h"
+    "core/math/Rect.h"
 )
 
-source_group( ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
-source_group( ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HEADERS})
+message(${CMAKE_CURRENT_SOURCE_DIR})
+
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/" PREFIX "Header Files" FILES ${HEADERS})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/" PREFIX "Source Files" FILES ${SOURCES})
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 
