@@ -28,6 +28,9 @@ void SampleLayer::OnAttach() {
 	s_Camera->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
 	s_TemplateTexture = gueepo::Texture::Create("./assets/Template.png");
 
+	// How would I represent a Tilemap? a Tile?
+	// What is a Tilemap?
+
 	// This uses the default sprite constructor, should draw the entire texture
 	s_player1 = new gueepo::GameObject(s_TemplateTexture, "Player");
 	s_player1->SetPosition(0.0, 0.0f);
@@ -37,13 +40,13 @@ void SampleLayer::OnAttach() {
 	s_player2 = new gueepo::GameObject(s_TemplateTexture, "Player");
 	s_player2->SetPosition(200.0, 64.0f);
 	s_player2->SetScale(3.0f, 3.0f);
-	s_player2->sprite->RebuildSourceRectangle(gueepo::math::Vector2(16, 32), gueepo::math::Vector2(32, 48));
+	s_player2->sprite->RebuildSourceRectangle(gueepo::math::Vector2(16, 0), gueepo::math::Vector2(32, 16));
 
 	// This simulates using the sprite constructor that gives tile position and tile size
 	s_player3 = new gueepo::GameObject(s_TemplateTexture, "Player");
 	s_player3->SetPosition(200.0, -64.0f);
 	s_player3->SetScale(3.0f, 3.0f);
-	s_player3->sprite->RebuildSourceRectangle(1, 1, 16, 16);
+	s_player3->sprite->RebuildSourceRectangle(3, 3, 16, 16);
 }
 
 void SampleLayer::OnRender() {
@@ -53,7 +56,7 @@ void SampleLayer::OnRender() {
 	s_player2->Render();
 	s_player3->Render();
 
-	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?!
+	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
 }
 
 class SandboxApp : public gueepo::Application {
