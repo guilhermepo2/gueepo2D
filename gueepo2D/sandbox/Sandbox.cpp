@@ -1,11 +1,16 @@
 #include <gueepo2D.h>
 
 static gueepo::Texture* s_TemplateTexture = nullptr;
+static gueepo::Tilemap* s_textureTilemap = nullptr;
 static gueepo::OrtographicCamera* s_Camera = nullptr;
 
 static gueepo::GameObject* s_player1 = nullptr;
 static gueepo::GameObject* s_player2 = nullptr;
 static gueepo::GameObject* s_player3 = nullptr;
+static gueepo::GameObject* s_player4 = nullptr;
+
+static float s_Count = 0.0f;
+static int s_currentTile = 3;
 
 class SampleLayer : public gueepo::Layer {
 public:
@@ -13,7 +18,7 @@ public:
 
 	void OnAttach() override;
 	void OnDetach() override {}
-	void OnUpdate(float DeltaTime) override {}
+	void OnUpdate(float DeltaTime) override;
 	void OnInput(const gueepo::InputState& currentInputState) override {}
 	void OnEvent(gueepo::Event& e) override {}
 	void OnRender() override;
@@ -27,6 +32,8 @@ void SampleLayer::OnAttach() {
 	s_Camera = new gueepo::OrtographicCamera(960, 540);
 	s_Camera->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
 	s_TemplateTexture = gueepo::Texture::Create("./assets/Template.png");
+	s_textureTilemap = new gueepo::Tilemap(s_TemplateTexture);
+	s_textureTilemap->Slice(16, 16);
 
 	// How would I represent a Tilemap? a Tile?
 	// What is a Tilemap?
@@ -47,6 +54,23 @@ void SampleLayer::OnAttach() {
 	s_player3->SetPosition(200.0, -64.0f);
 	s_player3->SetScale(3.0f, 3.0f);
 	s_player3->sprite->RebuildSourceRectangle(3, 3, 16, 16);
+
+	// This simulates using the sprite constructor that gives a Tile
+	s_player4 = new gueepo::GameObject(s_TemplateTexture, "Player4");
+	s_player4->SetPosition(0.0f, 128.0f);
+	s_player4->SetScale(3.0f, 3.0f);
+	s_player4->sprite->RebuildFromTile(s_textureTilemap->GetTile(3));
+}
+
+void SampleLayer::OnUpdate(float DeltaTime) {
+	s_Count += DeltaTime;
+
+	if (s_Count >= 0.25f) {
+		s_Count = 0.0f;
+		s_currentTile = (s_currentTile + 4) % s_textureTilemap->GetNumberOfTiles();
+
+		s_player4->sprite->RebuildFromTile(s_textureTilemap->GetTile(s_currentTile));
+	}
 }
 
 void SampleLayer::OnRender() {
@@ -55,6 +79,7 @@ void SampleLayer::OnRender() {
 	s_player1->Render();
 	s_player2->Render();
 	s_player3->Render();
+	s_player4->Render();
 
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
 }

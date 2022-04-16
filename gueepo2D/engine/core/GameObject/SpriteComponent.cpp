@@ -1,6 +1,7 @@
 #include "gueepo2Dpch.h"
 #include "SpriteComponent.h"
 #include "core/renderer/BufferLayout.h"
+#include "utils/Tilemap.h"
 
 namespace gueepo {
 	SpriteComponent::SpriteComponent(Texture* tex, int drawOrder /* = 1 */) : texture(tex), DrawOrder(drawOrder) {
@@ -15,21 +16,29 @@ namespace gueepo {
 		RebuildSourceRectangle(tile_x, tile_y, tile_width, tile_height);
 	}
 
+	SpriteComponent::SpriteComponent(Texture* tex, const Tile& tile, int drawOrder /*= 1*/) : texture(tex), DrawOrder(drawOrder) {
+		RebuildFromTile(tile);
+	}
+
 	void SpriteComponent::RebuildSourceRectangle() {
-		sourceRectangle.min = math::Vector2::Zero;
-		sourceRectangle.max = math::Vector2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()));
+		sourceRectangle.bottomLeft = math::Vector2::Zero;
+		sourceRectangle.topRight = math::Vector2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()));
 	}
 
 	void SpriteComponent::RebuildSourceRectangle(math::Vector2 min, math::Vector2 max) {
-		sourceRectangle.min = min;
-		sourceRectangle.max = max;
+		sourceRectangle.bottomLeft = min;
+		sourceRectangle.topRight = max;
 	}
 
 	void SpriteComponent::RebuildSourceRectangle(int tile_x, int tile_y, int tile_width, int tile_height) {
-		sourceRectangle.min.x = static_cast<float>(tile_x * tile_width);
-		sourceRectangle.min.y = static_cast<float>(tile_y * tile_height);
-		sourceRectangle.max.x = static_cast<float>((tile_x + 1) * tile_width);
-		sourceRectangle.max.y = static_cast<float>((tile_y + 1) * tile_height);
+		sourceRectangle.bottomLeft.x = static_cast<float>(tile_x * tile_width);
+		sourceRectangle.bottomLeft.y = static_cast<float>(tile_y * tile_height);
+		sourceRectangle.topRight.x = static_cast<float>((tile_x + 1) * tile_width);
+		sourceRectangle.topRight.y = static_cast<float>((tile_y + 1) * tile_height);
+	}
+
+	void SpriteComponent::RebuildFromTile(const Tile& tile) {
+		sourceRectangle = tile.GetRect();
 	}
 
 	void SpriteComponent::Render() {
@@ -56,15 +65,15 @@ namespace gueepo {
 	// ------------------------------------------------------------------------------------
 	math::Vector2 SpriteComponent::GetTexCoordsMin() const {
 		return math::Vector2(
-			sourceRectangle.min.x / texture->GetWidth(),
-			sourceRectangle.min.y / texture->GetHeight()
+			sourceRectangle.bottomLeft.x / texture->GetWidth(),
+			sourceRectangle.bottomLeft.y / texture->GetHeight()
 		);
 	}
 
 	math::Vector2 SpriteComponent::GetTexCoordsMax() const {
 		return math::Vector2(
-			sourceRectangle.max.x / texture->GetWidth(),
-			sourceRectangle.max.y / texture->GetHeight()
+			sourceRectangle.topRight.x / texture->GetWidth(),
+			sourceRectangle.topRight.y / texture->GetHeight()
 		);
 	}
 }

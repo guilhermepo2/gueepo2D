@@ -10,6 +10,9 @@
 #include "core/renderer/Renderer.h"
 
 namespace gueepo {
+
+	class Tile;
+
 	class SpriteComponent : public Component {	
 	public:
 		Texture* texture;
@@ -33,9 +36,13 @@ namespace gueepo {
 		*/
 		SpriteComponent(Texture* tex, int tile_x, int tile_y, int tile_width, int tile_height, int drawOrder = 1);
 
+		/* Gets the source rectangle from the tile */
+		SpriteComponent(Texture* tex, const Tile& tile, int drawOrder = 1);
+
 		void RebuildSourceRectangle();
 		void RebuildSourceRectangle(math::Vector2 min, math::Vector2 max);
 		void RebuildSourceRectangle(int tile_x, int tile_y, int tile_width, int tile_height);
+		void RebuildFromTile(const Tile& tile);
 
 		void Render() override;
 
