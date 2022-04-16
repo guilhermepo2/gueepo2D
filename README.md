@@ -28,7 +28,6 @@ Soon™
 Currently that's the only platform/backend available, here's a roadmap:
 
 ### Platforms
-- [ ] **Windows (x86)** ( Still thinking about it. )
 - [ ] **Linux**
 - [ ] **macOS**
 
