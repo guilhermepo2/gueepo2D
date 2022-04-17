@@ -44,7 +44,6 @@ namespace gueepo {
 		while (m_bIsRunning) {
 			float DeltaTime = static_cast<float>((timestep::GetTicks() - TicksLastFrame)) / 1000.0f;
 			TicksLastFrame = timestep::GetTicks();
-			// process input before update
 			inputSystem->PrepareForUpdate();
 			m_Window->Update();
 			inputSystem->Update();
@@ -57,7 +56,6 @@ namespace gueepo {
 				l->OnUpdate(DeltaTime);
 			}
 
-			// #todo: have a way to set the color to be cleared (maybe put it on the camera)
 			// RenderCommand::SetClearColor(gueepo::math::Vector3(0.1f, 0.1f, 0.1f));
 			// RenderCommand::Clear();
 			for (Layer* l : m_LayerStack) {
@@ -72,7 +70,6 @@ namespace gueepo {
 			}
 			m_ImGuiLayer->End();
 
-	
 			m_Window->Swap();
 
 			// delaying until next frame so we can keep 60fps
