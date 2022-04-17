@@ -83,11 +83,14 @@ set(HEADERS
     "core/input/MouseCodes.h"
     "core/layer/Layer.h"
     "core/layer/LayerStack.h"
+
+    "core/math/Math.h"
     "core/math/Rect.h"
     "core/math/Matrix4.h"
     "core/math/Random.h"
     "core/math/Vector2.h"
     "core/math/Vector3.h"
+
     "core/renderer/BufferLayout.h"
     "core/renderer/Color.h"
     "core/renderer/GraphicsContext.h"
