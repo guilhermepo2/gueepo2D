@@ -32,11 +32,8 @@ void SampleLayer::OnAttach() {
 	s_Camera = new gueepo::OrtographicCamera(960, 540);
 	s_Camera->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
 	s_TemplateTexture = gueepo::Texture::Create("./assets/Template.png");
-	s_textureTilemap = new gueepo::Tilemap(s_TemplateTexture);
+	s_textureTilemap = new gueepo::Tilemap(s_TemplateTexture); // #todo: create a static "Create" function
 	s_textureTilemap->Slice(16, 16);
-
-	// How would I represent a Tilemap? a Tile?
-	// What is a Tilemap?
 
 	// This uses the default sprite constructor, should draw the entire texture
 	s_player1 = new gueepo::GameObject(s_TemplateTexture, "Player");
@@ -59,13 +56,13 @@ void SampleLayer::OnAttach() {
 	s_player4 = new gueepo::GameObject(s_TemplateTexture, "Player4");
 	s_player4->SetPosition(0.0f, 128.0f);
 	s_player4->SetScale(3.0f, 3.0f);
-	s_player4->sprite->RebuildFromTile(s_textureTilemap->GetTile(3));
+	s_player4->sprite->RebuildFromTile(s_textureTilemap->GetTile(7));
 }
 
 void SampleLayer::OnUpdate(float DeltaTime) {
 	s_Count += DeltaTime;
 
-	if (s_Count >= 0.25f) {
+	if (s_Count >= 0.2f) {
 		s_Count = 0.0f;
 		s_currentTile = (s_currentTile + 4) % s_textureTilemap->GetNumberOfTiles();
 
@@ -77,8 +74,8 @@ void SampleLayer::OnRender() {
 	gueepo::Renderer::BeginScene(*s_Camera);
 
 	s_player1->Render();
-	s_player2->Render();
-	s_player3->Render();
+	// s_player2->Render();
+	// s_player3->Render();
 	s_player4->Render();
 
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol

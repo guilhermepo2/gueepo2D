@@ -10,4 +10,6 @@ add_subdirectory(gueepo2D/thirdparty/imgui-docking)
 add_subdirectory(gueepo2D/engine)
 add_subdirectory(gueepo2D/sandbox)
 
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT gueepo2D-sandbox)
+if(MSVC)
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT gueepo2D-sandbox)
+endif()
