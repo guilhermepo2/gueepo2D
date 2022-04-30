@@ -20,6 +20,8 @@
 #include "core/events/MouseEvent.h"
 
 #include "core/filesystem/File.h"
+#include "core/filesystem/Filesystem.h"
+#include "core/filesystem/json.h"
 
 #include "core/layer/Layer.h"
 #include "core/layer/LayerStack.h"

@@ -57,6 +57,26 @@ void SampleLayer::OnAttach() {
 	s_player4->SetPosition(0.0f, 128.0f);
 	s_player4->SetScale(3.0f, 3.0f);
 	s_player4->sprite->RebuildFromTile(s_textureTilemap->GetTile(7));
+
+	// #TODO: this has definitely to be a unit test thing
+	LOG_INFO("testing a json file!");
+	gueepo::json myJson("./assets/myJson.json");
+	if (myJson.IsValid()) {
+		LOG_INFO("loaded json is valid!");
+	}
+	int testInt;
+	float testFloat;
+	bool testBool;
+	std::string testString;
+	myJson.GetInt("number", testInt);
+	myJson.GetFloat("floating", testFloat);
+	myJson.GetBool("boolean", testBool);
+	myJson.GetString("color", testString);
+
+	LOG_INFO("should be 123: {0}", testInt);
+	LOG_INFO("should be 3.5: {0}", testFloat);
+	LOG_INFO("should be true (1): {0}", testBool);
+	LOG_INFO("should be 'gold': {0}", testString);
 }
 
 void SampleLayer::OnUpdate(float DeltaTime) {
