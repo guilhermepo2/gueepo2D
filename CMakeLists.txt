@@ -6,6 +6,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_subdirectory(gueepo2D/thirdparty/glad)
 add_subdirectory(gueepo2D/thirdparty/imgui-docking)
+set_target_properties (glad dearimgui PROPERTIES FOLDER thirdparty)
 
 add_subdirectory(gueepo2D/engine)
 add_subdirectory(gueepo2D/sandbox)
