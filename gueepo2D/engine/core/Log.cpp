@@ -1,10 +1,10 @@
 #include "gueepo2Dpch.h"
 #include "Log.h"
+#include "filesystem/Filesystem.h"
 
 #pragma warning(push, 0)
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
-#include <filesystem>
 #pragma warning(pop)
 
 namespace gueepo {
@@ -12,10 +12,10 @@ namespace gueepo {
 
 	void Log::Initialize() {
 
-		// #todo: route this to gueepo::filesystem
 		std::string logsDir = "logs";
-		if (!std::filesystem::exists(logsDir)) {
-			std::filesystem::create_directories(logsDir);
+
+		if (!gueepo::filesystem::DirectoryExists(logsDir)) {
+			gueepo::filesystem::CreateDirectory(logsDir);
 		}
 
 		std::vector<spdlog::sink_ptr> loggerSinks = {

@@ -30,6 +30,8 @@ set (SOURCES
     "core/renderer/VertexBuffer.cpp"
 
     "core/filesystem/File.cpp"
+    "core/filesystem/Filesystem.cpp"
+
     "core/GameObject/Entity.cpp"
     "core/GameObject/GameObject.h"
     "core/GameObject/GameObject.cpp"
@@ -73,6 +75,8 @@ set(HEADERS
     "core/events/KeyEvent.h"
     "core/events/MouseEvent.h"
     "core/filesystem/File.h"
+    "core/filesystem/Filesystem.h"
+    
     "core/GameObject/Component.h"
     "core/GameObject/Entity.h"
     "core/GameObject/GameObject.h"
