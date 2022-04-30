@@ -1,5 +1,4 @@
 #pragma once
-#include "thirdparty/catch.hpp"
 #include "core/math/Vector2.h"
 #include "TestUtils.h"
 
