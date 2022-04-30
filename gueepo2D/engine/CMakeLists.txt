@@ -70,6 +70,7 @@ set(HEADERS
     "core/Window.h"
 
     "core/Containers/String.h"
+    "core/Debug/Profiler.h"
     "core/events/ApplicationEvent.h"
     "core/events/Event.h"
     "core/events/EventDispatcher.h"
@@ -183,3 +184,5 @@ endif()
 target_precompile_headers(${PROJECT_NAME}
     PUBLIC gueepo2Dpch.h
 )
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DGUEEPO2D_DEBUG")

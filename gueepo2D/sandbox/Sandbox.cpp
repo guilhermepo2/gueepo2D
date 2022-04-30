@@ -26,6 +26,9 @@ public:
 };
 
 void SampleLayer::OnAttach() {
+
+	GUEEPO2D_SCOPED_TIMER("sample layer initialization");
+
 	// this shouldn't be here, the engine should initialize the renderer, not the game???
 	gueepo::Renderer::Initialize();
 
