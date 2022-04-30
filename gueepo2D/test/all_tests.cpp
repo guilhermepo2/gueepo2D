@@ -1,11 +1,8 @@
 #include "gueepo2D.h"
-
 #include <catch2/catch_all.hpp>
-
 #include "vector2.h"
 #include "vector3.h"
 #include "json.h"
-
 
 class Dummy : public gueepo::Application {
 public:
@@ -13,7 +10,6 @@ public:
 	Dummy() : Application("sandbox", 960, 540) {}
 	~Dummy() {}
 };
-
 
 gueepo::Application* gueepo::CreateApplication() {
 	
