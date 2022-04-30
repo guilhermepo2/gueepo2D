@@ -4,20 +4,16 @@
 #include "vector3.h"
 #include "json.h"
 
+
 class Dummy : public gueepo::Application {
 public:
-
 	Dummy() : Application("sandbox", 960, 540) {}
 	~Dummy() {}
 };
 
+// This is kind of dumb, but hey, it works?
+// In case it is needed that this works as some sort of sanity check as well, just return a new Dummy() instead of a nullptr
 gueepo::Application* gueepo::CreateApplication() {
-	
-	LOG_INFO("RUNNING TESTS!");
 	int result = Catch::Session().run();
-	LOG_INFO("FINISHED RUNNING TESTS");
-
-	// argh, this is awful, I wish I could just run the tests
-	// I will pat myself in the back and tell myself that this can also work as a sanity test to see if we can create a window
-	return new Dummy();
+	return nullptr;
 }

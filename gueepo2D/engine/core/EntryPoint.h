@@ -12,8 +12,14 @@ int main(int argc, char** argv) {
 	LOG_INFO("log initialized");
 
 	gueepo::Application* app = gueepo::CreateApplication();
-	app->Run();
-	delete app;
+
+	if (app != nullptr) {
+		app->Run();
+		delete app;
+	}
+	else {
+		LOG_ERROR("why is app a nullptr?");
+	}
 
 	return 0;
 }
