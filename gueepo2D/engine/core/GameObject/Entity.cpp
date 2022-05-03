@@ -1,10 +1,13 @@
 #include "gueepo2Dpch.h"
 #include "Entity.h"
 #include "Component.h"
+#include "../Log.h"
 
 gueepo::Entity::Entity() : m_bIsActive(true), Name("Entity") {}
 
 gueepo::Entity::Entity(const std::string& name) : m_bIsActive(true), Name(name) {}
+
+gueepo::Entity::~Entity() {}
 
 void gueepo::Entity::BeginPlay() {
 	for (Component* c : m_Components) {

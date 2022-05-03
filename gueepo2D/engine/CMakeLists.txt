@@ -33,6 +33,7 @@ set (SOURCES
     "core/filesystem/Filesystem.cpp"
     "core/filesystem/json.cpp"
 
+    "core/GameObject/GameWorld.cpp"
     "core/GameObject/Entity.cpp"
     "core/GameObject/GameObject.h"
     "core/GameObject/GameObject.cpp"
@@ -81,6 +82,7 @@ set(HEADERS
     "core/filesystem/Filesystem.h"
     "core/filesystem/json.h"
     
+    "core/GameObject/GameWorld.h"
     "core/GameObject/Component.h"
     "core/GameObject/Entity.h"
     "core/GameObject/GameObject.h"

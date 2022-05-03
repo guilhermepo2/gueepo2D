@@ -5,9 +5,9 @@ static gueepo::Tilemap* s_textureTilemap = nullptr;
 static gueepo::OrtographicCamera* s_Camera = nullptr;
 
 static gueepo::GameObject* s_player1 = nullptr;
-static gueepo::GameObject* s_player2 = nullptr;
-static gueepo::GameObject* s_player3 = nullptr;
 static gueepo::GameObject* s_player4 = nullptr;
+
+static gueepo::GameWorld* s_gameWorld = nullptr;
 
 static float s_Count = 0.0f;
 static int s_currentTile = 3;
@@ -38,51 +38,22 @@ void SampleLayer::OnAttach() {
 	s_textureTilemap = new gueepo::Tilemap(s_TemplateTexture); // #todo: create a static "Create" function
 	s_textureTilemap->Slice(16, 16);
 
+	s_gameWorld = new gueepo::GameWorld();
+
 	// This uses the default sprite constructor, should draw the entire texture
-	s_player1 = new gueepo::GameObject(s_TemplateTexture, "Player");
+	s_player1 = s_gameWorld->CreateGameObject(s_TemplateTexture, "Player");
 	s_player1->SetPosition(0.0, 0.0f);
 	s_player1->SetScale(3.0f, 3.0f);
 
-	// This simulates using the sprite constructor that gives a min and a max for the source rectangle
-	s_player2 = new gueepo::GameObject(s_TemplateTexture, "Player");
-	s_player2->SetPosition(200.0, 64.0f);
-	s_player2->SetScale(3.0f, 3.0f);
-	s_player2->sprite->RebuildSourceRectangle(gueepo::math::Vector2(16, 0), gueepo::math::Vector2(32, 16));
-
-	// This simulates using the sprite constructor that gives tile position and tile size
-	s_player3 = new gueepo::GameObject(s_TemplateTexture, "Player");
-	s_player3->SetPosition(200.0, -64.0f);
-	s_player3->SetScale(3.0f, 3.0f);
-	s_player3->sprite->RebuildSourceRectangle(3, 3, 16, 16);
-
 	// This simulates using the sprite constructor that gives a Tile
-	s_player4 = new gueepo::GameObject(s_TemplateTexture, "Player4");
+	s_player4 = s_gameWorld->CreateGameObject(s_TemplateTexture, "Player4");
 	s_player4->SetPosition(0.0f, 128.0f);
 	s_player4->SetScale(3.0f, 3.0f);
 	s_player4->sprite->RebuildFromTile(s_textureTilemap->GetTile(7));
-
-	// #TODO: this has definitely to be a unit test thing
-	LOG_INFO("testing a json file!");
-	gueepo::json myJson("./assets/myJson.json");
-	if (myJson.IsValid()) {
-		LOG_INFO("loaded json is valid!");
-	}
-	int testInt;
-	float testFloat;
-	bool testBool;
-	std::string testString;
-	myJson.GetInt("number", testInt);
-	myJson.GetFloat("floating", testFloat);
-	myJson.GetBool("boolean", testBool);
-	myJson.GetString("color", testString);
-
-	LOG_INFO("should be 123: {0}", testInt);
-	LOG_INFO("should be 3.5: {0}", testFloat);
-	LOG_INFO("should be true (1): {0}", testBool);
-	LOG_INFO("should be 'gold': {0}", testString);
 }
 
 void SampleLayer::OnUpdate(float DeltaTime) {
+
 	s_Count += DeltaTime;
 
 	if (s_Count >= 0.2f) {
@@ -91,15 +62,14 @@ void SampleLayer::OnUpdate(float DeltaTime) {
 
 		s_player4->sprite->RebuildFromTile(s_textureTilemap->GetTile(s_currentTile));
 	}
+
+	s_gameWorld->Update(DeltaTime);
 }
 
 void SampleLayer::OnRender() {
 	gueepo::Renderer::BeginScene(*s_Camera);
 
-	s_player1->Render();
-	// s_player2->Render();
-	// s_player3->Render();
-	s_player4->Render();
+	s_gameWorld->Render();
 
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
 }

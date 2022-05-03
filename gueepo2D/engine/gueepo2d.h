@@ -49,6 +49,7 @@
 
 #include "core/ImGuiLayer.h"
 
+#include "core/GameObject/GameWorld.h"
 #include "core/GameObject/Entity.h"
 #include "core/GameObject/GameObject.h"
 #include "core/GameObject/Component.h"

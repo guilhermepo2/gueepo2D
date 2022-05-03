@@ -17,6 +17,7 @@ namespace gueepo {
 		std::string Name;
 		Entity();
 		Entity(const std::string& name);
+		~Entity();
 
 		inline bool IsActive() const { return m_bIsActive; }
 	private:
