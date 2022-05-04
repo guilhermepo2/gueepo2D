@@ -71,6 +71,7 @@ namespace gueepo {
 				m_AllEntities.erase(toRemove);
 			}
 
+			entity->Destroy();
 			delete entity;
 		}
 

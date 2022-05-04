@@ -1,5 +1,5 @@
 /*
-* An entity is an empty "gameObject" that server as an abstract base basically
+* An entity is an empty "gameObject" that serves as an abstract base basically
 */
 
 #pragma once
@@ -17,7 +17,7 @@ namespace gueepo {
 		std::string Name;
 		Entity();
 		Entity(const std::string& name);
-		~Entity();
+		~Entity() = default;
 
 		inline bool IsActive() const { return m_bIsActive; }
 	private:

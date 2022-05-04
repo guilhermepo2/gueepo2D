@@ -1,13 +1,10 @@
 #include "gueepo2Dpch.h"
 #include "Entity.h"
 #include "Component.h"
-#include "../Log.h"
+#include "core/Log.h"
 
 gueepo::Entity::Entity() : m_bIsActive(true), Name("Entity") {}
-
 gueepo::Entity::Entity(const std::string& name) : m_bIsActive(true), Name(name) {}
-
-gueepo::Entity::~Entity() {}
 
 void gueepo::Entity::BeginPlay() {
 	for (Component* c : m_Components) {
@@ -40,8 +37,10 @@ void gueepo::Entity::Render() {
 void gueepo::Entity::Destroy() {
 	for (Component* c : m_Components) {
 		c->Destroy();
+		delete c;
 	}
-	// todo: properly destroy/mark for destruction
+	m_Components.clear();
+
 	m_bIsActive = false;
 }
 
