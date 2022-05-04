@@ -56,4 +56,8 @@ namespace gueepo {
 	uint32_t Tilemap::GetWidth() const { assert(m_tilemapTexture != nullptr, "tilemap texture is null!"); return m_tilemapTexture->GetHeight(); }
 	uint32_t Tilemap::GetHeight() const	{ assert(m_tilemapTexture != nullptr, "tilemap texture is null!"); return m_tilemapTexture->GetWidth(); }
 
+	Tilemap* Tilemap::Create(Texture* tilemapTexture) {
+		return new Tilemap(tilemapTexture);
+	}
+
 }

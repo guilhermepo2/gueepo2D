@@ -37,6 +37,8 @@ namespace gueepo {
 		uint16_t GetRows()			const { return m_NumberOfRows;		}
 		size_t	GetNumberOfTiles()	const { return m_Tiles.size();		}
 
+		static Tilemap* Create(Texture* tilemapTexture);
+
 	private:
 		Texture* m_tilemapTexture;
 		std::vector<Tile> m_Tiles;

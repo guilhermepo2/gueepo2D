@@ -32,6 +32,7 @@
 #include <fstream>
 #include <sstream>
 #include <functional>
+#include <memory>
 
 // ================================
 // gueepo2D includes
