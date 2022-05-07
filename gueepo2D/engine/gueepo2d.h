@@ -5,14 +5,14 @@
 //				CORE INCLUDES
 // ============================================================
 // ============================================================
-#include "core/Common.h"
-#include "core/Log.h"
-#include "core/EntryPoint.h"
 #include "core/Application.h"
+#include "core/Common.h"
+#include "core/EntryPoint.h"
+#include "core/Log.h"
+#include "core/ImGuiLayer.h"
 #include "core/Window.h"
 
 #include "core/Containers/String.h"
-
 #include "core/Debug/Profiler.h"
 
 #include "core/events/Event.h"
@@ -25,8 +25,23 @@
 #include "core/filesystem/Filesystem.h"
 #include "core/filesystem/json.h"
 
+#include "core/GameObject/GameWorld.h"
+#include "core/GameObject/Entity.h"
+#include "core/GameObject/GameObject.h"
+#include "core/GameObject/Component.h"
+#include "core/GameObject/TransformComponent.h"
+#include "core/GameObject/SpriteComponent.h"
+
+#include "core/input/Input.h"
+
 #include "core/layer/Layer.h"
 #include "core/layer/LayerStack.h"
+
+#include "core/math/Math.h"
+#include "core/math/Matrix4.h"
+#include "core/math/Random.h"
+#include "core/math/Vector2.h"
+#include "core/math/Vector3.h"
 
 #include "core/renderer/Renderer.h"
 #include "core/renderer/RendererAPI.h"
@@ -39,22 +54,7 @@
 #include "core/renderer/Color.h"
 #include "core/renderer/OrtographicCamera.h"
 
-#include "core/math/Math.h"
-#include "core/math/Vector2.h"
-#include "core/math/Vector3.h"
-#include "core/math/Matrix4.h"
-#include "core/math/Random.h"
-
-#include "core/input/Input.h"
-
-#include "core/ImGuiLayer.h"
-
-#include "core/GameObject/GameWorld.h"
-#include "core/GameObject/Entity.h"
-#include "core/GameObject/GameObject.h"
-#include "core/GameObject/Component.h"
-#include "core/GameObject/TransformComponent.h"
-#include "core/GameObject/SpriteComponent.h"
+#include "core/ResourceManager/ResourceManager.h"
 
 // ============================================================
 // ============================================================

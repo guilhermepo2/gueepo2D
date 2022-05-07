@@ -10,24 +10,8 @@ set (SOURCES
     "core/Application.cpp"
     "core/ImGuiLayer.cpp"
     "core/Log.cpp"
+
     "core/Containers/String.cpp"
-    "core/input/Input.cpp"
-    "core/layer/Layer.cpp"
-    "core/layer/LayerStack.cpp"
-    "core/math/Matrix4.cpp"
-    "core/math/Random.cpp"
-    "core/math/Vector2.cpp"
-    "core/math/Vector3.cpp"
-    "core/renderer/GraphicsContext.cpp"
-    "core/renderer/IndexBuffer.cpp"
-    "core/renderer/IndexBuffer.cpp"
-    "core/renderer/OrtographicCamera.cpp"
-    "core/renderer/Renderer.cpp"
-    "core/renderer/RendererAPI.cpp"
-    "core/renderer/Shader.cpp"
-    "core/renderer/Texture.cpp"
-    "core/renderer/VertexArray.cpp"
-    "core/renderer/VertexBuffer.cpp"
 
     "core/filesystem/File.cpp"
     "core/filesystem/Filesystem.cpp"
@@ -39,6 +23,27 @@ set (SOURCES
     "core/GameObject/GameObject.cpp"
     "core/GameObject/SpriteComponent.h"
     "core/GameObject/SpriteComponent.cpp"
+    "core/input/Input.cpp"
+    "core/layer/Layer.cpp"
+    "core/layer/LayerStack.cpp"
+
+    "core/math/Matrix4.cpp"
+    "core/math/Random.cpp"
+    "core/math/Vector2.cpp"
+    "core/math/Vector3.cpp"
+
+    "core/renderer/GraphicsContext.cpp"
+    "core/renderer/IndexBuffer.cpp"
+    "core/renderer/IndexBuffer.cpp"
+    "core/renderer/OrtographicCamera.cpp"
+    "core/renderer/Renderer.cpp"
+    "core/renderer/RendererAPI.cpp"
+    "core/renderer/Shader.cpp"
+    "core/renderer/Texture.cpp"
+    "core/renderer/VertexArray.cpp"
+    "core/renderer/VertexBuffer.cpp"
+
+    "core/ResourceManager/ResourceManager.cpp"
 
     "platform/SDL2/imgui_impl_sdl.cpp"
     "platform/SDL2/SDL2Input.cpp"
@@ -71,7 +76,9 @@ set(HEADERS
     "core/Window.h"
 
     "core/Containers/String.h"
+
     "core/Debug/Profiler.h"
+
     "core/events/ApplicationEvent.h"
     "core/events/Event.h"
     "core/events/EventDispatcher.h"
@@ -112,6 +119,8 @@ set(HEADERS
     "core/renderer/Texture.h"
     "core/renderer/VertexArray.h"
     "core/renderer/VertexBuffer.h"
+
+    "core/ResourceManager/ResourceManager.h"
 
     "platform/OpenGL/imgui_impl_opengl3_loader.h"
     "platform/OpenGL/imgui_impl_opengl3.h"
