@@ -10,6 +10,10 @@ namespace gueepo {
 		m_json.Parse(JsonAsString.c_str());
 	}
 
+	json::json(const rapidjson::Value& value) {
+		m_json.CopyFrom(value, m_json.GetAllocator());
+	}
+
 	bool json::IsValid() {
 		return m_json.IsObject();
 	}
@@ -76,6 +80,20 @@ namespace gueepo {
 
 		outBool = Property.GetBool();
 		return true;
+	}
+
+	bool json::GetArray(const std::string& property, std::vector<json>& outVec) {
+		rapidjson::Value& object = m_json[property.c_str()];
+		
+		if (object.IsArray()) {
+			for (rapidjson::SizeType i = 0; i < object.Size(); i++) {
+				outVec.push_back(json(object[i]));
+			}
+
+			return true;
+		}
+		
+		return false;
 	}
 
 }

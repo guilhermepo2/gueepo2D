@@ -15,6 +15,7 @@ namespace gueepo {
 		ResourceManager() = default;
 		~ResourceManager() = default;
 		void ClearResources();
+		void LoadFromFile(const std::string& path);
 
 		void AddTexture(const std::string& textureId, const std::string& texturePath);
 		Texture* GetTexture(const std::string& textureId);

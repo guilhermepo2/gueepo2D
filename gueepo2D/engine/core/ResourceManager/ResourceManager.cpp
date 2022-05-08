@@ -7,6 +7,7 @@
 #include "gueepo2Dpch.h"
 #include "ResourceManager.h"
 
+#include "core/filesystem/json.h"
 #include "core/renderer/Texture.h"
 #include "utils/Tilemap.h"
 
@@ -19,6 +20,61 @@ namespace gueepo {
 		}
 
 		m_textureResources.clear();
+
+		for (auto tilemapEntry : m_tilemapResources) {
+			delete tilemapEntry.second;
+		}
+		m_tilemapResources.clear();
+	}
+
+	void ResourceManager::LoadFromFile(const std::string& path) {
+		ClearResources();
+		gueepo::json resourceFile(path);
+
+		if (!resourceFile.IsValid()) {
+			LOG_ERROR("couldn't load resource file: {0}", path);
+			return;
+		}
+
+		// 1. get textures object
+		std::vector<gueepo::json> textures;
+		if (resourceFile.GetArray("textures", textures)) {
+			for (int i = 0; i < textures.size(); i++) {
+				std::string id;
+				std::string path;
+				bool bId = textures[i].GetString("id", id);
+				bool bPath = textures[i].GetString("path", path);
+				
+				if (bId && bPath) {
+					AddTexture(id, path);
+				}
+			}
+		}
+
+		// 2. get tilemaps object
+		std::vector<gueepo::json> tilemaps;
+		if (resourceFile.GetArray("tilemaps", tilemaps)) {
+			for (int i = 0; i < tilemaps.size(); i++) {
+				std::string id;
+				std::string texture;
+				bool bId = tilemaps[i].GetString("id", id);
+				bool bTexture = tilemaps[i].GetString("texture", texture);
+
+				if (bId && bTexture) {
+					AddTilemap(id, texture);
+				}
+
+				// trying to slice
+				Tilemap* tilemap = GetTilemap(id);
+				int slice_width;
+				int slice_height;
+				bool bsliceW = tilemaps[i].GetInt("slice_width", slice_width);
+				bool bsliceH = tilemaps[i].GetInt("slice_height", slice_height);
+				if (bsliceW && bsliceH && tilemap != nullptr) {
+					tilemap->Slice(slice_width, slice_height);
+				}
+			}
+		}
 	}
 
 	void ResourceManager::AddTexture(const std::string& textureId, const std::string& texturePath) {

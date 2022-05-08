@@ -12,9 +12,12 @@
 #pragma warning(pop)
 
 namespace gueepo {
+
 	class json {
 	private:
 		rapidjson::Document m_json;
+
+		json(const rapidjson::Value& value);
 	public:
 		json(const std::string& path);
 
@@ -24,5 +27,6 @@ namespace gueepo {
 		bool GetString(const std::string& property, std::string& outString);
 		bool GetBool(const std::string& property, bool& outBool);
 
+		bool GetArray(const std::string& property, std::vector<json>& outVec);
 	};
 }
