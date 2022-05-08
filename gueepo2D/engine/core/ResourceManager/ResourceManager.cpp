@@ -65,6 +65,7 @@ namespace gueepo {
 			return m_tilemapResources[tilemapId];
 		}
 
+		LOG_ERROR("couldn't find tilemap resource: {0}", tilemapId);
 		return nullptr;
 	}
 }

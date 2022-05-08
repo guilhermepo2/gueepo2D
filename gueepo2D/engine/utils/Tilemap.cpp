@@ -28,9 +28,17 @@ namespace gueepo {
 		m_TileHeight = tileHeight;
 
 		assert(m_tilemapTexture != nullptr, "Can't slice a Tilemap with a null texture!");
+		assert(tileWidth <= m_tilemapTexture->GetWidth(), "can't slice a tilemap if the tile width is bigger than the texture!");
+		assert(m_TileHeight <= m_tilemapTexture->GetHeight(), "can't slice a tilemap if the tile height is bigger than the texture!");
 
-		m_NumberOfRows = (m_tilemapTexture->GetHeight() / m_TileHeight);
-		m_NumberOfColumns = (m_tilemapTexture->GetWidth() / m_TileWidth);
+		// In case you are stupid, like me, here's an explanation of what is a row and what is a column.
+		// Yes, there was a bug here in the past because I didn't know what was what.
+		//          c   c   c	(c for column)
+		// row -> | x | y | z |
+		// row -> | a | b | c |
+		// row -> | i | j | k |
+		m_NumberOfColumns = m_tilemapTexture->GetHeight() / m_TileHeight;
+		m_NumberOfRows = m_tilemapTexture->GetWidth() / m_TileWidth;
 
 		float th = static_cast<float>(m_TileHeight) / m_tilemapTexture->GetHeight();
 		float tw = static_cast<float>(m_TileWidth) / m_tilemapTexture->GetWidth();
