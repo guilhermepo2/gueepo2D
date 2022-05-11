@@ -5,7 +5,7 @@ namespace gueepo {
 	class OpenGLTexture : public Texture {
 	public:
 
-		OpenGLTexture(const std::string& path);
+		OpenGLTexture(texture_data_t textureData);
 		~OpenGLTexture();
 
 		uint32_t GetWidth() const { return m_width; }
@@ -16,7 +16,8 @@ namespace gueepo {
 		bool IsLoaded() const { return m_isLoaded; }
 
 	private:
-		std::string m_path;
+		friend class Texture;
+
 		bool m_isLoaded;
 		uint32_t m_textureID;
 		int m_format;

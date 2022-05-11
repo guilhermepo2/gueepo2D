@@ -1,6 +1,14 @@
 #pragma once
 
 namespace gueepo {
+
+	struct texture_data_t {
+		unsigned char* texture_data;
+		int width;
+		int height;
+		int channels;
+	};
+
 	class Texture {
 	public:
 		virtual ~Texture() {}
@@ -12,5 +20,12 @@ namespace gueepo {
 		virtual bool IsLoaded() const = 0;
 
 		static Texture* Create(const std::string& path);
+
+	protected:
+		std::string m_path;
+
+	private:
+		static texture_data_t LoadTexture(const std::string& path);
+
 	};
 }
