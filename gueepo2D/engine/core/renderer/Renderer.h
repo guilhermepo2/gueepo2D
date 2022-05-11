@@ -24,6 +24,7 @@ namespace gueepo {
 
 		static void Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture);
 		static void Draw(const math::mat4& transform, Texture* texture);
+		static void Draw(Texture* texture); // hey... I don't know why you would ask us to just draw a texture, but hey, you have the option!
 
 		static void Flush();
 

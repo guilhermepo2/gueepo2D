@@ -204,6 +204,11 @@ namespace gueepo {
 		Draw(transform, math::vec2(0.0f), math::vec2(1.0f), texture);
 	}
 
+	void Renderer::Draw(Texture* texture) {
+		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(texture->GetWidth(), texture->GetHeight()));
+		Draw(transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One, texture);
+	}
+
 	void Renderer::Flush() {
 		uint32_t dataSize = (uint32_t)((uint8_t*)s_RenderData.quadVertexPtrPosition - (uint8_t*)s_RenderData.quadVertexBase);
 		s_RenderData.defaultVertexBuffer->SetData(s_RenderData.quadVertexBase, dataSize);
