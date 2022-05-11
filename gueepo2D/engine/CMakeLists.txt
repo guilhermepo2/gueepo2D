@@ -27,10 +27,10 @@ set (SOURCES
     "core/layer/Layer.cpp"
     "core/layer/LayerStack.cpp"
 
-    "core/math/Matrix4.cpp"
-    "core/math/Random.cpp"
-    "core/math/Vector2.cpp"
-    "core/math/Vector3.cpp"
+    "core/math/mat4.cpp"
+    "core/math/rand.cpp"
+    "core/math/vec2.cpp"
+    "core/math/vec3.cpp"
 
     "core/renderer/GraphicsContext.cpp"
     "core/renderer/IndexBuffer.cpp"
@@ -101,12 +101,12 @@ set(HEADERS
     "core/layer/Layer.h"
     "core/layer/LayerStack.h"
 
-    "core/math/Math.h"
-    "core/math/Rect.h"
-    "core/math/Matrix4.h"
-    "core/math/Random.h"
-    "core/math/Vector2.h"
-    "core/math/Vector3.h"
+    "core/math/math.h"
+    "core/math/rect.h"
+    "core/math/mat4.h"
+    "core/math/rand.h"
+    "core/math/vec2.h"
+    "core/math/vec3.h"
 
     "core/renderer/BufferLayout.h"
     "core/renderer/Color.h"

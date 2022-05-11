@@ -1,7 +1,7 @@
 #pragma once
 #include "KeyboardCodes.h"
 #include "MouseCodes.h"
-#include "core/math/Vector2.h"
+#include "core/math/vec2.h"
 #include "core/Common.h"
 
 namespace gueepo {
@@ -38,7 +38,7 @@ namespace gueepo {
 	// -------------------------------------------
 	class MouseState {
 	public:
-		const math::Vector2 GetPosition() const { return MousePosition; }
+		const math::vec2 GetPosition() const { return MousePosition; }
 		bool IsMouseKeyDown(Mousecode code) const;
 		bool WasMouseKeyPressedThisFrame(Mousecode code) const;
 		bool WasKMouseKeyReleasedThisFrame(Mousecode code) const;
@@ -49,8 +49,8 @@ namespace gueepo {
 
 	public:
 		bool IsRelative = false;
-		math::Vector2 MousePosition;
-		math::Vector2 ScrollWheel;
+		math::vec2 MousePosition;
+		math::vec2 ScrollWheel;
 		uint32_t MouseButtons = 0;
 		uint32_t MouseButtonsLastFrame = 0;
 	};

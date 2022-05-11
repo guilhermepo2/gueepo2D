@@ -1,5 +1,5 @@
 #pragma once
-#include "core/math/Rect.h"
+#include "core/math/rect.h"
 #include <vector>
 
 namespace gueepo {
@@ -8,14 +8,14 @@ namespace gueepo {
 
 	class Tile {
 	public:
-		Tile(math::Rect tilePosition, int textureWidth, int textureHeight);
+		Tile(math::rect tilePosition, int textureWidth, int textureHeight);
 		~Tile();
-		math::Rect GetRect() const { return m_TilePositionWorldCoords; }
-		math::Rect GetTexCoords() const { return m_TilePositionTexCoords; }
+		math::rect GetRect() const { return m_TilePositionWorldCoords; }
+		math::rect GetTexCoords() const { return m_TilePositionTexCoords; }
 
 	private:
-		math::Rect m_TilePositionTexCoords;
-		math::Rect m_TilePositionWorldCoords;
+		math::rect m_TilePositionTexCoords;
+		math::rect m_TilePositionWorldCoords;
 	};
 
 	class Tilemap {

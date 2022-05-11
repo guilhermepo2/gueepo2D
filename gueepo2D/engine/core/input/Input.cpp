@@ -73,7 +73,7 @@ namespace gueepo {
 
 		m_State.Mouse.MouseButtonsLastFrame = m_State.Mouse.MouseButtons;
 		m_State.Mouse.IsRelative = false;
-		m_State.Mouse.ScrollWheel = math::Vector2(0.0f, 0.0f);
+		m_State.Mouse.ScrollWheel = math::vec2(0.0f, 0.0f);
 
 		s_Instance->Implementation_PrepareForUpdate();
 	}

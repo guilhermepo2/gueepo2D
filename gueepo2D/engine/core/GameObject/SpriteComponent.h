@@ -20,7 +20,7 @@ namespace gueepo {
 		// todo: color (should be in the material?)
 		bool FlipHorizontal = false;
 		bool FlipVertical = false;
-		math::Rect sourceRectangle;
+		math::rect sourceRectangle;
 
 		SpriteComponent() : texture(nullptr) {}
 
@@ -28,7 +28,7 @@ namespace gueepo {
 		SpriteComponent(Texture* tex, int drawOrder = 1);
 
 		/* Explicitly passes sourceRectangle min and max points */
-		SpriteComponent(Texture* tex, math::Vector2 min, math::Vector2 max, int drawOrder = 1);
+		SpriteComponent(Texture* tex, math::vec2 min, math::vec2 max, int drawOrder = 1);
 
 		/* 
 			Calculates the source rectangle given the tile position and tile size
@@ -40,14 +40,14 @@ namespace gueepo {
 		SpriteComponent(Texture* tex, const Tile& tile, int drawOrder = 1);
 
 		void RebuildSourceRectangle();
-		void RebuildSourceRectangle(math::Vector2 min, math::Vector2 max);
+		void RebuildSourceRectangle(math::vec2 min, math::vec2 max);
 		void RebuildSourceRectangle(int tile_x, int tile_y, int tile_width, int tile_height);
 		void RebuildFromTile(const Tile& tile);
 
 		void Render() override;
 
 	private:
-		math::Vector2 GetTexCoordsMin() const;
-		math::Vector2 GetTexCoordsMax() const;
+		math::vec2 GetTexCoordsMin() const;
+		math::vec2 GetTexCoordsMax() const;
 	};
 }

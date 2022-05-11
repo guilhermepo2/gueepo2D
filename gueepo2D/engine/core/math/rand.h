@@ -2,7 +2,7 @@
 #include <random>
 
 namespace gueepo {
-	class Random {
+	class rand {
 	public:
 		static void Init() {
 			ms_RandomEngine.seed(std::random_device()());

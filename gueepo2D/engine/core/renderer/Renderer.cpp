@@ -32,14 +32,14 @@ namespace gueepo {
 	}
 
 	struct QuadVertex {
-		gueepo::math::Vector3 Position;
-		gueepo::math::Vector2 TexCoord;
+		gueepo::math::vec3 Position;
+		gueepo::math::vec2 TexCoord;
 		float TextureSlot = 0.0f;
 	};
 
 	static struct {
 		// Camera Data
-		math::Matrix4 ViewProjection;
+		math::mat4 ViewProjection;
 
 		// Maximum
 		static const uint32_t MaxQuads = 1000;
@@ -51,7 +51,7 @@ namespace gueepo {
 		Shader* defaultSpriteShader = nullptr;
 		VertexBuffer* defaultVertexBuffer = nullptr;
 		VertexArray* defaultVertexArray = nullptr;
-		math::Vector3 quadVertexPosition[4];
+		math::vec3 quadVertexPosition[4];
 
 		std::array<Texture*, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 0;
@@ -154,7 +154,7 @@ namespace gueepo {
 		s_RendererAPI->DrawIndexed(vertexArray);
 	}
 
-	void Renderer::Draw(const math::Matrix4& transform, const math::Vector2& textureCoordMin, const math::Vector2& textureCoordMax, Texture* texture) {
+	void Renderer::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture) {
 
 		if (
 			s_RenderData.quadIndexCount >= s_RenderData.MaxIndices ||
@@ -183,7 +183,7 @@ namespace gueepo {
 
 		size_t quadVertexCount = 4;
 
-		math::Vector2 textureCoords[] = {
+		math::vec2 textureCoords[] = {
 			{ textureCoordMin.x, textureCoordMin.y },
 			{ textureCoordMax.x, textureCoordMin.y },
 			{ textureCoordMax.x, textureCoordMax.y },
@@ -200,8 +200,8 @@ namespace gueepo {
 		s_RenderData.quadIndexCount += 6;
 	}
 
-	void Renderer::Draw(const math::Matrix4 & transform, Texture * texture) {
-		Draw(transform, math::Vector2(0.0f), math::Vector2(1.0f), texture);
+	void Renderer::Draw(const math::mat4 & transform, Texture * texture) {
+		Draw(transform, math::vec2(0.0f), math::vec2(1.0f), texture);
 	}
 
 	void Renderer::Flush() {

@@ -6,7 +6,7 @@ namespace gueepo {
 	public:
 		OpenGLRendererAPI() {}
 
-		void SetClearColor(const math::Vector3& color) override;
+		void SetClearColor(const math::vec3& color) override;
 		void SetClearColor(float r, float g, float b, float a) override;
 		void Clear() override;
 		void DrawIndexed(VertexArray* vertexArray) override;

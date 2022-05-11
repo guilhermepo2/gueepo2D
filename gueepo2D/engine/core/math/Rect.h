@@ -1,18 +1,18 @@
 #pragma once
-#include "Vector2.h"
+#include "vec2.h"
 
 namespace gueepo {
 	namespace math {
 
-		class Rect {
+		class rect {
 		public:
-			Vector2 bottomLeft;
-			Vector2 topRight;
+			vec2 bottomLeft;
+			vec2 topRight;
 
-			Rect() {}
-			Rect(Vector2 _min, Vector2 _max) : bottomLeft(_min), topRight(_max) {}
+			rect() {}
+			rect(vec2 _min, vec2 _max) : bottomLeft(_min), topRight(_max) {}
 
-			Vector2 GetSize() { return topRight - bottomLeft; }
+			vec2 GetSize() { return topRight - bottomLeft; }
 		};
 
 	}

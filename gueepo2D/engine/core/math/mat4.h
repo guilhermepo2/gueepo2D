@@ -1,17 +1,17 @@
 #pragma once
-#include "Vector2.h"
-#include "Vector3.h"
+#include "vec2.h"
+#include "vec3.h"
 
 namespace gueepo::math {
-	class Matrix4 {
+	class mat4 {
 	public:
 		float mat[4][4];
 
-		Matrix4() {
-			*this = Matrix4::m4Identity;
+		mat4() {
+			*this = mat4::m4Identity;
 		}
 
-		explicit Matrix4(float inMat[4][4]) {
+		explicit mat4(float inMat[4][4]) {
 			memcpy(mat, inMat, 16 * sizeof(float));
 		}
 
@@ -19,8 +19,8 @@ namespace gueepo::math {
 			return reinterpret_cast<const float*>(&mat[0][0]);
 		}
 
-		Matrix4 operator+(const Matrix4& other) {
-			Matrix4 ret;
+		mat4 operator+(const mat4& other) {
+			mat4 ret;
 			ret.mat[0][0] = mat[0][0] + other.mat[0][0];
 			ret.mat[0][1] = mat[0][1] + other.mat[0][1];
 			ret.mat[0][2] = mat[0][2] + other.mat[0][2];
@@ -43,8 +43,8 @@ namespace gueepo::math {
 			return ret;
 		}
 
-		Matrix4 operator-(const Matrix4& other) {
-			Matrix4 ret;
+		mat4 operator-(const mat4& other) {
+			mat4 ret;
 			ret.mat[0][0] = mat[0][0] - other.mat[0][0];
 			ret.mat[0][1] = mat[0][1] - other.mat[0][1];
 			ret.mat[0][2] = mat[0][2] - other.mat[0][2];
@@ -67,8 +67,8 @@ namespace gueepo::math {
 			return ret;
 		}
 
-		Matrix4 operator*(const float& scalar) {
-			Matrix4 ret;
+		mat4 operator*(const float& scalar) {
+			mat4 ret;
 			ret.mat[0][0] = mat[0][0] * scalar;
 			ret.mat[0][1] = mat[0][1] * scalar;
 			ret.mat[0][2] = mat[0][2] * scalar;
@@ -91,13 +91,13 @@ namespace gueepo::math {
 			return ret;
 		}
 
-		friend Vector3 operator*(const Matrix4& m, const Vector3& other);
+		friend vec3 operator*(const mat4& m, const vec3& other);
 
-		friend Matrix4 operator*(const float& lhs, const Matrix4& rhs);
+		friend mat4 operator*(const float& lhs, const mat4& rhs);
 
 		// multiplying matrices, not fun!
-		friend Matrix4 operator*(const Matrix4& lhs, const Matrix4& rhs) {
-			Matrix4 ret;
+		friend mat4 operator*(const mat4& lhs, const mat4& rhs) {
+			mat4 ret;
 
 			ret.mat[0][0] =
 				lhs.mat[0][0] * rhs.mat[0][0] +
@@ -193,14 +193,14 @@ namespace gueepo::math {
 		// #todo: transform operations (translate, rotate, scale)
 
 		// from Mathematics for 3D Game Programming and Computer Graphics
-		static Matrix4 CreateOrtographicProjection(float l, float r, float b, float t, float zFar = -10.0f, float zNear = 10.0f);
-		static Matrix4 CreateTranslation(const Vector3& translation);
-		static Matrix4 CreateTranslation(const Vector2& translation);
-		static Matrix4 CreateScale(const Vector3& scale);
-		static Matrix4 CreateScale(const Vector2& scale);
-		static Matrix4 CreateRotation(float rotation);
-		static Matrix4 CreateInverse(const Matrix4& other);
+		static mat4 CreateOrtographicProjection(float l, float r, float b, float t, float zFar = -10.0f, float zNear = 10.0f);
+		static mat4 CreateTranslation(const vec3& translation);
+		static mat4 CreateTranslation(const vec2& translation);
+		static mat4 CreateScale(const vec3& scale);
+		static mat4 CreateScale(const vec2& scale);
+		static mat4 CreateRotation(float rotation);
+		static mat4 CreateInverse(const mat4& other);
 
-		static const Matrix4 m4Identity;
+		static const mat4 m4Identity;
 	};
 }

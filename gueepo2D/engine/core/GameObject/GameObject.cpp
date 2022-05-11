@@ -6,7 +6,7 @@
 namespace gueepo {
 
 	GameObject::GameObject(Texture* t, const std::string& name) : Entity(name) {
-		transform = &(AddComponent<TransformComponent>(math::Vector2(0.0f, 0.0f), 0.0f, math::Vector2(1.0f, 1.0f)));
+		transform = &(AddComponent<TransformComponent>(math::vec2(0.0f, 0.0f), 0.0f, math::vec2(1.0f, 1.0f)));
 		sprite = &(AddComponent<SpriteComponent>(t));
 	}
 
@@ -14,7 +14,7 @@ namespace gueepo {
 		sprite->texture = t;
 	}
 
-	void GameObject::SetPosition(math::Vector2 pos) {
+	void GameObject::SetPosition(math::vec2 pos) {
 		SetPosition(pos.x, pos.y);
 
 	}
@@ -29,7 +29,7 @@ namespace gueepo {
 		transform->position.y += dy;
 	}
 
-	void GameObject::Translate(math::Vector2 ds) {
+	void GameObject::Translate(math::vec2 ds) {
 		Translate(ds.x, ds.y);
 	}
 

@@ -22,8 +22,8 @@ namespace gueepo {
 		static void EndScene();
 		static void Submit(VertexArray* vertexArray, Shader* shader);
 
-		static void Draw(const math::Matrix4& transform, const math::Vector2& textureCoordMin, const math::Vector2& textureCoordMax, Texture* texture);
-		static void Draw(const math::Matrix4& transform, Texture* texture);
+		static void Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture);
+		static void Draw(const math::mat4& transform, Texture* texture);
 
 		static void Flush();
 

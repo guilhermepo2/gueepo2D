@@ -1,9 +1,9 @@
 #pragma once
-#include "Matrix4.h"
-#include "Rect.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Random.h"
+#include "mat4.h"
+#include "rect.h"
+#include "vec2.h"
+#include "vec3.h"
+#include "rand.h"
 #include <cmath>
 
 namespace gueepo {

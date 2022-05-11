@@ -5,7 +5,7 @@
 
 namespace gueepo {
 
-	void OpenGLRendererAPI::SetClearColor(const math::Vector3& color) {
+	void OpenGLRendererAPI::SetClearColor(const math::vec3& color) {
 		glClearColor(color.x, color.y, color.z, 1.0);
 	}
 

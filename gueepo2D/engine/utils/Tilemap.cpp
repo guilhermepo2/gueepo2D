@@ -6,11 +6,11 @@
 
 namespace gueepo {
 
-	Tile::Tile(math::Rect tilePosition, int textureWidth, int textureHeight) : m_TilePositionTexCoords(tilePosition) {
+	Tile::Tile(math::rect tilePosition, int textureWidth, int textureHeight) : m_TilePositionTexCoords(tilePosition) {
 		m_TilePositionWorldCoords =
-			math::Rect(
-				math::Vector2(tilePosition.bottomLeft.x * textureWidth, tilePosition.bottomLeft.y * textureHeight),
-				math::Vector2(tilePosition.topRight.x * textureWidth, tilePosition.topRight.y * textureHeight)
+			math::rect(
+				math::vec2(tilePosition.bottomLeft.x * textureWidth, tilePosition.bottomLeft.y * textureHeight),
+				math::vec2(tilePosition.topRight.x * textureWidth, tilePosition.topRight.y * textureHeight)
 			);
 	}
 
@@ -46,10 +46,10 @@ namespace gueepo {
 			for (int j = 0; j < m_NumberOfColumns; j++) {
 				int x = i;
 				int y = j;
-				math::Vector2 min = math::Vector2(x * tw, y * th);
-				math::Vector2 max = math::Vector2( (x + 1) * tw, (y + 1) * th);
+				math::vec2 min = math::vec2(x * tw, y * th);
+				math::vec2 max = math::vec2( (x + 1) * tw, (y + 1) * th);
 
-				m_Tiles.push_back(Tile(math::Rect(min, max), m_tilemapTexture->GetWidth(), m_tilemapTexture->GetHeight()));
+				m_Tiles.push_back(Tile(math::rect(min, max), m_tilemapTexture->GetWidth(), m_tilemapTexture->GetHeight()));
 			}
 		}
 	}

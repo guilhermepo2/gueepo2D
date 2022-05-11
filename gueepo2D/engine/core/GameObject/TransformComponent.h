@@ -5,25 +5,25 @@
 namespace gueepo {
 	class TransformComponent : public Component {
 	public:
-		math::Vector2 position;
+		math::vec2 position;
 		float rotation = 0.0f;
-		math::Vector2 scale;
+		math::vec2 scale;
 
 		TransformComponent() {
-			position = math::Vector2(0.0f, 0.0f);
-			scale = math::Vector2(1.0f, 1.0f);
+			position = math::vec2(0.0f, 0.0f);
+			scale = math::vec2(1.0f, 1.0f);
 		}
 
-		TransformComponent(const math::Vector2& _position, const float& _rotation, const math::Vector2& _scale) : position(_position), rotation(_rotation), scale(_scale) {}
+		TransformComponent(const math::vec2& _position, const float& _rotation, const math::vec2& _scale) : position(_position), rotation(_rotation), scale(_scale) {}
 
 		// TODO: rotate(ds)
 		// TODO: translate(ds)
 		// TODO: set scale sign
 
-		math::Matrix4 GetTransformMatrix() {
-			return math::Matrix4::CreateScale(scale)
-				* math::Matrix4::CreateRotation(rotation * math::DEG_TO_RAD)
-				* math::Matrix4::CreateTranslation(position);
+		math::mat4 GetTransformMatrix() {
+			return math::mat4::CreateScale(scale)
+				* math::mat4::CreateRotation(rotation * math::DEG_TO_RAD)
+				* math::mat4::CreateTranslation(position);
 		}
 	};
 }

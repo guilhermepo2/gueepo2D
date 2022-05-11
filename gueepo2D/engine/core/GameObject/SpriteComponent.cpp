@@ -8,7 +8,7 @@ namespace gueepo {
 		RebuildSourceRectangle();
 	}
 
-	SpriteComponent::SpriteComponent(Texture* tex, math::Vector2 min, math::Vector2 max, int drawOrder /* = 1 */) : texture(tex), DrawOrder(drawOrder) {
+	SpriteComponent::SpriteComponent(Texture* tex, math::vec2 min, math::vec2 max, int drawOrder /* = 1 */) : texture(tex), DrawOrder(drawOrder) {
 		RebuildSourceRectangle(min, max);
 	}
 
@@ -21,11 +21,11 @@ namespace gueepo {
 	}
 
 	void SpriteComponent::RebuildSourceRectangle() {
-		sourceRectangle.bottomLeft = math::Vector2::Zero;
-		sourceRectangle.topRight = math::Vector2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()));
+		sourceRectangle.bottomLeft = math::vec2::Zero;
+		sourceRectangle.topRight = math::vec2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()));
 	}
 
-	void SpriteComponent::RebuildSourceRectangle(math::Vector2 min, math::Vector2 max) {
+	void SpriteComponent::RebuildSourceRectangle(math::vec2 min, math::vec2 max) {
 		sourceRectangle.bottomLeft = min;
 		sourceRectangle.topRight = max;
 	}
@@ -45,7 +45,7 @@ namespace gueepo {
 		TransformComponent* t = Owner->GetComponentOfType<TransformComponent>();
 		assert(t != nullptr, "trying to render something without a transform?!");
 
-		math::Vector2 textureScaleVec(sourceRectangle.GetSize());
+		math::vec2 textureScaleVec(sourceRectangle.GetSize());
 		
 		if (FlipHorizontal) {
 			textureScaleVec.x *= -1;
@@ -55,23 +55,23 @@ namespace gueepo {
 			textureScaleVec.y *= -1;
 		}
 
-		math::Matrix4 textureScale = math::Matrix4::CreateScale(textureScaleVec);
-		math::Matrix4 transformMatrix = textureScale * t->GetTransformMatrix();
+		math::mat4 textureScale = math::mat4::CreateScale(textureScaleVec);
+		math::mat4 transformMatrix = textureScale * t->GetTransformMatrix();
 		Renderer::Draw(transformMatrix, GetTexCoordsMin(), GetTexCoordsMax(), texture);
 	}
 
 	// ------------------------------------------------------------------------------------
 	// Private Functions
 	// ------------------------------------------------------------------------------------
-	math::Vector2 SpriteComponent::GetTexCoordsMin() const {
-		return math::Vector2(
+	math::vec2 SpriteComponent::GetTexCoordsMin() const {
+		return math::vec2(
 			sourceRectangle.bottomLeft.x / texture->GetWidth(),
 			sourceRectangle.bottomLeft.y / texture->GetHeight()
 		);
 	}
 
-	math::Vector2 SpriteComponent::GetTexCoordsMax() const {
-		return math::Vector2(
+	math::vec2 SpriteComponent::GetTexCoordsMax() const {
+		return math::vec2(
 			sourceRectangle.topRight.x / texture->GetWidth(),
 			sourceRectangle.topRight.y / texture->GetHeight()
 		);

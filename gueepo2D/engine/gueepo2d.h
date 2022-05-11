@@ -37,11 +37,11 @@
 #include "core/layer/Layer.h"
 #include "core/layer/LayerStack.h"
 
-#include "core/math/Math.h"
-#include "core/math/Matrix4.h"
-#include "core/math/Random.h"
-#include "core/math/Vector2.h"
-#include "core/math/Vector3.h"
+#include "core/math/math.h"
+#include "core/math/mat4.h"
+#include "core/math/rand.h"
+#include "core/math/vec2.h"
+#include "core/math/vec3.h"
 
 #include "core/renderer/Renderer.h"
 #include "core/renderer/RendererAPI.h"

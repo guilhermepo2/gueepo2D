@@ -2,16 +2,16 @@
 #include <cmath>
 
 namespace gueepo::math {
-	class Vector3 {
+	class vec3 {
 	public:
 		float x;
 		float y;
 		float z;
 
-		Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
-		Vector3(float _v) : x(_v), y(_v), z(_v) {}
-		Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
-		Vector3(const Vector3& _other) : x(_other.x), y(_other.y), z(_other.z) {}
+		vec3() : x(0.0f), y(0.0f), z(0.0f) {}
+		vec3(float _v) : x(_v), y(_v), z(_v) {}
+		vec3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
+		vec3(const vec3& _other) : x(_other.x), y(_other.y), z(_other.z) {}
 		// #todo: construct from vector2
 
 		float Magnitude() const {
@@ -29,51 +29,51 @@ namespace gueepo::math {
 		}
 		
 		// Returns a normalized copy
-		Vector3 GetNormalized() {
-			Vector3 normalized(x, y, z);
+		vec3 GetNormalized() {
+			vec3 normalized(x, y, z);
 			normalized.Normalize();
 			return normalized;
 		}
 
-		Vector3 operator+(const Vector3& other) {
-			return Vector3(
+		vec3 operator+(const vec3& other) {
+			return vec3(
 				this->x + other.x,
 				this->y + other.y,
 				this->z + other.z
 			);
 		}
 
-		Vector3 operator-(const Vector3& other) {
-			return Vector3(
+		vec3 operator-(const vec3& other) {
+			return vec3(
 				this->x - other.x,
 				this->y - other.y,
 				this->z - other.z
 			);
 		}
 
-		Vector3 operator*(const float& scalar) {
-			return Vector3(
+		vec3 operator*(const float& scalar) {
+			return vec3(
 				this->x * scalar,
 				this->y * scalar,
 				this->z * scalar
 			);
 		}
 
-		bool operator==(const Vector3& rhs) const {
+		bool operator==(const vec3& rhs) const {
 			return this->x == rhs.x &&
 				this->y == rhs.y &&
 				this->z == rhs.z;
 		}
 
-		bool operator!=(const Vector3& other) const {
+		bool operator!=(const vec3& other) const {
 			return this->x != other.x ||
 				this->y != other.y ||
 				this->z != other.z;
 		}
 
-		friend Vector3 operator*(const float& lhs, const Vector3& rhs);
+		friend vec3 operator*(const float& lhs, const vec3& rhs);
 
-		static float Dot(const Vector3& lhs, const Vector3& rhs) {
+		static float Dot(const vec3& lhs, const vec3& rhs) {
 			return (
 				(lhs.x * rhs.x) +
 				(lhs.y * rhs.y) +
@@ -81,17 +81,17 @@ namespace gueepo::math {
 			);
 		}
 
-		static Vector3 Cross(const Vector3& lhs, const Vector3& rhs) {
-			return Vector3(
+		static vec3 Cross(const vec3& lhs, const vec3& rhs) {
+			return vec3(
 				(lhs.y * rhs.z) - (lhs.z * rhs.y),
 				(lhs.z * rhs.x) - (lhs.x * rhs.z),
 				(lhs.x * rhs.y) - (lhs.y * rhs.x)
 			);
 		}
 
-		static const Vector3 Zero;
-		static const Vector3 Right;
-		static const Vector3 Up;
-		static const Vector3 Forward;
+		static const vec3 Zero;
+		static const vec3 Right;
+		static const vec3 Up;
+		static const vec3 Forward;
 	};
 }

@@ -1,6 +1,6 @@
 #include "gueepo2Dpch.h"
-#include "Matrix4.h"
-#include "Math.h"
+#include "mat4.h"
+#include "math.h"
 
 namespace gueepo::math {
 	static float _internal_m4Identity[4][4] = {
@@ -10,10 +10,10 @@ namespace gueepo::math {
 		{0.0f, 0.0f, 0.0f, 1.0f},
 	};
 
-	const Matrix4 Matrix4::m4Identity(_internal_m4Identity);
+	const mat4 mat4::m4Identity(_internal_m4Identity);
 
-	gueepo::math::Matrix4 Matrix4::CreateOrtographicProjection(float l, float r, float b, float t, float zNear, float zFar) {
-		math::Matrix4 ortographicProjection;
+	gueepo::math::mat4 mat4::CreateOrtographicProjection(float l, float r, float b, float t, float zNear, float zFar) {
+		math::mat4 ortographicProjection;
 
 		ortographicProjection.mat[0][0] = (2 / (r - l) );
 		ortographicProjection.mat[1][1] = (2 / (t - b) );
@@ -26,20 +26,20 @@ namespace gueepo::math {
 		return ortographicProjection;
 	}
 
-	gueepo::math::Matrix4 Matrix4::CreateTranslation(const Vector3& translation) {
-		Matrix4 translationMatrix;
+	gueepo::math::mat4 mat4::CreateTranslation(const vec3& translation) {
+		mat4 translationMatrix;
 		translationMatrix.mat[3][0] = translation.x;
 		translationMatrix.mat[3][1] = translation.y;
 		translationMatrix.mat[3][2] = translation.z;
 		return translationMatrix;
 	}
 
-	gueepo::math::Matrix4 Matrix4::CreateTranslation(const Vector2& translation) {
-		return gueepo::math::Matrix4::CreateTranslation(Vector3(translation.x, translation.y, 0.0f));
+	gueepo::math::mat4 mat4::CreateTranslation(const vec2& translation) {
+		return gueepo::math::mat4::CreateTranslation(vec3(translation.x, translation.y, 0.0f));
 	}
 
-	gueepo::math::Matrix4 Matrix4::CreateScale(const Vector3& scale) {
-		Matrix4 scaleMatrix;
+	gueepo::math::mat4 mat4::CreateScale(const vec3& scale) {
+		mat4 scaleMatrix;
 		scaleMatrix.mat[0][0] = scale.x;
 		scaleMatrix.mat[1][1] = scale.y;
 		scaleMatrix.mat[2][3] = scale.z;
@@ -47,12 +47,12 @@ namespace gueepo::math {
 		return scaleMatrix;
 	}
 
-	gueepo::math::Matrix4 Matrix4::CreateScale(const Vector2& scale) {
-		return Matrix4::CreateScale(Vector3(scale.x, scale.y, 0.0f));
+	gueepo::math::mat4 mat4::CreateScale(const vec2& scale) {
+		return mat4::CreateScale(vec3(scale.x, scale.y, 0.0f));
 	}
 
-	gueepo::math::Matrix4 Matrix4::CreateRotation(float rotation) {
-		Matrix4 rotationMatrix;
+	gueepo::math::mat4 mat4::CreateRotation(float rotation) {
+		mat4 rotationMatrix;
 		rotationMatrix.mat[0][0] = cosf(rotation);
 		rotationMatrix.mat[0][1] = sinf(rotation);
 		rotationMatrix.mat[1][0] = -sinf(rotation);
@@ -62,7 +62,7 @@ namespace gueepo::math {
 
 	// from game programming in cpp book
 	// #todo: TEMP? FIND A BETTER WAY?
-	gueepo::math::Matrix4 Matrix4::CreateInverse(const Matrix4& other) {
+	gueepo::math::mat4 mat4::CreateInverse(const mat4& other) {
 		float tmp[12];
 		float src[16];
 		float dst[16];
@@ -165,7 +165,7 @@ namespace gueepo::math {
 		}
 
 		// Creating the new matrix
-		Matrix4 inverseMatrix;
+		mat4 inverseMatrix;
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
@@ -179,8 +179,8 @@ namespace gueepo::math {
 
 }
 
-gueepo::math::Vector3 gueepo::math::operator*(const gueepo::math::Matrix4& m, const gueepo::math::Vector3& other) {
-	Vector3 returnValue;
+gueepo::math::vec3 gueepo::math::operator*(const gueepo::math::mat4& m, const gueepo::math::vec3& other) {
+	vec3 returnValue;
 	returnValue.x = (m.mat[0][0] * other.x) + (m.mat[1][0] * other.y) + (m.mat[2][0] * other.z) + (m.mat[3][0] * 1);
 	returnValue.y = (m.mat[0][1] * other.x) + (m.mat[1][1] * other.y) + (m.mat[2][1] * other.z) + (m.mat[3][1] * 1);
 	returnValue.z = (m.mat[0][2] * other.x) + (m.mat[1][2] * other.y) + (m.mat[2][2] * other.z) + (m.mat[3][2] * 1);
@@ -188,8 +188,8 @@ gueepo::math::Vector3 gueepo::math::operator*(const gueepo::math::Matrix4& m, co
 	return returnValue;
 }
 
-gueepo::math::Matrix4 gueepo::math::operator*(const float& lhs, const gueepo::math::Matrix4& rhs) {
-	gueepo::math::Matrix4 ret;
+gueepo::math::mat4 gueepo::math::operator*(const float& lhs, const gueepo::math::mat4& rhs) {
+	gueepo::math::mat4 ret;
 	ret.mat[0][0] = rhs.mat[0][0] * lhs;
 	ret.mat[0][1] = rhs.mat[0][1] * lhs;
 	ret.mat[0][2] = rhs.mat[0][2] * lhs;
