@@ -66,6 +66,10 @@ namespace gueepo {
 		} RenderStats = { 0 };
 	} s_RenderData;
 
+	int Renderer::GetDrawCalls() {
+		return s_RenderData.RenderStats.DrawCalls;
+	}
+
 	void Renderer::Initialize() {
 		
 		s_RendererAPI = InitRendererAPI();

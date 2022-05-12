@@ -18,6 +18,8 @@ namespace gueepo {
 		static void Initialize();
 		static void Shutdown();
 
+		static int GetDrawCalls();
+
 		static void BeginScene(OrtographicCamera& sceneCamera);
 		static void EndScene();
 		static void Submit(VertexArray* vertexArray, Shader* shader);

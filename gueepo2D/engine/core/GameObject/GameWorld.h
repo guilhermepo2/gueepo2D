@@ -24,6 +24,7 @@ namespace gueepo {
 		GameObject* CreateGameObject(Texture* tex, const std::string& name = "GameObject");
 		void Kill(Entity* entity);
 
+		int GetNumberOfEntities() const { return m_AllEntities.size(); }
 
 	private:
 		std::vector<Entity*> m_AllEntities;
