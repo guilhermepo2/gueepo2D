@@ -2,6 +2,7 @@
 #include "core/Common.h"
 #include "OpenGLTexture.h"
 #include <glad/glad.h>
+#include "core/math/math.h"
 
 namespace gueepo {
 	OpenGLTexture::OpenGLTexture(texture_data_t textureData) {
@@ -39,7 +40,9 @@ namespace gueepo {
 		m_format = GL_RGBA;
 
 		glGenTextures(1, &m_textureID);
-		glTextureStorage2D(m_textureID, 1, m_format, m_width, m_height);
+
+		glBindTexture(GL_TEXTURE_2D, m_textureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_format, m_width, m_height, 0, m_format, GL_UNSIGNED_BYTE, nullptr);
 		glTextureParameteri(m_textureID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTextureParameteri(m_textureID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
@@ -51,7 +54,8 @@ namespace gueepo {
 
 	void OpenGLTexture::SetData(void* data, uint32_t size) {
 		assert(size == m_width * m_height * 4, "data must be the entire texture!");
-		glTextureSubImage2D(m_textureID, 0, 0, 0, m_width, m_height, m_format, GL_UNSIGNED_BYTE, data);
+		glBindTexture(GL_TEXTURE_2D, m_textureID);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_width, m_height, m_format, GL_UNSIGNED_BYTE, data);
 	}
 
 	void OpenGLTexture::Bind(uint32_t slot /*= 0*/) const {
