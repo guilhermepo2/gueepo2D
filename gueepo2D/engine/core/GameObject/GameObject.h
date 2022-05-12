@@ -1,4 +1,10 @@
+// =================================================================================
+// GameObject.h
+// 
 // A GameObject is just an entity with a transform component and a sprite component
+// 
+// =================================================================================
+
 #pragma once
 #include "Entity.h"
 #include "core/math/Math.h"

@@ -13,29 +13,9 @@ namespace gueepo {
 	void GameObject::SetTexture(Texture* t) {
 		sprite->texture = t;
 	}
-
-	void GameObject::SetPosition(math::vec2 pos) {
-		SetPosition(pos.x, pos.y);
-
-	}
-
-	void GameObject::SetPosition(float x, float y) {
-		transform->position.x = x;
-		transform->position.y = y;
-	}
-
-	void GameObject::Translate(float dx, float dy) {
-		transform->position.x += dx;
-		transform->position.y += dy;
-	}
-
-	void GameObject::Translate(math::vec2 ds) {
-		Translate(ds.x, ds.y);
-	}
-
-	void GameObject::SetScale(float x, float y) {
-		transform->scale.x = x;
-		transform->scale.y = y;
-	}
-
+	void GameObject::SetPosition(float x, float y)	{ transform->SetPosition(x, y);		}
+	void GameObject::SetPosition(math::vec2 pos)	{ transform->SetPosition(pos);		}
+	void GameObject::Translate(float dx, float dy)	{ transform->Translate(dx, dy);		}
+	void GameObject::Translate(math::vec2 ds)		{ transform->Translate(ds);			}
+	void GameObject::SetScale(float x, float y)		{ transform->SetScale(x, y);		}
 }
