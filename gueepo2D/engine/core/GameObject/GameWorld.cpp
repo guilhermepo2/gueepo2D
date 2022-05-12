@@ -6,7 +6,17 @@
 
 namespace gueepo {
 
-	GameWorld::GameWorld() {}
+	GameWorld* GameWorld::s_instance = nullptr;
+
+	GameWorld::GameWorld() {
+		if (s_instance != nullptr) {
+			LOG_ERROR("trying to create a second instance of the game world?!");
+			return;
+		}
+
+		s_instance = this;
+	}
+
 	GameWorld::~GameWorld() {}
 
 	void GameWorld::BeginPlay() {
@@ -53,7 +63,7 @@ namespace gueepo {
 		return newGameObject;
 	}
 
-	void GameWorld::Kill(Entity* entity) {
+	void GameWorld::KillEntity(Entity* entity) {
 		m_entitiesToBeRemoved.push_back(entity);
 	}
 
@@ -78,4 +88,19 @@ namespace gueepo {
 		m_entitiesToBeRemoved.clear();
 	}
 
+
+	// =================================================
+	// 
+	// static implementations
+	// 
+	// =================================================
+	Entity* GameWorld::Create(const std::string& name) {
+		assert(s_instance != nullptr, "can't create an entity without creating a game world!");
+		return s_instance->CreateEntity(name);
+	}
+
+	void GameWorld::Kill(Entity* entity) {
+		assert(s_instance != nullptr, "can't destroy an entity without creating a game world!");
+		s_instance->KillEntity(entity);
+	}
 }

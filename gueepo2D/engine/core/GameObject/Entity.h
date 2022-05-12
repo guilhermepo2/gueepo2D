@@ -19,8 +19,12 @@ namespace gueepo {
 		Entity(const std::string& name);
 		~Entity() = default;
 
+		float lifetime;
+		void SetLifetime(float lf) { lifetime = lf; m_bHasLifetime = true; }
+
 		inline bool IsActive() const { return m_bIsActive; }
 	private:
+		bool m_bHasLifetime = false;
 		bool m_bIsActive;
 		std::vector<Component*> m_Components;
 		std::map<const std::type_info*, Component*> m_TypeInfoToComponent;

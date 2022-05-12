@@ -22,11 +22,16 @@ namespace gueepo {
 
 		Entity* CreateEntity(const std::string& name = "Entity");
 		GameObject* CreateGameObject(Texture* tex, const std::string& name = "GameObject");
-		void Kill(Entity* entity);
+		void KillEntity(Entity* entity);
 
-		int GetNumberOfEntities() const { return m_AllEntities.size(); }
+		size_t GetNumberOfEntities() const { return m_AllEntities.size(); }
+
+		static Entity* Create(const std::string& name = "Entity");
+		static void Kill(Entity* entity);
 
 	private:
+		static GameWorld* s_instance;
+
 		std::vector<Entity*> m_AllEntities;
 		std::vector<Entity*> m_EntitiesToBeAdded;
 		std::vector<Entity*> m_entitiesToBeRemoved;
