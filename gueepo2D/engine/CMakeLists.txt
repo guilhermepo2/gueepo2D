@@ -32,6 +32,9 @@ set (SOURCES
     "core/math/vec2.cpp"
     "core/math/vec3.cpp"
 
+    "core/physics/CollisionWorld.cpp"
+    "core/physics/LineSegment.cpp"
+
     "core/renderer/GraphicsContext.cpp"
     "core/renderer/IndexBuffer.cpp"
     "core/renderer/IndexBuffer.cpp"
@@ -93,6 +96,7 @@ set(HEADERS
     "core/GameObject/Component.h"
     "core/GameObject/Entity.h"
     "core/GameObject/GameObject.h"
+    "core/GameObject/BoxCollider.h"
     "core/GameObject/SpriteComponent.h"
     "core/GameObject/TransformComponent.h"
     "core/input/Input.h"
@@ -107,6 +111,9 @@ set(HEADERS
     "core/math/rand.h"
     "core/math/vec2.h"
     "core/math/vec3.h"
+
+    "core/physics/CollisionWorld.h"
+    "core/physics/LineSegment.h"
 
     "core/renderer/BufferLayout.h"
     "core/renderer/Color.h"

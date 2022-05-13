@@ -41,6 +41,14 @@ namespace gueepo::math {
 			);
 		}
 
+		friend vec2 operator+(const vec2& a, const vec2& b) {
+			return vec2(a.x + b.x, a.y + b.y);
+		}
+
+		friend vec2 operator-(const vec2& a, const vec2& b) {
+			return vec2(a.x - b.x, a.y - b.y);
+		}
+
 		vec2 operator*(const float& scalar) {
 			return vec2(
 				this->x * scalar,

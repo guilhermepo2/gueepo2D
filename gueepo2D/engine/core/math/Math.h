@@ -23,5 +23,9 @@ namespace gueepo {
 		static float abs(float value) {
 			return std::abs(value);
 		}
+
+		static float clamp(float value, float min, float max) {
+			return std::clamp(value, min, max);
+		}
 	}
 }
