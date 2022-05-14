@@ -1,6 +1,21 @@
 project(gueepo2D-sandbox)
 
+# Possible Sandboxes (choose one!)
+set(PIXEL_SANDBOX ON)
+set(REGULAR_SANDBOX OFF)
+
+if(PIXEL_SANDBOX)
+    add_compile_definitions(PIXEL_SANDBOX)
+endif()
+
+if(REGULAR_SANDBOX)
+    add_compile_definitions(GUEEPO2D_SANDBOX)
+endif()
+
 add_executable(${PROJECT_NAME}
+    PixelSandbox.h
+    PixelSandbox.cpp
+    Sandbox.h
     Sandbox.cpp
 )
 

@@ -24,16 +24,18 @@ namespace gueepo {
 
 		s_Instance = this;
 
+		// TODO: YOINK THIS FROM HERE!!
 		m_debugTex = Texture::Create(4, 4);
-		unsigned char* mydata = new unsigned char[4 * 4 * 4];
-		for (int i = 0; i < 4 * 4 * 4; i+=4) {
-			mydata[i] = 255;
-			mydata[i+1] = 0;
-			mydata[i+2] = 0;
-			mydata[i+3] = 155;
+		uint32_t* mydata = new uint32_t[4 * 4];
+		for (int i = 0; i < 4 * 4; i += 4) {
+			mydata[i] =
+				(255 & 0xFF) << 24 +
+				(0) << 16 +
+				(0) << 8 +
+				(255 & 0xFF);
 		}
-		m_debugTex->SetData(mydata, 4 * 4 * 4);
-		delete mydata;
+		m_debugTex->SetData(mydata, 4 * 4 * sizeof(uint32_t));
+		delete[] mydata;
 	}
 
 	void CollisionWorld::Debug_Render() {

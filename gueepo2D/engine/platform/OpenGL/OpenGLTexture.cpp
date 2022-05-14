@@ -52,8 +52,8 @@ namespace gueepo {
 		glDeleteTextures(1, &m_textureID);
 	}
 
-	void OpenGLTexture::SetData(void* data, uint32_t size) {
-		assert(size == m_width * m_height * 4, "data must be the entire texture!");
+	void OpenGLTexture::SetData(uint32_t* data, uint32_t size) {
+		assert(size == m_width * m_height * sizeof(uint32_t), "data must be the entire texture!");
 		glBindTexture(GL_TEXTURE_2D, m_textureID);
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_width, m_height, m_format, GL_UNSIGNED_BYTE, data);
 	}
