@@ -8,8 +8,8 @@ namespace gueepo {
 	OpenGLContext::OpenGLContext(SDL_Window* _WindowRef) {
 		m_WindowRef = _WindowRef;
 
-		assert(m_WindowRef != nullptr, "Window is null!");
-		assert(SDL_WasInit(SDL_INIT_VIDEO), "sdl is not initialized?!");
+		g2dassert(m_WindowRef != nullptr, "Window is null!");
+		g2dassert(SDL_WasInit(SDL_INIT_VIDEO), "sdl is not initialized?!");
 	}
 
 	void OpenGLContext::Init() {

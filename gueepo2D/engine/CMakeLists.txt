@@ -64,6 +64,7 @@ set (SOURCES
     "utils/ImageUtils.cpp"
     "utils/JsonHelper.cpp"
     "utils/Tilemap.h"
+    "utils/PixelBuffer.h"
 )
 
 set(HEADERS
@@ -145,6 +146,7 @@ set(HEADERS
     "utils/ImageUtils.h"
     "utils/JsonHelper.h"
     "utils/Tilemap.cpp"
+    "utils/PixelBuffer.cpp"
 )
 
 message(${CMAKE_CURRENT_SOURCE_DIR})

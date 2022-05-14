@@ -4,27 +4,20 @@
 static const int WIDTH = 800;
 static const int HEIGHT = 600;
 static const int DATA_SIZE = WIDTH * HEIGHT;
-static gueepo::Texture* s_tex = nullptr;
-static uint32_t* tex_data;
+
+static gueepo::PixelBuffer* pixelBuffer = nullptr;
 
 #define EMPTY 0
 #define SAND_ID 1
 #define WATER_ID 2
 
-uint32_t PositionToIndex(int x, int y) {
-	return (WIDTH * y) + x;
-}
-
-void put_color_on_tex(int x, int y, uint32_t color) {
-	uint32_t index = PositionToIndex(x, y);
-	tex_data[index] = color;
-}
+#define PositionToIndex(x, y) ((WIDTH * y) + x)
 
 typedef struct {
-	uint8_t id;
-	float lifetime;
-	gueepo::math::vec2 velocity;
-	uint32_t color;
+	uint8_t id = 0;
+	// float lifetime;
+	// gueepo::math::vec2 velocity;
+	uint32_t color = 0;
 } cell_t;
 
 static cell_t* s_all_cells;
@@ -136,8 +129,7 @@ void PixelLayer::OnAttach() {
 	m_Camera = std::make_unique<gueepo::OrtographicCamera>(WIDTH, HEIGHT);
 	m_Camera->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
 
-	s_tex = gueepo::Texture::Create(WIDTH, HEIGHT);
-	tex_data = new uint32_t[DATA_SIZE];
+	pixelBuffer = gueepo::PixelBuffer::Create(WIDTH, HEIGHT);
 
 	s_all_cells = new cell_t[WIDTH * HEIGHT];
 	for (int i = 0; i < WIDTH * HEIGHT; i++) {
@@ -146,7 +138,8 @@ void PixelLayer::OnAttach() {
 }
 
 void PixelLayer::OnDetach() {
-	delete[] tex_data;
+	delete pixelBuffer;
+	// delete[] tex_data;
 	delete[] s_all_cells;
 }
 
@@ -199,7 +192,7 @@ void PixelLayer::OnRender() {
 
 	for (int x = 0; x < WIDTH; x++) {
 		for (int y = 0; y < HEIGHT; y++) {
-			put_color_on_tex(x, y, 0xFF000000);
+			pixelBuffer->SetColor(x, y, 0xFF000000);
 		}
 	}
 
@@ -209,13 +202,12 @@ void PixelLayer::OnRender() {
 			cell_t currentCell = s_all_cells[PositionToIndex(x, y)];
 
 			if (currentCell.id != EMPTY) {
-				put_color_on_tex(x, y, currentCell.color);
+				pixelBuffer->SetColor(x, y, currentCell.color);
 			}
 		}
 	}
 
-	s_tex->SetData(tex_data, DATA_SIZE * sizeof(uint32_t));
-	gueepo::Renderer::Draw(s_tex);
+	pixelBuffer->Render();
 	gueepo::Renderer::EndScene();
 }
 

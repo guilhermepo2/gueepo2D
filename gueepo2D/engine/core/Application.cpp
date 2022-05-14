@@ -19,7 +19,7 @@ namespace gueepo {
 
 	Application::Application(const std::string& _Title, unsigned int _Width, unsigned int _Height) {
 
-		assert(s_Instance == nullptr, "application already exists!");
+		g2dassert(s_Instance == nullptr, "application already exists!");
 		s_Instance = this;
 
 		WindowConfiguration c = { _Title, _Width, _Height };
@@ -74,9 +74,11 @@ namespace gueepo {
 
 			// delaying until next frame so we can keep 60fps
 			int TimeToWait = FRAME_TARGET_TIME - (timestep::GetTicks() - TicksLastFrame);
+			/*
 			if (TimeToWait > 0.0f && TimeToWait <= FRAME_TARGET_TIME) {
 				timestep::Sleep(TimeToWait);
 			}
+			*/
 		}
 
 		inputSystem->Shutdown();

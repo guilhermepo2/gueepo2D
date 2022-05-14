@@ -209,7 +209,7 @@ namespace gueepo {
 	}
 
 	void Renderer::Draw(Texture* texture) {
-		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(texture->GetWidth(), texture->GetHeight()));
+		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())));
 		Draw(transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One, texture);
 	}
 

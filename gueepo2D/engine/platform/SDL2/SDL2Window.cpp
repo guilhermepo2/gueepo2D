@@ -2,6 +2,7 @@
 #include "SDL2Window.h"
 #include <SDL.h>
 
+#include "core/Common.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/KeyEvent.h"
 #include "core/events/MouseEvent.h"
@@ -143,7 +144,7 @@ namespace gueepo {
 			SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
 		);
 
-		assert(m_Window, "unable to create window: {0}", SDL_GetError());
+		g2dassert(m_Window, "unable to create window: {0}", SDL_GetError());
 
 		// #todo: set this somewhere else?
 		m_GraphicsContext = GraphicsContext::Create(m_Window);

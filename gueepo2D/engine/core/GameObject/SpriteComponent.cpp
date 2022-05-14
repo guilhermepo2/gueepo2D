@@ -43,7 +43,7 @@ namespace gueepo {
 
 	void SpriteComponent::Render() {
 		TransformComponent* t = Owner->GetComponentOfType<TransformComponent>();
-		assert(t != nullptr, "trying to render something without a transform?!");
+		g2dassert(t != nullptr, "trying to render something without a transform?!");
 
 		math::vec2 textureScaleVec(sourceRectangle.GetSize());
 		

@@ -95,12 +95,12 @@ namespace gueepo {
 	// 
 	// =================================================
 	Entity* GameWorld::Create(const std::string& name) {
-		assert(s_instance != nullptr, "can't create an entity without creating a game world!");
+		g2dassert(s_instance != nullptr, "can't create an entity without creating a game world!");
 		return s_instance->CreateEntity(name);
 	}
 
 	void GameWorld::Kill(Entity* entity) {
-		assert(s_instance != nullptr, "can't destroy an entity without creating a game world!");
+		g2dassert(s_instance != nullptr, "can't destroy an entity without creating a game world!");
 		s_instance->KillEntity(entity);
 	}
 }

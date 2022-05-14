@@ -29,10 +29,10 @@ namespace gueepo {
 		uint32_t* mydata = new uint32_t[4 * 4];
 		for (int i = 0; i < 4 * 4; i += 4) {
 			mydata[i] =
-				(255 & 0xFF) << 24 +
-				(0) << 16 +
-				(0) << 8 +
-				(255 & 0xFF);
+				((255 & 0xFF) << 24) +
+				((0) << 16) +
+				((0) << 8) +
+				((255 & 0xFF));
 		}
 		m_debugTex->SetData(mydata, 4 * 4 * sizeof(uint32_t));
 		delete[] mydata;
@@ -101,7 +101,7 @@ namespace gueepo {
 	}
 
 	void CollisionWorld::AddCollider(BoxCollider* b) {
-		assert(s_Instance != nullptr, "can't add collider if collision world wasn't created!");
+		g2dassert(s_Instance != nullptr, "can't add collider if collision world wasn't created!");
 		s_Instance->Internal_AddCollider(b);
 	}
 

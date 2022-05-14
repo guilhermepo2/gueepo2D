@@ -47,7 +47,7 @@ namespace gueepo {
 	}
 
 	void OpenGLVertexArray::AddVertexBuffer(VertexBuffer* vertexBuffer) {
-		assert(vertexBuffer->GetLayout().GetElements().size(), "vertex buffer has no layout!");
+		g2dassert(vertexBuffer->GetLayout().GetElements().size(), "vertex buffer has no layout!");
 
 		glBindVertexArray(m_vertexArrayID);
 		vertexBuffer->Bind();

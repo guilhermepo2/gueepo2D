@@ -1,5 +1,7 @@
 #include "gueepo2Dpch.h"
 
+#define _CRT_SECURE_NO_WARNINGS
+
 // dear imgui: Renderer Backend for modern OpenGL with shaders / programmatic pipeline
 // - Desktop GL: 2.x 3.x 4.x
 // - Embedded GL: ES 2.0 (WebGL 1.0), ES 3.0 (WebGL 2.0)
@@ -224,7 +226,7 @@ bool    ImGui_ImplOpenGL3_Init(const char* glsl_version)
     {
         // Query GL_VERSION in desktop GL 2.x, the string will start with "<major>.<minor>"
         const char* gl_version = (const char*)glGetString(GL_VERSION);
-        sscanf(gl_version, "%d.%d", &major, &minor);
+        sscanf_s(gl_version, "%d.%d", &major, &minor);
     }
     bd->GlVersion = (GLuint)(major * 100 + minor * 10);
 #else
@@ -252,8 +254,8 @@ bool    ImGui_ImplOpenGL3_Init(const char* glsl_version)
 #endif
     }
     IM_ASSERT((int)strlen(glsl_version) + 2 < IM_ARRAYSIZE(bd->GlslVersionString));
-    strcpy(bd->GlslVersionString, glsl_version);
-    strcat(bd->GlslVersionString, "\n");
+    strcpy_s(bd->GlslVersionString, glsl_version);
+    strcat_s(bd->GlslVersionString, "\n");
 
     // Make an arbitrary GL call (we don't actually need the result)
     // IF YOU GET A CRASH HERE: it probably means the OpenGL function loader didn't do its job. Let us know!
@@ -608,7 +610,7 @@ bool    ImGui_ImplOpenGL3_CreateDeviceObjects()
 
     // Parse GLSL version string
     int glsl_version = 130;
-    sscanf(bd->GlslVersionString, "#version %d", &glsl_version);
+    sscanf_s(bd->GlslVersionString, "#version %d", &glsl_version);
 
     const GLchar* vertex_shader_glsl_120 =
         "uniform mat4 ProjMtx;\n"

@@ -27,9 +27,9 @@ namespace gueepo {
 		m_TileWidth = tileWidth;
 		m_TileHeight = tileHeight;
 
-		assert(m_tilemapTexture != nullptr, "Can't slice a Tilemap with a null texture!");
-		assert(tileWidth <= m_tilemapTexture->GetWidth(), "can't slice a tilemap if the tile width is bigger than the texture!");
-		assert(m_TileHeight <= m_tilemapTexture->GetHeight(), "can't slice a tilemap if the tile height is bigger than the texture!");
+		g2dassert(m_tilemapTexture != nullptr, "Can't slice a Tilemap with a null texture!");
+		g2dassert(m_TileWidth <= m_tilemapTexture->GetWidth(), "can't slice a tilemap if the tile width is bigger than the texture!");
+		g2dassert(m_TileHeight <= m_tilemapTexture->GetHeight(), "can't slice a tilemap if the tile height is bigger than the texture!");
 
 		// In case you are stupid, like me, here's an explanation of what is a row and what is a column.
 		// Yes, there was a bug here in the past because I didn't know what was what.
@@ -55,14 +55,14 @@ namespace gueepo {
 	}
 
 	const gueepo::Tile& Tilemap::GetTile(int index) const {
-		assert(0 <= index && m_Tiles.size() >= index, "index is not within range of tilemap!");
+		g2dassert(0 <= index && m_Tiles.size() >= index, "index is not within range of tilemap!");
 
 		return m_Tiles[index];
 
 	}
 
-	uint32_t Tilemap::GetWidth() const { assert(m_tilemapTexture != nullptr, "tilemap texture is null!"); return m_tilemapTexture->GetHeight(); }
-	uint32_t Tilemap::GetHeight() const	{ assert(m_tilemapTexture != nullptr, "tilemap texture is null!"); return m_tilemapTexture->GetWidth(); }
+	uint32_t Tilemap::GetWidth() const { g2dassert(m_tilemapTexture != nullptr, "tilemap texture is null!"); return m_tilemapTexture->GetHeight(); }
+	uint32_t Tilemap::GetHeight() const	{ g2dassert(m_tilemapTexture != nullptr, "tilemap texture is null!"); return m_tilemapTexture->GetWidth(); }
 
 	Tilemap* Tilemap::Create(Texture* tilemapTexture) {
 		return new Tilemap(tilemapTexture);
