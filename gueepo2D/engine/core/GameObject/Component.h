@@ -9,7 +9,7 @@ namespace gueepo {
 	public:
 		Entity* Owner = nullptr;
 		Component() {}
-		virtual ~Component() {}
+		virtual ~Component() { Owner = nullptr; }
 		virtual void Initialize() {}
 		virtual void BeginPlay() {}
 		virtual bool ProcessInput(const InputState& CurrentInputState) { unreferenced(CurrentInputState); return false; }

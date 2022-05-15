@@ -45,12 +45,14 @@ void gueepo::Entity::Render() {
 }
 
 void gueepo::Entity::Destroy() {
-	for (Component* c : m_Components) {
+	
+	for (int i = 0; i < m_Components.size(); i++) {
+		Component* c = m_Components[i];
 		c->Destroy();
 		delete c;
 	}
+	
 	m_Components.clear();
-
 	m_bIsActive = false;
 }
 

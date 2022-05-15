@@ -74,11 +74,9 @@ namespace gueepo {
 
 			// delaying until next frame so we can keep 60fps
 			int TimeToWait = FRAME_TARGET_TIME - (timestep::GetTicks() - TicksLastFrame);
-			/*
 			if (TimeToWait > 0.0f && TimeToWait <= FRAME_TARGET_TIME) {
 				timestep::Sleep(TimeToWait);
 			}
-			*/
 		}
 
 		inputSystem->Shutdown();

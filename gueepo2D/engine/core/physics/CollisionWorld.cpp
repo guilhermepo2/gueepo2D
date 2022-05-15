@@ -8,7 +8,12 @@
 #include "core/GameObject/Entity.h"
 #include "core/GameObject/TransformComponent.h"
 
+
 namespace gueepo {
+
+	bool Contains(BoxCollider* b) {
+		return false;
+	}
 
 	CollisionWorld* CollisionWorld::s_Instance = nullptr;
 
@@ -67,7 +72,62 @@ namespace gueepo {
 	}
 
 	void CollisionWorld::Shutdown() {
-		// destroy all colliders (if any) and clear data structures
+		m_LastFrameCollision.clear();
+		m_worldColliders.clear();
+	}
+
+	void CollisionWorld::Update() {
+		std::vector<CollisionData> collisionsThisFrame;
+
+		// check for all collisions
+		for (int i = 0; i < m_worldColliders.size(); i++) {
+			for (int j = i + 1; j < m_worldColliders.size(); j++) {
+				BoxCollider* a = m_worldColliders[i];
+				BoxCollider* b = m_worldColliders[j];
+				math::rect rectA = a->GetWorldPositionRect();
+				math::rect rectB = b->GetWorldPositionRect();
+
+				if (CheckCollision(rectA, rectB)) {
+					collisionsThisFrame.push_back({ a, b });
+				}
+			}
+		}
+
+		// checking collisions that happened against last frame collisions
+		for (int i = 0; i < collisionsThisFrame.size(); i++) {
+			// first, dispatch all new collisions to "Handle Collision Callback" anyways
+			collisionsThisFrame[i].a->HandleOnCollision(collisionsThisFrame[i].b);
+			collisionsThisFrame[i].b->HandleOnCollision(collisionsThisFrame[i].a);
+
+			auto isCollisionRepeated = std::find(m_LastFrameCollision.begin(), m_LastFrameCollision.end(), collisionsThisFrame[i]);
+
+			if (isCollisionRepeated == m_LastFrameCollision.end()) {
+				// dispatching on collision enter
+				collisionsThisFrame[i].a->HandleOnCollisionEnter(collisionsThisFrame[i].b);
+				collisionsThisFrame[i].b->HandleOnCollisionEnter(collisionsThisFrame[i].a);
+			}
+			else {
+				// dispatching on collision stay
+				collisionsThisFrame[i].a->HandleOnCollisionStay(collisionsThisFrame[i].b);
+				collisionsThisFrame[i].b->HandleOnCollisionStay(collisionsThisFrame[i].a);
+			}
+		}
+
+		// checking which collisions no longer happen
+		for (int i = 0; i < m_LastFrameCollision.size(); i++) {
+			auto collisionNoLongerHappens = std::find(collisionsThisFrame.begin(), collisionsThisFrame.end(), m_LastFrameCollision[i]);
+
+			if (collisionNoLongerHappens == collisionsThisFrame.end()) {
+				if (m_LastFrameCollision[i].a != nullptr && m_LastFrameCollision[i].b != nullptr) {
+					m_LastFrameCollision[i].a->HandleOnCollisionExit(m_LastFrameCollision[i].b);
+					m_LastFrameCollision[i].b->HandleOnCollisionExit(m_LastFrameCollision[i].a);
+				}
+			}
+		}
+
+		m_LastFrameCollision.clear();
+		m_LastFrameCollision = collisionsThisFrame;
+
 	}
 
 	void CollisionWorld::Internal_AddCollider(BoxCollider* b) {
@@ -84,6 +144,17 @@ namespace gueepo {
 			m_worldColliders.pop_back();
 		}
 
+		// we also have to remove all collisions this collider was envolved in!!
+		// doing this the lazy way. I will just create another vector of collisions.
+		std::vector<CollisionData> newCollisionData;
+		for (int i = 0; i < m_LastFrameCollision.size(); i++) {
+			if (!m_LastFrameCollision[i].Contains(b)) {
+				newCollisionData.push_back(m_LastFrameCollision[i]);
+			}
+		}
+
+		m_LastFrameCollision.clear();
+		m_LastFrameCollision = newCollisionData;
 	}
 
 	// =====================================================================

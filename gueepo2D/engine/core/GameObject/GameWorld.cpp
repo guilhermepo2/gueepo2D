@@ -73,16 +73,21 @@ namespace gueepo {
 		}
 		m_EntitiesToBeAdded.clear();
 
-		// #todo: I'm not sure this will actually DELETE the individual element?
 		for (auto entity : m_entitiesToBeRemoved) {
+			if (!entity->IsActive()) {
+				// it was already removed!
+				LOG_WARN("trying to remove entity that was already removed...");
+				continue;
+			}
+
 			auto toRemove = std::find(m_AllEntities.begin(), m_AllEntities.end(), entity);
 
 			if (toRemove != m_AllEntities.end()) {
-				m_AllEntities.erase(toRemove);
+ 				std::iter_swap(toRemove, m_AllEntities.end() - 1);
+				entity->Destroy();
+				delete entity;
+				m_AllEntities.pop_back();
 			}
-
-			entity->Destroy();
-			delete entity;
 		}
 
 		m_entitiesToBeRemoved.clear();
