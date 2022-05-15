@@ -24,6 +24,9 @@ namespace gueepo {
 
 		void Internal_AddCollider(BoxCollider* b);
 		static void AddCollider(BoxCollider* b);
+
+		void Internal_RemoveCollider(BoxCollider* b);
+		static void RemoveCollider(BoxCollider* b);
 	private:
 		static CollisionWorld* s_Instance;
 		std::vector<BoxCollider*> m_worldColliders;

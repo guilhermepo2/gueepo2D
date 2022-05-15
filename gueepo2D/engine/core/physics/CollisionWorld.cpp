@@ -27,9 +27,9 @@ namespace gueepo {
 		// TODO: YOINK THIS FROM HERE!!
 		m_debugTex = Texture::Create(4, 4);
 		uint32_t* mydata = new uint32_t[4 * 4];
-		for (int i = 0; i < 4 * 4; i += 4) {
+		for (int i = 0; i < 4 * 4; i ++) {
 			mydata[i] =
-				((255 & 0xFF) << 24) +
+				((155 & 0xFF) << 24) +
 				((0) << 16) +
 				((0) << 8) +
 				((255 & 0xFF));
@@ -74,6 +74,18 @@ namespace gueepo {
 		m_worldColliders.push_back(b);
 	}
 
+	void CollisionWorld::Internal_RemoveCollider(BoxCollider* b) {
+		// just remove the pointer, not sure if sounds weird or not but it's not up to the CollisionWorld to guarantee BoxCollider resources were freed
+		// BoxCollider is a component, so that's up to the ECS system.
+		std::vector<BoxCollider*>::iterator collider = std::find(m_worldColliders.begin(), m_worldColliders.end(), b);
+
+		if (collider != m_worldColliders.end()) {
+			std::iter_swap(collider, m_worldColliders.end() - 1);
+			m_worldColliders.pop_back();
+		}
+
+	}
+
 	// =====================================================================
 	// static implementations
 	// =====================================================================
@@ -103,6 +115,11 @@ namespace gueepo {
 	void CollisionWorld::AddCollider(BoxCollider* b) {
 		g2dassert(s_Instance != nullptr, "can't add collider if collision world wasn't created!");
 		s_Instance->Internal_AddCollider(b);
+	}
+
+	void CollisionWorld::RemoveCollider(BoxCollider* b) {
+		g2dassert(s_Instance != nullptr, "can't remove a collider if collision world wasn't created!");
+		s_Instance->Internal_RemoveCollider(b);
 	}
 
 }

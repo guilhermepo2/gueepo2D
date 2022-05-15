@@ -13,7 +13,7 @@ namespace gueepo {
 		}
 
 		~BoxCollider() {
-			// todo: remove collider from world
+			CollisionWorld::RemoveCollider(this);
 		}
 
 		void SetTag(const std::string& tag) { m_tag = tag; }
