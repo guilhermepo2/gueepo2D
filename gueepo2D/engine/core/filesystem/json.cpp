@@ -96,4 +96,18 @@ namespace gueepo {
 		return false;
 	}
 
+	bool json::GetIntArray(const std::string& property, std::vector<int>& outVec) {
+		rapidjson::Value& object = m_json[property.c_str()];
+
+		if (object.IsArray()) {
+			for (rapidjson::SizeType i = 0; i < object.Size(); i++) {
+				if (object[i].IsInt()) {
+					outVec.push_back(object[i].GetInt());
+				}
+			}
+		}
+
+		return false;
+	}
+
 }

@@ -28,5 +28,6 @@ namespace gueepo {
 		bool GetBool(const std::string& property, bool& outBool);
 
 		bool GetArray(const std::string& property, std::vector<json>& outVec);
+		bool GetIntArray(const std::string& property, std::vector<int>& outVec);
 	};
 }

@@ -42,6 +42,21 @@ namespace gueepo {
 
 		float th = static_cast<float>(m_TileHeight) / m_tilemapTexture->GetHeight();
 		float tw = static_cast<float>(m_TileWidth) / m_tilemapTexture->GetWidth();
+
+		// stupid hack so the data starts from the top left corner
+		auto whereToInsert = m_Tiles.begin();
+		for (int y = 0; y < m_NumberOfColumns; y++) {
+			for (int x = 0; x < m_NumberOfRows; x++) {
+				math::vec2 min = math::vec2(x * tw, y * th);
+				math::vec2 max = math::vec2((x + 1) * tw, (y + 1) * th);
+
+				whereToInsert = m_Tiles.insert(whereToInsert, Tile(math::rect(min, max), m_tilemapTexture->GetWidth(), m_tilemapTexture->GetHeight()));
+				whereToInsert++;
+			}
+			whereToInsert = m_Tiles.begin();
+		}
+
+		/*
 		for (int i = 0; i < m_NumberOfRows; i++) {
 			for (int j = 0; j < m_NumberOfColumns; j++) {
 				int x = i;
@@ -49,9 +64,10 @@ namespace gueepo {
 				math::vec2 min = math::vec2(x * tw, y * th);
 				math::vec2 max = math::vec2( (x + 1) * tw, (y + 1) * th);
 
-				m_Tiles.push_back(Tile(math::rect(min, max), m_tilemapTexture->GetWidth(), m_tilemapTexture->GetHeight()));
+				m_Tiles.insert(m_Tiles.end(), Tile(math::rect(min, max), m_tilemapTexture->GetWidth(), m_tilemapTexture->GetHeight()));
 			}
 		}
+		*/
 	}
 
 	const gueepo::Tile& Tilemap::GetTile(int index) const {
