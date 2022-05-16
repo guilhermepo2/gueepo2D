@@ -19,7 +19,6 @@ set (SOURCES
 
     "core/GameObject/GameWorld.cpp"
     "core/GameObject/Entity.cpp"
-    "core/GameObject/GameObject.h"
     "core/GameObject/GameObject.cpp"
     "core/GameObject/SpriteComponent.h"
     "core/GameObject/SpriteComponent.cpp"
@@ -100,6 +99,7 @@ set(HEADERS
     "core/GameObject/BoxCollider.h"
     "core/GameObject/SpriteComponent.h"
     "core/GameObject/TransformComponent.h"
+    "core/GameObject/TilemapComponent.h"
     "core/input/Input.h"
     "core/input/KeyboardCodes.h"
     "core/input/MouseCodes.h"

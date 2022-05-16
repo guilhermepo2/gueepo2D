@@ -55,19 +55,6 @@ namespace gueepo {
 			}
 			whereToInsert = m_Tiles.begin();
 		}
-
-		/*
-		for (int i = 0; i < m_NumberOfRows; i++) {
-			for (int j = 0; j < m_NumberOfColumns; j++) {
-				int x = i;
-				int y = j;
-				math::vec2 min = math::vec2(x * tw, y * th);
-				math::vec2 max = math::vec2( (x + 1) * tw, (y + 1) * th);
-
-				m_Tiles.insert(m_Tiles.end(), Tile(math::rect(min, max), m_tilemapTexture->GetWidth(), m_tilemapTexture->GetHeight()));
-			}
-		}
-		*/
 	}
 
 	const gueepo::Tile& Tilemap::GetTile(int index) const {

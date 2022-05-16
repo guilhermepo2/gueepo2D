@@ -36,6 +36,7 @@ namespace gueepo {
 		uint16_t GetColumns()		const { return m_NumberOfColumns;	}
 		uint16_t GetRows()			const { return m_NumberOfRows;		}
 		size_t	GetNumberOfTiles()	const { return m_Tiles.size();		}
+		Texture* GetTexture()		const { return m_tilemapTexture;	}
 
 		static Tilemap* Create(Texture* tilemapTexture);
 

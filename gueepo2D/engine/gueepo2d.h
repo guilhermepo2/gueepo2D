@@ -30,6 +30,7 @@
 #include "core/GameObject/GameObject.h"
 #include "core/GameObject/Component.h"
 #include "core/GameObject/BoxCollider.h"
+#include "core/GameObject/TilemapComponent.h"
 #include "core/GameObject/TransformComponent.h"
 #include "core/GameObject/SpriteComponent.h"
 
