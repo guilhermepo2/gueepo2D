@@ -27,5 +27,17 @@ namespace gueepo {
 		static float clamp(float value, float min, float max) {
 			return std::clamp(value, min, max);
 		}
+
+		static float floor(float value) {
+			return std::floor(value);
+		}
+
+		static float ceil(float value) {
+			return std::ceil(value);
+		}
+
+		static float round(float value) {
+			return std::round(value);
+		}
 	}
 }
