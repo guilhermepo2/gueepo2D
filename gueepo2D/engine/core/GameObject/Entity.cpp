@@ -54,6 +54,10 @@ void gueepo::Entity::Destroy() {
 	
 	m_Components.clear();
 	m_bIsActive = false;
+
+	if (OnEntityDestroyed != nullptr) {
+		OnEntityDestroyed();
+	}
 }
 
 

@@ -8,6 +8,9 @@
 #include <vector>
 #include <typeinfo>
 
+using EntityCallback = std::function<void(void)>;
+#define ENTITY_CALLBACK(...) std::bind(__VA_ARGS__, this);
+
 namespace gueepo {
 	class Component;
 	struct InputState;
@@ -23,6 +26,11 @@ namespace gueepo {
 		void SetLifetime(float lf) { lifetime = lf; m_bHasLifetime = true; }
 
 		inline bool IsActive() const { return m_bIsActive; }
+
+	public:
+		// Messages
+		EntityCallback OnEntityDestroyed;
+
 	private:
 		bool m_bHasLifetime = false;
 		bool m_bIsActive;
