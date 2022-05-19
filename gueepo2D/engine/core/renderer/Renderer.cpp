@@ -35,8 +35,12 @@ namespace gueepo {
 		gueepo::math::vec3 Position;
 		gueepo::math::vec2 TexCoord;
 		float TextureSlot = 0.0f;
+		gueepo::Color color;
 	};
 
+
+	// ========================================================================
+	// ========================================================================
 	static struct {
 		// Camera Data
 		math::mat4 ViewProjection;
@@ -79,12 +83,16 @@ namespace gueepo {
 			return;
 		}
 
+		LOG_INFO("quad vertex size: {0}", sizeof QuadVertex);
+		LOG_INFO("sizeof color class: {0}", sizeof Color);
+
 		s_RenderData.defaultVertexArray = VertexArray::Create();
 		s_RenderData.defaultVertexBuffer = VertexBuffer::Create(s_RenderData.MaxVertices * sizeof(QuadVertex));
 		s_RenderData.defaultVertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float2, "a_TexCoords" },
-			{ ShaderDataType::Float, "a_TextureSlot" }
+			{ ShaderDataType::Float, "a_TextureSlot" },
+			{ ShaderDataType::Float4, "a_Color "}
 		});
 		s_RenderData.defaultVertexArray->AddVertexBuffer(s_RenderData.defaultVertexBuffer);
 		
@@ -158,7 +166,7 @@ namespace gueepo {
 		s_RendererAPI->DrawIndexed(vertexArray);
 	}
 
-	void Renderer::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture) {
+	void Renderer::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture, Color color) {
 
 		if (
 			s_RenderData.quadIndexCount >= s_RenderData.MaxIndices ||
@@ -198,10 +206,15 @@ namespace gueepo {
 			s_RenderData.quadVertexPtrPosition->Position = transform * s_RenderData.quadVertexPosition[i];
 			s_RenderData.quadVertexPtrPosition->TexCoord = textureCoords[i];
 			s_RenderData.quadVertexPtrPosition->TextureSlot = textureSlot;
+			s_RenderData.quadVertexPtrPosition->color = color;
 			s_RenderData.quadVertexPtrPosition++;
 		}
 
 		s_RenderData.quadIndexCount += 6;
+	}
+
+	void Renderer::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture) {
+		Draw(transform, textureCoordMin, textureCoordMax, texture, Color(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
 	void Renderer::Draw(const math::mat4 & transform, Texture * texture) {
@@ -212,6 +225,7 @@ namespace gueepo {
 		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())));
 		Draw(transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One, texture);
 	}
+
 
 	void Renderer::Flush() {
 		uint32_t dataSize = (uint32_t)((uint8_t*)s_RenderData.quadVertexPtrPosition - (uint8_t*)s_RenderData.quadVertexBase);

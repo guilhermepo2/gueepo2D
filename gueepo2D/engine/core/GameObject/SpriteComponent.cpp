@@ -57,7 +57,7 @@ namespace gueepo {
 
 		math::mat4 textureScale = math::mat4::CreateScale(textureScaleVec);
 		math::mat4 transformMatrix = textureScale * t->GetTransformMatrix();
-		Renderer::Draw(transformMatrix, GetTexCoordsMin(), GetTexCoordsMax(), texture);
+		Renderer::Draw(transformMatrix, GetTexCoordsMin(), GetTexCoordsMax(), texture, spriteTint);
 	}
 
 	// ------------------------------------------------------------------------------------

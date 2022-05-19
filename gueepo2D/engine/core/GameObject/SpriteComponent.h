@@ -21,6 +21,7 @@ namespace gueepo {
 		bool FlipHorizontal = false;
 		bool FlipVertical = false;
 		math::rect sourceRectangle;
+		Color spriteTint;
 
 		SpriteComponent() : texture(nullptr) {}
 

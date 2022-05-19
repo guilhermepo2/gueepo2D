@@ -50,6 +50,10 @@ namespace gueepo {
 		);
 	}
 
+	void OpenGLShader::SetVec4(const std::string& name, float x, float y, float z, float w) const {
+		glUniform4f(glGetUniformLocation(m_ShaderProgramID, name.c_str()), x, y, z, w);
+	}
+
 	bool OpenGLShader::CompileShader(const char* shaderSource, unsigned int shaderType, unsigned int& outShader) {
 		outShader = glCreateShader(shaderType);
 		glShaderSource(outShader, 1, &shaderSource, nullptr);
