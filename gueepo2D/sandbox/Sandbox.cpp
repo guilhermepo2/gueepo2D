@@ -2,6 +2,9 @@
 
 #include "Sandbox.h"
 
+#define STB_TRUETYPE_IMPLEMENTATION
+#include "stb_truetype.h"
+
 static gueepo::GameObject* s_player1 = nullptr;
 static gueepo::GameObject* s_player4 = nullptr;
 

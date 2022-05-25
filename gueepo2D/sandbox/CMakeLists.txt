@@ -1,8 +1,8 @@
 project(gueepo2D-sandbox)
 
 # Possible Sandboxes (choose one!)
-set(PIXEL_SANDBOX ON)
-set(REGULAR_SANDBOX OFF)
+set(PIXEL_SANDBOX OFF)
+set(REGULAR_SANDBOX ON)
 
 if(PIXEL_SANDBOX)
     add_compile_definitions(PIXEL_SANDBOX)
