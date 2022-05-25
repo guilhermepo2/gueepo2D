@@ -14,6 +14,7 @@ namespace gueepo {
 		uint32_t GetTextureID() const { return m_textureID; }
 
 		virtual void SetData(uint32_t* data, uint32_t size) override;
+		virtual void SetData(unsigned char* data, uint32_t size) override;
 		void Bind(uint32_t slot = 0) const;
 		bool IsLoaded() const { return m_isLoaded; }
 

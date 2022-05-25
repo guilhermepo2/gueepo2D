@@ -16,7 +16,7 @@ namespace gueepo {
 		int height;
 		Tilemap* tm;
 
-		TilemapComponent() {}
+		TilemapComponent() : width(0), height(0), tm(nullptr) {}
 		
 		void LoadFromTiled(Tilemap* t, gueepo::json& file) {
 			tm = t;

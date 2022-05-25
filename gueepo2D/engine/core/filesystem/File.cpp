@@ -20,7 +20,7 @@ namespace gueepo {
 		}
 	}
 
-	const std::string File::GetStringContent() {
+	std::string File::GetStringContent() {
 		std::stringstream sstream;
 		sstream << m_File.rdbuf();
 		return sstream.str();

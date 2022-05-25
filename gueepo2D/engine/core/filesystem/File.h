@@ -8,7 +8,7 @@ namespace gueepo {
 		File(const std::string& Filepath, std::ios_base::openmode mode);
 		~File();
 
-		const std::string GetStringContent();
+		std::string GetStringContent();
 		bool IsValid();
 
 	private:
