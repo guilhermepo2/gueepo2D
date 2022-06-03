@@ -44,20 +44,14 @@ void GameLayer::OnAttach() {
 	s_player4->sprite->RebuildFromTile(m_resourceManager->GetTilemap("texture-tilemap")->GetTile(7));
 	s_player4->AddComponent<gueepo::BoxCollider>(gueepo::math::vec2(-8.0f, -8.0f), gueepo::math::vec2(8.0f, 8.0f));
 
+	// =========================================================================
+	// =========================================================================
 	// trying this font thing!
-	gueepo::File myFont("./assets/fonts/Kenney Future Square.ttf");
+	// =========================================================================
+	// =========================================================================
+	gueepo::File myFont("./assets/fonts/Kenney Future Square.ttf", std::ios_base::in | std::ios_base::binary);
 	size_t myFontSize = myFont.GetStringContent().size();
-	size_t myFontLength = myFont.GetStringContent().length();
-
-	// 1. loading font file?! have to make it use gueepo::File instead
-	FILE* fontFile = fopen("./assets/fonts/Kenney Future Square.ttf", "rb");
-	fseek(fontFile, 0, SEEK_END);
-	long size = ftell(fontFile); // get how long is the file (22884 for Kenney Future Square)
-	fseek(fontFile, 0, SEEK_SET); // reset
-
-	unsigned char* fontBuffer = (unsigned char*)malloc(size);
-	fread(fontBuffer, size, 1, fontFile);
-	fclose(fontFile);
+	unsigned char* fontBuffer = myFont.GetAsUnsignedChar();
 
 	stbtt_fontinfo info;
 	if (!stbtt_InitFont(&info, fontBuffer, 0)) {
@@ -158,10 +152,12 @@ void GameLayer::OnUpdate(float DeltaTime) {
 
 void GameLayer::OnRender() {
 	gueepo::Renderer::BeginScene(*m_Camera);
+
 	// pb->Render();
 	gueepo::Renderer::Draw(myTex);
 	// m_gameWorld->Render();
 	// m_collisionWorld->Debug_Render();
+
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
 }
 

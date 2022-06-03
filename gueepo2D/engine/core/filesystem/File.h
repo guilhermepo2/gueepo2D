@@ -9,6 +9,7 @@ namespace gueepo {
 		~File();
 
 		std::string GetStringContent();
+		unsigned char* GetAsUnsignedChar();
 		bool IsValid();
 
 	private:
