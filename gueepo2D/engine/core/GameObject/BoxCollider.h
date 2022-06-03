@@ -5,9 +5,6 @@
 #include "core/GameObject/Entity.h"
 #include "core/GameObject/TransformComponent.h"
 
-using CollisionCallback = std::function<void(gueepo::BoxCollider*)>;
-#define COLLISION_CALLBACK(...) std::bind(__VA_ARGS__, this, std::placeholders::_1);
-
 namespace gueepo {
 	class BoxCollider : public Component {
 	public:
@@ -20,6 +17,9 @@ namespace gueepo {
 		~BoxCollider() {
 			CollisionWorld::RemoveCollider(this);
 		}
+
+		using CollisionCallback = std::function<void(gueepo::BoxCollider*)>;
+		#define COLLISION_CALLBACK(...) std::bind(__VA_ARGS__, this, std::placeholders::_1);
 		
 		// Collision Callbacks
 		CollisionCallback OnCollisionEnter;
