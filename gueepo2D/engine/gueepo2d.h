@@ -23,6 +23,7 @@
 
 #include "core/filesystem/File.h"
 #include "core/filesystem/Filesystem.h"
+#include "core/filesystem/Font.h"
 #include "core/filesystem/json.h"
 
 #include "core/GameObject/GameWorld.h"

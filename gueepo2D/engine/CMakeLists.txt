@@ -15,6 +15,7 @@ set (SOURCES
 
     "core/filesystem/File.cpp"
     "core/filesystem/Filesystem.cpp"
+    "core/filesystem/Font.cpp"
     "core/filesystem/json.cpp"
 
     "core/GameObject/GameWorld.cpp"
@@ -90,6 +91,7 @@ set(HEADERS
 
     "core/filesystem/File.h"
     "core/filesystem/Filesystem.h"
+    "core/filesystem/Font.h"
     "core/filesystem/json.h"
     
     "core/GameObject/GameWorld.h"
