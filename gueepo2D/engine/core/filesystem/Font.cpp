@@ -1,5 +1,6 @@
 #include "Font.h"
 #include "File.h"
+#include "core/math/Math.h"
 
 #pragma warning(push, 0)
 #define STB_TRUETYPE_IMPLEMENTATION
@@ -33,12 +34,13 @@ static std::string GetFontName(stbtt_fontinfo* font, int nameId) {
 	// converts utf16 into utf8
 	// more info: https://en.wikipedia.org/wiki/UTF-16#Description
 
-	
+	// this really shouldn't be here, do it on a string class, I don't know.
 	length /= 2;
 	char* buffer = new char[length];
 	buffer[0] = '\0';
 	size_t bufferLength = 0;
-	bool swapEndian = true;
+
+	bool swapEndian = gueepo::math::IsLittleEndian();
 
 	const uint16_t surrogate_min = 0xd800u;
 	const uint16_t surrogate_max = 0xdbffu;
@@ -106,8 +108,9 @@ static std::string GetFontName(stbtt_fontinfo* font, int nameId) {
 	}
 
 	std::string fontName(buffer);
-	LOG_INFO("string name: {0}", fontName);
-
+	
+	// delete buffer;
+	
 	return fontName;
 }
 
@@ -140,5 +143,64 @@ namespace gueepo {
 		font->m_internalBuffer = fontBuffer;
 		font->m_familyName = GetFontName(fontInfo, 1);
 		font->m_styleName = GetFontName(fontInfo, 2);
+		stbtt_GetFontVMetrics(fontInfo, &font->m_ascent, &font->m_descent, &font->m_lineGap);
+		return font;
 	}
+
+	float Font::GetScale(float size) const {
+		if (m_font == nullptr) {
+			return 0.0f;
+		}
+
+		return stbtt_ScaleForPixelHeight(static_cast<stbtt_fontinfo*>(m_font), size);
+	}
+
+	float Font::GetKerning(int glyph1, int glyph2, float scale) const {
+		if (m_font == nullptr) {
+			LOG_WARN("trying to get kerning on an invalid font?");
+			return 0;
+		}
+
+		return stbtt_GetCodepointKernAdvance(static_cast<stbtt_fontinfo*>(m_font), glyph1, glyph2) * scale;
+
+	}
+
+	Character Font::GetCharacter(int glyph, float scale) const {
+		Character ch;
+
+		if (m_font == nullptr) {
+			LOG_WARN("trying to create a character on an invalid font?");
+			return ch;
+		}
+
+		int advance, offsetX, x0, y0, x1, y1;
+
+		// Note that each Codepoint call has an alternative Glyph version which caches the work required to lookup the character word[i]
+		stbtt_GetCodepointHMetrics(static_cast<stbtt_fontinfo*>(m_font), glyph, &advance, &offsetX);
+
+		// get bounding box for character (may be offset to account for chars that dip above or below the line)
+		stbtt_GetCodepointBitmapBox(static_cast<stbtt_fontinfo*>(m_font), glyph, scale, scale, &x0, &y0, &x1, &y1);
+
+		int w = (x1 - x0);
+		int h = (y1 - y0);
+
+		ch.glyph = glyph;
+		ch.width = w;
+		ch.height = h;
+		ch.advance = advance;
+		ch.offset_x = offsetX * scale;
+		ch.offset_y = static_cast<float>(y0);
+		ch.scale = scale;
+		ch.has_glyph = (w > 0 && h > 0 && stbtt_IsGlyphEmpty(static_cast<stbtt_fontinfo*>(m_font), glyph) == 0);
+
+		return ch;
+	}
+
+	bool Font::BlitCharacter(const Character& ch, int outStride, unsigned char** pixels) const {
+		unsigned char* src = *pixels;
+
+		stbtt_MakeCodepointBitmap(static_cast<stbtt_fontinfo*>(m_font), src, ch.width, ch.height, outStride, ch.scale, ch.scale, ch.glyph);
+		return true;
+	}
+
 }

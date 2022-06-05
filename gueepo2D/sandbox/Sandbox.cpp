@@ -56,61 +56,42 @@ void GameLayer::OnAttach() {
 	int bitmapSize = b_w * b_h * sizeof(unsigned char);
 
 	/* calculate font scaling */
-	// float scale = stbtt_ScaleForPixelHeight(&info, l_h);
+	float scale = myFont->GetScale(l_h);
 
 	char* word = "the quick brown fox";
 	int x = 0;
 
-	int ascent, descent, lineGap;
-	// stbtt_GetFontVMetrics(&info, &ascent, &descent, &lineGap);
-	// ascent = roundf(ascent * scale);
-	// descent = roundf(descent * scale);
+	 int i;
+	 for (i = 0; i < strlen(word); ++i) {
+		gueepo::Character ch = myFont->GetCharacter(word[i], scale);
+	 	int y = myFont->GetAscent() * scale + ch.offset_y;
+		int byteOffset = x + roundf(ch.offset_x * scale) + (y * b_w);
+		unsigned char* src = bitmap + byteOffset;
+		unsigned char** src2 = &src;
+		myFont->BlitCharacter(ch, b_w, src2);
+	 
+	 	x += roundf(ch.advance * ch.scale);
+	 	int kern;
+		kern = myFont->GetKerning(word[i], word[i + 1], scale);
+	 	x += roundf(kern);
+	 }
+	 
+	 /* save out a 1 channel image */
+	 myTex = gueepo::Texture::Create(b_w, b_h);
+	 
+	 unsigned char* bitmap2 = (unsigned char*)calloc(b_w * b_h, sizeof(unsigned char));
+	 
+	 int theY = 0;
+	 for (int y = b_h - 1; y >= 0; y--) {
+	 	for (int x = 0; x < b_w; x++) {
+	 		bitmap2[(b_w * y) + x] = bitmap[(b_w * theY) + x];
+	 	}
+	 	theY += 1;
+	 }
 
-	// int i;
-	// for (i = 0; i < strlen(word); ++i)
-	// {
-	// 	/* how wide is this character */
-	// 	int ax;
-	// 	int lsb;
-	// 	stbtt_GetCodepointHMetrics(&info, word[i], &ax, &lsb);
-	// 	/* (Note that each Codepoint call has an alternative Glyph version which caches the work required to lookup the character word[i].) */
-	// 
-	// 	/* get bounding box for character (may be offset to account for chars that dip above or below the line) */
-	// 	int c_x1, c_y1, c_x2, c_y2;
-	// 	stbtt_GetCodepointBitmapBox(&info, word[i], scale, scale, &c_x1, &c_y1, &c_x2, &c_y2);
-	// 
-	// 	/* compute y (different characters have different heights) */
-	// 	int y = ascent + c_y1;
-	// 
-	// 	/* render character (stride and offset is important here) */
-	// 	int byteOffset = x + roundf(lsb * scale) + (y * b_w);
-	// 	stbtt_MakeCodepointBitmap(&info, bitmap + byteOffset, c_x2 - c_x1, c_y2 - c_y1, b_w, scale, scale, word[i]);
-	// 
-	// 	/* advance x */
-	// 	x += roundf(ax * scale);
-	// 
-	// 	/* add kerning */
-	// 	int kern;
-	// 	kern = stbtt_GetCodepointKernAdvance(&info, word[i], word[i + 1]);
-	// 	x += roundf(kern * scale);
-	// }
-	// 
-	// /* save out a 1 channel image */
-	// myTex = gueepo::Texture::Create(b_w, b_h);
-	// 
-	// unsigned char* bitmap2 = (unsigned char*)calloc(b_w * b_h, sizeof(unsigned char));
-	// 
-	// int theY = 0;
-	// for (int y = b_h - 1; y >= 0; y--) {
-	// 	for (int x = 0; x < b_w; x++) {
-	// 		bitmap2[(b_w * y) + x] = bitmap[(b_w * theY) + x];
-	// 	}
-	// 	theY += 1;
-	// }
+	myTex->SetData(bitmap2, bitmapSize);
 
-	// myTex->SetData(bitmap2, bitmapSize);
-
-	// gueepo::g_SaveImage("out.png", b_w, b_h, 1, bitmap, b_w);
+	gueepo::g_SaveImage("out2.png", b_w, b_h, 1, bitmap, b_w);
 }
 
 void GameLayer::OnDetach() {
@@ -140,7 +121,7 @@ void GameLayer::OnRender() {
 	gueepo::Renderer::BeginScene(*m_Camera);
 
 	// pb->Render();
-	// gueepo::Renderer::Draw(myTex);
+	gueepo::Renderer::Draw(myTex);
 	// m_gameWorld->Render();
 	// m_collisionWorld->Debug_Render();
 
