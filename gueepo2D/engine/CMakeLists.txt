@@ -21,7 +21,6 @@ set (SOURCES
     "core/GameObject/GameWorld.cpp"
     "core/GameObject/Entity.cpp"
     "core/GameObject/GameObject.cpp"
-    "core/GameObject/SpriteComponent.h"
     "core/GameObject/SpriteComponent.cpp"
     "core/input/Input.cpp"
     "core/layer/Layer.cpp"
@@ -109,6 +108,7 @@ set(HEADERS
     "core/layer/LayerStack.h"
 
     "core/math/math.h"
+    "core/math/endian.h"
     "core/math/rect.h"
     "core/math/mat4.h"
     "core/math/rand.h"
