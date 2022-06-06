@@ -12,7 +12,7 @@
 #include "core/ImGuiLayer.h"
 #include "core/Window.h"
 
-#include "core/Containers/String.h"
+#include "core/Containers/hashed_string.h"
 #include "core/Debug/Profiler.h"
 
 #include "core/events/Event.h"

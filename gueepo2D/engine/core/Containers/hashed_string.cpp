@@ -1,7 +1,16 @@
-#include "gueepo2Dpch.h"
-#include "String.h"
+// ==========================================================================
+// hashed_string.cpp
+// 
+// A hashed string is an IMMUTABLE string.
+// A hash for it is calculated when it is created, using a CRC32 algorithm.
+// It's main purpose is to excel at string comparison, storing a string for the game,
+// and to aid in localization.
+// ==========================================================================
 
-unsigned reverse(unsigned x) {
+#include "gueepo2Dpch.h"
+#include "hashed_string.h"
+
+static unsigned reverse(unsigned x) {
 	x = ((x & 0x55555555) << 1) | ((x >> 1) & 0x55555555);
 	x = ((x & 0x33333333) << 2) | ((x >> 2) & 0x33333333);
 	x = ((x & 0x0F0F0F0F) << 4) | ((x >> 4) & 0x0F0F0F0F);
@@ -12,12 +21,12 @@ unsigned reverse(unsigned x) {
 
 namespace gueepo {
 
-	String::String(const char* pIdentString) : m_crcIdentifier(HashWithCRC(pIdentString)), m_internalString(pIdentString) {}
+	hashed_string::hashed_string(const char* pIdentString) : m_crcIdentifier(HashWithCRC(pIdentString)), m_internalString(pIdentString) {}
 	
 	// ---------------------------------------------------------------------------------------
 	// https://stackoverflow.com/questions/34153765/generate-checksum-for-string
 	// ---------------------------------------------------------------------------------------
-	unsigned long String::HashWithCRC(const char* pIdentString) {
+	unsigned long hashed_string::HashWithCRC(const char* pIdentString) {
 		int i, j;
 		unsigned long byte, crc;
 

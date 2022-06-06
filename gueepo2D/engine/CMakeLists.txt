@@ -11,7 +11,7 @@ set (SOURCES
     "core/ImGuiLayer.cpp"
     "core/Log.cpp"
 
-    "core/Containers/String.cpp"
+    "core/Containers/hashed_string.cpp"
 
     "core/filesystem/File.cpp"
     "core/filesystem/Filesystem.cpp"
@@ -78,7 +78,7 @@ set(HEADERS
     "core/TimeStep.h"
     "core/Window.h"
 
-    "core/Containers/String.h"
+    "core/Containers/hashed_string.h"
 
     "core/Debug/Profiler.h"
 
