@@ -45,6 +45,40 @@ namespace gueepo {
 		return *this;
 	}
 
+	gueepo::string& string::append(const char* start, const char* end) {
+		if (end == nullptr) {
+			end = start + strlen(start);
+		}
+
+		int add = (int)(end - start);
+		if (add <= 0) {
+			return *this;
+		}
+
+		reserve(m_length + add);
+		memcpy(data() + m_length, start, add);
+		m_length += add;
+		data()[m_length] = '\0';
+
+		return *this;
+	}
+
+	gueepo::string& string::append(const string& str, int start, int end) {
+		if (end < 0 || end > str.m_length) {
+			end = str.m_length;
+		}
+		
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (start > end) {
+			start = end;
+		}
+
+		return append(str.begin() + start, str.begin() + end);
+	}
+
 	// ***********************************************************************
 	// UTF8 AND UTF16 SHENANIGANS
 	// ***********************************************************************

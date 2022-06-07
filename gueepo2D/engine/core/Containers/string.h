@@ -18,10 +18,17 @@ namespace gueepo {
 		string& operator=(const string& rhs) { set(rhs.c_str(), rhs.c_str() + rhs.m_length); return *this; }
 		string& operator=(const char* rhs) { set(rhs, nullptr); return *this; }
 
-		// todo: operator+=
-		// todo: operator+
+		// Appending
+		string& operator+=(const char& rhs) { return append(rhs); }
+		string& operator+=(const char* rhs) { return append(rhs); }
+		string& operator+=(const string& rhs) { return append(rhs); }
+		string& operator+(const char& rhs) { string str; str.append(*this).append(rhs); return str; }
+		string& operator+(const char* rhs) { string str; str.append(*this).append(rhs); return str; }
+		string& operator+(const string& rhs) { string str; str.append(*this).append(rhs); return str; }
 		string& append(char c);
 		string& append(uint32_t c);
+		string& append(const char* start, const char* end = nullptr);
+		string& append(const string& str, int start = 0, int end = -1);
 
 		// Implicit casting
 		operator char*() { return c_str(); }
@@ -38,8 +45,8 @@ namespace gueepo {
 
 		char* c_str() { return data(); }
 		const char* c_str() const { return data(); }
-		const char* begin() { return data(); }
-		const char* end() { return data() + m_length; }
+		const char* begin() const { return data(); }
+		const char* end() const { return data() + m_length; }
 
 		inline bool empty() const { return m_length <= 0; }
 		inline int length() const { return m_length; }
