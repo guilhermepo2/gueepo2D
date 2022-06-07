@@ -41,6 +41,16 @@ void GameLayer::OnAttach() {
 
 	// =========================================================================
 	// =========================================================================
+	// trying this string thing!
+	// =========================================================================
+	// =========================================================================
+	gueepo::hashed_string mystring("test");
+	LOG_INFO("STRING TEST");
+	LOG_INFO("{0}", mystring.GetCRCValue());
+	LOG_INFO("{0}", mystring.GetString());
+
+	// =========================================================================
+	// =========================================================================
 	// trying this font thing!
 	// =========================================================================
 	// =========================================================================
@@ -49,7 +59,7 @@ void GameLayer::OnAttach() {
 
 	int b_w = 512; /* bitmap width */
 	int b_h = 128; /* bitmap height */
-	int l_h = 52; /* line height */
+	int l_h = 32; // line height (basically font size)
 
 	/* create a bitmap for the phrase */
 	unsigned char* bitmap = (unsigned char*)calloc(b_w * b_h, sizeof(unsigned char));
@@ -59,12 +69,14 @@ void GameLayer::OnAttach() {
 	float scale = myFont->GetScale(l_h);
 
 	char* word = "the quick brown fox";
+	char* word2 = "jumps over the lazy dog";
 	int x = 0;
 
 	 int i;
 	 for (i = 0; i < strlen(word); ++i) {
 		gueepo::Character ch = myFont->GetCharacter(word[i], scale);
-	 	int y = myFont->GetAscent() * scale + ch.offset_y;
+
+	 	int y = myFont->GetAscent() * ch.scale + ch.offset_y;
 		int byteOffset = x + roundf(ch.offset_x * scale) + (y * b_w);
 		unsigned char* src = bitmap + byteOffset;
 		unsigned char** src2 = &src;
@@ -75,10 +87,27 @@ void GameLayer::OnAttach() {
 		kern = myFont->GetKerning(word[i], word[i + 1], scale);
 	 	x += roundf(kern);
 	 }
+
+	 int base_y = (myFont->GetAscent() - myFont->GetDescent() + myFont->GetLineGap()) * myFont->GetScale(l_h);
+	 x = 0;
+
+	 for (i = 0; i < strlen(word2); ++i) {
+		 gueepo::Character ch = myFont->GetCharacter(word2[i], scale);
+
+		 int y = base_y + myFont->GetAscent() * ch.scale + ch.offset_y;
+		 int byteOffset = x + roundf(ch.offset_x * scale) + (y * b_w);
+		 unsigned char* src = bitmap + byteOffset;
+		 unsigned char** src2 = &src;
+		 myFont->BlitCharacter(ch, b_w, src2);
+
+		 x += roundf(ch.advance * ch.scale);
+		 int kern;
+		 kern = myFont->GetKerning(word[i], word[i + 1], scale);
+		 x += roundf(kern);
+	 }
 	 
-	 /* save out a 1 channel image */
+	 
 	 myTex = gueepo::Texture::Create(b_w, b_h);
-	 
 	 unsigned char* bitmap2 = (unsigned char*)calloc(b_w * b_h, sizeof(unsigned char));
 	 
 	 int theY = 0;
@@ -90,8 +119,6 @@ void GameLayer::OnAttach() {
 	 }
 
 	myTex->SetData(bitmap2, bitmapSize);
-
-	gueepo::g_SaveImage("out2.png", b_w, b_h, 1, bitmap, b_w);
 }
 
 void GameLayer::OnDetach() {

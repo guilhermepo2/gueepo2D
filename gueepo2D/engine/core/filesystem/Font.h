@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include "core/Containers/string.h"
 
 namespace gueepo {
 	struct Character {
@@ -25,8 +25,8 @@ namespace gueepo {
 		static Font* CreateFont(const std::string& path);
 
 
-		const std::string& GetFamilyName() const { return m_familyName; }
-		const std::string& GetStyleName() const { return m_styleName; }
+		const gueepo::string& GetFamilyName() const { return m_familyName; }
+		const gueepo::string& GetStyleName() const { return m_styleName; }
 		const int& GetAscent() const { return m_ascent; }
 		const int& GetDescent() const { return m_descent; }
 		const int& GetLineGap() const { return m_lineGap; }
@@ -41,8 +41,8 @@ namespace gueepo {
 	private:
 		void* m_font;
 		unsigned char* m_internalBuffer;
-		std::string m_familyName;
-		std::string m_styleName;
+		gueepo::string m_familyName;
+		gueepo::string m_styleName;
 
 		// ascent is the coordinate above the baseline the font extends;
 		int m_ascent = 0;

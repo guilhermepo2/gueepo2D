@@ -12,6 +12,7 @@ set (SOURCES
     "core/Log.cpp"
 
     "core/Containers/hashed_string.cpp"
+    "core/Containers/string.cpp"
 
     "core/filesystem/File.cpp"
     "core/filesystem/Filesystem.cpp"
@@ -79,6 +80,7 @@ set(HEADERS
     "core/Window.h"
 
     "core/Containers/hashed_string.h"
+    "core/Containers/string.h"
 
     "core/Debug/Profiler.h"
 
