@@ -4,6 +4,7 @@
 
 static gueepo::GameObject* s_player1 = nullptr;
 static gueepo::GameObject* s_player4 = nullptr;
+gueepo::FontSprite* myFontSprite = nullptr;
 
 static gueepo::Texture* myTex;
 
@@ -16,7 +17,7 @@ void GameLayer::OnAttach() {
 	gueepo::Renderer::Initialize();
 
 	m_Camera = std::make_unique<gueepo::OrtographicCamera>(800, 600);
-	m_Camera->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
+	m_Camera->SetBackgroundColor(0.0f, 0.0f, 0.0f, 1.0f);
 	m_gameWorld = std::make_unique<gueepo::GameWorld>();
 	m_resourceManager = std::make_unique<gueepo::ResourceManager>();
 	m_collisionWorld = std::make_unique<gueepo::CollisionWorld>();
@@ -54,71 +55,12 @@ void GameLayer::OnAttach() {
 	// trying this font thing!
 	// =========================================================================
 	// =========================================================================
-
 	gueepo::Font* myFont = gueepo::Font::CreateFont("./assets/Fonts/Kenney Future Square.ttf");
 
-	int b_w = 512; /* bitmap width */
-	int b_h = 128; /* bitmap height */
-	int l_h = 32; // line height (basically font size)
-
-	/* create a bitmap for the phrase */
-	unsigned char* bitmap = (unsigned char*)calloc(b_w * b_h, sizeof(unsigned char));
-	int bitmapSize = b_w * b_h * sizeof(unsigned char);
-
-	/* calculate font scaling */
-	float scale = myFont->GetScale(l_h);
-
-	char* word = "the quick brown fox";
-	char* word2 = "jumps over the lazy dog";
-	int x = 0;
-
-	 int i;
-	 for (i = 0; i < strlen(word); ++i) {
-		gueepo::Character ch = myFont->GetCharacter(word[i], scale);
-
-	 	int y = myFont->GetAscent() * ch.scale + ch.offset.y;
-		int byteOffset = x + roundf(ch.offset.x * scale) + (y * b_w);
-		unsigned char* src = bitmap + byteOffset;
-		unsigned char** src2 = &src;
-		myFont->BlitCharacter(ch, b_w, src2);
-	 
-	 	x += roundf(ch.advance * ch.scale);
-	 	int kern;
-		kern = myFont->GetKerning(word[i], word[i + 1], scale);
-	 	x += roundf(kern);
-	 }
-
-	 int base_y = (myFont->GetAscent() - myFont->GetDescent() + myFont->GetLineGap()) * myFont->GetScale(l_h);
-	 x = 0;
-
-	 for (i = 0; i < strlen(word2); ++i) {
-		 gueepo::Character ch = myFont->GetCharacter(word2[i], scale);
-
-		 int y = base_y + myFont->GetAscent() * ch.scale + ch.offset.y;
-		 int byteOffset = x + roundf(ch.offset.x * scale) + (y * b_w);
-		 unsigned char* src = bitmap + byteOffset;
-		 unsigned char** src2 = &src;
-		 myFont->BlitCharacter(ch, b_w, src2);
-
-		 x += roundf(ch.advance * ch.scale);
-		 int kern;
-		 kern = myFont->GetKerning(word[i], word[i + 1], scale);
-		 x += roundf(kern);
-	 }
-	 
-	 
-	 myTex = gueepo::Texture::Create(b_w, b_h);
-	 unsigned char* bitmap2 = (unsigned char*)calloc(b_w * b_h, sizeof(unsigned char));
-	 
-	 int theY = 0;
-	 for (int y = b_h - 1; y >= 0; y--) {
-	 	for (int x = 0; x < b_w; x++) {
-	 		bitmap2[(b_w * y) + x] = bitmap[(b_w * theY) + x];
-	 	}
-	 	theY += 1;
-	 }
-
-	myTex->SetData(bitmap2, bitmapSize);
+	{
+		GUEEPO2D_SCOPED_TIMER("creating fontsprite");
+		myFontSprite = new gueepo::FontSprite(myFont, 32);
+	}
 }
 
 void GameLayer::OnDetach() {
@@ -146,12 +88,7 @@ void GameLayer::OnUpdate(float DeltaTime) {
 
 void GameLayer::OnRender() {
 	gueepo::Renderer::BeginScene(*m_Camera);
-
-	// pb->Render();
-	gueepo::Renderer::Draw(myTex);
-	// m_gameWorld->Render();
-	// m_collisionWorld->Debug_Render();
-
+	gueepo::Renderer::DrawText(myFontSprite, "sample text", gueepo::math::vec2(0.0f, 0.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
 }
 

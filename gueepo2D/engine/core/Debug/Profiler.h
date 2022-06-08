@@ -34,7 +34,7 @@ namespace gueepo::debug {
 	};
 }
 
-#define GUEEPO2D_SCOPED_TIMER(x) do { gueepo::debug::ScopedTimer s(x); } while(false)
+#define GUEEPO2D_SCOPED_TIMER(x) gueepo::debug::ScopedTimer s(x)
 
 #else
 

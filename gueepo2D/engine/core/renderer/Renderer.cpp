@@ -3,6 +3,7 @@
 #include "core/renderer/VertexArray.h"
 #include "core/renderer/OrtographicCamera.h"
 #include "core/renderer/Texture.h"
+#include "FontSprite.h"
 
 // Specific Renderer APIs
 #include "platform/OpenGL/OpenGLRendererAPI.h"
@@ -226,6 +227,29 @@ namespace gueepo {
 		Draw(transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One, texture);
 	}
 
+	void Renderer::DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
+		int x = 0;
+		for (int i = 0; i < text.length(); i++) {
+			SpriteCharacter ch = fontSprite->GetSpriteCharacter(text[i]);
+
+			int y = fontSprite->ascent() * fontSprite->scale() + ch.bearing.y;
+
+			math::vec2 renderScale(ch.size.x, ch.size.y);
+			math::vec2 renderPosition = position + math::vec2(x, y);
+			math::mat4 transformMatrix = 
+				math::mat4::CreateScale(renderScale) * 
+				math::mat4::CreateScale(math::vec2(1.0f, -1.0f)) * 
+				math::mat4::CreateRotation(0.0f) * 
+				math::mat4::CreateTranslation(renderPosition);
+
+			Draw(transformMatrix, math::vec2(0.0f), math::vec2(1.0f), ch.texture, color);
+
+			x += roundf(ch.advance * fontSprite->scale());
+			int kern;
+			kern = fontSprite->kerning(text[i], text[i + 1]);
+			x += roundf(kern);
+		}
+	}
 
 	void Renderer::Flush() {
 		uint32_t dataSize = (uint32_t)((uint8_t*)s_RenderData.quadVertexPtrPosition - (uint8_t*)s_RenderData.quadVertexBase);

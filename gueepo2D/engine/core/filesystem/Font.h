@@ -1,3 +1,9 @@
+// ==========================================================================
+// Font.h
+// 
+// internal representation of a font file
+// ==========================================================================
+
 #pragma once
 #include "core/Containers/string.h"
 #include "core/math/vec2.h"

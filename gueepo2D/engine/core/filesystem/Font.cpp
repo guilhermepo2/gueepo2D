@@ -1,3 +1,9 @@
+// ==========================================================================
+// Font.cpp
+// 
+// internal representation of a font file
+// ==========================================================================
+
 #include "Font.h"
 #include "File.h"
 #include "core/math/Math.h"

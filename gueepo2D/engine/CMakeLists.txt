@@ -45,6 +45,7 @@ set (SOURCES
     "core/renderer/Texture.cpp"
     "core/renderer/VertexArray.cpp"
     "core/renderer/VertexBuffer.cpp"
+    "core/renderer/FontSprite.cpp"
 
     "core/ResourceManager/ResourceManager.cpp"
 
@@ -131,6 +132,7 @@ set(HEADERS
     "core/renderer/Texture.h"
     "core/renderer/VertexArray.h"
     "core/renderer/VertexBuffer.h"
+    "core/renderer/FontSprite.h"
 
     "core/ResourceManager/ResourceManager.h"
 
