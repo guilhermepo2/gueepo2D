@@ -80,7 +80,7 @@ namespace gueepo {
 			return 0.0f;
 		}
 
-		return stbtt_ScaleForPixelHeight(static_cast<stbtt_fontinfo*>(m_font), size);
+		return stbtt_ScaleForMappingEmToPixels(static_cast<stbtt_fontinfo*>(m_font), size);
 	}
 
 	float Font::GetKerning(int glyph1, int glyph2, float scale) const {
