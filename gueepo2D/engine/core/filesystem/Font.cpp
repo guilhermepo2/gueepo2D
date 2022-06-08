@@ -125,10 +125,14 @@ namespace gueepo {
 	}
 
 	bool Font::BlitCharacter(const Character& ch, int outStride, unsigned char** pixels) const {
-		unsigned char* src = *pixels;
 
-		stbtt_MakeCodepointBitmap(static_cast<stbtt_fontinfo*>(m_font), src, ch.size.x, ch.size.y, outStride, ch.scale, ch.scale, ch.glyph);
-		return true;
+		if (ch.has_glyph) {
+			unsigned char* src = *pixels;
+			stbtt_MakeCodepointBitmap(static_cast<stbtt_fontinfo*>(m_font), src, ch.size.x, ch.size.y, outStride, ch.scale, ch.scale, ch.glyph);
+			return true;
+		}
+
+		return false;
 	}
 
 }
