@@ -113,11 +113,11 @@ namespace gueepo {
 		int h = (y1 - y0);
 
 		ch.glyph = glyph;
-		ch.width = w;
-		ch.height = h;
+		ch.size.x = w;
+		ch.size.y = h;
 		ch.advance = advance;
-		ch.offset_x = offsetX * scale;
-		ch.offset_y = static_cast<float>(y0);
+		ch.offset.x = offsetX * scale;
+		ch.offset.y = static_cast<float>(y0);
 		ch.scale = scale;
 		ch.has_glyph = (w > 0 && h > 0 && stbtt_IsGlyphEmpty(static_cast<stbtt_fontinfo*>(m_font), glyph) == 0);
 
@@ -127,7 +127,7 @@ namespace gueepo {
 	bool Font::BlitCharacter(const Character& ch, int outStride, unsigned char** pixels) const {
 		unsigned char* src = *pixels;
 
-		stbtt_MakeCodepointBitmap(static_cast<stbtt_fontinfo*>(m_font), src, ch.width, ch.height, outStride, ch.scale, ch.scale, ch.glyph);
+		stbtt_MakeCodepointBitmap(static_cast<stbtt_fontinfo*>(m_font), src, ch.size.x, ch.size.y, outStride, ch.scale, ch.scale, ch.glyph);
 		return true;
 	}
 

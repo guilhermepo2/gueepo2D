@@ -76,8 +76,8 @@ void GameLayer::OnAttach() {
 	 for (i = 0; i < strlen(word); ++i) {
 		gueepo::Character ch = myFont->GetCharacter(word[i], scale);
 
-	 	int y = myFont->GetAscent() * ch.scale + ch.offset_y;
-		int byteOffset = x + roundf(ch.offset_x * scale) + (y * b_w);
+	 	int y = myFont->GetAscent() * ch.scale + ch.offset.y;
+		int byteOffset = x + roundf(ch.offset.x * scale) + (y * b_w);
 		unsigned char* src = bitmap + byteOffset;
 		unsigned char** src2 = &src;
 		myFont->BlitCharacter(ch, b_w, src2);
@@ -94,8 +94,8 @@ void GameLayer::OnAttach() {
 	 for (i = 0; i < strlen(word2); ++i) {
 		 gueepo::Character ch = myFont->GetCharacter(word2[i], scale);
 
-		 int y = base_y + myFont->GetAscent() * ch.scale + ch.offset_y;
-		 int byteOffset = x + roundf(ch.offset_x * scale) + (y * b_w);
+		 int y = base_y + myFont->GetAscent() * ch.scale + ch.offset.y;
+		 int byteOffset = x + roundf(ch.offset.x * scale) + (y * b_w);
 		 unsigned char* src = bitmap + byteOffset;
 		 unsigned char** src2 = &src;
 		 myFont->BlitCharacter(ch, b_w, src2);

@@ -1,14 +1,13 @@
 #pragma once
 #include "core/Containers/string.h"
+#include "core/math/vec2.h"
 
 namespace gueepo {
 	struct Character {
 		int glyph = 0;
-		int width = 0;
-		int height = 0;
+		math::vec2 size;
+		math::vec2 offset;
 		float advance = 0; // how much to move horizontally
-		float offset_x = 0;
-		float offset_y = 0;
 		float scale = 0;
 
 		bool has_glyph = false;
@@ -17,13 +16,10 @@ namespace gueepo {
 	class Font {
 
 	public:
-		
-
 		Font();
 		~Font();
 
 		static Font* CreateFont(const std::string& path);
-
 
 		const gueepo::string& GetFamilyName() const { return m_familyName; }
 		const gueepo::string& GetStyleName() const { return m_styleName; }
