@@ -28,8 +28,9 @@ namespace gueepo {
 
 		m_scale = m_internalFontRef->GetScale(m_fontSize);
 
-		for (int i = 0; i < 128; i++) {
-			Character ch = m_internalFontRef->GetCharacter(i, m_scale);
+		for (int i = 0; i < 255; i++) {
+			int glyph = m_internalFontRef->GetGlyphIndex(i);
+			Character ch = m_internalFontRef->GetCharacter(glyph, m_scale);
 			Texture* characterTexture = Texture::Create(ch.size.x, ch.size.y);
 
 			unsigned char* characterBitmap = (unsigned char*)calloc(ch.size.x * ch.size.y, sizeof(unsigned char));

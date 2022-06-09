@@ -89,14 +89,23 @@ namespace gueepo {
 		return stbtt_ScaleForMappingEmToPixels(static_cast<stbtt_fontinfo*>(m_font), size);
 	}
 
-	float Font::GetKerning(int glyph1, int glyph2, float scale) const {
+	float Font::GetCodepointKerning(int codepoint1, int codepoint2, float scale) const {
 		if (m_font == nullptr) {
 			LOG_WARN("trying to get kerning on an invalid font?");
 			return 0;
 		}
 
-		return stbtt_GetCodepointKernAdvance(static_cast<stbtt_fontinfo*>(m_font), glyph1, glyph2) * scale;
+		return stbtt_GetCodepointKernAdvance(static_cast<stbtt_fontinfo*>(m_font), codepoint1, codepoint2) * scale;
 
+	}
+
+	float Font::GetGlyphKerning(int glyph1, int glyph2, float scale) const {
+		if (m_font == nullptr) {
+			LOG_WARN("trying to get kerning on an invalid font?");
+			return 0;
+		}
+
+		return stbtt_GetGlyphKernAdvance(static_cast<stbtt_fontinfo*>(m_font), glyph1, glyph2) * scale;
 	}
 
 	Character Font::GetCharacter(int glyph, float scale) const {
@@ -109,11 +118,8 @@ namespace gueepo {
 
 		int advance, offsetX, x0, y0, x1, y1;
 
-		// Note that each Codepoint call has an alternative Glyph version which caches the work required to lookup the character word[i]
-		stbtt_GetCodepointHMetrics(static_cast<stbtt_fontinfo*>(m_font), glyph, &advance, &offsetX);
-
-		// get bounding box for character (may be offset to account for chars that dip above or below the line)
-		stbtt_GetCodepointBitmapBox(static_cast<stbtt_fontinfo*>(m_font), glyph, scale, scale, &x0, &y0, &x1, &y1);
+		stbtt_GetGlyphHMetrics(static_cast<stbtt_fontinfo*>(m_font), glyph, &advance, &offsetX);
+		stbtt_GetGlyphBitmapBox(static_cast<stbtt_fontinfo*>(m_font), glyph, scale, scale, &x0, &y0, &x1, &y1);
 
 		int w = (x1 - x0);
 		int h = (y1 - y0);
@@ -130,11 +136,19 @@ namespace gueepo {
 		return ch;
 	}
 
+	int Font::GetGlyphIndex(uint32_t codepoint) const {
+		if (m_font == nullptr) {
+			return 0;
+		}
+
+		stbtt_FindGlyphIndex(static_cast<stbtt_fontinfo*>(m_font), codepoint);
+	}
+
 	bool Font::BlitCharacter(const Character& ch, int outStride, unsigned char** pixels) const {
 
 		if (ch.has_glyph) {
 			unsigned char* src = *pixels;
-			stbtt_MakeCodepointBitmap(static_cast<stbtt_fontinfo*>(m_font), src, ch.size.x, ch.size.y, outStride, ch.scale, ch.scale, ch.glyph);
+			stbtt_MakeGlyphBitmap(static_cast<stbtt_fontinfo*>(m_font), src, ch.size.x, ch.size.y, outStride, ch.scale, ch.scale, ch.glyph);
 			return true;
 		}
 

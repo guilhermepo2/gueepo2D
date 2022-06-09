@@ -32,7 +32,7 @@ namespace gueepo {
 
 		const float& scale() const { return m_scale; }
 		const int& ascent() const { return m_internalFontRef->GetAscent(); }
-		const float& kerning(int glyph1, int glyph2) const { return m_internalFontRef->GetKerning(glyph1, glyph2, m_scale); }
+		const float& kerning(int glyph1, int glyph2) const { return m_internalFontRef->GetGlyphKerning(glyph1, glyph2, m_scale); }
 
 	private:
 		Font* m_internalFontRef;

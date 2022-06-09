@@ -151,7 +151,7 @@ namespace gueepo {
 	}
 
 	void Renderer::NextBatch() {
-		LOG_INFO("more quads or more textures than the maximum! flushing and starting a new batch!");
+		// LOG_INFO("more quads or more textures than the maximum! flushing and starting a new batch!");
 		Flush();
 		StartBatch();
 	}
@@ -222,10 +222,15 @@ namespace gueepo {
 		Draw(transform, math::vec2(0.0f), math::vec2(1.0f), texture);
 	}
 
-	void Renderer::Draw(Texture* texture) {
-		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())));
+	void Renderer::Draw(const math::vec2& position, Texture* texture) {
+		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()))) * math::mat4::CreateTranslation(position);
 		Draw(transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One, texture);
 	}
+
+	void Renderer::Draw(Texture* texture) {
+		Draw(math::vec2::Zero, texture);
+	}
+
 
 	void Renderer::DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
 		int x = 0;
