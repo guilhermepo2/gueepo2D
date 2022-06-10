@@ -10,10 +10,8 @@ static gueepo::FontSprite* kenneySpace = nullptr;
 static gueepo::FontSprite* roboto = nullptr;
 static gueepo::FontSprite* openSans = nullptr;
 
-static gueepo::Texture* kenneyFutureSquareTex = nullptr;
-static gueepo::Texture* kenneySpaceTex = nullptr;
-static gueepo::Texture* robotoTex = nullptr;
-static gueepo::Texture* openSansTex = nullptr;
+static gueepo::string fox("the quick brown fox");
+static gueepo::string dog("jumps over the lazy dog");
 
 static float s_Count = 0.0f;
 static int s_currentTile = 3;
@@ -24,7 +22,7 @@ void GameLayer::OnAttach() {
 	gueepo::Renderer::Initialize();
 
 	m_Camera = std::make_unique<gueepo::OrtographicCamera>(800, 600);
-	m_Camera->SetBackgroundColor(0.0f, 0.0f, 0.0f, 1.0f);
+	m_Camera->SetBackgroundColor(0.2f, 0.2f, 0.2f, 1.0f);
 	m_gameWorld = std::make_unique<gueepo::GameWorld>();
 	m_resourceManager = std::make_unique<gueepo::ResourceManager>();
 	m_collisionWorld = std::make_unique<gueepo::CollisionWorld>();
@@ -65,147 +63,6 @@ void GameLayer::OnAttach() {
 		openSans = new gueepo::FontSprite(openSansFont, 32);
 	}
 
-	/* ======================================================================= */
-	// Making a texture with the words to compare the FontSprite* to
-	// 
-	// 
-	// Kenney Future Square
-	int b_w = 1024;
-	int b_h = 128;
-	int l_h = 32;
-	unsigned char* bitmap = (unsigned char*)calloc(b_w * b_h, sizeof(unsigned char));
-	int bitmapSize = b_w * b_h * sizeof(unsigned char);
-	float f_scale = kenneyFutureSquareFont->GetScale(l_h);
-	char* word = "the quick brown fox";
-	int x = 0;
-	int i;
-	for (i = 0; i < strlen(word); ++i) {
-		int glyph = kenneyFutureSquareFont->GetGlyphIndex(word[i]);
-		int next = openSansFont->GetGlyphIndex(word[i + 1]);
-
-		gueepo::Character ch = kenneyFutureSquareFont->GetCharacter(glyph, f_scale);
-		int y = kenneyFutureSquareFont->GetAscent() * ch.scale + ch.offset.y;
-		int byteOffset = x + roundf(ch.offset.x * f_scale) + (y * b_w);
-		unsigned char* src = bitmap + byteOffset;
-		unsigned char** src2 = &src;
-		kenneyFutureSquareFont->BlitCharacter(ch, b_w, src2);
-
-		x += roundf(ch.advance * ch.scale);
-		int kern;
-		kern = kenneyFutureSquareFont->GetGlyphKerning(glyph, next, f_scale);
-		x += roundf(kern);
-	}
-	kenneyFutureSquareTex = gueepo::Texture::Create(b_w, b_h);
-	unsigned char* bitmap2 = (unsigned char*)calloc(b_w * b_h, sizeof(unsigned char));
-
-	int theY = 0;
-	for (int y = b_h - 1; y >= 0; y--) {
-		for (int x = 0; x < b_w; x++) {
-			bitmap2[(b_w * y) + x] = bitmap[(b_w * theY) + x];
-		}
-		theY += 1;
-	}
-
-	kenneyFutureSquareTex->SetData(bitmap2, bitmapSize);
-
-	// Kenney Space
-	memset(bitmap, 0, b_w * b_h);
-	memset(bitmap2, 0, b_w * b_h);
-	f_scale = kenneySpaceFont->GetScale(l_h);
-	x = 0;
-	for (i = 0; i < strlen(word); ++i) {
-		int glyph = kenneySpaceFont->GetGlyphIndex(word[i]);
-		int next = openSansFont->GetGlyphIndex(word[i + 1]);
-
-		gueepo::Character ch = kenneySpaceFont->GetCharacter(glyph, f_scale);
-		int y = kenneySpaceFont->GetAscent() * ch.scale + ch.offset.y;
-		int byteOffset = x + roundf(ch.offset.x * f_scale) + (y * b_w);
-		unsigned char* src = bitmap + byteOffset;
-		unsigned char** src2 = &src;
-		kenneySpaceFont->BlitCharacter(ch, b_w, src2);
-
-		x += roundf(ch.advance * ch.scale);
-		int kern;
-		kern = kenneySpaceFont->GetGlyphKerning(glyph, next, f_scale);
-		x += roundf(kern);
-	}
-
-	theY = 0;
-	for (int y = b_h - 1; y >= 0; y--) {
-		for (int x = 0; x < b_w; x++) {
-			bitmap2[(b_w * y) + x] = bitmap[(b_w * theY) + x];
-		}
-		theY += 1;
-	}
-
-	kenneySpaceTex = gueepo::Texture::Create(b_w, b_h);
-	kenneySpaceTex->SetData(bitmap2, bitmapSize);
-
-	// Roboto
-	memset(bitmap, 0, b_w * b_h);
-	memset(bitmap2, 0, b_w * b_h);
-	f_scale = robotoFont->GetScale(l_h);
-	x = 0;
-	for (i = 0; i < strlen(word); ++i) {
-		int glyph = robotoFont->GetGlyphIndex(word[i]);
-		int next = openSansFont->GetGlyphIndex(word[i + 1]);
-
-		gueepo::Character ch = robotoFont->GetCharacter(glyph, f_scale);
-		int y = robotoFont->GetAscent() * ch.scale + ch.offset.y;
-		int byteOffset = x + roundf(ch.offset.x * f_scale) + (y * b_w);
-		unsigned char* src = bitmap + byteOffset;
-		unsigned char** src2 = &src;
-		robotoFont->BlitCharacter(ch, b_w, src2);
-
-		x += roundf(ch.advance * ch.scale);
-		int kern;
-		kern = robotoFont->GetGlyphKerning(glyph, next, f_scale);
-		x += roundf(kern);
-	}
-
-	theY = 0;
-	for (int y = b_h - 1; y >= 0; y--) {
-		for (int x = 0; x < b_w; x++) {
-			bitmap2[(b_w * y) + x] = bitmap[(b_w * theY) + x];
-		}
-		theY += 1;
-	}
-
-	robotoTex = gueepo::Texture::Create(b_w, b_h);
-	robotoTex->SetData(bitmap2, bitmapSize);
-
-	// Open Sans
-	memset(bitmap, 0, b_w * b_h);
-	memset(bitmap2, 0, b_w * b_h);
-	f_scale = openSansFont->GetScale(l_h);
-	x = 0;
-	for (i = 0; i < strlen(word); ++i) {
-		int glyph = openSansFont->GetGlyphIndex(word[i]);
-		int next = openSansFont->GetGlyphIndex(word[i + 1]);
-
-		gueepo::Character ch = openSansFont->GetCharacter(glyph, f_scale);
-		int y = openSansFont->GetAscent() * ch.scale + ch.offset.y;
-		int byteOffset = x + roundf(ch.offset.x * f_scale) + (y * b_w);
-		unsigned char* src = bitmap + byteOffset;
-		unsigned char** src2 = &src;
-		openSansFont->BlitCharacter(ch, b_w, src2);
-
-		x += roundf(ch.advance * ch.scale);
-		int kern;
-		kern = openSansFont->GetGlyphKerning(glyph, next, f_scale);
-		x += roundf(kern);
-	}
-
-	theY = 0;
-	for (int y = b_h - 1; y >= 0; y--) {
-		for (int x = 0; x < b_w; x++) {
-			bitmap2[(b_w * y) + x] = bitmap[(b_w * theY) + x];
-		}
-		theY += 1;
-	}
-
-	openSansTex = gueepo::Texture::Create(b_w, b_h);
-	openSansTex->SetData(bitmap2, bitmapSize);
 }
 
 void GameLayer::OnDetach() {
@@ -233,17 +90,26 @@ void GameLayer::OnUpdate(float DeltaTime) {
 
 void GameLayer::OnRender() {
 	gueepo::Renderer::BeginScene(*m_Camera);
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Kenney Future Square", gueepo::math::vec2(-250.0f, 100.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	gueepo::Renderer::Draw(gueepo::math::vec2(200.0f, 200.0f), kenneyFutureSquareTex);
-	gueepo::Renderer::DrawText(kenneyFutureSquare, "the quick brown fox", gueepo::math::vec2(-300.0f, 200.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-
-	gueepo::Renderer::Draw(gueepo::math::vec2(200.0f, 100.0f), kenneySpaceTex);
-	gueepo::Renderer::DrawText(kenneySpace, "the quick brown fox", gueepo::math::vec2(-300.0f, 75.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	
-	gueepo::Renderer::Draw(gueepo::math::vec2(200.0f, -50.0f), robotoTex);
-	gueepo::Renderer::DrawTextA(roboto, "the quick brown fox", gueepo::math::vec2(-300.0f, -60.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	gueepo::Renderer::Draw(gueepo::math::vec2(200.0f, -150.0f), openSansTex);
-	gueepo::Renderer::DrawTextA(openSans, "the quick brown fox", gueepo::math::vec2(-300.0f, -160.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "the quick brown fox", gueepo::math::vec2(-300.0f, 200.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "jumps over the lazy dog", gueepo::math::vec2(-300.0f, 175), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "the five boxing wizards jump quickly", gueepo::math::vec2(-300.0f, 100), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Two driven jocks help fax my big quiz", gueepo::math::vec2(-300.0f, 50), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Fickle jinx bog dwarves spy math quiz.", gueepo::math::vec2(-300.0f, 0), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Pack my box with five dozen liquor jugs", gueepo::math::vec2(-300.0f, -50), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "When zombies arrive,", gueepo::math::vec2(-300.0f, -100), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "quickly fax judge Pat", gueepo::math::vec2(-300.0f, -125), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "The wizard quickly jinxed the ", gueepo::math::vec2(-300.0f, -175), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawText(kenneyFutureSquare, "gnomes before they vaporized", gueepo::math::vec2(-300.0f, -200), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+
+	// gueepo::Renderer::DrawText(kenneySpace, "the quick brown fox", gueepo::math::vec2(-300.0f, 75.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	
+	gueepo::Renderer::DrawText(roboto, fox, gueepo::math::vec2(-300.0f, -60.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::DrawText(roboto, dog, gueepo::math::vec2(-300.0f, -90.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+
+	// gueepo::Renderer::DrawTextA(openSans, "the quick brown fox", gueepo::math::vec2(-300.0f, -160.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	// gueepo::Renderer::DrawTextA(openSans, "jumps over the lazy dog", gueepo::math::vec2(-300.0f, -190.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
 }
 

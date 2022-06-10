@@ -89,17 +89,7 @@ namespace gueepo {
 		return stbtt_ScaleForMappingEmToPixels(static_cast<stbtt_fontinfo*>(m_font), size);
 	}
 
-	float Font::GetCodepointKerning(int codepoint1, int codepoint2, float scale) const {
-		if (m_font == nullptr) {
-			LOG_WARN("trying to get kerning on an invalid font?");
-			return 0;
-		}
-
-		return stbtt_GetCodepointKernAdvance(static_cast<stbtt_fontinfo*>(m_font), codepoint1, codepoint2) * scale;
-
-	}
-
-	float Font::GetGlyphKerning(int glyph1, int glyph2, float scale) const {
+	float Font::GetKerning(int glyph1, int glyph2, float scale) const {
 		if (m_font == nullptr) {
 			LOG_WARN("trying to get kerning on an invalid font?");
 			return 0;
@@ -128,7 +118,7 @@ namespace gueepo {
 		ch.size.x = w;
 		ch.size.y = h;
 		ch.advance = advance;
-		ch.offset.x = offsetX * scale;
+		ch.offset.x = offsetX;
 		ch.offset.y = static_cast<float>(y0);
 		ch.scale = scale;
 		ch.has_glyph = (w > 0 && h > 0 && stbtt_IsGlyphEmpty(static_cast<stbtt_fontinfo*>(m_font), glyph) == 0);

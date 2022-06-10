@@ -167,6 +167,10 @@ namespace gueepo {
 		s_RendererAPI->DrawIndexed(vertexArray);
 	}
 
+	void Renderer::SetUnpackAlignment(int value) {
+		s_RendererAPI->SetUnpackAlignment(value);
+	}
+
 	void Renderer::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture, Color color) {
 
 		if (
@@ -233,26 +237,38 @@ namespace gueepo {
 
 
 	void Renderer::DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
-		int x = 0;
-		for (int i = 0; i < text.length(); i++) {
-			SpriteCharacter ch = fontSprite->GetSpriteCharacter(text[i]);
+		float x = 0;
+		// float y = fontSprite->ascent() + fontSprite->descent();
+		uint32_t last = 0;
 
-			int y = fontSprite->ascent() * fontSprite->scale() + ch.bearing.y;
+		// todo: justify
+
+		for (int i = 0, l = text.length(); i < l; i += text.utf8_length(i)) {
+			uint32_t next = text.utf8_at(i);
+			SpriteCharacter ch = fontSprite->GetSpriteCharacter(next);
+
+			if (ch.texture == nullptr) {
+				LOG_WARN("null texture for character: {0} - {1}", next, text[i]);
+				continue;
+			}
+
+			// int y = fontSprite->ascent() + ch.bearing.y - (ch.size.y / 2);
+			int y = 0;
+			x += ch.bearing.x;
 
 			math::vec2 renderScale(ch.size.x, ch.size.y);
 			math::vec2 renderPosition = position + math::vec2(x, y);
-			math::mat4 transformMatrix = 
-				math::mat4::CreateScale(renderScale) * 
-				math::mat4::CreateScale(math::vec2(1.0f, -1.0f)) * 
-				math::mat4::CreateRotation(0.0f) * 
+			math::mat4 transformMatrix =
+				math::mat4::CreateScale(renderScale) *
+				math::mat4::CreateScale(math::vec2(1.0f, -1.0f)) *
+				math::mat4::CreateRotation(0.0f) *
 				math::mat4::CreateTranslation(renderPosition);
 
 			Draw(transformMatrix, math::vec2(0.0f), math::vec2(1.0f), ch.texture, color);
 
-			x += roundf(ch.advance * fontSprite->scale());
-			int kern;
-			kern = fontSprite->kerning(text[i], text[i + 1]);
-			x += roundf(kern);
+			x += fontSprite->kerning(last, next);
+			x += ch.advance * fontSprite->scale();
+			last = next;
 		}
 	}
 

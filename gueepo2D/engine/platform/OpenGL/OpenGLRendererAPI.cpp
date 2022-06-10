@@ -38,4 +38,8 @@ namespace gueepo {
 		);
 	}
 
+	void OpenGLRendererAPI::SetUnpackAlignment(int value) {
+		glPixelStorei(GL_UNPACK_ALIGNMENT, value);
+	}
+
 }

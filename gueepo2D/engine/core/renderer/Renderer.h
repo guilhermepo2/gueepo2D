@@ -26,6 +26,8 @@ namespace gueepo {
 		static void EndScene();
 		static void Submit(VertexArray* vertexArray, Shader* shader);
 
+		static void SetUnpackAlignment(int value);
+
 		static void Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture, Color color);
 		static void Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture);
 		static void Draw(const math::mat4& transform, Texture* texture);

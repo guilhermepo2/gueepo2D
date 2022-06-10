@@ -36,8 +36,7 @@ namespace gueepo {
 		const int& GetFontLineHeight() const { return m_descent - m_descent + m_lineGap; }
 		
 		float GetScale(float size) const;
-		float GetCodepointKerning(int codepoint1, int codepoint2, float scale) const;
-		float GetGlyphKerning(int glyph1, int glyph2, float scale) const;
+		float GetKerning(int glyph1, int glyph2, float scale) const;
 
 		Character GetCharacter(int glyph, float scale) const;
 		int GetGlyphIndex(uint32_t codepoint) const;

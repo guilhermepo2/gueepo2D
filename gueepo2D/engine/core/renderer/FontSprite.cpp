@@ -8,8 +8,12 @@
 #include "gueepo2dpch.h"
 #include "FontSprite.h"
 #include "core/renderer/Texture.h"
+#include "core/renderer/Renderer.h"
 
 namespace gueepo {
+
+	CharacterRange::CharacterRange(uint32_t from, uint32_t to) : from(from), to(to) {}
+	const CharacterRange CharacterRange::ASCII = CharacterRange(32, 128);
 
 	FontSprite::FontSprite(Font* font, float size) {
 		m_internalFontRef = font;
@@ -28,7 +32,9 @@ namespace gueepo {
 
 		m_scale = m_internalFontRef->GetScale(m_fontSize);
 
-		for (int i = 0; i < 255; i++) {
+		Renderer::SetUnpackAlignment(1);
+
+		for (int i = CharacterRange::ASCII.from; i < CharacterRange::ASCII.to; i++) {
 			int glyph = m_internalFontRef->GetGlyphIndex(i);
 			Character ch = m_internalFontRef->GetCharacter(glyph, m_scale);
 			Texture* characterTexture = Texture::Create(ch.size.x, ch.size.y);
@@ -39,13 +45,16 @@ namespace gueepo {
 
 			SpriteCharacter character;
 			character.texture = characterTexture;
+			character.glyph = glyph;
 			character.size = math::vec2(ch.size.x, ch.size.y);
-			character.bearing = math::vec2(ch.offset.x, ch.offset.y);
+			character.bearing = math::vec2(ch.offset.x, ch.offset.y) * m_scale;
 			character.advance = ch.advance;
 			
 			free(characterBitmap);
 			m_Characters.insert(std::pair<char, SpriteCharacter>(i, character));
 		}
+
+		Renderer::SetUnpackAlignment(4);
 	}
 
 }

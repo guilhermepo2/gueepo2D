@@ -11,5 +11,6 @@ namespace gueepo {
 		void Clear() override;
 		void DrawIndexed(VertexArray* vertexArray) override;
 		void DrawIndexed(VertexArray* vertexArray, uint32_t count) override;
+		void SetUnpackAlignment(int value) override;
 	};
 }
