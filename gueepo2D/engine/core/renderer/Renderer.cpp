@@ -237,37 +237,39 @@ namespace gueepo {
 
 
 	void Renderer::DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
-		float x = 0;
-		// float y = fontSprite->ascent() + fontSprite->descent();
+		
+		math::vec2 offset = math::vec2(0, 0);
 		uint32_t last = 0;
-
-		// todo: justify
 
 		for (int i = 0, l = text.length(); i < l; i += text.utf8_length(i)) {
 			uint32_t next = text.utf8_at(i);
-			SpriteCharacter ch = fontSprite->GetSpriteCharacter(next);
 
-			if (ch.texture == nullptr) {
-				LOG_WARN("null texture for character: {0} - {1}", next, text[i]);
+			if (next == '\n') {
+				offset.x = 0;
+				offset.y -= fontSprite->lineHeight();
+				last = 0;
 				continue;
 			}
 
-			// int y = fontSprite->ascent() + ch.bearing.y - (ch.size.y / 2);
-			int y = 0;
-			x += ch.bearing.x;
+			const SpriteCharacter& ch = fontSprite->GetSpriteCharacter(next);
+			if (ch.texture != nullptr) {
+				math::vec2 at = offset + ch.bearing;
+				at.x += ch.size.x / 2.0f;
+				at.y += ch.size.y / 2.0f;
 
-			math::vec2 renderScale(ch.size.x, ch.size.y);
-			math::vec2 renderPosition = position + math::vec2(x, y);
-			math::mat4 transformMatrix =
-				math::mat4::CreateScale(renderScale) *
-				math::mat4::CreateScale(math::vec2(1.0f, -1.0f)) *
-				math::mat4::CreateRotation(0.0f) *
-				math::mat4::CreateTranslation(renderPosition);
+				if (i > 0 && text[i - 1] != '\n') {
+					at.x += fontSprite->kerning(last, next);
+				}
 
-			Draw(transformMatrix, math::vec2(0.0f), math::vec2(1.0f), ch.texture, color);
+				math::mat4 transformMatrix =
+					math::mat4::CreateScale(ch.size) *
+					math::mat4::CreateScale(math::vec2(scale, -scale)) *
+					math::mat4::CreateTranslation(position + at);
 
-			x += fontSprite->kerning(last, next);
-			x += ch.advance * fontSprite->scale();
+				Draw(transformMatrix, math::vec2::Zero, math::vec2::One, ch.texture, color);
+			}
+
+			offset.x += ch.advance;
 			last = next;
 		}
 	}

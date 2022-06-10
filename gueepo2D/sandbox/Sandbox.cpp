@@ -9,9 +9,9 @@ static gueepo::FontSprite* kenneyFutureSquare = nullptr;
 static gueepo::FontSprite* kenneySpace = nullptr;
 static gueepo::FontSprite* roboto = nullptr;
 static gueepo::FontSprite* openSans = nullptr;
+static gueepo::FontSprite* dogica = nullptr;
 
-static gueepo::string fox("the quick brown fox");
-static gueepo::string dog("jumps over the lazy dog");
+static gueepo::string fox("the quick brown fox\njumps over the lazy dog");
 
 static float s_Count = 0.0f;
 static int s_currentTile = 3;
@@ -22,7 +22,7 @@ void GameLayer::OnAttach() {
 	gueepo::Renderer::Initialize();
 
 	m_Camera = std::make_unique<gueepo::OrtographicCamera>(800, 600);
-	m_Camera->SetBackgroundColor(0.2f, 0.2f, 0.2f, 1.0f);
+	m_Camera->SetBackgroundColor(0.0f, 0.0f, 0.0f, 1.0f);
 	m_gameWorld = std::make_unique<gueepo::GameWorld>();
 	m_resourceManager = std::make_unique<gueepo::ResourceManager>();
 	m_collisionWorld = std::make_unique<gueepo::CollisionWorld>();
@@ -54,9 +54,12 @@ void GameLayer::OnAttach() {
 	gueepo::Font* kenneySpaceFont = gueepo::Font::CreateFont("./assets/Fonts/Kenney Space.ttf");
 	gueepo::Font* robotoFont = gueepo::Font::CreateFont("./assets/Fonts/Roboto-Black.ttf");
 	gueepo::Font* openSansFont = gueepo::Font::CreateFont("./assets/fonts/static/OpenSans/OpenSans-Bold.ttf");
+	gueepo::Font* dogicaFont = gueepo::Font::CreateFont("./assets/fonts/dogica.ttf");
 
 	{
 		GUEEPO2D_SCOPED_TIMER("creating fontsprite");
+		dogica = new gueepo::FontSprite(dogicaFont, 16);
+		dogica->SetLineGap(4);
 		kenneyFutureSquare = new gueepo::FontSprite(kenneyFutureSquareFont, 32);
 		kenneySpace = new gueepo::FontSprite(kenneySpaceFont, 32);
 		roboto = new gueepo::FontSprite(robotoFont, 32);
@@ -91,8 +94,8 @@ void GameLayer::OnUpdate(float DeltaTime) {
 void GameLayer::OnRender() {
 	gueepo::Renderer::BeginScene(*m_Camera);
 	
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "the quick brown fox", gueepo::math::vec2(-300.0f, 200.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "jumps over the lazy dog", gueepo::math::vec2(-300.0f, 175), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::DrawText(dogica, fox, gueepo::math::vec2(-300.0f, 200.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::DrawText(kenneyFutureSquare, fox, gueepo::math::vec2(-300.0f, 100.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	// gueepo::Renderer::DrawText(kenneyFutureSquare, "the five boxing wizards jump quickly", gueepo::math::vec2(-300.0f, 100), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Two driven jocks help fax my big quiz", gueepo::math::vec2(-300.0f, 50), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Fickle jinx bog dwarves spy math quiz.", gueepo::math::vec2(-300.0f, 0), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
@@ -102,13 +105,10 @@ void GameLayer::OnRender() {
 	// gueepo::Renderer::DrawText(kenneyFutureSquare, "The wizard quickly jinxed the ", gueepo::math::vec2(-300.0f, -175), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	// gueepo::Renderer::DrawText(kenneyFutureSquare, "gnomes before they vaporized", gueepo::math::vec2(-300.0f, -200), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	// gueepo::Renderer::DrawText(kenneySpace, "the quick brown fox", gueepo::math::vec2(-300.0f, 75.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	
 	gueepo::Renderer::DrawText(roboto, fox, gueepo::math::vec2(-300.0f, -60.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	gueepo::Renderer::DrawText(roboto, dog, gueepo::math::vec2(-300.0f, -90.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	// gueepo::Renderer::DrawTextA(openSans, "the quick brown fox", gueepo::math::vec2(-300.0f, -160.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawTextA(openSans, "jumps over the lazy dog", gueepo::math::vec2(-300.0f, -190.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::DrawText(openSans, fox, gueepo::math::vec2(-300.0f, -160.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	
 	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
 }
