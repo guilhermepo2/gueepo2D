@@ -255,7 +255,9 @@ namespace gueepo {
 			if (ch.texture != nullptr) {
 				math::vec2 at = offset + ch.bearing;
 				at.x += ch.size.x / 2.0f;
+				at.y = offset.y;
 				at.y += ch.size.y / 2.0f;
+				at.y += ch.bearing.y;
 
 				if (i > 0 && text[i - 1] != '\n') {
 					at.x += fontSprite->kerning(last, next);
@@ -263,7 +265,7 @@ namespace gueepo {
 
 				math::mat4 transformMatrix =
 					math::mat4::CreateScale(ch.size) *
-					math::mat4::CreateScale(math::vec2(scale, -scale)) *
+					math::mat4::CreateScale(math::vec2(scale, scale)) *
 					math::mat4::CreateTranslation(position + at);
 
 				Draw(transformMatrix, math::vec2::Zero, math::vec2::One, ch.texture, color);
