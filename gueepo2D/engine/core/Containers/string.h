@@ -40,7 +40,7 @@ namespace gueepo {
 		string& append_utf16(const uint16_t* start, const uint16_t* end = nullptr, bool swapEndian = false);
 
 		// #TODO: search and manipulation functions (starts with, contains, ends with, first index of, last index of, etc...)
-
+		string substring(int start, int end) const;
 
 		void reserve(int capacity);
 		void clear();

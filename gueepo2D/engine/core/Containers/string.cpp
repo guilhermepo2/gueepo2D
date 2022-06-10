@@ -152,6 +152,17 @@ namespace gueepo {
 		return *this;
 	}
 
+	gueepo::string string::substring(int start, int end) const {
+
+		if (start < 0) { start = 0; }
+		if (start > m_length) { start = m_length; }
+		if (end < 0) { end = m_length + end; }
+		if (end < start) { end = start; }
+		if (end > m_length) { end = m_length; }
+
+		return string(data() + start, data() + end);
+	}
+
 	// ***********************************************************************
 	void string::reserve(int capacity) {
 		int bufferLength = capacity + 1;
