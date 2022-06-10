@@ -117,8 +117,8 @@ namespace gueepo {
 		ch.glyph = glyph;
 		ch.size.x = w;
 		ch.size.y = h;
-		ch.advance = advance;
-		ch.offset.x = offsetX;
+		ch.advance = advance * scale;
+		ch.offset.x = offsetX * scale;
 		ch.offset.y = static_cast<float>(y0);
 		ch.scale = scale;
 		ch.has_glyph = (w > 0 && h > 0 && stbtt_IsGlyphEmpty(static_cast<stbtt_fontinfo*>(m_font), glyph) == 0);

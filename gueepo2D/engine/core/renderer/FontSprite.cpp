@@ -31,6 +31,9 @@ namespace gueepo {
 		m_Characters.clear();
 
 		m_scale = m_internalFontRef->GetScale(m_fontSize);
+		m_ascent = m_internalFontRef->GetAscent() * m_scale;
+		m_descent = m_internalFontRef->GetDescent() * m_scale;
+		m_lineGap = m_internalFontRef->GetLineGap() * m_scale;
 
 		Renderer::SetUnpackAlignment(1);
 
@@ -47,7 +50,7 @@ namespace gueepo {
 			character.texture = characterTexture;
 			character.glyph = glyph;
 			character.size = math::vec2(ch.size.x, ch.size.y);
-			character.bearing = math::vec2(ch.offset.x, ch.offset.y) * m_scale;
+			character.bearing = math::vec2(ch.offset.x, ch.offset.y); // THE BEARING DOESN'T NEED TO BE MULTIPLIED BY SCALE, BECAUSE IT ALREADY TAKES IT IN CONSIDERATION
 			character.advance = ch.advance;
 			
 			free(characterBitmap);
