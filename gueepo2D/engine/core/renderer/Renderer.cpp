@@ -246,7 +246,7 @@ namespace gueepo {
 
 			if (next == '\n') {
 				offset.x = 0;
-				offset.y -= fontSprite->lineHeight();
+				offset.y += fontSprite->lineHeight(); // adding here because down there we are going to reverse it
 				last = 0;
 				continue;
 			}
@@ -255,18 +255,22 @@ namespace gueepo {
 			if (ch.texture != nullptr) {
 				math::vec2 at = offset + ch.bearing;
 				at.x += ch.size.x / 2.0f;
-				at.y = offset.y;
 				at.y += ch.size.y / 2.0f;
-				at.y += ch.bearing.y;
 
 				if (i > 0 && text[i - 1] != '\n') {
 					at.x += fontSprite->kerning(last, next);
 				}
 
+				// WE HAVE TO DO -AT.Y HERE BECAUSE WE DO -SCALE DOWN THERE
+				// BECAUSE IN THE ORIGINAL FONT/TEXTURE, THE CHARACTERS ARE UPSIDE DOWN
+				// SO THE BEARING AND OFFSET ARE FOR THAT OCCASION
+				// SO BECAUSE WE INVERSING THE SCALE, WE HAVE TO INVERSE THE BEARING/OFFSET AS WELL!!
+				at.y = -at.y;
+
 				math::mat4 transformMatrix =
 					math::mat4::CreateScale(ch.size) *
-					math::mat4::CreateScale(math::vec2(scale, scale)) *
-					math::mat4::CreateTranslation(position + at);
+					math::mat4::CreateScale(math::vec2(scale, -scale)) *
+					math::mat4::CreateTranslation(position + math::vec2(at.x, at.y));
 
 				Draw(transformMatrix, math::vec2::Zero, math::vec2::One, ch.texture, color);
 			}
