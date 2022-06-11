@@ -46,7 +46,7 @@ namespace gueepo {
 		void RebuildSourceRectangle(int tile_x, int tile_y, int tile_width, int tile_height);
 		void RebuildFromTile(const Tile& tile);
 
-		void Render() override;
+		void Render(SpriteBatcher* batch) override;
 
 	private:
 		math::vec2 GetTexCoordsMin() const;

@@ -38,9 +38,9 @@ void gueepo::Entity::Update(float DeltaTime) {
 	}
 }
 
-void gueepo::Entity::Render() {
+void gueepo::Entity::Render(SpriteBatcher* batch) {
 	for (Component* c : m_Components) {
-		c->Render();
+		c->Render(batch);
 	}
 }
 

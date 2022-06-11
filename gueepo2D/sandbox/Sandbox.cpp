@@ -85,14 +85,9 @@ void GameLayer::OnUpdate(float DeltaTime) {
 void GameLayer::OnRender() {
 	gueepo::Renderer::Begin(*m_Camera);
 
-	gueepo::Renderer::s_spriteBatcher->Begin(*m_Camera);
-	m_gameWorld->Render();
-	gueepo::Renderer::s_spriteBatcher->End();
-	
-	gueepo::Renderer::s_uiBatcher->Begin(*m_Camera);
+	m_gameWorld->Render(gueepo::Renderer::s_spriteBatcher);
 	gueepo::Renderer::s_uiBatcher->DrawText(dogica, "this engine now render fonts", gueepo::math::vec2(-350.0f, -250.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
 	gueepo::Renderer::s_uiBatcher->DrawText(kenneyFutureSquare, "it's pretty cool", gueepo::math::vec2(-350.0f, -275.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	gueepo::Renderer::s_uiBatcher->End();
 
 	gueepo::Renderer::End();
 }

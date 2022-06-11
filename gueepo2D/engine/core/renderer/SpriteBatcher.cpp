@@ -5,7 +5,6 @@
 #include "core/filesystem/Filesystem.h"
 #include "core/math/Math.h"
 #include "core/renderer/BufferLayout.h"
-#include "core/renderer/Color.h"
 #include "core/renderer/FontSprite.h"
 #include "core/renderer/OrtographicCamera.h"
 #include "core/renderer/RendererAPI.h"
@@ -15,41 +14,6 @@
 #include "core/renderer/VertexBuffer.h"
 
 namespace gueepo {
-
-	struct QuadVertex {
-		gueepo::math::vec3 Position;
-		gueepo::math::vec2 TexCoord;
-		float TextureSlot = 0.0f;
-		gueepo::Color color;
-	};
-
-	static struct {
-		math::mat4 ViewProjection;
-
-		// Maximum
-		static const uint32_t MaxQuads = 1000;
-		static const uint32_t MaxVertices = MaxQuads * 4;
-		static const uint32_t MaxIndices = MaxQuads * 6;
-		static const uint32_t MaxTextureSlots = 16;
-
-		// Defaults
-		VertexBuffer* defaultVertexBuffer = nullptr;
-		VertexArray* defaultVertexArray = nullptr;
-		math::vec3 quadVertexPosition[4];
-
-		std::array<Texture*, MaxTextureSlots> TextureSlots;
-		uint32_t TextureSlotIndex = 0;
-
-		// quad vertex counting
-		uint32_t quadIndexCount = 0;
-		QuadVertex* quadVertexBase = nullptr;
-		QuadVertex* quadVertexPtrPosition = nullptr;
-
-		struct {
-			uint32_t DrawCalls;
-		} RenderStats = { 0 };
-	} s_RenderData;
-
 	// ------------------------------------------------------
 	void SpriteBatcher::Initialize(RendererAPI* rendererAPI, Shader* batchShader) {
 		m_RendererAPI = rendererAPI;
@@ -58,20 +22,20 @@ namespace gueepo {
 		LOG_INFO("quad vertex size: {0}", sizeof QuadVertex);
 		LOG_INFO("sizeof color class: {0}", sizeof Color);
 
-		s_RenderData.defaultVertexArray = VertexArray::Create();
-		s_RenderData.defaultVertexBuffer = VertexBuffer::Create(s_RenderData.MaxVertices * sizeof(QuadVertex));
-		s_RenderData.defaultVertexBuffer->SetLayout({
+		m_renderData.defaultVertexArray = VertexArray::Create();
+		m_renderData.defaultVertexBuffer = VertexBuffer::Create(m_renderData.MaxVertices * sizeof(QuadVertex));
+		m_renderData.defaultVertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float2, "a_TexCoords" },
 			{ ShaderDataType::Float, "a_TextureSlot" },
 			{ ShaderDataType::Float4, "a_Color "}
 			});
-		s_RenderData.defaultVertexArray->AddVertexBuffer(s_RenderData.defaultVertexBuffer);
+		m_renderData.defaultVertexArray->AddVertexBuffer(m_renderData.defaultVertexBuffer);
 
-		s_RenderData.quadVertexBase = new QuadVertex[s_RenderData.MaxVertices];
-		uint32_t* quadIndices = new uint32_t[s_RenderData.MaxIndices];
+		m_renderData.quadVertexBase = new QuadVertex[m_renderData.MaxVertices];
+		uint32_t* quadIndices = new uint32_t[m_renderData.MaxIndices];
 		uint32_t offset = 0;
-		for (uint32_t i = 0; i < s_RenderData.MaxIndices; i += 6) {
+		for (uint32_t i = 0; i < m_renderData.MaxIndices; i += 6) {
 			quadIndices[i + 0] = offset + 0;
 			quadIndices[i + 1] = offset + 1;
 			quadIndices[i + 2] = offset + 2;
@@ -82,25 +46,25 @@ namespace gueepo {
 			offset += 4;
 		}
 
-		IndexBuffer* quadIndexBuffer = IndexBuffer::Create(quadIndices, s_RenderData.MaxIndices);
-		s_RenderData.defaultVertexArray->SetIndexBuffer(quadIndexBuffer);
+		IndexBuffer* quadIndexBuffer = IndexBuffer::Create(quadIndices, m_renderData.MaxIndices);
+		m_renderData.defaultVertexArray->SetIndexBuffer(quadIndexBuffer);
 		delete[] quadIndices;
 
-		s_RenderData.quadVertexPosition[0] = { -0.5f, -0.5f, 0.0f };
-		s_RenderData.quadVertexPosition[1] = { 0.5f, -0.5f, 0.0f };
-		s_RenderData.quadVertexPosition[2] = { 0.5f,  0.5f, 0.0f };
-		s_RenderData.quadVertexPosition[3] = { -0.5f,  0.5f, 0.0f };
+		m_renderData.quadVertexPosition[0] = { -0.5f, -0.5f, 0.0f };
+		m_renderData.quadVertexPosition[1] = { 0.5f, -0.5f, 0.0f };
+		m_renderData.quadVertexPosition[2] = { 0.5f,  0.5f, 0.0f };
+		m_renderData.quadVertexPosition[3] = { -0.5f,  0.5f, 0.0f };
 	}
 
 	// ------------------------------------------------------
 	void SpriteBatcher::Shutdown() {
-		delete[] s_RenderData.quadVertexBase;
+		delete[] m_renderData.quadVertexBase;
 	}
 
 	// ------------------------------------------------------
 	void SpriteBatcher::Begin(const OrtographicCamera& camera) {
-		s_RenderData.ViewProjection = camera.GetViewProjectionMatrix();
-		s_RenderData.RenderStats.DrawCalls = 0;
+		m_renderData.ViewProjection = camera.GetViewProjectionMatrix();
+		m_renderData.RenderStats.DrawCalls = 0;
 		StartBatch();
 	}
 
@@ -113,8 +77,8 @@ namespace gueepo {
 	void SpriteBatcher::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture, Color color) {
 
 		if (
-			s_RenderData.quadIndexCount >= s_RenderData.MaxIndices ||
-			s_RenderData.TextureSlotIndex >= s_RenderData.MaxTextureSlots
+			m_renderData.quadIndexCount >= m_renderData.MaxIndices ||
+			m_renderData.TextureSlotIndex >= m_renderData.MaxTextureSlots
 			) {
 			NextBatch();
 		}
@@ -122,8 +86,8 @@ namespace gueepo {
 		float textureSlot = -1.0f;
 
 		// searching for the texture on the array
-		for (size_t i = 0; i < s_RenderData.TextureSlotIndex; i++) {
-			if (s_RenderData.TextureSlots[i] == texture) {
+		for (size_t i = 0; i < m_renderData.TextureSlotIndex; i++) {
+			if (m_renderData.TextureSlots[i] == texture) {
 				textureSlot = (float)i;
 				break;
 			}
@@ -132,9 +96,9 @@ namespace gueepo {
 		// if we didn't find it, we add it.
 		if (textureSlot == -1.0f) {
 			// #todo: check if we are not over the maximum texture slots, if we are we have to flush
-			textureSlot = (float)s_RenderData.TextureSlotIndex;
-			s_RenderData.TextureSlots[s_RenderData.TextureSlotIndex] = texture;
-			s_RenderData.TextureSlotIndex++;
+			textureSlot = (float)m_renderData.TextureSlotIndex;
+			m_renderData.TextureSlots[m_renderData.TextureSlotIndex] = texture;
+			m_renderData.TextureSlotIndex++;
 		}
 
 		size_t quadVertexCount = 4;
@@ -147,14 +111,14 @@ namespace gueepo {
 		};
 
 		for (size_t i = 0; i < quadVertexCount; i++) {
-			s_RenderData.quadVertexPtrPosition->Position = transform * s_RenderData.quadVertexPosition[i];
-			s_RenderData.quadVertexPtrPosition->TexCoord = textureCoords[i];
-			s_RenderData.quadVertexPtrPosition->TextureSlot = textureSlot;
-			s_RenderData.quadVertexPtrPosition->color = color;
-			s_RenderData.quadVertexPtrPosition++;
+			m_renderData.quadVertexPtrPosition->Position = transform * m_renderData.quadVertexPosition[i];
+			m_renderData.quadVertexPtrPosition->TexCoord = textureCoords[i];
+			m_renderData.quadVertexPtrPosition->TextureSlot = textureSlot;
+			m_renderData.quadVertexPtrPosition->color = color;
+			m_renderData.quadVertexPtrPosition++;
 		}
 
-		s_RenderData.quadIndexCount += 6;
+		m_renderData.quadIndexCount += 6;
 	}
 
 	void SpriteBatcher::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture) {
@@ -220,16 +184,16 @@ namespace gueepo {
 	}
 
 	int SpriteBatcher::GetDrawCalls() {
-		return s_RenderData.RenderStats.DrawCalls;
+		return m_renderData.RenderStats.DrawCalls;
 	}
 
 	// ---------------------------------------------------------
 	// Private Members
 	// ---------------------------------------------------------
 	void SpriteBatcher::StartBatch() {
-		s_RenderData.TextureSlotIndex = 0;
-		s_RenderData.quadIndexCount = 0;
-		s_RenderData.quadVertexPtrPosition = s_RenderData.quadVertexBase;
+		m_renderData.TextureSlotIndex = 0;
+		m_renderData.quadIndexCount = 0;
+		m_renderData.quadVertexPtrPosition = m_renderData.quadVertexBase;
 	}
 
 	void SpriteBatcher::NextBatch() {
@@ -238,18 +202,18 @@ namespace gueepo {
 	}
 
 	void SpriteBatcher::Flush() {
-		uint32_t dataSize = (uint32_t)((uint8_t*)s_RenderData.quadVertexPtrPosition - (uint8_t*)s_RenderData.quadVertexBase);
-		s_RenderData.defaultVertexBuffer->SetData(s_RenderData.quadVertexBase, dataSize);
+		uint32_t dataSize = (uint32_t)((uint8_t*)m_renderData.quadVertexPtrPosition - (uint8_t*)m_renderData.quadVertexBase);
+		m_renderData.defaultVertexBuffer->SetData(m_renderData.quadVertexBase, dataSize);
 
-		for (uint32_t i = 0; i < s_RenderData.TextureSlotIndex; i++) {
-			s_RenderData.TextureSlots[i]->Bind(i);
+		for (uint32_t i = 0; i < m_renderData.TextureSlotIndex; i++) {
+			m_renderData.TextureSlots[i]->Bind(i);
 		}
 
 		m_batchShader->Bind();
-		m_batchShader->SetMat4("u_ViewProjection", s_RenderData.ViewProjection);
-		s_RenderData.defaultVertexArray->Bind();
-		m_RendererAPI->DrawIndexed(s_RenderData.defaultVertexArray, s_RenderData.quadIndexCount);
-		s_RenderData.RenderStats.DrawCalls++;
+		m_batchShader->SetMat4("u_ViewProjection", m_renderData.ViewProjection);
+		m_renderData.defaultVertexArray->Bind();
+		m_RendererAPI->DrawIndexed(m_renderData.defaultVertexArray, m_renderData.quadIndexCount);
+		m_renderData.RenderStats.DrawCalls++;
 	}
 
 }

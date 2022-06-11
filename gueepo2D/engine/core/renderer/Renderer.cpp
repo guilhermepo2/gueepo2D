@@ -89,10 +89,14 @@ namespace gueepo {
 			camera.GetBackGroundColor().rgba[3]
 		);
 		s_RendererAPI->Clear();
+
+		s_spriteBatcher->Begin(camera);
+		s_uiBatcher->Begin(camera);
 	}
 
 	void Renderer::End() {
-		// nothing?
+		s_spriteBatcher->End();
+		s_uiBatcher->End();
 	}
 
 	/*

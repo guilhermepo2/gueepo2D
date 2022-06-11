@@ -30,7 +30,7 @@ namespace gueepo {
 			layers[0].GetInt("height", height);
 		}
 
-		void Render() override {
+		void Render(SpriteBatcher* batch) override {
 			TransformComponent* t = Owner->GetComponentOfType<TransformComponent>();
 			g2dassert(t != nullptr, "trying to render something without a transform?!");
 
@@ -48,7 +48,7 @@ namespace gueepo {
 					
 					math::mat4 tileScale = math::mat4::CreateScale(currentTile.GetRect().GetSize());
 					math::mat4 transformMatrix = math::mat4::CreateScale(scale) * math::mat4::CreateRotation(0.0f) * math::mat4::CreateTranslation(pos);
-					Renderer::s_spriteBatcher->Draw(tileScale * transformMatrix, currentTile.GetTexCoords().bottomLeft, currentTile.GetTexCoords().topRight, tm->GetTexture());
+					batch->Draw(tileScale * transformMatrix, currentTile.GetTexCoords().bottomLeft, currentTile.GetTexCoords().topRight, tm->GetTexture());
 
 					pos.x += width * scale.x;
 					v++;

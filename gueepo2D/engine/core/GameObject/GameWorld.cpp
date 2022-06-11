@@ -39,9 +39,9 @@ namespace gueepo {
 		Internal_Update(DeltaTime);
 	}
 
-	void GameWorld::Render() {
+	void GameWorld::Render(SpriteBatcher* batch) {
 		for (auto entity : m_AllEntities) {
-			entity->Render();
+			entity->Render(batch);
 		}
 	}
 

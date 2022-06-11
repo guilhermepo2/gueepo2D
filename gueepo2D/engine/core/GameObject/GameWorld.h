@@ -6,6 +6,7 @@ namespace gueepo {
 	class Entity;
 	class GameObject;
 	struct InputState;
+	class SpriteBatcher;
 	class Texture;
 
 	class GameWorld {
@@ -17,7 +18,7 @@ namespace gueepo {
 		void BeginPlay();
 		void ProcessInput(const InputState& CurrentInputState);
 		void Update(float DeltaTime);
-		void Render();
+		void Render(SpriteBatcher* batch);
 		void Destroy();
 
 		Entity* CreateEntity(const std::string& name = "Entity");

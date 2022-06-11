@@ -42,7 +42,7 @@ namespace gueepo {
 		sourceRectangle = tile.GetRect();
 	}
 
-	void SpriteComponent::Render() {
+	void SpriteComponent::Render(SpriteBatcher* batch) {
 		TransformComponent* t = Owner->GetComponentOfType<TransformComponent>();
 		g2dassert(t != nullptr, "trying to render something without a transform?!");
 
@@ -58,7 +58,7 @@ namespace gueepo {
 
 		math::mat4 textureScale = math::mat4::CreateScale(textureScaleVec);
 		math::mat4 transformMatrix = textureScale * t->GetTransformMatrix();
-		Renderer::s_spriteBatcher->Draw(transformMatrix, GetTexCoordsMin(), GetTexCoordsMax(), texture, spriteTint);
+		batch->Draw(transformMatrix, GetTexCoordsMin(), GetTexCoordsMax(), texture, spriteTint);
 	}
 
 	// ------------------------------------------------------------------------------------

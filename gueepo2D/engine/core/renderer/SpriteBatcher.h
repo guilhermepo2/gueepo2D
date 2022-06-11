@@ -1,16 +1,53 @@
 #pragma once
 #include "core/math/mat4.h"
 #include "core/math/vec2.h"
+#include "core/renderer/Color.h"
 
 namespace gueepo {
 
-	class Color;
 	class FontSprite;
 	class OrtographicCamera;
 	class Texture;
 	class RendererAPI;
 	class Shader;
 	class string;
+
+	class VertexBuffer;
+	class VertexArray;
+
+	struct QuadVertex {
+		gueepo::math::vec3 Position;
+		gueepo::math::vec2 TexCoord;
+		float TextureSlot = 0.0f;
+		gueepo::Color color;
+	};
+
+	struct RenderData {
+		math::mat4 ViewProjection;
+
+		// Maximum
+		static const uint32_t MaxQuads = 1000;
+		static const uint32_t MaxVertices = MaxQuads * 4;
+		static const uint32_t MaxIndices = MaxQuads * 6;
+		static const uint32_t MaxTextureSlots = 16;
+
+		// Defaults
+		VertexBuffer* defaultVertexBuffer = nullptr;
+		VertexArray* defaultVertexArray = nullptr;
+		math::vec3 quadVertexPosition[4];
+
+		std::array<Texture*, MaxTextureSlots> TextureSlots;
+		uint32_t TextureSlotIndex = 0;
+
+		// quad vertex counting
+		uint32_t quadIndexCount = 0;
+		QuadVertex* quadVertexBase = nullptr;
+		QuadVertex* quadVertexPtrPosition = nullptr;
+
+		struct {
+			uint32_t DrawCalls;
+		} RenderStats = { 0 };
+	};
 
 	class SpriteBatcher {
 	public:
@@ -36,5 +73,6 @@ namespace gueepo {
 
 		RendererAPI* m_RendererAPI;
 		Shader* m_batchShader;
+		RenderData m_renderData;
 	};
 }

@@ -4,6 +4,7 @@
 namespace gueepo {
 	class Entity;
 	struct InputState;
+	class SpriteBatcher;
 	
 	class Component {
 	public:
@@ -14,7 +15,7 @@ namespace gueepo {
 		virtual void BeginPlay() {}
 		virtual bool ProcessInput(const InputState& CurrentInputState) { unreferenced(CurrentInputState); return false; }
 		virtual void Update(float DeltaTime) { unreferenced(DeltaTime); }
-		virtual void Render() {}
+		virtual void Render(SpriteBatcher* batch) {}
 		virtual void Destroy() {};
 	};
 }

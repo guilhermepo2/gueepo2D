@@ -14,6 +14,7 @@ using EntityCallback = std::function<void(void)>;
 namespace gueepo {
 	class Component;
 	struct InputState;
+	class SpriteBatcher;
 
 	class Entity {
 	public:
@@ -41,7 +42,7 @@ namespace gueepo {
 		void BeginPlay();
 		bool ProcessInput(const InputState& CurrentInputState);
 		void Update(float DeltaTime);
-		void Render();
+		void Render(SpriteBatcher* batch);
 		void Destroy();
 
 		template<typename T, typename... TArgs>
