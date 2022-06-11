@@ -24,6 +24,8 @@ namespace gueepo {
 		virtual void DrawIndexed(VertexArray* vertexArray) = 0;
 		virtual void DrawIndexed(VertexArray* vertexArray, uint32_t count) = 0;
 
+		virtual void SetUnpackAlignment(int value) = 0;
+
 		inline static API GetAPI() { return s_API; }
 
 	private:

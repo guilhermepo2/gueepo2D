@@ -4,6 +4,7 @@
 #include "vec2.h"
 #include "vec3.h"
 #include "rand.h"
+#include "endian.h"
 #include <cmath>
 
 namespace gueepo {

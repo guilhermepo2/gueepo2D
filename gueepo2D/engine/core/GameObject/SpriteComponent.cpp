@@ -1,6 +1,7 @@
 #include "gueepo2Dpch.h"
 #include "SpriteComponent.h"
 #include "core/renderer/BufferLayout.h"
+#include "core/renderer/SpriteBatcher.h"
 #include "utils/Tilemap.h"
 
 namespace gueepo {
@@ -57,7 +58,7 @@ namespace gueepo {
 
 		math::mat4 textureScale = math::mat4::CreateScale(textureScaleVec);
 		math::mat4 transformMatrix = textureScale * t->GetTransformMatrix();
-		Renderer::Draw(transformMatrix, GetTexCoordsMin(), GetTexCoordsMax(), texture, spriteTint);
+		Renderer::s_spriteBatcher->Draw(transformMatrix, GetTexCoordsMin(), GetTexCoordsMax(), texture, spriteTint);
 	}
 
 	// ------------------------------------------------------------------------------------

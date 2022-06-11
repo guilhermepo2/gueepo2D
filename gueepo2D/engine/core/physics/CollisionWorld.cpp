@@ -3,6 +3,7 @@
 #include "LineSegment.h"
 #include "core/math/math.h"
 #include "core/renderer/Renderer.h"
+#include "core/renderer/SpriteBatcher.h"
 #include "core/renderer/Texture.h"
 #include "core/GameObject/BoxCollider.h"
 #include "core/GameObject/Entity.h"
@@ -67,7 +68,7 @@ namespace gueepo {
 			position.y += (bottomLeft.y) * transform->scale.y;
 
 			math::mat4 transformMatrix = textureScaleM * math::mat4::CreateScale(transform->scale) * math::mat4::CreateTranslation(position);
-			gueepo::Renderer::Draw(transformMatrix, m_debugTex);
+			gueepo::Renderer::s_spriteBatcher->Draw(transformMatrix, m_debugTex);
 		 }
 	}
 

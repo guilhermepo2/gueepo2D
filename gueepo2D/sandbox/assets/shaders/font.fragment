@@ -1,0 +1,16 @@
+# version 330 core
+
+out vec4 v_FragColor;
+
+in vec2 v_TexCoord;
+in float v_TextureSlot;
+in vec3 v_Color;
+
+uniform sampler2D u_textureSampler[16];
+
+void main()
+{
+    int index = int(v_TextureSlot);
+    vec4 sampled = vec4(1.0, 1.0, 1.0, texture(u_textureSampler[index], v_TexCoord).r);
+    v_FragColor = vec4(v_Color, 1.0) * sampled;
+}

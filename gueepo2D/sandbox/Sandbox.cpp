@@ -2,11 +2,13 @@
 
 #include "Sandbox.h"
 
-#define STB_TRUETYPE_IMPLEMENTATION
-#include "stb_truetype.h"
-
 static gueepo::GameObject* s_player1 = nullptr;
 static gueepo::GameObject* s_player4 = nullptr;
+
+static gueepo::FontSprite* kenneyFutureSquare = nullptr;
+static gueepo::FontSprite* dogica = nullptr;
+
+static gueepo::string fox("the quick brown fox\njumps over the lazy dog");
 
 static float s_Count = 0.0f;
 static int s_currentTile = 3;
@@ -17,7 +19,7 @@ void GameLayer::OnAttach() {
 	gueepo::Renderer::Initialize();
 
 	m_Camera = std::make_unique<gueepo::OrtographicCamera>(800, 600);
-	m_Camera->SetBackgroundColor(0.1f, 0.1f, 0.1f, 1.0f);
+	m_Camera->SetBackgroundColor(0.33f, 0.0f, 0.33f, 1.0f);
 	m_gameWorld = std::make_unique<gueepo::GameWorld>();
 	m_resourceManager = std::make_unique<gueepo::ResourceManager>();
 	m_collisionWorld = std::make_unique<gueepo::CollisionWorld>();
@@ -39,6 +41,22 @@ void GameLayer::OnAttach() {
 	s_player4->SetScale(3.0f, 3.0f);
 	s_player4->sprite->RebuildFromTile(m_resourceManager->GetTilemap("texture-tilemap")->GetTile(7));
 	s_player4->AddComponent<gueepo::BoxCollider>(gueepo::math::vec2(-8.0f, -8.0f), gueepo::math::vec2(8.0f, 8.0f));
+
+	// =========================================================================
+	// =========================================================================
+	// trying this font thing!
+	// =========================================================================
+	// =========================================================================
+	gueepo::Font* kenneyFutureSquareFont = gueepo::Font::CreateFont("./assets/Fonts/Kenney Future Square.ttf");
+	gueepo::Font* dogicaFont = gueepo::Font::CreateFont("./assets/fonts/dogica.ttf");
+
+	{
+		GUEEPO2D_SCOPED_TIMER("creating fontsprite");
+		dogica = new gueepo::FontSprite(dogicaFont, 16);
+		dogica->SetLineGap(4);
+		kenneyFutureSquare = new gueepo::FontSprite(kenneyFutureSquareFont, 32);
+	}
+
 }
 
 void GameLayer::OnDetach() {
@@ -65,10 +83,18 @@ void GameLayer::OnUpdate(float DeltaTime) {
 }
 
 void GameLayer::OnRender() {
-	gueepo::Renderer::BeginScene(*m_Camera);
+	gueepo::Renderer::Begin(*m_Camera);
+
+	gueepo::Renderer::s_spriteBatcher->Begin(*m_Camera);
 	m_gameWorld->Render();
-	m_collisionWorld->Debug_Render();
-	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
+	gueepo::Renderer::s_spriteBatcher->End();
+	
+	gueepo::Renderer::s_uiBatcher->Begin(*m_Camera);
+	gueepo::Renderer::s_uiBatcher->DrawText(dogica, "this engine now render fonts", gueepo::math::vec2(-350.0f, -250.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::s_uiBatcher->DrawText(kenneyFutureSquare, "it's pretty cool", gueepo::math::vec2(-350.0f, -275.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::s_uiBatcher->End();
+
+	gueepo::Renderer::End();
 }
 
 #endif

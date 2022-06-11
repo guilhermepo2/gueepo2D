@@ -5,9 +5,10 @@
 #include "core/math/Math.h"
 #include "Entity.h"
 #include "TransformComponent.h"
+#include "core/renderer/Color.h"
+#include "core/renderer/Renderer.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/VertexArray.h"
-#include "core/renderer/Renderer.h"
 
 namespace gueepo {
 

@@ -17,7 +17,7 @@ namespace gueepo {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_BLEND);
 		glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
-		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	void OpenGLRendererAPI::DrawIndexed(VertexArray* vertexArray) {
@@ -36,6 +36,10 @@ namespace gueepo {
 			GL_UNSIGNED_INT,
 			nullptr
 		);
+	}
+
+	void OpenGLRendererAPI::SetUnpackAlignment(int value) {
+		glPixelStorei(GL_UNPACK_ALIGNMENT, value);
 	}
 
 }

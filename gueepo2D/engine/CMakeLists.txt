@@ -11,16 +11,17 @@ set (SOURCES
     "core/ImGuiLayer.cpp"
     "core/Log.cpp"
 
-    "core/Containers/String.cpp"
+    "core/Containers/hashed_string.cpp"
+    "core/Containers/string.cpp"
 
     "core/filesystem/File.cpp"
     "core/filesystem/Filesystem.cpp"
+    "core/filesystem/Font.cpp"
     "core/filesystem/json.cpp"
 
     "core/GameObject/GameWorld.cpp"
     "core/GameObject/Entity.cpp"
     "core/GameObject/GameObject.cpp"
-    "core/GameObject/SpriteComponent.h"
     "core/GameObject/SpriteComponent.cpp"
     "core/input/Input.cpp"
     "core/layer/Layer.cpp"
@@ -41,9 +42,11 @@ set (SOURCES
     "core/renderer/Renderer.cpp"
     "core/renderer/RendererAPI.cpp"
     "core/renderer/Shader.cpp"
+    "core/renderer/SpriteBatcher.cpp"
     "core/renderer/Texture.cpp"
     "core/renderer/VertexArray.cpp"
     "core/renderer/VertexBuffer.cpp"
+    "core/renderer/FontSprite.cpp"
 
     "core/ResourceManager/ResourceManager.cpp"
 
@@ -78,7 +81,8 @@ set(HEADERS
     "core/TimeStep.h"
     "core/Window.h"
 
-    "core/Containers/String.h"
+    "core/Containers/hashed_string.h"
+    "core/Containers/string.h"
 
     "core/Debug/Profiler.h"
 
@@ -90,6 +94,7 @@ set(HEADERS
 
     "core/filesystem/File.h"
     "core/filesystem/Filesystem.h"
+    "core/filesystem/Font.h"
     "core/filesystem/json.h"
     
     "core/GameObject/GameWorld.h"
@@ -107,6 +112,7 @@ set(HEADERS
     "core/layer/LayerStack.h"
 
     "core/math/math.h"
+    "core/math/endian.h"
     "core/math/rect.h"
     "core/math/mat4.h"
     "core/math/rand.h"
@@ -124,9 +130,11 @@ set(HEADERS
     "core/renderer/Renderer.h"
     "core/renderer/RendererAPI.h"
     "core/renderer/Shader.h"
+    "core/renderer/SpriteBatcher.h"
     "core/renderer/Texture.h"
     "core/renderer/VertexArray.h"
     "core/renderer/VertexBuffer.h"
+    "core/renderer/FontSprite.h"
 
     "core/ResourceManager/ResourceManager.h"
 
