@@ -20,8 +20,8 @@ namespace gueepo {
 		unsigned long GetCRCValue(void) const { return m_crcIdentifier; }
 		const std::string& GetString() const { return m_internalString; }
 
-		bool operator< (hashed_string const& other) const { return (GetCRCValue() < other.GetCRCValue()); }
-		bool operator== (hashed_string const& other) const { return GetCRCValue() == other.GetCRCValue(); }
+		bool operator<(const hashed_string& other) const { return (GetCRCValue() < other.GetCRCValue()); }
+		bool operator==(const hashed_string& other) const { return GetCRCValue() == other.GetCRCValue(); }
 
 	private:
 		unsigned long m_crcIdentifier;
@@ -29,4 +29,10 @@ namespace gueepo {
 	};
 
 }
+
+struct StringHasher {
+	unsigned long operator()(const gueepo::hashed_string& k) const {
+		return k.GetCRCValue();
+	}
+};
 
