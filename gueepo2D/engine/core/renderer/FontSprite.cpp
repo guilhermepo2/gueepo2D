@@ -37,14 +37,17 @@ namespace gueepo {
 
 		Renderer::SetUnpackAlignment(1);
 
-		for (int i = CharacterRange::ASCII.from; i < CharacterRange::ASCII.to; i++) {
+		for (uint32_t i = CharacterRange::ASCII.from; i < CharacterRange::ASCII.to; i++) {
 			int glyph = m_internalFontRef->GetGlyphIndex(i);
 			Character ch = m_internalFontRef->GetCharacter(glyph, m_scale);
-			Texture* characterTexture = Texture::Create(ch.size.x, ch.size.y);
+			Texture* characterTexture = Texture::Create(
+				static_cast<uint32_t>(ch.size.x), 
+				static_cast<uint32_t>(ch.size.y)
+			);
 
-			unsigned char* characterBitmap = (unsigned char*)calloc(ch.size.x * ch.size.y, sizeof(unsigned char));
-			m_internalFontRef->BlitCharacter(ch, ch.size.x, &characterBitmap);
-			characterTexture->SetData(characterBitmap, ch.size.x * ch.size.y);
+			unsigned char* characterBitmap = (unsigned char*)calloc(static_cast<size_t>(ch.size.x) * static_cast<size_t>(ch.size.y), sizeof(unsigned char));
+			m_internalFontRef->BlitCharacter(ch, static_cast<int>(ch.size.x), &characterBitmap);
+			characterTexture->SetData(characterBitmap, static_cast<uint32_t>(ch.size.x) * static_cast<uint32_t>(ch.size.y));
 
 			SpriteCharacter character;
 			character.texture = characterTexture;

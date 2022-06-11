@@ -16,11 +16,11 @@ namespace gueepo {
 	class Texture;
 
 	struct SpriteCharacter {
-		Texture* texture;
-		int glyph;
+		Texture* texture = nullptr;
+		int glyph = 0;
 		math::vec2 size;
 		math::vec2 bearing;
-		unsigned int advance;
+		float advance = 0.0f;
 	};
 
 	struct CharacterRange {
@@ -45,7 +45,7 @@ namespace gueepo {
 		const float& descent() const { return m_descent; }
 		const float& lineGap() const { return m_lineGap; }
 		const float lineHeight() const { return ascent() - descent() + lineGap(); }
-		const float& kerning(int glyph1, int glyph2) const { return m_internalFontRef->GetKerning(glyph1, glyph2, m_scale); }
+		const float kerning(int glyph1, int glyph2) const { return m_internalFontRef->GetKerning(glyph1, glyph2, m_scale); }
 
 		void SetLineGap(float value) { m_lineGap = value; }
 
