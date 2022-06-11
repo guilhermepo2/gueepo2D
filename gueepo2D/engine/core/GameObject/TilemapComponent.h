@@ -7,6 +7,7 @@
 #include "core/renderer/Texture.h"
 #include "utils/Tilemap.h"
 #include "core/renderer/Renderer.h"
+#include "core/renderer/SpriteBatcher.h"
 
 namespace gueepo {
 	class TilemapComponent : public Component {
@@ -47,7 +48,7 @@ namespace gueepo {
 					
 					math::mat4 tileScale = math::mat4::CreateScale(currentTile.GetRect().GetSize());
 					math::mat4 transformMatrix = math::mat4::CreateScale(scale) * math::mat4::CreateRotation(0.0f) * math::mat4::CreateTranslation(pos);
-					Renderer::Draw(tileScale * transformMatrix, currentTile.GetTexCoords().bottomLeft, currentTile.GetTexCoords().topRight, tm->GetTexture());
+					Renderer::s_spriteBatcher->Draw(tileScale * transformMatrix, currentTile.GetTexCoords().bottomLeft, currentTile.GetTexCoords().topRight, tm->GetTexture());
 
 					pos.x += width * scale.x;
 					v++;

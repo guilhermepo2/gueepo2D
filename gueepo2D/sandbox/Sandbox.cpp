@@ -6,9 +6,6 @@ static gueepo::GameObject* s_player1 = nullptr;
 static gueepo::GameObject* s_player4 = nullptr;
 
 static gueepo::FontSprite* kenneyFutureSquare = nullptr;
-static gueepo::FontSprite* kenneySpace = nullptr;
-static gueepo::FontSprite* roboto = nullptr;
-static gueepo::FontSprite* openSans = nullptr;
 static gueepo::FontSprite* dogica = nullptr;
 
 static gueepo::string fox("the quick brown fox\njumps over the lazy dog");
@@ -22,7 +19,7 @@ void GameLayer::OnAttach() {
 	gueepo::Renderer::Initialize();
 
 	m_Camera = std::make_unique<gueepo::OrtographicCamera>(800, 600);
-	m_Camera->SetBackgroundColor(0.0f, 0.0f, 0.0f, 1.0f);
+	m_Camera->SetBackgroundColor(0.33f, 0.0f, 0.33f, 1.0f);
 	m_gameWorld = std::make_unique<gueepo::GameWorld>();
 	m_resourceManager = std::make_unique<gueepo::ResourceManager>();
 	m_collisionWorld = std::make_unique<gueepo::CollisionWorld>();
@@ -51,9 +48,6 @@ void GameLayer::OnAttach() {
 	// =========================================================================
 	// =========================================================================
 	gueepo::Font* kenneyFutureSquareFont = gueepo::Font::CreateFont("./assets/Fonts/Kenney Future Square.ttf");
-	gueepo::Font* kenneySpaceFont = gueepo::Font::CreateFont("./assets/Fonts/Kenney Space.ttf");
-	gueepo::Font* robotoFont = gueepo::Font::CreateFont("./assets/Fonts/Roboto-Black.ttf");
-	gueepo::Font* openSansFont = gueepo::Font::CreateFont("./assets/fonts/static/OpenSans/OpenSans-Bold.ttf");
 	gueepo::Font* dogicaFont = gueepo::Font::CreateFont("./assets/fonts/dogica.ttf");
 
 	{
@@ -61,9 +55,6 @@ void GameLayer::OnAttach() {
 		dogica = new gueepo::FontSprite(dogicaFont, 16);
 		dogica->SetLineGap(4);
 		kenneyFutureSquare = new gueepo::FontSprite(kenneyFutureSquareFont, 32);
-		kenneySpace = new gueepo::FontSprite(kenneySpaceFont, 32);
-		roboto = new gueepo::FontSprite(robotoFont, 32);
-		openSans = new gueepo::FontSprite(openSansFont, 32);
 	}
 
 }
@@ -92,25 +83,18 @@ void GameLayer::OnUpdate(float DeltaTime) {
 }
 
 void GameLayer::OnRender() {
-	gueepo::Renderer::BeginScene(*m_Camera);
-	
-	gueepo::Renderer::DrawText(dogica, fox, gueepo::math::vec2(-300.0f, 200.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	gueepo::Renderer::DrawText(kenneyFutureSquare, fox, gueepo::math::vec2(-300.0f, 100.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "the five boxing wizards jump quickly", gueepo::math::vec2(-300.0f, 100), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Two driven jocks help fax my big quiz", gueepo::math::vec2(-300.0f, 50), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Fickle jinx bog dwarves spy math quiz.", gueepo::math::vec2(-300.0f, 0), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "Pack my box with five dozen liquor jugs", gueepo::math::vec2(-300.0f, -50), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "When zombies arrive,", gueepo::math::vec2(-300.0f, -100), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "quickly fax judge Pat", gueepo::math::vec2(-300.0f, -125), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "The wizard quickly jinxed the ", gueepo::math::vec2(-300.0f, -175), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	// gueepo::Renderer::DrawText(kenneyFutureSquare, "gnomes before they vaporized", gueepo::math::vec2(-300.0f, -200), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::Begin(*m_Camera);
 
+	gueepo::Renderer::s_spriteBatcher->Begin(*m_Camera);
+	m_gameWorld->Render();
+	gueepo::Renderer::s_spriteBatcher->End();
 	
-	gueepo::Renderer::DrawText(roboto, fox, gueepo::math::vec2(-300.0f, -60.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::s_uiBatcher->Begin(*m_Camera);
+	gueepo::Renderer::s_uiBatcher->DrawText(dogica, "this engine now render fonts", gueepo::math::vec2(-350.0f, -250.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::s_uiBatcher->DrawText(kenneyFutureSquare, "it's pretty cool", gueepo::math::vec2(-350.0f, -275.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
+	gueepo::Renderer::s_uiBatcher->End();
 
-	gueepo::Renderer::DrawText(openSans, fox, gueepo::math::vec2(-300.0f, -160.0f), 1.0f, gueepo::Color(1.0f, 1.0f, 1.0f, 1.0f));
-	
-	gueepo::Renderer::EndScene(); // SHOULD BE DONE BY THE ENGINE?! probably lol
+	gueepo::Renderer::End();
 }
 
 #endif

@@ -57,6 +57,7 @@
 #include "core/renderer/VertexBuffer.h"
 #include "core/renderer/IndexBuffer.h"
 #include "core/renderer/Shader.h"
+#include "core/renderer/SpriteBatcher.h"
 #include "core/renderer/Texture.h"
 #include "core/renderer/Color.h"
 #include "core/renderer/OrtographicCamera.h"
