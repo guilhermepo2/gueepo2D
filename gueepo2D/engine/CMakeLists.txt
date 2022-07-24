@@ -19,10 +19,6 @@ set (SOURCES
     "core/filesystem/Font.cpp"
     "core/filesystem/json.cpp"
 
-    "core/GameObject/GameWorld.cpp"
-    "core/GameObject/Entity.cpp"
-    "core/GameObject/GameObject.cpp"
-    "core/GameObject/SpriteComponent.cpp"
     "core/input/Input.cpp"
     "core/layer/Layer.cpp"
     "core/layer/LayerStack.cpp"
@@ -32,7 +28,6 @@ set (SOURCES
     "core/math/vec2.cpp"
     "core/math/vec3.cpp"
 
-    "core/physics/CollisionWorld.cpp"
     "core/physics/LineSegment.cpp"
 
     "core/renderer/GraphicsContext.cpp"
@@ -97,14 +92,6 @@ set(HEADERS
     "core/filesystem/Font.h"
     "core/filesystem/json.h"
     
-    "core/GameObject/GameWorld.h"
-    "core/GameObject/Component.h"
-    "core/GameObject/Entity.h"
-    "core/GameObject/GameObject.h"
-    "core/GameObject/BoxCollider.h"
-    "core/GameObject/SpriteComponent.h"
-    "core/GameObject/TransformComponent.h"
-    "core/GameObject/TilemapComponent.h"
     "core/input/Input.h"
     "core/input/KeyboardCodes.h"
     "core/input/MouseCodes.h"
@@ -119,7 +106,6 @@ set(HEADERS
     "core/math/vec2.h"
     "core/math/vec3.h"
 
-    "core/physics/CollisionWorld.h"
     "core/physics/LineSegment.h"
 
     "core/renderer/BufferLayout.h"
