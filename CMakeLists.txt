@@ -11,13 +11,7 @@ add_subdirectory(gueepo2D/thirdparty/imgui-docking)
 set_target_properties (glad dearimgui PROPERTIES FOLDER thirdparty)
 
 add_subdirectory(gueepo2D/engine)
-add_subdirectory(gueepo2D/sandbox)
 
 if(BUILD_TEST)
     add_subdirectory(gueepo2D/test)
-endif()
-
-
-if(MSVC)
-    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT gueepo2D-sandbox)
 endif()
