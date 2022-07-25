@@ -16,7 +16,6 @@ namespace gueepo {
 		static void SetUnpackAlignment(int value);
 
 		// #todo: ehrm........ not sure if I want this
-		static Shader* GetShader(const std::string& shaderName);
 		static RendererAPI* GetRendererAPI();
 
 		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
