@@ -43,8 +43,6 @@ set (SOURCES
     "core/renderer/VertexBuffer.cpp"
     "core/renderer/FontSprite.cpp"
 
-    "core/ResourceManager/ResourceManager.cpp"
-
     "platform/SDL2/imgui_impl_sdl.cpp"
     "platform/SDL2/SDL2Input.cpp"
     "platform/SDL2/SDL2TimeStep.cpp"
@@ -121,8 +119,6 @@ set(HEADERS
     "core/renderer/VertexArray.h"
     "core/renderer/VertexBuffer.h"
     "core/renderer/FontSprite.h"
-
-    "core/ResourceManager/ResourceManager.h"
 
     "platform/OpenGL/imgui_impl_opengl3_loader.h"
     "platform/OpenGL/imgui_impl_opengl3.h"

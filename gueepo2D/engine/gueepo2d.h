@@ -53,8 +53,6 @@
 #include "core/renderer/OrtographicCamera.h"
 #include "core/renderer/FontSprite.h"
 
-#include "core/ResourceManager/ResourceManager.h"
-
 // ============================================================
 // ============================================================
 //				UTILS INCLUDES
