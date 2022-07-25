@@ -4,6 +4,7 @@
 namespace gueepo {
 
 	class OrtographicCamera;
+	class Shader;
 	class SpriteBatcher;
 
 	class Renderer {
@@ -11,16 +12,13 @@ namespace gueepo {
 
 		static void Initialize();
 		static void Shutdown();
-
-		// static void Submit(VertexArray* vertexArray, Shader* shader);
-		static void Begin(const OrtographicCamera& camera);
-		static void End();
-
+		static void Clear(float r, float g, float b, float a);
 		static void SetUnpackAlignment(int value);
 
-		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+		// #todo: ehrm........ not sure if I want this
+		static Shader* GetShader(const std::string& shaderName);
+		static RendererAPI* GetRendererAPI();
 
-		static SpriteBatcher* s_spriteBatcher;
-		static SpriteBatcher* s_uiBatcher;
+		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};
 }

@@ -16,10 +16,6 @@ namespace gueepo {
 	static RendererAPI* s_RendererAPI = nullptr;
 	static ShaderLibrary shaderLibrary;
 
-	SpriteBatcher* Renderer::s_spriteBatcher = nullptr;
-	SpriteBatcher* Renderer::s_uiBatcher;
-
-
 	static RendererAPI* InitRendererAPI() {
 		
 		switch (RendererAPI::GetAPI()) {
@@ -46,8 +42,6 @@ namespace gueepo {
 	void Renderer::Initialize() {
 		
 		s_RendererAPI = InitRendererAPI();
-		s_spriteBatcher = new SpriteBatcher();
-		s_uiBatcher = new SpriteBatcher();
 
 		if (s_RendererAPI == nullptr) {
 			LOG_ERROR("Error initializing Renderer API");
@@ -68,45 +62,18 @@ namespace gueepo {
 			LOG_ERROR("there might be issues with the renderer!");
 			return;
 		}
-
-		s_spriteBatcher->Initialize(s_RendererAPI, shaderLibrary.Get("sprite shader"));
-		s_uiBatcher->Initialize(s_RendererAPI, shaderLibrary.Get("font shader"));
 	}
 
-	void Renderer::Shutdown() {
-		s_spriteBatcher->Shutdown();
-		s_uiBatcher->Shutdown();
+	void Renderer::Shutdown() {}
 
-		delete s_spriteBatcher;
-		delete s_uiBatcher;
-	}
-
-	void Renderer::Begin(const OrtographicCamera& camera) {
-		s_RendererAPI->SetClearColor(
-			camera.GetBackGroundColor().rgba[0],
-			camera.GetBackGroundColor().rgba[1],
-			camera.GetBackGroundColor().rgba[2],
-			camera.GetBackGroundColor().rgba[3]
-		);
+	void Renderer::Clear(float r, float g, float b, float a) {
+		s_RendererAPI->SetClearColor(r,g,b,a);
 		s_RendererAPI->Clear();
-
-		s_spriteBatcher->Begin(camera);
-		s_uiBatcher->Begin(camera);
 	}
 
-	void Renderer::End() {
-		s_spriteBatcher->End();
-		s_uiBatcher->End();
-	}
-
-	/*
-	void Renderer::Submit(VertexArray* vertexArray, Shader* shader) {
-		shader->Bind();
-		shader->SetMat4("u_ViewProjection", s_RenderData.ViewProjection);
-		vertexArray->Bind();
-		s_RendererAPI->DrawIndexed(vertexArray);
-	}
-	*/
+	// #todo: ehrm........ not sure if I want this
+	Shader* Renderer::GetShader(const std::string & shaderName) { return shaderLibrary.Get(shaderName.c_str()); }
+	RendererAPI* Renderer::GetRendererAPI() { return s_RendererAPI; }
 
 	void Renderer::SetUnpackAlignment(int value) {
 		s_RendererAPI->SetUnpackAlignment(value);
