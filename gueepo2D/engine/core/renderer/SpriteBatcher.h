@@ -14,6 +14,7 @@ namespace gueepo {
 
 	class VertexBuffer;
 	class VertexArray;
+	class TextureRegion;
 
 	struct QuadVertex {
 		gueepo::math::vec3 Position;
@@ -63,6 +64,10 @@ namespace gueepo {
 		void Draw(const math::mat4& transform, Texture* texture);
 		void Draw(const math::vec2& position, Texture* texture);
 		void Draw(Texture* texture); // hey... I don't know why you would ask us to just draw a texture, but hey, you have the option!
+
+		void Draw(TextureRegion* texRegion, int x, int y, int w, int h);
+		void Draw(TextureRegion* texRegion, int x, int y);
+
 		void DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color);
 
 		int GetDrawCalls();

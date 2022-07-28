@@ -58,8 +58,9 @@ set (SOURCES
 
     "utils/ImageUtils.cpp"
     "utils/JsonHelper.cpp"
-    "utils/Tilemap.h"
-    "utils/PixelBuffer.h"
+    "utils/Tilemap.cpp"
+    "utils/TextureRegion.cpp"
+    "utils/PixelBuffer.cpp"
 )
 
 set(HEADERS
@@ -135,8 +136,9 @@ set(HEADERS
 
     "utils/ImageUtils.h"
     "utils/JsonHelper.h"
-    "utils/Tilemap.cpp"
-    "utils/PixelBuffer.cpp"
+    "utils/Tilemap.h"
+    "utils/TextureRegion.h"
+    "utils/PixelBuffer.h"
 )
 
 message(${CMAKE_CURRENT_SOURCE_DIR})

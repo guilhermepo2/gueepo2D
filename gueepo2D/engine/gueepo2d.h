@@ -61,4 +61,5 @@
 #include "utils/ImageUtils.h"
 #include "utils/JsonHelper.h"
 #include "utils/Tilemap.h"
+#include "utils/TextureRegion.h"
 #include "utils/PixelBuffer.h"

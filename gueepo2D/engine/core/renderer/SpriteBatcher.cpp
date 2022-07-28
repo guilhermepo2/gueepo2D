@@ -13,6 +13,8 @@
 #include "core/renderer/VertexArray.h"
 #include "core/renderer/VertexBuffer.h"
 
+#include "utils/TextureRegion.h"
+
 namespace gueepo {
 	// ------------------------------------------------------
 	void SpriteBatcher::Initialize(RendererAPI* rendererAPI, Shader* batchShader) {
@@ -138,6 +140,21 @@ namespace gueepo {
 		Draw(math::vec2::Zero, texture);
 	}
 
+	void SpriteBatcher::Draw(TextureRegion* texRegion, int x, int y, int w, int h) {
+		Texture* t = texRegion->GetTexture();
+		math::mat4 transformMatrix = 
+			math::mat4::CreateScale(math::vec2(static_cast<float>(w), static_cast<float>(h))) * 
+			math::mat4::CreateTranslation(math::vec2(x, y)
+		);
+
+		math::rect coords = texRegion->GetCoordinates();
+		Draw(transformMatrix, coords.bottomLeft, coords.topRight, t);
+	}
+
+
+	void SpriteBatcher::Draw(TextureRegion* texRegion, int x, int y) {
+		Draw(texRegion, x, y, texRegion->GetTexture()->GetWidth(), texRegion->GetTexture()->GetHeight());
+	}
 
 	void SpriteBatcher::DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
 
