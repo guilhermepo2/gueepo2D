@@ -141,7 +141,7 @@ namespace gueepo {
 			SDL_WINDOWPOS_CENTERED,
 			m_Width,
 			m_Height,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
+			SDL_WINDOW_OPENGL // | SDL_WINDOW_RESIZABLE - it's a videogame! no resizing the window!
 		);
 
 		g2dassert(m_Window, "unable to create window: {0}", SDL_GetError());

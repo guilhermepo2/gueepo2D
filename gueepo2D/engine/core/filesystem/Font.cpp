@@ -50,7 +50,7 @@ static gueepo::string GetFontName(stbtt_fontinfo* font, int nameId) {
 
 namespace gueepo {
 
-	Font::Font() {}
+	Font::Font() : m_font(nullptr), m_internalBuffer(nullptr) {}
 	Font::~Font() {
 		if (m_internalBuffer != nullptr) {
 			delete m_internalBuffer;
@@ -115,8 +115,8 @@ namespace gueepo {
 		int h = (y1 - y0);
 
 		ch.glyph = glyph;
-		ch.size.x = w;
-		ch.size.y = h;
+		ch.size.x = static_cast<float>(w);
+		ch.size.y = static_cast<float>(h);
 		ch.advance = advance * scale;
 		ch.offset.x = offsetX * scale;
 		ch.offset.y = static_cast<float>(y0);
@@ -131,14 +131,14 @@ namespace gueepo {
 			return 0;
 		}
 
-		stbtt_FindGlyphIndex(static_cast<stbtt_fontinfo*>(m_font), codepoint);
+		return stbtt_FindGlyphIndex(static_cast<stbtt_fontinfo*>(m_font), codepoint);
 	}
 
 	bool Font::BlitCharacter(const Character& ch, int outStride, unsigned char** pixels) const {
 
 		if (ch.has_glyph) {
 			unsigned char* src = *pixels;
-			stbtt_MakeGlyphBitmap(static_cast<stbtt_fontinfo*>(m_font), src, ch.size.x, ch.size.y, outStride, ch.scale, ch.scale, ch.glyph);
+			stbtt_MakeGlyphBitmap(static_cast<stbtt_fontinfo*>(m_font), src, static_cast<int>(ch.size.x), static_cast<int>(ch.size.y), outStride, ch.scale, ch.scale, ch.glyph);
 			return true;
 		}
 

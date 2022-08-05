@@ -10,6 +10,7 @@ namespace gueepo::math {
 		vec2() : x(0.0f), y(0.0f) {}
 		vec2(float _v) : x(_v), y(_v) {}
 		vec2(float _x, float _y) : x(_x), y(_y) {}
+		vec2(int _x, int _y) : x(static_cast<float>(_x)), y(static_cast<float>(_y)) {}
 		vec2(const vec2& _other) : x(_other.x), y(_other.y) {}
 
 		float Magnitude() const { return sqrtf( (x*x) + (y*y) ); }

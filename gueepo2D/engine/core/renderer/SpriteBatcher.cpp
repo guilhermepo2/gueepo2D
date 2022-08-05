@@ -76,7 +76,9 @@ namespace gueepo {
 	}
 
 	// ------------------------------------------------------
-	void SpriteBatcher::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture, Color color) {
+	// Drawing Textures
+	// ------------------------------------------------------
+	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color) {
 
 		if (
 			m_renderData.quadIndexCount >= m_renderData.MaxIndices ||
@@ -123,23 +125,30 @@ namespace gueepo {
 		m_renderData.quadIndexCount += 6;
 	}
 
-	void SpriteBatcher::Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture) {
-		Draw(transform, textureCoordMin, textureCoordMax, texture, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax) {
+		Draw(texture, transform, textureCoordMin, textureCoordMax, Color(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
-	void SpriteBatcher::Draw(const math::mat4& transform, Texture* texture) {
-		Draw(transform, math::vec2(0.0f), math::vec2(1.0f), texture);
-	}
-
-	void SpriteBatcher::Draw(const math::vec2& position, Texture* texture) {
+	void SpriteBatcher::Draw(Texture* texture, const math::vec2& position, const math::vec2& scale) {
 		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()))) * math::mat4::CreateTranslation(position);
-		Draw(transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One, texture);
+		Draw(texture, transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One);
+	}
+
+	void SpriteBatcher::Draw(Texture* texture, int x, int y, int w, int h) {
+		Draw(texture, math::vec2(x, y), math::vec2(w, h));
+	}
+
+	void SpriteBatcher::Draw(Texture* texture, int x, int y) {
+		Draw(texture, math::vec2(x, y), math::vec2(1, 1));
 	}
 
 	void SpriteBatcher::Draw(Texture* texture) {
-		Draw(math::vec2::Zero, texture);
+		Draw(texture, math::vec2::Zero, math::vec2::One);
 	}
 
+	// ------------------------------------------------------
+	// Drawing Texture Regions
+	// ------------------------------------------------------
 	void SpriteBatcher::Draw(TextureRegion* texRegion, int x, int y, int w, int h) {
 		Texture* t = texRegion->GetTexture();
 		math::mat4 transformMatrix = 
@@ -148,7 +157,7 @@ namespace gueepo {
 		);
 
 		math::rect coords = texRegion->GetCoordinates();
-		Draw(transformMatrix, coords.bottomLeft, coords.topRight, t);
+		Draw(t, transformMatrix, coords.bottomLeft, coords.topRight);
 	}
 
 
@@ -156,6 +165,9 @@ namespace gueepo {
 		Draw(texRegion, x, y, texRegion->GetTexture()->GetWidth(), texRegion->GetTexture()->GetHeight());
 	}
 
+	// ------------------------------------------------------
+	// Drawing Text
+	// ------------------------------------------------------
 	void SpriteBatcher::DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
 
 		math::vec2 offset = math::vec2(0, 0);
@@ -192,7 +204,7 @@ namespace gueepo {
 					math::mat4::CreateScale(math::vec2(scale, -scale)) *
 					math::mat4::CreateTranslation(position + math::vec2(at.x, at.y));
 
-				Draw(transformMatrix, math::vec2::Zero, math::vec2::One, ch.texture, color);
+				Draw(ch.texture, transformMatrix, math::vec2::Zero, math::vec2::One, color);
 			}
 
 			offset.x += ch.advance;

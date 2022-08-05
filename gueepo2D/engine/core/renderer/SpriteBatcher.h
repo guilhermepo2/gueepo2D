@@ -59,20 +59,26 @@ namespace gueepo {
 		void End();
 		void Flush();
 
-		void Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture, Color color);
-		void Draw(const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Texture* texture);
-		void Draw(const math::mat4& transform, Texture* texture);
-		void Draw(const math::vec2& position, Texture* texture);
-		void Draw(Texture* texture); // hey... I don't know why you would ask us to just draw a texture, but hey, you have the option!
+		// Drawing Textures
+		void Draw(Texture* texture, const math::vec2& position, const math::vec2& scale);
+		void Draw(Texture* texture, int x, int y, int w, int h);
+		void Draw(Texture* texture, int x, int y);
+		void Draw(Texture* texture);
 
+		// Drawing Texture Regions
 		void Draw(TextureRegion* texRegion, int x, int y, int w, int h);
 		void Draw(TextureRegion* texRegion, int x, int y);
 
+		// Drawing Text
 		void DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color);
 
 		int GetDrawCalls();
 
 	private:
+		// Hiding these absolute monsters that are drawing textures with transforms and texture coords but that are actually how it's done
+		void Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color);
+		void Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax);
+
 		void StartBatch();
 		void NextBatch();
 
