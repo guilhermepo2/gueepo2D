@@ -130,7 +130,7 @@ namespace gueepo {
 	}
 
 	void SpriteBatcher::Draw(Texture* texture, const math::vec2& position, const math::vec2& scale) {
-		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()))) * math::mat4::CreateTranslation(position);
+		math::mat4 transformMatrix = math::mat4::CreateScale(math::vec2(static_cast<float>(scale.x), static_cast<float>(scale.y))) * math::mat4::CreateTranslation(position);
 		Draw(texture, transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One);
 	}
 
