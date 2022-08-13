@@ -21,8 +21,8 @@ namespace gueepo {
 		m_RendererAPI = rendererAPI;
 		m_batchShader = batchShader;
 
-		LOG_INFO("quad vertex size: {0}", sizeof QuadVertex);
-		LOG_INFO("sizeof color class: {0}", sizeof Color);
+		LOG_INFO("quad vertex size: {0}", sizeof(QuadVertex));
+		LOG_INFO("sizeof color class: {0}", sizeof(Color));
 
 		m_renderData.defaultVertexArray = VertexArray::Create();
 		m_renderData.defaultVertexBuffer = VertexBuffer::Create(m_renderData.MaxVertices * sizeof(QuadVertex));
