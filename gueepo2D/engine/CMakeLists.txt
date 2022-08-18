@@ -1,4 +1,5 @@
 project(gueepo2D-engine VERSION 0.1 DESCRIPTION "gueepo2D game engine v0.1")
+include(FindSDL2.cmake)
 
 set(PLATFORM_SDL2 true CACHE BOOL "Use SDL2 Platform Backend")
 set(GRAPHICS_OPENGL true CACHE BOOL "Use OpenGL Graphics Backend")
@@ -66,6 +67,8 @@ set (SOURCES
 set(HEADERS
     "gueepo2d.h"
     "gueepo2Dpch.h"
+
+    "core/macos_common.h"
 
     "core/Application.h"
     "core/Common.h"
@@ -160,36 +163,57 @@ target_include_directories (${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} glad dearimgui)
 
-if(PLATFORM_SDL2)
+if(WIN32)
+    add_compile_definitions(GUEEPO2D_WINDOWS)
+    if(PLATFORM_SDL2)
 
-    if(EXISTS SDL2_PATH)
-        message("found SDL2_PATH")
-        set(SDL2_FOUND true)
-    else()
-        set(SDL2_FOUND false)
+        if(EXISTS SDL2_PATH)
+            message("found SDL2_PATH")
+            set(SDL2_FOUND true)
+        else()
+            set(SDL2_FOUND false)
+        endif()
+
+        if(NOT ${SDL2_FOUND})
+            message("downloading SDL2...")
+            
+            include(FetchContent)
+            FetchContent_Declare(
+                SDL2
+                URL     https://www.libsdl.org/release/SDL2-devel-2.0.18-VC.zip
+                URL_MD5 701b791e8d3f39d018acb2be4be4b0b5
+            )
+            FetchContent_MakeAvailable(SDL2)
+            message("SDL2 SOURCE DIR: " ${sdl2_SOURCE_DIR})
+            set(SDL2_PATH ${sdl2_SOURCE_DIR} CACHE INTERNAL "sdl2 root path")
+        endif()
+
+        target_link_libraries(${PROJECT_NAME} SDL2.lib)
+        target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_PATH}/include)
+        add_compile_definitions(GUEEPO2D_PLATFORM_SDL2)
     endif()
+endif()
 
-    if(NOT ${SDL2_FOUND})
-        message("downloading SDL2...")
-        
-        include(FetchContent)
-        FetchContent_Declare(
-            SDL2
-            URL     https://www.libsdl.org/release/SDL2-devel-2.0.18-VC.zip
-            URL_MD5 701b791e8d3f39d018acb2be4be4b0b5
-        )
-        FetchContent_MakeAvailable(SDL2)
-        message("SDL2 SOURCE DIR: " ${sdl2_SOURCE_DIR})
-        set(SDL2_PATH ${sdl2_SOURCE_DIR} CACHE INTERNAL "sdl2 root path")
-    endif()
-
-    target_link_libraries(${PROJECT_NAME} SDL2.lib)
-    target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_PATH}/include)
-    add_compile_definitions(GUEEPO2D_PLATFORM_SDL2)
+if(APPLE)
+    message("defining for apple")
+    add_compile_definitions(GUEEPO2D_MACOS)
+    find_package(SDL2 REQUIRED)
+    include_directories(${SDL2_INCLUDE_DIR})
+    target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
+    message("- source dir: ${PROJECT_SOURCE_DIR}")
+    message("- sdl2 library: ${SDL2_LIBRARY}")
+    message("- sdl2 dir: ${SDL2_INCLUDE_DIR}")
 endif()
 
 if(GRAPHICS_OPENGL)
-    target_link_libraries(${PROJECT_NAME} opengl32.lib)
+    if(WIN32)
+        target_link_libraries(${PROJECT_NAME} opengl32.lib)
+    endif()
+
+    if(APPLE)
+        # target_link_libraries(${PROJECT_NAME} OpenGL)
+    endif()
+
     add_compile_definitions(GUEEPO2D_GRAPHICS_OPENGL)
 endif()
 
@@ -198,3 +222,7 @@ target_precompile_headers(${PROJECT_NAME}
 )
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DGUEEPO2D_DEBUG")
+
+if(APPLE)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lGL -lSDL2 -framework OpenGL")
+endif()

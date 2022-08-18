@@ -1,4 +1,5 @@
 #include "gueepo2Dpch.h"
+#include "core/macos_common.h"
 
 #define _CRT_SECURE_NO_WARNINGS
 
