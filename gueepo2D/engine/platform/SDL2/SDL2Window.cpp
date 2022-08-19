@@ -15,8 +15,13 @@
 #include "platform/SDL2/imgui_impl_sdl.h"
 
 // #todo maybe move this to a "OpenGLIncludes.h" ?
+#if GUEEPO2D_MACOS
+static const int OPENGL_MAJOR_VERSION = 4;
+static const int OPENGL_MINOR_VERSION = 1;
+#else
 static const int OPENGL_MAJOR_VERSION = 4;
 static const int OPENGL_MINOR_VERSION = 5;
+#endif
 
 namespace gueepo {
 
@@ -144,6 +149,7 @@ namespace gueepo {
 			SDL_WINDOW_OPENGL // | SDL_WINDOW_RESIZABLE - it's a videogame! no resizing the window!
 		);
 
+		LOG_INFO("SDL2 window created");
 		g2dassert(m_Window, "unable to create window: {0}", SDL_GetError());
 
 		// #todo: set this somewhere else?

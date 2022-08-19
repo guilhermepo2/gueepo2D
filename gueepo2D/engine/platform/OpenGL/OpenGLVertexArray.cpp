@@ -31,7 +31,8 @@ namespace gueepo {
 
 
 	OpenGLVertexArray::OpenGLVertexArray() {
-		glCreateVertexArrays(1, &m_vertexArrayID);
+		LOG_INFO("trying to create a new vertexy array");
+		glGenVertexArrays(1, &m_vertexArrayID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray() {

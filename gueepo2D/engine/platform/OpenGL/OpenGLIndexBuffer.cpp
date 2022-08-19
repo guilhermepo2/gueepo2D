@@ -6,7 +6,7 @@ namespace gueepo {
 	
 	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
 	: m_Count(count) {
-		glCreateBuffers(1, &m_indexBufferID);
+		glGenBuffers(1, &m_indexBufferID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 	}
