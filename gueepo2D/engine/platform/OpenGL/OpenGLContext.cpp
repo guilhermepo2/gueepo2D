@@ -29,6 +29,7 @@ namespace gueepo {
 	}
 
 	void OpenGLContext::Swap() {
+		// todo: this... should be on the window? why is this on the graphics context?
 		SDL_GL_SwapWindow(m_WindowRef);
 	}
 

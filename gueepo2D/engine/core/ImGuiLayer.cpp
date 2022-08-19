@@ -9,7 +9,14 @@
 #include "platform/OpenGL/imgui_impl_opengl3.h"
 #include <SDL.h>
 #include <glad/glad.h>
+
+// #todo: should I just standardize the OpenGL version to 330?
+#if GUEEPO2D_MACOS
+static const char* opengl_version = "#version 410";
+#else
 static const char* opengl_version = "#version 450";
+#endif
+
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 // #todo this is being redefined here! maybe put it on a common.h?
