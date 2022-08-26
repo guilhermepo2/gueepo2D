@@ -139,7 +139,7 @@ namespace gueepo {
 	}
 
 	void SpriteBatcher::Draw(Texture* texture, int x, int y) {
-		Draw(texture, math::vec2(x, y), math::vec2(1, 1));
+		Draw(texture, math::vec2(x, y), math::vec2((int)texture->GetWidth(), (int)texture->GetHeight()));
 	}
 
 	void SpriteBatcher::Draw(Texture* texture) {
