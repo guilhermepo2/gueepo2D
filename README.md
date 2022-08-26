@@ -8,39 +8,19 @@
 # gueepo2D
 gueepo2D is a simple 2D game engine, aimed towards being easy to use and easy to read!
 
-## Design Motivations
-1. Easy to use.
-2. Easy to read.
-3. Multiplatform.
+## Requirements
+- C++ 17+
+- CMake 3.10+
+- SDL2.0.18+
+
+## Building
+Soon™
 
 ## Features
 Soon™
 
 ## Platforms
-- Windows (x64) with OpenGL (SDL2)
-
-Currently that's the only platform/backend available, here's a roadmap:
-### Platforms
-- [ ] **Windows (x86)** - Still thinking about it.
-- [ ] **Linux**
-- [ ] **macOS**
-
-### Renderer Backends
-- [ ] DirectX 11
-- [ ] DirectX 12
-- [ ] Vulkan
-- [ ] Metal
-
-## Building
-1. Download the repository `git clone --recursive https://github.com/guilhermepo2/gueepo2D.git`
-2. Set up `SDL2_INCLUDE_DIR` and `SDL2_LIB_DIR` on `premake5.lua` *(I will write better on this soon!)*
-3. Run `genproj_vs2019.bat` on the scripts folder.
-
-## Learning/Documentation
-As stated, this is a project that is still very early in its conception. It is on my mind to have some sort of online documentation explaining the architecture as well as how to make things using this, sample projects are in my mind as well.
-
-## How to Contribute
-Soon™
+Currently the only available platform is Windows (x64) with OpenGL (using SDL2) - The plan is to eventually have OS X and Linux support. Not sure about having DirectX/Vulkan support though, who knows, someday, eventually.
 
 ## License
 This project is under MIT License which is just a fancy way to say "do whatever you want as long as you mention me"

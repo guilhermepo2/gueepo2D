@@ -2,15 +2,26 @@
 #include "SDL2Window.h"
 #include <SDL.h>
 
+#include "core/Common.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/KeyEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/renderer/RendererAPI.h"
 #include "platform/OpenGL/OpenGLContext.h"
 
+
+// #todo: is there a better way to do this?
+#include "imgui.h"
+#include "platform/SDL2/imgui_impl_sdl.h"
+
 // #todo maybe move this to a "OpenGLIncludes.h" ?
+#if GUEEPO2D_MACOS
+static const int OPENGL_MAJOR_VERSION = 4;
+static const int OPENGL_MINOR_VERSION = 1;
+#else
 static const int OPENGL_MAJOR_VERSION = 4;
 static const int OPENGL_MINOR_VERSION = 5;
+#endif
 
 namespace gueepo {
 
@@ -29,6 +40,10 @@ namespace gueepo {
 	void SDL2Window::Update() {
 		SDL_Event SDLEvent;
 		while (SDL_PollEvent(&SDLEvent)) {
+			
+			// #todo: hmm.... if we are using SDL window I can assume that Dear ImGui will also be using SDL, right?
+			// #todo: is there a way to check if it's initialized or something?
+			ImGui_ImplSDL2_ProcessEvent(&SDLEvent);
 
 			switch (SDLEvent.type) {
 			case SDL_WINDOWEVENT: {
@@ -86,6 +101,10 @@ namespace gueepo {
 		}
 	}
 
+	void SDL2Window::Swap() {
+		m_GraphicsContext->Swap();
+	}
+
 	void SDL2Window::SetVSync(bool _enabled) {
 		m_bIsVSyncEnabled = _enabled;
 		// #todo: actually do something here to enable/disable vsync
@@ -127,15 +146,16 @@ namespace gueepo {
 			SDL_WINDOWPOS_CENTERED,
 			m_Width,
 			m_Height,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
+			SDL_WINDOW_OPENGL // | SDL_WINDOW_RESIZABLE - it's a videogame! no resizing the window!
 		);
 
-		assert(m_Window, "unable to create window: {0}", SDL_GetError());
+		LOG_INFO("SDL2 window created");
+		g2dassert(m_Window, "unable to create window: {0}", SDL_GetError());
 
 		// #todo: set this somewhere else?
-		RendererAPI::SetAPI(RendererAPI::API::OpenGL);
 		m_GraphicsContext = GraphicsContext::Create(m_Window);
 		m_GraphicsContext->Init();
+		SDL_SetWindowTitle(m_Window, std::string(m_Title + " <" + m_GraphicsContext->GraphicsContextString() + ">").c_str());
 
 		SetVSync(true);
 

@@ -1,7 +1,6 @@
 #pragma once
 #include <stdlib.h>
 #include <time.h>
-
 #include "core/math/Vector3.h"
 
 namespace gueepo::test {

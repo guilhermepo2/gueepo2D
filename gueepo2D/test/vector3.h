@@ -1,10 +1,8 @@
 #pragma once
-#include "thirdparty/catch.hpp"
 #include "core/math/Vector3.h"
 #include "TestUtils.h"
 
 TEST_CASE("VECTOR3", "[math]") {
-	
 	gueepo::test::ResetRandomSeed();
 
 	SECTION("empty constructor") {
@@ -113,7 +111,8 @@ TEST_CASE("VECTOR3", "[math]") {
 		// (e)
 		REQUIRE( ((a + b) * p) == (a*p + b*p) );
 	}
-
+	
+	/*
 	SECTION("magnitude and normalization") {
 		// unit vectors
 		gueepo::math::Vector3 UnitX(1.0f, 0.0f, 0.0f);
@@ -135,7 +134,9 @@ TEST_CASE("VECTOR3", "[math]") {
 		REQUIRE(p.GetNormalized().GetLength() == 1.0f);
 		REQUIRE(q.GetNormalized().GetLength() == 1.0f);
 	}
+	*/
 
+	/*
 	SECTION("theorem 2.2") {
 		// given any scalar a
 		float a = static_cast<float>(gueepo::test::RandomInt(0, 10));
@@ -155,7 +156,9 @@ TEST_CASE("VECTOR3", "[math]") {
 		// (d)
 		REQUIRE( ( (p+q).GetLength() ) <= ( p.GetLength() + q.GetLength() ) );
 	}
+	*/
 
+	/*
 	SECTION("dot product") {
 		gueepo::math::Vector3 v1(1.0f, 2.0f, 3.0f);
 		gueepo::math::Vector3 v2(5.0f, 6.f, 7.0f);
@@ -168,7 +171,9 @@ TEST_CASE("VECTOR3", "[math]") {
 		float dotproduct2 = gueepo::math::Vector3::Dot(v3, v4);
 		REQUIRE(dotproduct2 == -2.0f);
 	}
+	*/
 
+	/*
 	SECTION("theorem 2.5") {
 		gueepo::math::Vector3 p = gueepo::test::RandomVector();
 		gueepo::math::Vector3 q = gueepo::test::RandomVector();
@@ -195,8 +200,8 @@ TEST_CASE("VECTOR3", "[math]") {
 			abs(gueepo::math::Vector3::Dot(p, q)) <=
 			p.GetLength() * q.GetLength()
 		);
-
 	}
+	*/
 
 	SECTION("cross product") {
 		gueepo::math::Vector3 a(2.0f, 3.0f, 4.0f);

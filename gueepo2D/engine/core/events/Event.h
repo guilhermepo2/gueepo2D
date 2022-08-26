@@ -22,7 +22,7 @@ namespace gueepo {
 		EC_MouseButton	= BIT(4)
 	};
 
-#define EVENT_CLASS_TYPE(t) static EventType GetStaticType() { return EventType::##t; } \
+#define EVENT_CLASS_TYPE(t) static EventType GetStaticType() { return EventType::t; } \
 							virtual EventType GetEventType() const override { return GetStaticType(); } \
 							virtual const char* GetName() const override { return #t; }
 

@@ -8,8 +8,8 @@ namespace gueepo {
 	OpenGLContext::OpenGLContext(SDL_Window* _WindowRef) {
 		m_WindowRef = _WindowRef;
 
-		assert(m_WindowRef != nullptr, "Window is null!");
-		assert(SDL_WasInit(SDL_INIT_VIDEO), "sdl is not initialized?!");
+		g2dassert(m_WindowRef != nullptr, "Window is null!");
+		g2dassert(SDL_WasInit(SDL_INIT_VIDEO), "sdl is not initialized?!");
 	}
 
 	void OpenGLContext::Init() {
@@ -29,7 +29,15 @@ namespace gueepo {
 	}
 
 	void OpenGLContext::Swap() {
+		// todo: this... should be on the window? why is this on the graphics context?
 		SDL_GL_SwapWindow(m_WindowRef);
+	}
+
+	std::string OpenGLContext::GraphicsContextString() {
+		std::string version = std::string((const char*)glGetString(GL_VERSION));
+		std::string versionNumbersOnly = version.substr(0, version.find(' '));
+
+		return "OpenGL " + std::string((const char*)glGetString(GL_VENDOR)) + " " + versionNumbersOnly;
 	}
 
 }

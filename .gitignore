@@ -8,6 +8,9 @@ gueepo2D/binobj/
 *.vcxproj.user
 *.vcxproj.filters
 
+# CMake
+build/
+
 # GNU Make
 Makefile
 
@@ -15,3 +18,5 @@ Makefile
 # SDL2 is not distributed with the engine (at least not for now)
 SDL2.dll
 gueepo2D/thirdparty/SDL2-2.0.16/
+gueepo2D/thirdparty/SDL2-2.0.17/
+gueepo2D/thirdparty/SDL2-2.0.18/
