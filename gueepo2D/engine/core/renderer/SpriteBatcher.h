@@ -85,5 +85,6 @@ namespace gueepo {
 		RendererAPI* m_RendererAPI;
 		Shader* m_batchShader;
 		RenderData m_renderData;
+		bool m_isInitialized;
 	};
 }

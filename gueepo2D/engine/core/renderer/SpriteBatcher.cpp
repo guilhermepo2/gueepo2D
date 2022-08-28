@@ -56,6 +56,8 @@ namespace gueepo {
 		m_renderData.quadVertexPosition[1] = { 0.5f, -0.5f, 0.0f };
 		m_renderData.quadVertexPosition[2] = { 0.5f,  0.5f, 0.0f };
 		m_renderData.quadVertexPosition[3] = { -0.5f,  0.5f, 0.0f };
+		
+		m_isInitialized = true;
 	}
 
 	// ------------------------------------------------------
@@ -79,6 +81,8 @@ namespace gueepo {
 	// Drawing Textures
 	// ------------------------------------------------------
 	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color) {
+
+		assert(m_isInitialized, "trying to draw without initializing the sprite batcher?!");
 
 		if (
 			m_renderData.quadIndexCount >= m_renderData.MaxIndices ||
