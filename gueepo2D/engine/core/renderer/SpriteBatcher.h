@@ -66,6 +66,7 @@ namespace gueepo {
 		void Draw(Texture* texture);
 
 		// Drawing Texture Regions
+		void Draw(TextureRegion* texRegion, int x, int y, int w, int h, Color color);
 		void Draw(TextureRegion* texRegion, int x, int y, int w, int h);
 		void Draw(TextureRegion* texRegion, int x, int y);
 
