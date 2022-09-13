@@ -80,6 +80,7 @@ set(HEADERS
 
     "core/Containers/hashed_string.h"
     "core/Containers/string.h"
+    "core/Containers/vector.h"
 
     "core/Debug/Profiler.h"
 

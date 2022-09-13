@@ -14,6 +14,7 @@
 
 #include "core/Containers/hashed_string.h"
 #include "core/Containers/string.h"
+#include "core/Containers/vector.h"
 #include "core/Debug/Profiler.h"
 
 #include "core/events/Event.h"
