@@ -62,6 +62,7 @@ set (SOURCES
     "utils/Tilemap.cpp"
     "utils/TextureRegion.cpp"
     "utils/PixelBuffer.cpp"
+    "utils/SpriteAnimation.cpp"
 )
 
 set(HEADERS
@@ -143,6 +144,7 @@ set(HEADERS
     "utils/Tilemap.h"
     "utils/TextureRegion.h"
     "utils/PixelBuffer.h"
+    "utils/SpriteAnimation.h"
 )
 
 message(${CMAKE_CURRENT_SOURCE_DIR})
