@@ -12,6 +12,8 @@ set (SOURCES
     "core/ImGuiLayer.cpp"
     "core/Log.cpp"
 
+    "core/audio/Audio.cpp"
+
     "core/Containers/hashed_string.cpp"
     "core/Containers/string.cpp"
 
@@ -78,6 +80,8 @@ set(HEADERS
     "core/Log.h"
     "core/TimeStep.h"
     "core/Window.h"
+
+    "core/audio/Audio.h"
 
     "core/Containers/hashed_string.h"
     "core/Containers/string.h"
@@ -162,6 +166,7 @@ target_include_directories (${PROJECT_NAME}
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/imgui-docking>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/rapidjson-1.1.0/include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/stb>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/miniaudio>
 )
 
 target_link_libraries(${PROJECT_NAME} glad dearimgui)
