@@ -40,5 +40,9 @@ namespace gueepo {
 		static float round(float value) {
 			return std::round(value);
 		}
+
+		static float sign(float value) {
+			return (value > 0) - (value < 0);
+		}
 	}
 }
