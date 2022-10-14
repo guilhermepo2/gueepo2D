@@ -40,6 +40,7 @@ namespace gueepo {
 		void add(const T& item);
 		void add(T&& item);
 		bool contains(T item);
+		int find(T item);
 
 		// it seems like this gets the constructor and allocates/creates a new item for you?
 		// looks good, but...maybe later
@@ -66,6 +67,17 @@ namespace gueepo {
 		int m_count;
 		int m_capacity;
 	};
+
+	template<class T>
+	int gueepo::vector<T>::find(T item) {
+		for (int i = 0; i < m_count; i++) {
+			if (m_data[i] == item) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
 
 	template<class T>
 	bool gueepo::vector<T>::contains(T item) {

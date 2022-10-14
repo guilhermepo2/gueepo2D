@@ -83,9 +83,9 @@ namespace gueepo {
 		void StartBatch();
 		void NextBatch();
 
-		RendererAPI* m_RendererAPI;
-		Shader* m_batchShader;
+		RendererAPI* m_RendererAPI = nullptr;
+		Shader* m_batchShader = nullptr;
 		RenderData m_renderData;
-		bool m_isInitialized;
+		bool m_isInitialized = false;
 	};
 }
