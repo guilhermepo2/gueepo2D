@@ -5,9 +5,12 @@
 //				CORE INCLUDES
 // ============================================================
 // ============================================================
+#ifdef GUEEPO2D_MAIN
+#include "core/EntryPoint.h"
+#endif
+
 #include "core/Application.h"
 #include "core/Common.h"
-#include "core/EntryPoint.h"
 #include "core/Log.h"
 #include "core/ImGuiLayer.h"
 #include "core/Window.h"
