@@ -39,6 +39,7 @@ namespace gueepo {
 		// data manipulation
 		void add(const T& item);
 		void add(T&& item);
+		bool contains(T item);
 
 		// it seems like this gets the constructor and allocates/creates a new item for you?
 		// looks good, but...maybe later
@@ -65,6 +66,17 @@ namespace gueepo {
 		int m_count;
 		int m_capacity;
 	};
+
+	template<class T>
+	bool gueepo::vector<T>::contains(T item) {
+		for (int i = 0; i < m_count; i++) {
+			if (m_data[i] == item) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	template<class T>
 	vector<T>::vector() {
