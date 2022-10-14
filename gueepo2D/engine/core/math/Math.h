@@ -44,5 +44,9 @@ namespace gueepo {
 		static int sign(float value) {
 			return (value > 0) - (value < 0);
 		}
+
+		static int ManhattanDistance(math::vec2 a, math::vec2 b) {
+			return static_cast<int>(abs(b.x - a.x) + abs(b.y - a.y));
+		}
 	}
 }
