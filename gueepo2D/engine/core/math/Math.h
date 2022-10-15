@@ -7,6 +7,14 @@
 #include "endian.h"
 #include <cmath>
 
+#ifndef max
+#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#endif
+
+#ifndef min
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
+
 namespace gueepo {
 	namespace math {
 
@@ -43,6 +51,14 @@ namespace gueepo {
 
 		static int sign(float value) {
 			return (value > 0) - (value < 0);
+		}
+
+		static int maximum(float a, float b) {
+			return max(a, b);
+		}
+
+		static int minimum(float a, float b) {
+			return min(a, b);
 		}
 
 		static int ManhattanDistance(math::vec2 a, math::vec2 b) {
