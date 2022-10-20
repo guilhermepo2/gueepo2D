@@ -27,7 +27,8 @@ namespace gueepo {
 		g2dassert(m_audioEngine != nullptr, "can't play an audio without initializing the audio engine!");
 		g2dassert(audioClip != nullptr && audioClip->audioClip != nullptr, "there's something wrong here");
 
-		ma_sound_start(audioClip->audioClip);
+		ma_sound_start(audioClip->audioClip[audioClip->currentClip]);
+		audioClip->AdvanceClip();
 	}
 
 	void Audio::Shutdown() {
@@ -50,20 +51,34 @@ namespace gueepo {
 			return nullptr;
 		}
 
+
+
 		AudioClip* newClip = new AudioClip;
-		newClip->audioClip = newSound;
+		newClip->currentClip = 0;
+		newClip->audioClip[0] = newSound;
+
+		for (int i = 1; i < MA_SOUND_AMOUNT; i++) {
+			ma_sound* iSound = new ma_sound;
+			ma_sound_init_from_file(m_audioEngine, path, 0, nullptr, nullptr, iSound);
+			newClip->audioClip[i] = iSound;
+		}
+
 		return newClip;
 	}
 
 	void Audio::DestroyAudioClip(AudioClip* clip) {
 		if (clip != nullptr) {
-			if (clip->audioClip != nullptr) {
-				ma_sound_uninit(clip->audioClip);
-				delete clip->audioClip;
+			for (int i = 0; i < MA_SOUND_AMOUNT; i++) {
+				ma_sound_uninit(clip->audioClip[i]);
+				delete clip->audioClip[i];
 			}
 
 			delete clip;
 		}
+	}
+
+	void AudioClip::AdvanceClip() {
+		currentClip = (currentClip + 1) % MA_SOUND_AMOUNT;
 	}
 
 }
