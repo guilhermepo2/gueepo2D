@@ -82,7 +82,7 @@ namespace gueepo {
 	// ------------------------------------------------------
 	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color) {
 
-		assert(m_isInitialized, "trying to draw without initializing the sprite batcher?!");
+		g2dassert(m_isInitialized, "trying to draw without initializing the sprite batcher?!");
 
 		if (
 			m_renderData.quadIndexCount >= m_renderData.MaxIndices ||
