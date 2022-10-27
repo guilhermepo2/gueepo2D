@@ -31,6 +31,9 @@ namespace gueepo {
 #if GUEEPO2D_MACOS // todo: figure out how __debugbreak on os x
 #define	   assert(x, ...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); } }
 #define g2dassert(x, ...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); } }
+#elif __EMSCRIPTEN__
+#define	   assert(x, ...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); } }
+#define g2dassert(x, ...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); } }
 #else
 #define	   assert(x, ...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); } }
 #define g2dassert(x, ...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); } }
