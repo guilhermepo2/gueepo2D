@@ -44,8 +44,6 @@
 #include "core/math/vec2.h"
 #include "core/math/vec3.h"
 
-#include "core/physics/LineSegment.h"
-
 #include "core/renderer/Renderer.h"
 #include "core/renderer/RendererAPI.h"
 #include "core/renderer/GraphicsContext.h"
@@ -66,7 +64,6 @@
 // ============================================================
 #include "utils/ImageUtils.h"
 #include "utils/JsonHelper.h"
-#include "utils/Tilemap.h"
 #include "utils/TextureRegion.h"
 #include "utils/PixelBuffer.h"
 #include "utils/SpriteAnimation.h"

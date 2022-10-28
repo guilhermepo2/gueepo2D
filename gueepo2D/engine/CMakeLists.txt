@@ -31,8 +31,6 @@ set (SOURCES
     "core/math/vec2.cpp"
     "core/math/vec3.cpp"
 
-    "core/physics/LineSegment.cpp"
-
     "core/renderer/GraphicsContext.cpp"
     "core/renderer/IndexBuffer.cpp"
     "core/renderer/IndexBuffer.cpp"
@@ -61,7 +59,6 @@ set (SOURCES
 
     "utils/ImageUtils.cpp"
     "utils/JsonHelper.cpp"
-    "utils/Tilemap.cpp"
     "utils/TextureRegion.cpp"
     "utils/PixelBuffer.cpp"
     "utils/SpriteAnimation.cpp"
@@ -114,8 +111,6 @@ set(HEADERS
     "core/math/vec2.h"
     "core/math/vec3.h"
 
-    "core/physics/LineSegment.h"
-
     "core/renderer/BufferLayout.h"
     "core/renderer/Color.h"
     "core/renderer/GraphicsContext.h"
@@ -145,7 +140,6 @@ set(HEADERS
 
     "utils/ImageUtils.h"
     "utils/JsonHelper.h"
-    "utils/Tilemap.h"
     "utils/TextureRegion.h"
     "utils/PixelBuffer.h"
     "utils/SpriteAnimation.h"
