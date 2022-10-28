@@ -41,6 +41,7 @@
 #include "core/math/math.h"
 #include "core/math/mat4.h"
 #include "core/math/rand.h"
+#include "core/math/rect.h"
 #include "core/math/vec2.h"
 #include "core/math/vec3.h"
 

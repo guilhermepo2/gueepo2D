@@ -53,11 +53,11 @@ namespace gueepo {
 			return (value > 0) - (value < 0);
 		}
 
-		static int maximum(float a, float b) {
+		static float maximum(float a, float b) {
 			return max(a, b);
 		}
 
-		static int minimum(float a, float b) {
+		static float minimum(float a, float b) {
 			return min(a, b);
 		}
 

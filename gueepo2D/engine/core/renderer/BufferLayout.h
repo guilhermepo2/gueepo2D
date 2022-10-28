@@ -20,6 +20,8 @@ namespace gueepo {
 		case ShaderDataType::Int3:		return 3 * sizeof(int);
 		case ShaderDataType::Int4:		return 4 * sizeof(int);
 		case ShaderDataType::Bool:		return sizeof(bool);
+		case ShaderDataType::None: 		return 0;
+		default: return 0;
 		}
 
 		LOG_ERROR("UNKNOWN SHADER DATA TYPE: {0}", type);
@@ -52,6 +54,8 @@ namespace gueepo {
 			case ShaderDataType::Int3:		return 3;
 			case ShaderDataType::Int4:		return 4;
 			case ShaderDataType::Bool:		return 1;
+			case ShaderDataType::None:		return 0;
+			default: return 0;
 			}
 
 			LOG_ERROR("UNKNOWN SHADER DATA TYPE: {0}", Type);

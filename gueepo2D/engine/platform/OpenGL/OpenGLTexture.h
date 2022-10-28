@@ -9,14 +9,14 @@ namespace gueepo {
 		OpenGLTexture(uint32_t width, uint32_t height);
 		~OpenGLTexture();
 
-		uint32_t GetWidth() const { return m_width; }
-		uint32_t GetHeight() const { return m_height; }
-		uint32_t GetTextureID() const { return m_textureID; }
+		uint32_t GetWidth() const override { return m_width; }
+		uint32_t GetHeight() const override { return m_height; }
+		uint32_t GetTextureID() const override { return m_textureID; }
 
 		virtual void SetData(uint32_t* data, uint32_t size) override;
 		virtual void SetData(unsigned char* data, uint32_t size) override;
-		void Bind(uint32_t slot = 0) const;
-		bool IsLoaded() const { return m_isLoaded; }
+		void Bind(uint32_t slot = 0) const override;
+		bool IsLoaded() const override { return m_isLoaded; }
 
 	private:
 		friend class Texture;

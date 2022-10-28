@@ -6,7 +6,7 @@
 
 #include "Font.h"
 #include "File.h"
-#include "core/math/Math.h"
+#include "core/math/math.h"
 
 #pragma warning(push, 0)
 #define STB_TRUETYPE_IMPLEMENTATION
