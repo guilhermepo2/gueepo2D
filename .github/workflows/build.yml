@@ -16,24 +16,28 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [msvc,clang]
-        os: [windows-latest,macos-latest]
+        os: [windows-latest,macos-latest,ubuntu-latest]
         optimized: [true, false]
         exclude:
         - os: macos-latest
           compiler: msvc
+        - os: ubuntu-latest
+          compiler: msvc
         - os: windows-latest
           compiler: clang      
         include:
-        - compiler: clang
-          CC: clang
-          CXX: clang++
-        - compiler: msvc
-          CC: 
-          CXX: 
         - os: windows-latest
           TOOLCHAIN_FILE: /cmake/toolchain/windows/windows-msvc.cmake
         - os: macos-latest
           TOOLCHAIN_FILE: /cmake/toolchain/macos/macos-clang.cmake
+        - os: ubuntu-latest
+          TOOLCHAIN_FILE: /cmake/toolchain/unix/unix-clang.cmake          
+        - compiler: clang
+          CC: clang
+          CXX: clang++
+        - compiler: msvc
+          CC:
+          CXX:
 
     env:
       CMAKE_BUILD_DIR: ${{ github.workspace }}/build
@@ -49,18 +53,22 @@ jobs:
         matrix.optimized && 'Release' || 'Debug') }}
         
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@dev
       with:
         submodules: true
         
-    - name: Generate build config
+    - name: config
       run: >-
         cmake -S "${{ github.workspace }}" -B "${{ env.CMAKE_BUILD_DIR }}"
         -DCMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }}
         -DCMAKE_INSTALL_PREFIX=${{ runner.temp }}/install_test/
+        -DWE_BUILD_BENCHMARK=${{ matrix.optimized && 'ON' || 'OFF' }}
         -DCMAKE_TOOLCHAIN_FILE=${{ env.CMAKE_TOOLCHAIN_FILE }}
 
-    - name: Build
+    - name: build
       run: >-
         cmake --build "${{ env.CMAKE_BUILD_DIR }}"
-        --config "${{ env.CMAKE_BUILD_TYPE }}"
+        --config "${{ env.CMAKE_BUILD_TYPE }}" --verbose
+
+    - name: test cmake installation
+      run: cmake --build "${{ env.CMAKE_BUILD_DIR }}" --target install
