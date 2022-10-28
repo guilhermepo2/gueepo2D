@@ -1,7 +1,9 @@
 #include "gueepo2Dpch.h"
 
 #define MINIAUDIO_IMPLEMENTATION
+#pragma warning(push, 0)
 #include "miniaudio.h"
+#pragma warning(pop)
 
 #include "Audio.h"
 #include "core/Containers/string.h"
@@ -25,7 +27,7 @@ namespace gueepo {
 
 	void Audio::Play(AudioClip* audioClip) {
 		g2dassert(m_audioEngine != nullptr, "can't play an audio without initializing the audio engine!");
-		g2dassert(audioClip != nullptr && audioClip->audioClip != nullptr, "there's something wrong here");
+		g2dassert(audioClip != nullptr, "there's something wrong here");
 
 		ma_sound_start(audioClip->audioClip[audioClip->currentClip]);
 		audioClip->AdvanceClip();
