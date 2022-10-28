@@ -58,7 +58,6 @@ set (SOURCES
     "platform/OpenGL/OpenGLVertexBuffer.cpp"
 
     "utils/ImageUtils.cpp"
-    "utils/JsonHelper.cpp"
     "utils/TextureRegion.cpp"
     "utils/PixelBuffer.cpp"
     "utils/SpriteAnimation.cpp"
@@ -139,7 +138,6 @@ set(HEADERS
     "platform/SDL2/SDL2Window.h"
 
     "utils/ImageUtils.h"
-    "utils/JsonHelper.h"
     "utils/TextureRegion.h"
     "utils/PixelBuffer.h"
     "utils/SpriteAnimation.h"
