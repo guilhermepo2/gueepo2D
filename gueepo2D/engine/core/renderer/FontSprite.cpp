@@ -5,7 +5,7 @@
 // has all the information needed to draw text
 // ==========================================================================
 
-#include "gueepo2dpch.h"
+#include "gueepo2Dpch.h"
 #include "FontSprite.h"
 #include "core/renderer/Texture.h"
 #include "core/renderer/Renderer.h"
