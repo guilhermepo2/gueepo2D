@@ -5,7 +5,7 @@
 // ==========================================================================
 
 #pragma once
-#include "core/Containers/string.h"
+#include "core/containers/string.h"
 #include "core/math/vec2.h"
 
 namespace gueepo {
