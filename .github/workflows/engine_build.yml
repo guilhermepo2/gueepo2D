@@ -42,11 +42,11 @@ jobs:
     
     - name: macos download SDL2
       run: brew install SDL2
-      if: matrix.os == 'macOS-latest'
+      if: matrix.config.os == 'macOS-latest'
       
     - name: ubuntu download SDL2
       run: sudo apt-get install build-essential libsdl2-dev
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.config.os == 'ubuntu-latest'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
