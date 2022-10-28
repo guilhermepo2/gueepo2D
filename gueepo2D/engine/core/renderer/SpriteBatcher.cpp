@@ -1,7 +1,7 @@
 #include "gueepo2Dpch.h"
 #include "SpriteBatcher.h"
 
-#include "core/containers/string.h"
+#include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
 #include "core/math/math.h"
 #include "core/renderer/BufferLayout.h"

@@ -1,7 +1,7 @@
 #include "gueepo2Dpch.h"
 #include "Renderer.h"
 
-#include "core/containers/string.h"
+#include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
 #include "core/renderer/OrtographicCamera.h"
 #include "core/renderer/RendererAPI.h"

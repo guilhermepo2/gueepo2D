@@ -6,7 +6,7 @@
 #pragma warning(pop)
 
 #include "Audio.h"
-#include "core/containers/string.h"
+#include "core/Containers/string.h"
 
 namespace gueepo {
 

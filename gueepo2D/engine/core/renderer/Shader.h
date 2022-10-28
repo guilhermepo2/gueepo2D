@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "core/math/mat4.h"
-#include "core/containers/hashed_string.h"
+#include "core/Containers/hashed_string.h"
 
 namespace gueepo {
 	

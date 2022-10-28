@@ -1,5 +1,5 @@
 #pragma once
-#include "core/containers/vector.h"
+#include "core/Containers/vector.h"
 
 // --------------------------------------------------------------------
 // #todo: maybe should add a "ShouldLoop" boolean to SpriteAnimation?
