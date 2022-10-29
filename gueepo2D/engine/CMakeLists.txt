@@ -156,7 +156,7 @@ target_include_directories (${PROJECT_NAME}
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/spdlog-1.9.2/include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/glad/include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/imgui-docking>
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/rapidjson-1.1.0/include>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/nlohmann>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/stb>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/miniaudio>
 )
