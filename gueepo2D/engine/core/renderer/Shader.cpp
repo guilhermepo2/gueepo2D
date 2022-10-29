@@ -4,7 +4,7 @@
 #include "platform/OpenGL/OpenGLShader.h"
 #include "core/filesystem/File.h"
 #include "core/Containers/hashed_string.h"
-#include "core/containers/string.h"
+#include "core/Containers/string.h"
 
 namespace gueepo {
 	Shader* Shader::Create(const std::string& vertexSource, const std::string& fragmentSource) {

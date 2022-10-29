@@ -1,5 +1,5 @@
 #pragma once
-#include "core/math/Rect.h"
+#include "core/math/rect.h"
 #include "core/renderer/Texture.h"
 // A texture region is... a texture region
 // A piece of a texture if you wanna think that way

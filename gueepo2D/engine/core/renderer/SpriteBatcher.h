@@ -66,6 +66,7 @@ namespace gueepo {
 		void Draw(Texture* texture);
 
 		// Drawing Texture Regions
+		void Draw(TextureRegion* texRegion, int x, int y, int w, int h, Color color);
 		void Draw(TextureRegion* texRegion, int x, int y, int w, int h);
 		void Draw(TextureRegion* texRegion, int x, int y);
 
@@ -82,8 +83,9 @@ namespace gueepo {
 		void StartBatch();
 		void NextBatch();
 
-		RendererAPI* m_RendererAPI;
-		Shader* m_batchShader;
+		RendererAPI* m_RendererAPI = nullptr;
+		Shader* m_batchShader = nullptr;
 		RenderData m_renderData;
+		bool m_isInitialized = false;
 	};
 }

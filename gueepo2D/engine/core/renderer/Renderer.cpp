@@ -4,9 +4,9 @@
 #include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
 #include "core/renderer/OrtographicCamera.h"
-#include "core/Renderer/RendererAPI.h"
-#include "core/Renderer/Shader.h"
-#include "core/Renderer/SpriteBatcher.h"
+#include "core/renderer/RendererAPI.h"
+#include "core/renderer/Shader.h"
+#include "core/renderer/SpriteBatcher.h"
 	
 // Specific Renderer APIs
 #include "platform/OpenGL/OpenGLRendererAPI.h"

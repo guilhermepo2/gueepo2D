@@ -12,9 +12,9 @@
 
 // #todo: should I just standardize the OpenGL version to 330?
 #if GUEEPO2D_MACOS
-static const char* opengl_version = "#version 410";
+static const char* opengl_version = "#version 330";
 #else
-static const char* opengl_version = "#version 450";
+static const char* opengl_version = "#version 330";
 #endif
 
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);

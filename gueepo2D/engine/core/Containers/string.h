@@ -22,9 +22,9 @@ namespace gueepo {
 		string& operator+=(const char& rhs) { return append(rhs); }
 		string& operator+=(const char* rhs) { return append(rhs); }
 		string& operator+=(const string& rhs) { return append(rhs); }
-		string& operator+(const char& rhs) { string str; str.append(*this).append(rhs); return str; }
-		string& operator+(const char* rhs) { string str; str.append(*this).append(rhs); return str; }
-		string& operator+(const string& rhs) { string str; str.append(*this).append(rhs); return str; }
+		string operator+(const char& rhs) { string str; str.append(*this).append(rhs); return str; }
+		string operator+(const char* rhs) { string str; str.append(*this).append(rhs); return str; }
+		string operator+(const string& rhs) { string str; str.append(*this).append(rhs); return str; }
 		string& append(char c);
 		string& append(uint32_t c);
 		string& append(const char* start, const char* end = nullptr);

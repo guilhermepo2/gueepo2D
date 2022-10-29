@@ -3,7 +3,7 @@
 
 #include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
-#include "core/math/Math.h"
+#include "core/math/math.h"
 #include "core/renderer/BufferLayout.h"
 #include "core/renderer/FontSprite.h"
 #include "core/renderer/OrtographicCamera.h"
@@ -56,6 +56,8 @@ namespace gueepo {
 		m_renderData.quadVertexPosition[1] = { 0.5f, -0.5f, 0.0f };
 		m_renderData.quadVertexPosition[2] = { 0.5f,  0.5f, 0.0f };
 		m_renderData.quadVertexPosition[3] = { -0.5f,  0.5f, 0.0f };
+		
+		m_isInitialized = true;
 	}
 
 	// ------------------------------------------------------
@@ -79,6 +81,8 @@ namespace gueepo {
 	// Drawing Textures
 	// ------------------------------------------------------
 	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color) {
+
+		g2dassert(m_isInitialized, "trying to draw without initializing the sprite batcher?!");
 
 		if (
 			m_renderData.quadIndexCount >= m_renderData.MaxIndices ||
@@ -143,13 +147,20 @@ namespace gueepo {
 	}
 
 	void SpriteBatcher::Draw(Texture* texture) {
-		Draw(texture, math::vec2::Zero, math::vec2::One);
+		Draw(
+			texture, 
+			math::vec2::Zero, 
+			math::vec2(
+				static_cast<float>(texture->GetWidth()),
+				static_cast<float>(texture->GetHeight())
+			)
+		);
 	}
 
 	// ------------------------------------------------------
 	// Drawing Texture Regions
 	// ------------------------------------------------------
-	void SpriteBatcher::Draw(TextureRegion* texRegion, int x, int y, int w, int h) {
+	void SpriteBatcher::Draw(TextureRegion* texRegion, int x, int y, int w, int h, Color color) {
 		Texture* t = texRegion->GetTexture();
 		math::mat4 transformMatrix = 
 			math::mat4::CreateScale(math::vec2(static_cast<float>(w), static_cast<float>(h))) * 
@@ -157,9 +168,12 @@ namespace gueepo {
 		);
 
 		math::rect coords = texRegion->GetCoordinates();
-		Draw(t, transformMatrix, coords.bottomLeft, coords.topRight);
+		Draw(t, transformMatrix, coords.bottomLeft, coords.topRight, color);
 	}
 
+	void SpriteBatcher::Draw(TextureRegion* texRegion, int x, int y, int w, int h) {
+		Draw(texRegion, x, y, w, h, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	}
 
 	void SpriteBatcher::Draw(TextureRegion* texRegion, int x, int y) {
 		Draw(texRegion, x, y, texRegion->GetTexture()->GetWidth(), texRegion->GetTexture()->GetHeight());

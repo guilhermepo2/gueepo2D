@@ -5,15 +5,21 @@
 //				CORE INCLUDES
 // ============================================================
 // ============================================================
+#ifdef GUEEPO2D_MAIN
+#include "core/EntryPoint.h"
+#endif
+
 #include "core/Application.h"
 #include "core/Common.h"
-#include "core/EntryPoint.h"
 #include "core/Log.h"
 #include "core/ImGuiLayer.h"
 #include "core/Window.h"
 
+#include "core/audio/Audio.h"
+
 #include "core/Containers/hashed_string.h"
 #include "core/Containers/string.h"
+#include "core/Containers/vector.h"
 #include "core/Debug/Profiler.h"
 
 #include "core/events/Event.h"
@@ -35,10 +41,9 @@
 #include "core/math/math.h"
 #include "core/math/mat4.h"
 #include "core/math/rand.h"
+#include "core/math/rect.h"
 #include "core/math/vec2.h"
 #include "core/math/vec3.h"
-
-#include "core/physics/LineSegment.h"
 
 #include "core/renderer/Renderer.h"
 #include "core/renderer/RendererAPI.h"
@@ -59,7 +64,6 @@
 // ============================================================
 // ============================================================
 #include "utils/ImageUtils.h"
-#include "utils/JsonHelper.h"
-#include "utils/Tilemap.h"
 #include "utils/TextureRegion.h"
 #include "utils/PixelBuffer.h"
+#include "utils/SpriteAnimation.h"

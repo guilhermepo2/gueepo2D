@@ -3,6 +3,8 @@
 
 namespace gueepo {
 	TextureRegion::TextureRegion(Texture* texture, int x, int y, int w, int h) {
+		g2dassert(texture != nullptr, "can't create a texture region with a null texture!");
+
 		m_TextureRef = texture;
 
 		uint32_t textureWidth = m_TextureRef->GetWidth();

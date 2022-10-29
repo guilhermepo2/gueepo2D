@@ -12,6 +12,8 @@ set (SOURCES
     "core/ImGuiLayer.cpp"
     "core/Log.cpp"
 
+    "core/audio/Audio.cpp"
+
     "core/Containers/hashed_string.cpp"
     "core/Containers/string.cpp"
 
@@ -28,8 +30,6 @@ set (SOURCES
     "core/math/rand.cpp"
     "core/math/vec2.cpp"
     "core/math/vec3.cpp"
-
-    "core/physics/LineSegment.cpp"
 
     "core/renderer/GraphicsContext.cpp"
     "core/renderer/IndexBuffer.cpp"
@@ -58,10 +58,9 @@ set (SOURCES
     "platform/OpenGL/OpenGLVertexBuffer.cpp"
 
     "utils/ImageUtils.cpp"
-    "utils/JsonHelper.cpp"
-    "utils/Tilemap.cpp"
     "utils/TextureRegion.cpp"
     "utils/PixelBuffer.cpp"
+    "utils/SpriteAnimation.cpp"
 )
 
 set(HEADERS
@@ -78,8 +77,11 @@ set(HEADERS
     "core/TimeStep.h"
     "core/Window.h"
 
+    "core/audio/Audio.h"
+
     "core/Containers/hashed_string.h"
     "core/Containers/string.h"
+    "core/Containers/vector.h"
 
     "core/Debug/Profiler.h"
 
@@ -107,8 +109,6 @@ set(HEADERS
     "core/math/rand.h"
     "core/math/vec2.h"
     "core/math/vec3.h"
-
-    "core/physics/LineSegment.h"
 
     "core/renderer/BufferLayout.h"
     "core/renderer/Color.h"
@@ -138,10 +138,9 @@ set(HEADERS
     "platform/SDL2/SDL2Window.h"
 
     "utils/ImageUtils.h"
-    "utils/JsonHelper.h"
-    "utils/Tilemap.h"
     "utils/TextureRegion.h"
     "utils/PixelBuffer.h"
+    "utils/SpriteAnimation.h"
 )
 
 message(${CMAKE_CURRENT_SOURCE_DIR})
@@ -157,8 +156,9 @@ target_include_directories (${PROJECT_NAME}
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/spdlog-1.9.2/include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/glad/include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/imgui-docking>
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/rapidjson-1.1.0/include>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/nlohmann>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/stb>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/miniaudio>
 )
 
 target_link_libraries(${PROJECT_NAME} glad dearimgui)
