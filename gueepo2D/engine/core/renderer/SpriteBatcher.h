@@ -8,7 +8,7 @@ namespace gueepo {
 	class FontSprite;
 	class OrtographicCamera;
 	class Texture;
-	class RendererAPI;
+	class Renderer;
 	class Shader;
 	class string;
 
@@ -52,7 +52,7 @@ namespace gueepo {
 
 	class SpriteBatcher {
 	public:
-		void Initialize(RendererAPI* rendererAPI, Shader* batchShader);
+		void Initialize(Renderer* rendererAPI, Shader* batchShader);
 		void Shutdown();
 
 		void Begin(const OrtographicCamera& camera);
@@ -83,7 +83,7 @@ namespace gueepo {
 		void StartBatch();
 		void NextBatch();
 
-		RendererAPI* m_RendererAPI = nullptr;
+		Renderer* m_renderer = nullptr;
 		Shader* m_batchShader = nullptr;
 		RenderData m_renderData;
 		bool m_isInitialized = false;

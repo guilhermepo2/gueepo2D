@@ -7,7 +7,7 @@
 #include "core/renderer/BufferLayout.h"
 #include "core/renderer/FontSprite.h"
 #include "core/renderer/OrtographicCamera.h"
-#include "core/renderer/RendererAPI.h"
+#include "core/renderer/Renderer.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/Texture.h"
 #include "core/renderer/VertexArray.h"
@@ -17,8 +17,8 @@
 
 namespace gueepo {
 	// ------------------------------------------------------
-	void SpriteBatcher::Initialize(RendererAPI* rendererAPI, Shader* batchShader) {
-		m_RendererAPI = rendererAPI;
+	void SpriteBatcher::Initialize(Renderer* rendererAPI, Shader* batchShader) {
+		m_renderer = rendererAPI;
 		m_batchShader = batchShader;
 
 		LOG_INFO("quad vertex size: {0}", sizeof(QuadVertex));
@@ -255,7 +255,7 @@ namespace gueepo {
 		m_batchShader->Bind();
 		m_batchShader->SetMat4("u_ViewProjection", m_renderData.ViewProjection);
 		m_renderData.defaultVertexArray->Bind();
-		m_RendererAPI->DrawIndexed(m_renderData.defaultVertexArray, m_renderData.quadIndexCount);
+		m_renderer->DrawIndexed(m_renderData.defaultVertexArray, m_renderData.quadIndexCount);
 		m_renderData.RenderStats.DrawCalls++;
 	}
 

@@ -1,26 +1,26 @@
 #include "gueepo2Dpch.h"
-#include "OpenGLRendererAPI.h"
+#include "OpenGLRenderer.h"
 #include <glad/glad.h>
 #include "core/renderer/VertexArray.h"
 
 namespace gueepo {
 
-	void OpenGLRendererAPI::SetClearColor(const math::vec3& color) {
+	void OpenGLRenderer::SetClearColor(const math::vec3& color) {
 		glClearColor(color.x, color.y, color.z, 1.0);
 	}
 
-	void OpenGLRendererAPI::SetClearColor(float r, float g, float b, float a) {
+	void OpenGLRenderer::SetClearColor(float r, float g, float b, float a) {
 		glClearColor(r, g, b, a);
 	}
 
-	void OpenGLRendererAPI::Clear() {
+	void OpenGLRenderer::Clear() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_BLEND);
 		glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	void OpenGLRendererAPI::DrawIndexed(VertexArray* vertexArray) {
+	void OpenGLRenderer::DrawIndexed(VertexArray* vertexArray) {
 		glDrawElements(
 			GL_TRIANGLES, 
 			vertexArray->GetIndexBuffer()->GetCount(), 
@@ -29,7 +29,7 @@ namespace gueepo {
 		);
 	}
 
-	void OpenGLRendererAPI::DrawIndexed(VertexArray* vertexArray, uint32_t count) {
+	void OpenGLRenderer::DrawIndexed(VertexArray* vertexArray, uint32_t count) {
 		glDrawElements(
 			GL_TRIANGLES,
 			count,
@@ -38,7 +38,7 @@ namespace gueepo {
 		);
 	}
 
-	void OpenGLRendererAPI::SetUnpackAlignment(int value) {
+	void OpenGLRenderer::SetUnpackAlignment_Internal(int value) {
 		glPixelStorei(GL_UNPACK_ALIGNMENT, value);
 	}
 
