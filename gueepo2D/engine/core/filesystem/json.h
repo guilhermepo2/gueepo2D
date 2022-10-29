@@ -11,7 +11,6 @@ namespace gueepo {
 	class json {
 	private:
 		nlohmann::json m_json;
-		json(const nlohmann::json& value);
 
 	public:
 		json(const std::string& path);

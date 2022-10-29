@@ -10,10 +10,6 @@ namespace gueepo {
 		m_json = nlohmann::json::parse(JsonAsString);
 	}
 
-	json::json(const nlohmann::json& value) {
-		m_json = value;
-	}
-
 	bool json::IsValid() {
 		return m_json.is_object();
 	}
