@@ -6,7 +6,6 @@
 #include "core/events/ApplicationEvent.h"
 #include "core/events/KeyEvent.h"
 #include "core/events/MouseEvent.h"
-#include "core/renderer/RendererAPI.h"
 #include "platform/OpenGL/OpenGLContext.h"
 
 

@@ -7,14 +7,14 @@ namespace gueepo {
 	public:
 		OpenGLRenderer() {}
 
-		void DrawIndexed(VertexArray* vertexArray) override;
-		void DrawIndexed(VertexArray* vertexArray, uint32_t count) override;
 
 	protected:
 		void SetClearColor(const math::vec3& color) override;
 		void SetClearColor(float r, float g, float b, float a) override;
 		void Clear() override;
 		
+		void DrawIndexed_Internal(VertexArray* vertexArray) override;
+		void DrawIndexed_Internal(VertexArray* vertexArray, uint32_t count) override;
 		void SetUnpackAlignment_Internal(int value) override;
 	};
 }

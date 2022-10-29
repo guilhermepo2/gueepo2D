@@ -20,7 +20,7 @@ namespace gueepo {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	void OpenGLRenderer::DrawIndexed(VertexArray* vertexArray) {
+	void OpenGLRenderer::DrawIndexed_Internal(VertexArray* vertexArray) {
 		glDrawElements(
 			GL_TRIANGLES, 
 			vertexArray->GetIndexBuffer()->GetCount(), 
@@ -29,7 +29,7 @@ namespace gueepo {
 		);
 	}
 
-	void OpenGLRenderer::DrawIndexed(VertexArray* vertexArray, uint32_t count) {
+	void OpenGLRenderer::DrawIndexed_Internal(VertexArray* vertexArray, uint32_t count) {
 		glDrawElements(
 			GL_TRIANGLES,
 			count,

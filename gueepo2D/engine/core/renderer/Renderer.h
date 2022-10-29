@@ -24,8 +24,10 @@ namespace gueepo {
 		static void Clear(float r, float g, float b, float a);
 		static void SetUnpackAlignment(int value);
 
-		virtual void DrawIndexed(VertexArray* vertexArray) = 0;
-		virtual void DrawIndexed(VertexArray* vertexArray, uint32_t count) = 0;
+		static void DrawIndexed(VertexArray* vertexArray);
+		static void DrawIndexed(VertexArray* vertexArray, uint32_t count);
+
+		
 
 		static Renderer* GetRendererAPI();
 		static API GetAPI() { return s_API; }
@@ -35,6 +37,8 @@ namespace gueepo {
 
 	protected:
 		virtual void Clear() = 0;
+		virtual void DrawIndexed_Internal(VertexArray* vertexArray) = 0;
+		virtual void DrawIndexed_Internal(VertexArray* vertexArray, uint32_t count) = 0;
 		virtual void SetClearColor(const math::vec3& color) = 0;
 		virtual void SetClearColor(float r, float g, float b, float a) = 0;
 		virtual void SetUnpackAlignment_Internal(int value) = 0;

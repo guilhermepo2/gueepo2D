@@ -17,8 +17,7 @@
 
 namespace gueepo {
 	// ------------------------------------------------------
-	void SpriteBatcher::Initialize(Renderer* rendererAPI, Shader* batchShader) {
-		m_renderer = rendererAPI;
+	void SpriteBatcher::Initialize(Shader* batchShader) {
 		m_batchShader = batchShader;
 
 		LOG_INFO("quad vertex size: {0}", sizeof(QuadVertex));
@@ -255,7 +254,7 @@ namespace gueepo {
 		m_batchShader->Bind();
 		m_batchShader->SetMat4("u_ViewProjection", m_renderData.ViewProjection);
 		m_renderData.defaultVertexArray->Bind();
-		m_renderer->DrawIndexed(m_renderData.defaultVertexArray, m_renderData.quadIndexCount);
+		Renderer::DrawIndexed(m_renderData.defaultVertexArray, m_renderData.quadIndexCount);
 		m_renderData.RenderStats.DrawCalls++;
 	}
 

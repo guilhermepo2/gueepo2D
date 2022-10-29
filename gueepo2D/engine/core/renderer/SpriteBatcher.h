@@ -52,7 +52,7 @@ namespace gueepo {
 
 	class SpriteBatcher {
 	public:
-		void Initialize(Renderer* rendererAPI, Shader* batchShader);
+		void Initialize(Shader* batchShader);
 		void Shutdown();
 
 		void Begin(const OrtographicCamera& camera);
@@ -83,7 +83,6 @@ namespace gueepo {
 		void StartBatch();
 		void NextBatch();
 
-		Renderer* m_renderer = nullptr;
 		Shader* m_batchShader = nullptr;
 		RenderData m_renderData;
 		bool m_isInitialized = false;

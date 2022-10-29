@@ -42,6 +42,8 @@ namespace gueepo {
 		
 		renderer_internal = InitRendererAPI();
 
+		g2dassert(renderer_internal != nullptr, "error initializing renderer API!");
+
 		if (renderer_internal == nullptr) {
 			LOG_ERROR("Error initializing Renderer API");
 			return;
@@ -53,6 +55,14 @@ namespace gueepo {
 	void Renderer::Clear(float r, float g, float b, float a) {
 		renderer_internal->SetClearColor(r,g,b,a);
 		renderer_internal->Clear();
+	}
+
+	void Renderer::DrawIndexed(VertexArray* vertexArray) {
+		renderer_internal->DrawIndexed_Internal(vertexArray);
+	}
+
+	void Renderer::DrawIndexed(VertexArray* vertexArray, uint32_t count) {
+		renderer_internal->DrawIndexed_Internal(vertexArray, count);
 	}
 
 	void Renderer::SetUnpackAlignment(int value) {
