@@ -13,8 +13,10 @@ namespace gueepo {
 		void SetClearColor(float r, float g, float b, float a) override;
 		void Clear() override;
 		
+		void Initialize_Internal() override;
 		void DrawIndexed_Internal(VertexArray* vertexArray) override;
 		void DrawIndexed_Internal(VertexArray* vertexArray, uint32_t count) override;
+		std::string GraphicsContextString_Internal() override;
 		void SetUnpackAlignment_Internal(int value) override;
 	};
 }

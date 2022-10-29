@@ -1,5 +1,6 @@
 #include "gueepo2Dpch.h"
 #include "OpenGLRenderer.h"
+#include <SDL.h>
 #include <glad/glad.h>
 #include "core/renderer/VertexArray.h"
 
@@ -20,6 +21,18 @@ namespace gueepo {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
+	void OpenGLRenderer::Initialize_Internal() {
+		if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+			LOG_ERROR("unable to initialize glad! {0}", glGetError());
+		}
+
+		glGetError();
+
+		LOG_INFO("OpenGL version: {0}", glGetString(GL_VERSION));
+		LOG_INFO("OpenGL vendor: {0}", glGetString(GL_VENDOR));
+		LOG_INFO("OpenGL renderer: {0}", glGetString(GL_RENDERER));
+	}
+
 	void OpenGLRenderer::DrawIndexed_Internal(VertexArray* vertexArray) {
 		glDrawElements(
 			GL_TRIANGLES, 
@@ -36,6 +49,13 @@ namespace gueepo {
 			GL_UNSIGNED_INT,
 			nullptr
 		);
+	}
+
+	std::string OpenGLRenderer::GraphicsContextString_Internal() {
+		std::string version = std::string((const char*)glGetString(GL_VERSION));
+		std::string versionNumbersOnly = version.substr(0, version.find(' '));
+
+		return "OpenGL " + std::string((const char*)glGetString(GL_VENDOR)) + " " + versionNumbersOnly;
 	}
 
 	void OpenGLRenderer::SetUnpackAlignment_Internal(int value) {

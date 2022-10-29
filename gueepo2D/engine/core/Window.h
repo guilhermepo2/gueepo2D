@@ -27,6 +27,7 @@ namespace gueepo {
 		virtual void SetVSync(bool _enabled) = 0;
 		virtual bool IsVSyncEnabled() const = 0;
 		virtual void* GetNativeWindow() const = 0;
+		virtual void AddPlatformToTitle() = 0;
 
 		static Window* CreateNewWindow(const WindowConfiguration& _props);
 	};

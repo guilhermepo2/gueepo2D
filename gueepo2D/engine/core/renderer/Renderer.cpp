@@ -44,25 +44,35 @@ namespace gueepo {
 
 		g2dassert(renderer_internal != nullptr, "error initializing renderer API!");
 
-		if (renderer_internal == nullptr) {
-			LOG_ERROR("Error initializing Renderer API");
-			return;
-		}
+		renderer_internal->Initialize_Internal();
+
 	}
 
 	void Renderer::Shutdown() {}
 
 	void Renderer::Clear(float r, float g, float b, float a) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+
 		renderer_internal->SetClearColor(r,g,b,a);
 		renderer_internal->Clear();
 	}
 
 	void Renderer::DrawIndexed(VertexArray* vertexArray) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+
 		renderer_internal->DrawIndexed_Internal(vertexArray);
 	}
 
 	void Renderer::DrawIndexed(VertexArray* vertexArray, uint32_t count) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+
 		renderer_internal->DrawIndexed_Internal(vertexArray, count);
+	}
+
+	std::string Renderer::GraphicsContextString() {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+
+		return renderer_internal->GraphicsContextString_Internal();
 	}
 
 	void Renderer::SetUnpackAlignment(int value) {

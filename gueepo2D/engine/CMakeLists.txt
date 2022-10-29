@@ -31,7 +31,6 @@ set (SOURCES
     "core/math/vec2.cpp"
     "core/math/vec3.cpp"
 
-    "core/renderer/GraphicsContext.cpp"
     "core/renderer/IndexBuffer.cpp"
     "core/renderer/IndexBuffer.cpp"
     "core/renderer/OrtographicCamera.cpp"
@@ -48,7 +47,6 @@ set (SOURCES
     "platform/SDL2/SDL2TimeStep.cpp"
     "platform/SDL2/SDL2Window.cpp"
     "platform/OpenGL/imgui_impl_opengl3.cpp"
-    "platform/OpenGL/OpenGLContext.cpp"
     "platform/OpenGL/OpenGLIndexBuffer.cpp"
     "platform/OpenGL/OpenGLRenderer.cpp"
     "platform/OpenGL/OpenGLShader.cpp"
@@ -111,7 +109,6 @@ set(HEADERS
 
     "core/renderer/BufferLayout.h"
     "core/renderer/Color.h"
-    "core/renderer/GraphicsContext.h"
     "core/renderer/IndexBuffer.h"
     "core/renderer/OrtographicCamera.h"
     "core/renderer/Renderer.h"
@@ -124,7 +121,6 @@ set(HEADERS
 
     "platform/OpenGL/imgui_impl_opengl3_loader.h"
     "platform/OpenGL/imgui_impl_opengl3.h"
-    "platform/OpenGL/OpenGLContext.h"
     "platform/OpenGL/OpenGLIndexBuffer.h"
     "platform/OpenGL/OpenGLRenderer.h"
     "platform/OpenGL/OpenGLShader.h"

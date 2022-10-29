@@ -6,7 +6,7 @@
 #include "core/events/ApplicationEvent.h"
 #include "core/events/KeyEvent.h"
 #include "core/events/MouseEvent.h"
-#include "platform/OpenGL/OpenGLContext.h"
+#include "core/renderer/Renderer.h"
 
 
 // #todo: is there a better way to do this?
@@ -101,12 +101,16 @@ namespace gueepo {
 	}
 
 	void SDL2Window::Swap() {
-		m_GraphicsContext->Swap();
+		SDL_GL_SwapWindow(m_Window);
 	}
 
 	void SDL2Window::SetVSync(bool _enabled) {
 		m_bIsVSyncEnabled = _enabled;
 		// #todo: actually do something here to enable/disable vsync
+	}
+
+	void SDL2Window::AddPlatformToTitle() {
+		SDL_SetWindowTitle(m_Window, std::string(m_Title + " <" + Renderer::GraphicsContextString() + ">").c_str());
 	}
 
 	void SDL2Window::Initialize(const WindowConfiguration& _config) {
@@ -151,13 +155,9 @@ namespace gueepo {
 		LOG_INFO("SDL2 window created");
 		g2dassert(m_Window, "unable to create window: {0}", SDL_GetError());
 
-		// #todo: set this somewhere else?
-		m_GraphicsContext = GraphicsContext::Create(m_Window);
-		m_GraphicsContext->Init();
-		SDL_SetWindowTitle(m_Window, std::string(m_Title + " <" + m_GraphicsContext->GraphicsContextString() + ">").c_str());
-
+		m_OpenGLContext = SDL_GL_CreateContext(m_Window);
+		SDL_GL_MakeCurrent(m_Window, m_OpenGLContext);
 		SetVSync(true);
-
 
 		LOG_INFO("window was created successfully! ({0}, {1}, {2})", m_Title, m_Width, m_Height);
 	}
