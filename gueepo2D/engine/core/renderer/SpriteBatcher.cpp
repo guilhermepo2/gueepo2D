@@ -29,7 +29,8 @@ namespace gueepo {
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float2, "a_TexCoords" },
 			{ ShaderDataType::Float, "a_TextureSlot" },
-			{ ShaderDataType::Float4, "a_Color "}
+			{ ShaderDataType::Float4, "a_Color"},
+			{ ShaderDataType::Float,  "a_ShaderType" }
 			});
 		m_renderData.defaultVertexArray->AddVertexBuffer(m_renderData.defaultVertexBuffer);
 
@@ -79,7 +80,7 @@ namespace gueepo {
 	// ------------------------------------------------------
 	// Drawing Textures
 	// ------------------------------------------------------
-	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color) {
+	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color, float shaderType /* = 1 */) {
 
 		g2dassert(m_isInitialized, "trying to draw without initializing the sprite batcher?!");
 
@@ -122,6 +123,7 @@ namespace gueepo {
 			m_renderData.quadVertexPtrPosition->TexCoord = textureCoords[i];
 			m_renderData.quadVertexPtrPosition->TextureSlot = textureSlot;
 			m_renderData.quadVertexPtrPosition->color = color;
+			m_renderData.quadVertexPtrPosition->shaderType = shaderType;
 			m_renderData.quadVertexPtrPosition++;
 		}
 
@@ -217,7 +219,7 @@ namespace gueepo {
 					math::mat4::CreateScale(math::vec2(scale, -scale)) *
 					math::mat4::CreateTranslation(position + math::vec2(at.x, at.y));
 
-				Draw(ch.texture, transformMatrix, math::vec2::Zero, math::vec2::One, color);
+				Draw(ch.texture, transformMatrix, math::vec2::Zero, math::vec2::One, color, 2.0f);
 			}
 
 			offset.x += ch.advance;

@@ -21,6 +21,7 @@ namespace gueepo {
 		gueepo::math::vec2 TexCoord;
 		float TextureSlot = 0.0f;
 		gueepo::Color color;
+		float shaderType;
 	};
 
 	struct RenderData {
@@ -77,7 +78,7 @@ namespace gueepo {
 
 	private:
 		// Hiding these absolute monsters that are drawing textures with transforms and texture coords but that are actually how it's done
-		void Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color);
+		void Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color, float shaderType = 1.0f);
 		void Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax);
 
 		void StartBatch();
