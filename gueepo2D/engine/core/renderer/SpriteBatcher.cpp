@@ -15,10 +15,68 @@
 
 #include "utils/TextureRegion.h"
 
+const char* spriteVertexShader =
+	"# version 330 core\n"
+	"layout(location = 0) in vec3 a_Position;\n"
+	"layout(location = 1) in vec2 a_TexCoord;\n"
+	"layout(location = 2) in float a_TextureSlot;\n"
+	"layout(location = 3) in vec4 a_Color;\n"
+	"layout(location = 4) in float a_ShaderType;\n"
+	"\n"
+	"uniform mat4 u_ViewProjection;\n"
+	"uniform mat4 u_Transform;\n"
+	"\n"
+	"out vec3 v_Position;\n"
+	"out vec2 v_TexCoord;\n"
+	"out float v_TextureSlot;\n"
+	"out vec4 v_Color;\n"
+	"out float v_ShaderType;\n"
+	"\n"
+	"void main()\n"
+	"{\n"
+	"	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);\n"
+	"	v_TexCoord = a_TexCoord;\n"
+	"	v_TextureSlot = a_TextureSlot;\n"
+	"	v_Color = a_Color;\n"
+	"	v_ShaderType = a_ShaderType;\n"
+	"}\n";
+
+const char* spriteFragmentShader =
+	"# version 330 core\n"
+	"\n"
+	"out vec4 v_FragColor;\n"
+	"\n"
+	"in vec2 v_TexCoord;\n"
+	"in float v_TextureSlot;\n"
+	"in vec4 v_Color;\n"
+	"in float v_ShaderType;\n"
+	"\n"
+	"uniform sampler2D u_textureSampler[16];\n"
+	"\n"
+	"void main()\n"
+	"{\n"
+	"	int index = int(v_TextureSlot);\n"
+	"	float shaderType = v_ShaderType;\n"
+	"\n"
+	"	if (shaderType == 1.0) {\n"
+	"		vec4 color = texture(u_textureSampler[index], v_TexCoord);\n"
+	"		v_FragColor = v_Color * color;\n"
+	"	}\n"
+	"	else if (shaderType == 2.0) {\n"
+	"		vec4 color = vec4(1.0, 1.0, 1.0, texture(u_textureSampler[index], v_TexCoord).r);\n"
+	"		v_FragColor = vec4(v_Color.xyz, 1.0) * color;\n"
+	"	}\n"
+	"	else {\n"
+	"		// let's put an annoying color here so there's clearly something wrong.\n"
+	"		v_FragColor = vec4(1.0, v_ShaderType, 0.0, 1.0);\n"
+	"	}\n"
+	"}\n";
+
 namespace gueepo {
 	// ------------------------------------------------------
-	void SpriteBatcher::Initialize(Shader* batchShader) {
-		m_batchShader = batchShader;
+	void SpriteBatcher::Initialize() {
+
+		m_batchShader = Shader::Create(spriteVertexShader, spriteFragmentShader);
 
 		LOG_INFO("quad vertex size: {0}", sizeof(QuadVertex));
 		LOG_INFO("sizeof color class: {0}", sizeof(Color));

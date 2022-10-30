@@ -53,7 +53,7 @@ namespace gueepo {
 
 	class SpriteBatcher {
 	public:
-		void Initialize(Shader* batchShader);
+		void Initialize();
 		void Shutdown();
 
 		void Begin(const OrtographicCamera& camera);
