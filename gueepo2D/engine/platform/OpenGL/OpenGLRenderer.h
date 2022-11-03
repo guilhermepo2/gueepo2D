@@ -1,8 +1,14 @@
 #pragma once
 #include "core/renderer/Renderer.h"
 #include "core/math/vec3.h"
+#include "core/math/mat4.h"
 
 namespace gueepo {
+
+	class OpenGLShader;
+	class OpenGLVertexArray;
+	class OpenGLVertexBuffer;
+
 	class OpenGLRenderer : public Renderer {
 	public:
 		OpenGLRenderer() {}
@@ -14,9 +20,15 @@ namespace gueepo {
 		void Clear() override;
 		
 		void Initialize_Internal() override;
-		void DrawIndexed_Internal(VertexArray* vertexArray) override;
-		void DrawIndexed_Internal(VertexArray* vertexArray, uint32_t count) override;
+		void DrawIndexed_Internal(math::mat4 viewProjectionMatrix) override;
+		void DrawIndexed_Internal(math::mat4 viewProjectionMatrix, uint32_t count) override;
 		std::string GraphicsContextString_Internal() override;
 		void SetUnpackAlignment_Internal(int value) override;
+		virtual void SetBufferData_Internal(const void* data, uint32_t size) override;
+
+	private:
+		OpenGLShader* m_shader;
+		OpenGLVertexArray* m_vertexArray;
+		OpenGLVertexBuffer* m_vertexBuffer;
 	};
 }

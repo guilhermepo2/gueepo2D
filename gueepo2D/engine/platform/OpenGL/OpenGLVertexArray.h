@@ -1,23 +1,26 @@
 #pragma once
-#include "core/renderer/VertexArray.h"
 
 namespace gueepo {
-	class OpenGLVertexArray : public VertexArray {
+
+	class OpenGLVertexBuffer;
+	class OpenGLIndexBuffer;
+
+	class OpenGLVertexArray {
 	public:
 		OpenGLVertexArray();
 		~OpenGLVertexArray();
 
-		void Bind() const override;
-		void Unbind() const override;
-		void AddVertexBuffer(VertexBuffer* vertexBuffer) override;
-		void SetIndexBuffer(IndexBuffer* indexBuffer) override;
+		void Bind() const;
+		void Unbind() const;
+		void AddVertexBuffer(OpenGLVertexBuffer* vertexBuffer);
+		void SetIndexBuffer(OpenGLIndexBuffer* indexBuffer);
 
-		const std::vector<VertexBuffer*>& GetVertexBuffer() const override { return m_VertexBuffers; }
-		const IndexBuffer* GetIndexBuffer() const override { return m_IndexBuffer; }
+		const std::vector<OpenGLVertexBuffer*>& GetVertexBuffer() const { return m_VertexBuffers; }
+		const OpenGLIndexBuffer* GetIndexBuffer() const { return m_IndexBuffer; }
 
 	private:
 		uint32_t m_vertexArrayID;
-		std::vector<VertexBuffer*> m_VertexBuffers;
-		IndexBuffer* m_IndexBuffer;
+		std::vector<OpenGLVertexBuffer*> m_VertexBuffers;
+		OpenGLIndexBuffer* m_IndexBuffer;
 	};
 }

@@ -3,6 +3,9 @@
 #include <glad/glad.h>
 #include "core/renderer/BufferLayout.h"
 
+#include "platform/OpenGL/OpenGLVertexBuffer.h"
+#include "platform/OpenGL/OpenGLIndexBuffer.h"
+
 namespace gueepo {
 
 	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type) {
@@ -33,6 +36,8 @@ namespace gueepo {
 	OpenGLVertexArray::OpenGLVertexArray() {
 		LOG_INFO("trying to create a new vertexy array");
 		glGenVertexArrays(1, &m_vertexArrayID);
+
+		m_IndexBuffer = nullptr;
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray() {
@@ -47,7 +52,7 @@ namespace gueepo {
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(VertexBuffer* vertexBuffer) {
+	void OpenGLVertexArray::AddVertexBuffer(OpenGLVertexBuffer* vertexBuffer) {
 		g2dassert(vertexBuffer->GetLayout().GetElements().size(), "vertex buffer has no layout!");
 
 		glBindVertexArray(m_vertexArrayID);
@@ -71,7 +76,7 @@ namespace gueepo {
 		m_VertexBuffers.push_back(vertexBuffer);
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer(IndexBuffer* indexBuffer) {
+	void OpenGLVertexArray::SetIndexBuffer(OpenGLIndexBuffer* indexBuffer) {
 		glBindVertexArray(m_vertexArrayID);
 		indexBuffer->Bind();
 		m_IndexBuffer = indexBuffer;

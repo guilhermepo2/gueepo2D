@@ -31,15 +31,11 @@ set (SOURCES
     "core/math/vec2.cpp"
     "core/math/vec3.cpp"
 
-    "core/renderer/IndexBuffer.cpp"
-    "core/renderer/IndexBuffer.cpp"
     "core/renderer/OrtographicCamera.cpp"
     "core/renderer/Renderer.cpp"
     "core/renderer/Shader.cpp"
     "core/renderer/SpriteBatcher.cpp"
     "core/renderer/Texture.cpp"
-    "core/renderer/VertexArray.cpp"
-    "core/renderer/VertexBuffer.cpp"
     "core/renderer/FontSprite.cpp"
 
     "platform/SDL2/imgui_impl_sdl.cpp"
@@ -109,14 +105,11 @@ set(HEADERS
 
     "core/renderer/BufferLayout.h"
     "core/renderer/Color.h"
-    "core/renderer/IndexBuffer.h"
     "core/renderer/OrtographicCamera.h"
     "core/renderer/Renderer.h"
     "core/renderer/Shader.h"
     "core/renderer/SpriteBatcher.h"
     "core/renderer/Texture.h"
-    "core/renderer/VertexArray.h"
-    "core/renderer/VertexBuffer.h"
     "core/renderer/FontSprite.h"
 
     "platform/OpenGL/imgui_impl_opengl3_loader.h"

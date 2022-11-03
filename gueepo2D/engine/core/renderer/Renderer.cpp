@@ -57,16 +57,16 @@ namespace gueepo {
 		renderer_internal->Clear();
 	}
 
-	void Renderer::DrawIndexed(VertexArray* vertexArray) {
+	void Renderer::DrawIndexed(math::mat4 viewProjectionMatrix) {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
 
-		renderer_internal->DrawIndexed_Internal(vertexArray);
+		renderer_internal->DrawIndexed_Internal(viewProjectionMatrix);
 	}
 
-	void Renderer::DrawIndexed(VertexArray* vertexArray, uint32_t count) {
+	void Renderer::DrawIndexed(math::mat4 viewProjectionMatrix, uint32_t count) {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
 
-		renderer_internal->DrawIndexed_Internal(vertexArray, count);
+		renderer_internal->DrawIndexed_Internal(viewProjectionMatrix, count);
 	}
 
 	std::string Renderer::GraphicsContextString() {
@@ -77,6 +77,11 @@ namespace gueepo {
 
 	void Renderer::SetUnpackAlignment(int value) {
 		renderer_internal->SetUnpackAlignment_Internal(value);
+	}
+
+	void Renderer::SetBufferData(const void* data, uint32_t size) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+		renderer_internal->SetBufferData_Internal(data, size);
 	}
 
 	gueepo::Renderer* Renderer::GetRendererAPI() { return renderer_internal; }

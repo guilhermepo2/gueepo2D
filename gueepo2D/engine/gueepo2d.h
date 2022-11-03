@@ -46,9 +46,6 @@
 #include "core/math/vec3.h"
 
 #include "core/renderer/Renderer.h"
-#include "core/renderer/VertexArray.h"
-#include "core/renderer/VertexBuffer.h"
-#include "core/renderer/IndexBuffer.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/SpriteBatcher.h"
 #include "core/renderer/Texture.h"

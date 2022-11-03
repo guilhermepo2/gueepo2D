@@ -1,5 +1,6 @@
 #pragma once
 #include "core/math/vec3.h"
+#include "core/math/mat4.h"
 
 namespace gueepo {
 
@@ -23,9 +24,10 @@ namespace gueepo {
 		static void Shutdown();
 		static void Clear(float r, float g, float b, float a);
 		static void SetUnpackAlignment(int value);
+		static void SetBufferData(const void* data, uint32_t size);
 
-		static void DrawIndexed(VertexArray* vertexArray);
-		static void DrawIndexed(VertexArray* vertexArray, uint32_t count);
+		static void DrawIndexed(math::mat4 viewProjectionMatrix);
+		static void DrawIndexed(math::mat4 viewProjectionMatrix, uint32_t count);
 		static std::string GraphicsContextString();
 		
 
@@ -41,9 +43,10 @@ namespace gueepo {
 		virtual void SetClearColor(float r, float g, float b, float a) = 0;
 		
 		virtual void Initialize_Internal() = 0;
-		virtual void DrawIndexed_Internal(VertexArray* vertexArray) = 0;
-		virtual void DrawIndexed_Internal(VertexArray* vertexArray, uint32_t count) = 0;
+		virtual void DrawIndexed_Internal(math::mat4 viewProjectionMatrix) = 0;
+		virtual void DrawIndexed_Internal(math::mat4 viewProjectionMatrix, uint32_t count) = 0;
 		virtual std::string GraphicsContextString_Internal() = 0;
 		virtual void SetUnpackAlignment_Internal(int value) = 0;
+		virtual void SetBufferData_Internal(const void* data, uint32_t size) = 0;
 	};
 }

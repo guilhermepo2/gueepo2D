@@ -34,8 +34,6 @@ namespace gueepo {
 		static const uint32_t MaxTextureSlots = 16;
 
 		// Defaults
-		VertexBuffer* defaultVertexBuffer = nullptr;
-		VertexArray* defaultVertexArray = nullptr;
 		math::vec3 quadVertexPosition[4];
 
 		std::array<Texture*, MaxTextureSlots> TextureSlots;
@@ -84,7 +82,6 @@ namespace gueepo {
 		void StartBatch();
 		void NextBatch();
 
-		Shader* m_batchShader = nullptr;
 		RenderData m_renderData;
 		bool m_isInitialized = false;
 	};

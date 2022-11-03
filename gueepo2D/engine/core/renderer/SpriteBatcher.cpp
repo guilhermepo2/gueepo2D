@@ -10,105 +10,19 @@
 #include "core/renderer/Renderer.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/Texture.h"
-#include "core/renderer/VertexArray.h"
-#include "core/renderer/VertexBuffer.h"
 
 #include "utils/TextureRegion.h"
 
-const char* spriteVertexShader =
-	"# version 330 core\n"
-	"layout(location = 0) in vec3 a_Position;\n"
-	"layout(location = 1) in vec2 a_TexCoord;\n"
-	"layout(location = 2) in float a_TextureSlot;\n"
-	"layout(location = 3) in vec4 a_Color;\n"
-	"layout(location = 4) in float a_ShaderType;\n"
-	"\n"
-	"uniform mat4 u_ViewProjection;\n"
-	"uniform mat4 u_Transform;\n"
-	"\n"
-	"out vec3 v_Position;\n"
-	"out vec2 v_TexCoord;\n"
-	"out float v_TextureSlot;\n"
-	"out vec4 v_Color;\n"
-	"out float v_ShaderType;\n"
-	"\n"
-	"void main()\n"
-	"{\n"
-	"	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);\n"
-	"	v_TexCoord = a_TexCoord;\n"
-	"	v_TextureSlot = a_TextureSlot;\n"
-	"	v_Color = a_Color;\n"
-	"	v_ShaderType = a_ShaderType;\n"
-	"}\n";
 
-const char* spriteFragmentShader =
-	"# version 330 core\n"
-	"\n"
-	"out vec4 v_FragColor;\n"
-	"\n"
-	"in vec2 v_TexCoord;\n"
-	"in float v_TextureSlot;\n"
-	"in vec4 v_Color;\n"
-	"in float v_ShaderType;\n"
-	"\n"
-	"uniform sampler2D u_textureSampler[16];\n"
-	"\n"
-	"void main()\n"
-	"{\n"
-	"	int index = int(v_TextureSlot);\n"
-	"	float shaderType = v_ShaderType;\n"
-	"\n"
-	"	if (shaderType == 1.0) {\n"
-	"		vec4 color = texture(u_textureSampler[index], v_TexCoord);\n"
-	"		v_FragColor = v_Color * color;\n"
-	"	}\n"
-	"	else if (shaderType == 2.0) {\n"
-	"		vec4 color = vec4(1.0, 1.0, 1.0, texture(u_textureSampler[index], v_TexCoord).r);\n"
-	"		v_FragColor = vec4(v_Color.xyz, 1.0) * color;\n"
-	"	}\n"
-	"	else {\n"
-	"		// let's put an annoying color here so there's clearly something wrong.\n"
-	"		v_FragColor = vec4(1.0, v_ShaderType, 0.0, 1.0);\n"
-	"	}\n"
-	"}\n";
 
 namespace gueepo {
 	// ------------------------------------------------------
 	void SpriteBatcher::Initialize() {
 
-		m_batchShader = Shader::Create(spriteVertexShader, spriteFragmentShader);
-
 		LOG_INFO("quad vertex size: {0}", sizeof(QuadVertex));
 		LOG_INFO("sizeof color class: {0}", sizeof(Color));
 
-		m_renderData.defaultVertexArray = VertexArray::Create();
-		m_renderData.defaultVertexBuffer = VertexBuffer::Create(m_renderData.MaxVertices * sizeof(QuadVertex));
-		m_renderData.defaultVertexBuffer->SetLayout({
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float2, "a_TexCoords" },
-			{ ShaderDataType::Float, "a_TextureSlot" },
-			{ ShaderDataType::Float4, "a_Color"},
-			{ ShaderDataType::Float,  "a_ShaderType" }
-			});
-		m_renderData.defaultVertexArray->AddVertexBuffer(m_renderData.defaultVertexBuffer);
-
 		m_renderData.quadVertexBase = new QuadVertex[m_renderData.MaxVertices];
-		uint32_t* quadIndices = new uint32_t[m_renderData.MaxIndices];
-		uint32_t offset = 0;
-		for (uint32_t i = 0; i < m_renderData.MaxIndices; i += 6) {
-			quadIndices[i + 0] = offset + 0;
-			quadIndices[i + 1] = offset + 1;
-			quadIndices[i + 2] = offset + 2;
-
-			quadIndices[i + 3] = offset + 2;
-			quadIndices[i + 4] = offset + 3;
-			quadIndices[i + 5] = offset + 0;
-			offset += 4;
-		}
-
-		IndexBuffer* quadIndexBuffer = IndexBuffer::Create(quadIndices, m_renderData.MaxIndices);
-		m_renderData.defaultVertexArray->SetIndexBuffer(quadIndexBuffer);
-		delete[] quadIndices;
 
 		m_renderData.quadVertexPosition[0] = { -0.5f, -0.5f, 0.0f };
 		m_renderData.quadVertexPosition[1] = { 0.5f, -0.5f, 0.0f };
@@ -304,17 +218,14 @@ namespace gueepo {
 	}
 
 	void SpriteBatcher::Flush() {
-		uint32_t dataSize = (uint32_t)((uint8_t*)m_renderData.quadVertexPtrPosition - (uint8_t*)m_renderData.quadVertexBase);
-		m_renderData.defaultVertexBuffer->SetData(m_renderData.quadVertexBase, dataSize);
 
 		for (uint32_t i = 0; i < m_renderData.TextureSlotIndex; i++) {
 			m_renderData.TextureSlots[i]->Bind(i);
 		}
 
-		m_batchShader->Bind();
-		m_batchShader->SetMat4("u_ViewProjection", m_renderData.ViewProjection);
-		m_renderData.defaultVertexArray->Bind();
-		Renderer::DrawIndexed(m_renderData.defaultVertexArray, m_renderData.quadIndexCount);
+		uint32_t dataSize = (uint32_t)((uint8_t*)m_renderData.quadVertexPtrPosition - (uint8_t*)m_renderData.quadVertexBase);
+		Renderer::SetBufferData(m_renderData.quadVertexBase, dataSize);
+		Renderer::DrawIndexed(m_renderData.ViewProjection, m_renderData.quadIndexCount);
 		m_renderData.RenderStats.DrawCalls++;
 	}
 
