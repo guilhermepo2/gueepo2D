@@ -1,6 +1,6 @@
 #include "gueepo2Dpch.h"
 #include "Shader.h"
-#include "RendererAPI.h"
+#include "Renderer.h"
 #include "platform/OpenGL/OpenGLShader.h"
 #include "core/filesystem/File.h"
 #include "core/Containers/hashed_string.h"
@@ -8,14 +8,14 @@
 
 namespace gueepo {
 	Shader* Shader::Create(const std::string& vertexSource, const std::string& fragmentSource) {
-		switch (RendererAPI::GetAPI()) {
-		case RendererAPI::API::OpenGL: {
+		switch (Renderer::GetAPI()) {
+		case Renderer::API::OpenGL: {
 			return new OpenGLShader(vertexSource, fragmentSource);
 		} break;
-		case RendererAPI::API::DirectX:
-		case RendererAPI::API::Metal:
-		case RendererAPI::API::Vulkan:
-		case RendererAPI::API::None:
+		case Renderer::API::DirectX:
+		case Renderer::API::Metal:
+		case Renderer::API::Vulkan:
+		case Renderer::API::None:
 		default:
 			LOG_ERROR("API NOT SUPPORTED!");
 			return nullptr;

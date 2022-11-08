@@ -4,29 +4,29 @@
 #include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
 #include "core/renderer/OrtographicCamera.h"
-#include "core/renderer/RendererAPI.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/SpriteBatcher.h"
 	
 // Specific Renderer APIs
-#include "platform/OpenGL/OpenGLRendererAPI.h"
+#include "platform/OpenGL/OpenGLRenderer.h"
 
 namespace gueepo {
 
-	static RendererAPI* s_RendererAPI = nullptr;
+	Renderer::API Renderer::s_API = Renderer::API::OpenGL;
+	Renderer* renderer_internal;
 
-	static RendererAPI* InitRendererAPI() {
+	static Renderer* InitRendererAPI() {
 		
-		switch (RendererAPI::GetAPI()) {
-		case RendererAPI::API::None:
+		switch (Renderer::GetAPI()) {
+		case Renderer::API::None:
 			LOG_ERROR("RENDERER API 'NONE' NOT IMPLEMENTED!");
 			break;
-		case RendererAPI::API::OpenGL:
-			return new OpenGLRendererAPI();
+		case Renderer::API::OpenGL:
+			return new OpenGLRenderer();
 			break;
-		case RendererAPI::API::DirectX:
-		case RendererAPI::API::Vulkan:
-		case RendererAPI::API::Metal:
+		case Renderer::API::DirectX:
+		case Renderer::API::Vulkan:
+		case Renderer::API::Metal:
 			LOG_ERROR("RENDERER API NOT IMPLEMENTED!");
 			break;
 			
@@ -40,25 +40,50 @@ namespace gueepo {
 
 	void Renderer::Initialize() {
 		
-		s_RendererAPI = InitRendererAPI();
+		renderer_internal = InitRendererAPI();
 
-		if (s_RendererAPI == nullptr) {
-			LOG_ERROR("Error initializing Renderer API");
-			return;
-		}
+		g2dassert(renderer_internal != nullptr, "error initializing renderer API!");
+
+		renderer_internal->Initialize_Internal();
+
 	}
 
 	void Renderer::Shutdown() {}
 
 	void Renderer::Clear(float r, float g, float b, float a) {
-		s_RendererAPI->SetClearColor(r,g,b,a);
-		s_RendererAPI->Clear();
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+
+		renderer_internal->SetClearColor(r,g,b,a);
+		renderer_internal->Clear();
 	}
 
-	// #todo: ehrm........ not sure if I want this
-	RendererAPI* Renderer::GetRendererAPI() { return s_RendererAPI; }
+	void Renderer::DrawIndexed(math::mat4 viewProjectionMatrix) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+
+		renderer_internal->DrawIndexed_Internal(viewProjectionMatrix);
+	}
+
+	void Renderer::DrawIndexed(math::mat4 viewProjectionMatrix, uint32_t count) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+
+		renderer_internal->DrawIndexed_Internal(viewProjectionMatrix, count);
+	}
+
+	std::string Renderer::GraphicsContextString() {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+
+		return renderer_internal->GraphicsContextString_Internal();
+	}
 
 	void Renderer::SetUnpackAlignment(int value) {
-		s_RendererAPI->SetUnpackAlignment(value);
+		renderer_internal->SetUnpackAlignment_Internal(value);
 	}
+
+	void Renderer::SetBufferData(const void* data, uint32_t size) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+		renderer_internal->SetBufferData_Internal(data, size);
+	}
+
+	gueepo::Renderer* Renderer::GetRendererAPI() { return renderer_internal; }
+
 }

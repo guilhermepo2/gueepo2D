@@ -8,7 +8,7 @@ namespace gueepo {
 	class FontSprite;
 	class OrtographicCamera;
 	class Texture;
-	class RendererAPI;
+	class Renderer;
 	class Shader;
 	class string;
 
@@ -21,6 +21,7 @@ namespace gueepo {
 		gueepo::math::vec2 TexCoord;
 		float TextureSlot = 0.0f;
 		gueepo::Color color;
+		float shaderType;
 	};
 
 	struct RenderData {
@@ -33,8 +34,6 @@ namespace gueepo {
 		static const uint32_t MaxTextureSlots = 16;
 
 		// Defaults
-		VertexBuffer* defaultVertexBuffer = nullptr;
-		VertexArray* defaultVertexArray = nullptr;
 		math::vec3 quadVertexPosition[4];
 
 		std::array<Texture*, MaxTextureSlots> TextureSlots;
@@ -52,7 +51,7 @@ namespace gueepo {
 
 	class SpriteBatcher {
 	public:
-		void Initialize(RendererAPI* rendererAPI, Shader* batchShader);
+		void Initialize();
 		void Shutdown();
 
 		void Begin(const OrtographicCamera& camera);
@@ -77,14 +76,12 @@ namespace gueepo {
 
 	private:
 		// Hiding these absolute monsters that are drawing textures with transforms and texture coords but that are actually how it's done
-		void Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color);
+		void Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color, float shaderType = 1.0f);
 		void Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax);
 
 		void StartBatch();
 		void NextBatch();
 
-		RendererAPI* m_RendererAPI = nullptr;
-		Shader* m_batchShader = nullptr;
 		RenderData m_renderData;
 		bool m_isInitialized = false;
 	};

@@ -7,6 +7,7 @@
 #include "core/input/Input.h"
 #include "core/TimeStep.h"
 #include "core/renderer/Renderer.h"
+#include "core/audio/Audio.h"
 
 const unsigned int FPS = 60;
 const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
@@ -25,6 +26,10 @@ namespace gueepo {
 		WindowConfiguration c = { _Title, _Width, _Height };
 		m_Window = std::unique_ptr<Window>(Window::CreateNewWindow(c));
 		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
+
+		Renderer::Initialize();
+		Audio::Init();
+		m_Window->AddPlatformToTitle();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);

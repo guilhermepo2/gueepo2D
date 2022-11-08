@@ -1,6 +1,5 @@
 #pragma once
 #include "core/Window.h"
-#include "core/renderer/GraphicsContext.h"
 
 struct SDL_Window;
 
@@ -19,6 +18,8 @@ namespace gueepo {
 		bool IsVSyncEnabled() const override { return m_bIsVSyncEnabled; }
 		void* GetNativeWindow() const override { return static_cast<void*>(m_Window); }
 
+		void AddPlatformToTitle() override;
+
 	private:
 		void Initialize(const WindowConfiguration& _config);
 		void Shutdown();
@@ -31,6 +32,6 @@ namespace gueepo {
 		EventCallback m_EventCallback;
 
 		SDL_Window* m_Window;
-		GraphicsContext* m_GraphicsContext;
+		void* m_OpenGLContext;
 	};
 }

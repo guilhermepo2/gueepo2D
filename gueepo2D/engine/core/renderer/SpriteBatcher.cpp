@@ -7,50 +7,22 @@
 #include "core/renderer/BufferLayout.h"
 #include "core/renderer/FontSprite.h"
 #include "core/renderer/OrtographicCamera.h"
-#include "core/renderer/RendererAPI.h"
+#include "core/renderer/Renderer.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/Texture.h"
-#include "core/renderer/VertexArray.h"
-#include "core/renderer/VertexBuffer.h"
 
 #include "utils/TextureRegion.h"
 
+
+
 namespace gueepo {
 	// ------------------------------------------------------
-	void SpriteBatcher::Initialize(RendererAPI* rendererAPI, Shader* batchShader) {
-		m_RendererAPI = rendererAPI;
-		m_batchShader = batchShader;
+	void SpriteBatcher::Initialize() {
 
 		LOG_INFO("quad vertex size: {0}", sizeof(QuadVertex));
 		LOG_INFO("sizeof color class: {0}", sizeof(Color));
 
-		m_renderData.defaultVertexArray = VertexArray::Create();
-		m_renderData.defaultVertexBuffer = VertexBuffer::Create(m_renderData.MaxVertices * sizeof(QuadVertex));
-		m_renderData.defaultVertexBuffer->SetLayout({
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float2, "a_TexCoords" },
-			{ ShaderDataType::Float, "a_TextureSlot" },
-			{ ShaderDataType::Float4, "a_Color "}
-			});
-		m_renderData.defaultVertexArray->AddVertexBuffer(m_renderData.defaultVertexBuffer);
-
 		m_renderData.quadVertexBase = new QuadVertex[m_renderData.MaxVertices];
-		uint32_t* quadIndices = new uint32_t[m_renderData.MaxIndices];
-		uint32_t offset = 0;
-		for (uint32_t i = 0; i < m_renderData.MaxIndices; i += 6) {
-			quadIndices[i + 0] = offset + 0;
-			quadIndices[i + 1] = offset + 1;
-			quadIndices[i + 2] = offset + 2;
-
-			quadIndices[i + 3] = offset + 2;
-			quadIndices[i + 4] = offset + 3;
-			quadIndices[i + 5] = offset + 0;
-			offset += 4;
-		}
-
-		IndexBuffer* quadIndexBuffer = IndexBuffer::Create(quadIndices, m_renderData.MaxIndices);
-		m_renderData.defaultVertexArray->SetIndexBuffer(quadIndexBuffer);
-		delete[] quadIndices;
 
 		m_renderData.quadVertexPosition[0] = { -0.5f, -0.5f, 0.0f };
 		m_renderData.quadVertexPosition[1] = { 0.5f, -0.5f, 0.0f };
@@ -80,7 +52,7 @@ namespace gueepo {
 	// ------------------------------------------------------
 	// Drawing Textures
 	// ------------------------------------------------------
-	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color) {
+	void SpriteBatcher::Draw(Texture* texture, const math::mat4& transform, const math::vec2& textureCoordMin, const math::vec2& textureCoordMax, Color color, float shaderType /* = 1 */) {
 
 		g2dassert(m_isInitialized, "trying to draw without initializing the sprite batcher?!");
 
@@ -123,6 +95,7 @@ namespace gueepo {
 			m_renderData.quadVertexPtrPosition->TexCoord = textureCoords[i];
 			m_renderData.quadVertexPtrPosition->TextureSlot = textureSlot;
 			m_renderData.quadVertexPtrPosition->color = color;
+			m_renderData.quadVertexPtrPosition->shaderType = shaderType;
 			m_renderData.quadVertexPtrPosition++;
 		}
 
@@ -218,7 +191,7 @@ namespace gueepo {
 					math::mat4::CreateScale(math::vec2(scale, -scale)) *
 					math::mat4::CreateTranslation(position + math::vec2(at.x, at.y));
 
-				Draw(ch.texture, transformMatrix, math::vec2::Zero, math::vec2::One, color);
+				Draw(ch.texture, transformMatrix, math::vec2::Zero, math::vec2::One, color, 2.0f);
 			}
 
 			offset.x += ch.advance;
@@ -245,17 +218,14 @@ namespace gueepo {
 	}
 
 	void SpriteBatcher::Flush() {
-		uint32_t dataSize = (uint32_t)((uint8_t*)m_renderData.quadVertexPtrPosition - (uint8_t*)m_renderData.quadVertexBase);
-		m_renderData.defaultVertexBuffer->SetData(m_renderData.quadVertexBase, dataSize);
 
 		for (uint32_t i = 0; i < m_renderData.TextureSlotIndex; i++) {
 			m_renderData.TextureSlots[i]->Bind(i);
 		}
 
-		m_batchShader->Bind();
-		m_batchShader->SetMat4("u_ViewProjection", m_renderData.ViewProjection);
-		m_renderData.defaultVertexArray->Bind();
-		m_RendererAPI->DrawIndexed(m_renderData.defaultVertexArray, m_renderData.quadIndexCount);
+		uint32_t dataSize = (uint32_t)((uint8_t*)m_renderData.quadVertexPtrPosition - (uint8_t*)m_renderData.quadVertexBase);
+		Renderer::SetBufferData(m_renderData.quadVertexBase, dataSize);
+		Renderer::DrawIndexed(m_renderData.ViewProjection, m_renderData.quadIndexCount);
 		m_renderData.RenderStats.DrawCalls++;
 	}
 

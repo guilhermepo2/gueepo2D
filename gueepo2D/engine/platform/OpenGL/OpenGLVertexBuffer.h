@@ -1,20 +1,19 @@
 #pragma once
 #include "core/renderer/BufferLayout.h"
-#include "core/renderer/VertexBuffer.h"
 
 namespace gueepo {
-	class OpenGLVertexBuffer : public VertexBuffer {
+	class OpenGLVertexBuffer {
 	public:
 		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
-		virtual ~OpenGLVertexBuffer();
-		void Bind() const override;
-		void Unbind() const override;
+		~OpenGLVertexBuffer();
+		void Bind() const;
+		void Unbind() const;
 
-		virtual void SetData(const void* data, uint32_t size) override;
+		void SetData(const void* data, uint32_t size);
 
-		virtual void SetLayout(const BufferLayout& layout) override { m_layout = layout; }
-		virtual const BufferLayout& GetLayout() override { return m_layout; }
+		void SetLayout(const BufferLayout& layout) { m_layout = layout; }
+		const BufferLayout& GetLayout() { return m_layout; }
 
 	private:
 		uint32_t m_vertexBufferID;
