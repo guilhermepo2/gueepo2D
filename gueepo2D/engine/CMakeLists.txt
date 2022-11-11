@@ -17,6 +17,8 @@ set (SOURCES
     "core/Containers/hashed_string.cpp"
     "core/Containers/string.cpp"
 
+    "core/Debug/MemoryTracker.cpp"
+
     "core/filesystem/File.cpp"
     "core/filesystem/Filesystem.cpp"
     "core/filesystem/Font.cpp"
@@ -77,6 +79,7 @@ set(HEADERS
     "core/Containers/vector.h"
 
     "core/Debug/Profiler.h"
+    "core/Debug/MemoryTracker.h"
 
     "core/events/ApplicationEvent.h"
     "core/events/Event.h"
