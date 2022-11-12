@@ -22,9 +22,13 @@ namespace gueepo {
 	};
 
 	struct SpriteAnimation {
+	public:
 		vector<AnimationFrame> animationFrames;
 		int currentFrame;
 		float timeElapsed;
+
+		void AddAnimationFrame(TextureRegion* texRegion, float timeOnFrame);
+		TextureRegion* GetCurrentFrameTextureRegion();
 	};
 
 	// ----------------------------------------------
