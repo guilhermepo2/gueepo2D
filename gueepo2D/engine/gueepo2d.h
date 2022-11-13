@@ -17,7 +17,7 @@
 #include "core/Window.h"
 
 #include "core/Debug/Profiler.h"
-#include "core/Debug/MemoryTracker.h"
+// #include "core/Debug/MemoryTracker.h"
 
 #include "core/audio/Audio.h"
 
