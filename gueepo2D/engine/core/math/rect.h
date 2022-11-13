@@ -26,6 +26,11 @@ namespace gueepo {
 					bottomLeft.y + thisSize.y > other.bottomLeft.y
 					);
 			}
+
+			vec2 GetCenter() {
+				vec2 size = GetSize();
+				return vec2(bottomLeft.x + (size.x / 2), bottomLeft.y + (size.y / 2));
+			}
 		};
 
 	}
