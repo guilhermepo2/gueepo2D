@@ -39,6 +39,7 @@ namespace gueepo {
 		// data manipulation
 		void add(const T& item);
 		void add(T&& item);
+		void insert(int index, const T& item);
 		bool contains(T item);
 		int find(T item);
 
@@ -185,6 +186,7 @@ namespace gueepo {
 		return *this;
 	}
 
+
 	template<class T>
 	T& vector<T>::operator[](int index) {
 		g2dassert(index >= 0 && index <= m_count, "index out of range!");
@@ -283,6 +285,19 @@ namespace gueepo {
 	void vector<T>::add(T&& item) {
 		reserve(m_count + 1);
 		new(m_data + m_count) T(std::move(item));
+		m_count++;
+	}
+
+	template<class T>
+	void gueepo::vector<T>::insert(int index, const T& item) {
+		reserve(m_count + 1);
+
+		// what a pain.
+		for (int i = index + 1; i < m_count; i++) {
+			m_data[i] = std::move(m_data[i - 1]);
+		}
+
+		m_data[index] = item;
 		m_count++;
 	}
 
