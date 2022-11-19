@@ -58,6 +58,6 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
     
     - name: Tests
-      working-directory: ${{github.workspace}}/build/src/lib/gueepo2D/gueepo2D/test
+      working-directory: ${{github.workspace}}/build/gueepo2D/test
       run: ctest -C Debug --verbose
       
