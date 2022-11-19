@@ -293,7 +293,7 @@ namespace gueepo {
 		reserve(m_count + 1);
 
 		// what a pain.
-		for (int i = index + 1; i < m_count; i++) {
+		for (int i = index + 1; i <= m_count; i++) {
 			m_data[i] = std::move(m_data[i - 1]);
 		}
 
