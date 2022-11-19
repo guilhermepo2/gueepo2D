@@ -42,3 +42,6 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/assets)
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/assets $<TARGET_FILE_DIR:${PROJECT_NAME}>/../assets
     )
 endif()
+
+message("adding tests")
+add_test(NAME AllTests COMMAND ${PROJECT_NAME})
