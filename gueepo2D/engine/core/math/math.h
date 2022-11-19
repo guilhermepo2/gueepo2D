@@ -8,11 +8,11 @@
 #include <cmath>
 
 #ifndef max
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#define max_macro(a,b)            (((a) > (b)) ? (a) : (b))
 #endif
 
 #ifndef min
-#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#define min_macro(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
 namespace gueepo {
@@ -54,11 +54,11 @@ namespace gueepo {
 		}
 
 		static float maximum(float a, float b) {
-			return max(a, b);
+			return max_macro(a, b);
 		}
 
 		static float minimum(float a, float b) {
-			return min(a, b);
+			return min_macro(a, b);
 		}
 
 		static int ManhattanDistance(math::vec2 a, math::vec2 b) {

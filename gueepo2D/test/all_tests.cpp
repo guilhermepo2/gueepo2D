@@ -1,5 +1,5 @@
 #define GUEEPO2D_MAIN
-#include "gueepo2D.h"
+#include "gueepo2d.h"
 #include <catch2/catch_all.hpp>
 #include "vector2.h"
 #include "vector3.h"

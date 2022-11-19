@@ -6,7 +6,8 @@
 extern gueepo::Application* gueepo::CreateApplication();
 
 int main(int argc, char** argv) {
-	unreferenced(argc, argv);
+	unreferenced(argc);
+	unreferenced(argv);
 
 	gueepo::Log::Initialize();
 	LOG_INFO("log initialized");
