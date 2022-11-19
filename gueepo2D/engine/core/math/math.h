@@ -49,11 +49,11 @@ namespace gueepo {
 		}
 
 		static float maximum(float a, float b) {
-			return max_macro(a, b);
+			return max_def(a, b);
 		}
 
 		static float minimum(float a, float b) {
-			return min_macro(a, b);
+			return min_def(a, b);
 		}
 
 		static int ManhattanDistance(math::vec2 a, math::vec2 b) {
