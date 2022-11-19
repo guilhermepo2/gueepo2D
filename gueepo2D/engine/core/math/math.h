@@ -7,13 +7,8 @@
 #include "endian.h"
 #include <cmath>
 
-#ifndef max
-#define max_macro(a,b)            (((a) > (b)) ? (a) : (b))
-#endif
-
-#ifndef min
-#define min_macro(a,b)            (((a) < (b)) ? (a) : (b))
-#endif
+#define max_def(a,b)            (((a) > (b)) ? (a) : (b))
+#define min_def(a,b)            (((a) < (b)) ? (a) : (b))
 
 namespace gueepo {
 	namespace math {
