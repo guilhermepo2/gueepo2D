@@ -1,8 +1,18 @@
 #pragma once
 #include "core/filesystem/json.h"
 
+const char* testJsonString =
+        "{\n"
+        "\"bval\": true,\n"
+        "\"color\": \"gold\",\n"
+        "\"number\": 123,\n"
+        "\"floating\": 3.5\n"
+        "}\n";
+
 TEST_CASE("json test", "[filesystem]") {
-	gueepo::json testJson("./assets/test.json");
+	gueepo::json testJson;
+    testJson.CreateFromString(testJsonString);
+
 	bool outBool;
 	int outInt;
 	float outFloat;
@@ -10,12 +20,12 @@ TEST_CASE("json test", "[filesystem]") {
 
 	REQUIRE(testJson.IsValid() == true);
 	
-	testJson.GetBool("boolean", outBool);
-	testJson.GetInt("number", outInt);
-	testJson.GetFloat("floating", outFloat);
-	testJson.GetString("color", outString);
+	REQUIRE(testJson.GetBool("bval", outBool));
+    REQUIRE(testJson.GetInt("number", outInt));
+    REQUIRE(testJson.GetFloat("floating", outFloat));
+    REQUIRE(testJson.GetString("color", outString));
 
-	REQUIRE(outBool == true);
+	REQUIRE( outBool == true );
 	REQUIRE(outInt == 123);
 	REQUIRE(outFloat == 3.5);
 	REQUIRE(outString == "gold");

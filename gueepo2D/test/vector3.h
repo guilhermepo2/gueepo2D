@@ -95,9 +95,9 @@ TEST_CASE("VECTOR3", "[math]") {
 		INFO("a: " << a);
 		INFO("b: " << b);
 		// and any three vectors, P, Q, and R
-		gueepo::math::vec3 p = gueepo::test::RandomVector();
-		gueepo::math::vec3 q = gueepo::test::RandomVector();
-		gueepo::math::vec3 r = gueepo::test::RandomVector();
+		gueepo::math::vec3 p = gueepo::math::vec3(1, 2, 3);
+		gueepo::math::vec3 q = gueepo::math::vec3(10, 11, 12);
+		gueepo::math::vec3 r = gueepo::math::vec3(21, 22, 23);
 		// the following properties hold
 
 		// (a)
