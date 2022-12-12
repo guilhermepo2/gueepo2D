@@ -12,6 +12,7 @@ FetchContent_MakeAvailable(Catch2)
 
 add_executable(${PROJECT_NAME}
     all_tests.cpp
+    gueepo_vector.h
     TestUtils.h
     vector2.h
     vector3.h

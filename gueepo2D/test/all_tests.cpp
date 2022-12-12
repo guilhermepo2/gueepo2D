@@ -4,6 +4,7 @@
 #include "vector2.h"
 #include "vector3.h"
 #include "json.h"
+#include "gueepo_vector.h"
 
 
 class Dummy : public gueepo::Application {
