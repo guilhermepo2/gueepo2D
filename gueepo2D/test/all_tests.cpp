@@ -1,8 +1,10 @@
-#include "gueepo2D.h"
+#define GUEEPO2D_MAIN
+#include "gueepo2d.h"
 #include <catch2/catch_all.hpp>
 #include "vector2.h"
 #include "vector3.h"
 #include "json.h"
+#include "gueepo_vector.h"
 
 
 class Dummy : public gueepo::Application {

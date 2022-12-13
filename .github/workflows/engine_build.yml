@@ -56,4 +56,8 @@ jobs:
     - name: Build
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+    
+    - name: Tests
+      working-directory: ${{github.workspace}}/build/gueepo2D/test
+      run: ctest -C Debug --verbose
       

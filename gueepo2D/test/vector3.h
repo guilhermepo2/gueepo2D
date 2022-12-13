@@ -1,43 +1,43 @@
 #pragma once
-#include "core/math/Vector3.h"
+#include "core/math/vec3.h"
 #include "TestUtils.h"
 
 TEST_CASE("VECTOR3", "[math]") {
 	gueepo::test::ResetRandomSeed();
 
 	SECTION("empty constructor") {
-		gueepo::math::Vector3 v;
+		gueepo::math::vec3 v;
 		REQUIRE(v.x == 0.0f);
 		REQUIRE(v.y == 0.0f);
 		REQUIRE(v.z == 0.0f);
 	}
 
 	SECTION("single parameter constructor") {
-		gueepo::math::Vector3 v(1.0f);
+		gueepo::math::vec3 v(1.0f);
 		REQUIRE(v.x == 1.0f);
 		REQUIRE(v.y == 1.0f);
 		REQUIRE(v.z == 1.0f);
 	}
 
 	SECTION("three parameter constructor") {
-		gueepo::math::Vector3 v(2.0f, 4.0f, 6.0f);
+		gueepo::math::vec3 v(2.0f, 4.0f, 6.0f);
 		REQUIRE(v.x == 2.0f);
 		REQUIRE(v.y == 4.0f);
 		REQUIRE(v.z == 6.0f);
 	}
 
 	SECTION("copy constructor") {
-		gueepo::math::Vector3 base(3.0f, 6.0f, 9.0f);
-		gueepo::math::Vector3 v(base);
+		gueepo::math::vec3 base(3.0f, 6.0f, 9.0f);
+		gueepo::math::vec3 v(base);
 		REQUIRE(v.x == 3.0f);
 		REQUIRE(v.y == 6.0f);
 		REQUIRE(v.z == 9.0f);
 	}
 
 	SECTION("vector3 operator+ overloading") {
-		gueepo::math::Vector3 a(1.0f, 2.0f, 3.0f);
-		gueepo::math::Vector3 b(2.0f, 3.0f, 4.0f);
-		gueepo::math::Vector3 sum = a + b;
+		gueepo::math::vec3 a(1.0f, 2.0f, 3.0f);
+		gueepo::math::vec3 b(2.0f, 3.0f, 4.0f);
+		gueepo::math::vec3 sum = a + b;
 
 		REQUIRE(sum.x == 3.0f);
 		REQUIRE(sum.y == 5.0f);
@@ -45,9 +45,9 @@ TEST_CASE("VECTOR3", "[math]") {
 	}
 
 	SECTION("vector3 operator- overloading") {
-		gueepo::math::Vector3 a(5.0f, 5.0f, 5.0f);
-		gueepo::math::Vector3 b(1.0f, 2.0f, 3.0f);
-		gueepo::math::Vector3 result = a - b;
+		gueepo::math::vec3 a(5.0f, 5.0f, 5.0f);
+		gueepo::math::vec3 b(1.0f, 2.0f, 3.0f);
+		gueepo::math::vec3 result = a - b;
 
 		REQUIRE(result.x == 4.0f);
 		REQUIRE(result.y == 3.0f);
@@ -55,10 +55,10 @@ TEST_CASE("VECTOR3", "[math]") {
 	}
 
 	SECTION("vector3 scalar multiplication") {
-		gueepo::math::Vector3 a(2.0f, 3.0f, 4.0f);
+		gueepo::math::vec3 a(2.0f, 3.0f, 4.0f);
 		float scalar = 3.0f;
-		gueepo::math::Vector3 result = a * scalar;
-		gueepo::math::Vector3 result2 = a * 2;
+		gueepo::math::vec3 result = a * scalar;
+		gueepo::math::vec3 result2 = a * 2;
 		
 		REQUIRE(result2.x == 4.0f);
 		REQUIRE(result2.y == 6.0f);
@@ -70,9 +70,9 @@ TEST_CASE("VECTOR3", "[math]") {
 	}
 
 	SECTION("vector3 scalar multiplication") {
-		gueepo::math::Vector3 a(2.0f, 3.0f, 4.0f);
+		gueepo::math::vec3 a(2.0f, 3.0f, 4.0f);
 		float scalar = 3.0f;
-		gueepo::math::Vector3 result = a * scalar;
+		gueepo::math::vec3 result = a * scalar;
 
 		REQUIRE(result.x == 6.0f);
 		REQUIRE(result.y == 9.0f);
@@ -80,9 +80,9 @@ TEST_CASE("VECTOR3", "[math]") {
 	}
 
 	SECTION("vector3 == and != operators") {
-		gueepo::math::Vector3 a(1.0f, 2.0f, 3.0f);
-		gueepo::math::Vector3 a2(1.0f, 2.0f, 3.0f);
-		gueepo::math::Vector3 b(2.0f, 4.0f, 6.0f);
+		gueepo::math::vec3 a(1.0f, 2.0f, 3.0f);
+		gueepo::math::vec3 a2(1.0f, 2.0f, 3.0f);
+		gueepo::math::vec3 b(2.0f, 4.0f, 6.0f);
 
 		REQUIRE(a == a2);
 		REQUIRE(a != b);
@@ -95,9 +95,9 @@ TEST_CASE("VECTOR3", "[math]") {
 		INFO("a: " << a);
 		INFO("b: " << b);
 		// and any three vectors, P, Q, and R
-		gueepo::math::Vector3 p = gueepo::test::RandomVector();
-		gueepo::math::Vector3 q = gueepo::test::RandomVector();
-		gueepo::math::Vector3 r = gueepo::test::RandomVector();
+		gueepo::math::vec3 p = gueepo::math::vec3(1, 2, 3);
+		gueepo::math::vec3 q = gueepo::math::vec3(10, 11, 12);
+		gueepo::math::vec3 r = gueepo::math::vec3(21, 22, 23);
 		// the following properties hold
 
 		// (a)
@@ -204,17 +204,17 @@ TEST_CASE("VECTOR3", "[math]") {
 	*/
 
 	SECTION("cross product") {
-		gueepo::math::Vector3 a(2.0f, 3.0f, 4.0f);
-		gueepo::math::Vector3 b(1.0f, 1.0f, 2.0f);
-		gueepo::math::Vector3 cross = gueepo::math::Vector3::Cross(a, b);
+		gueepo::math::vec3 a(2.0f, 3.0f, 4.0f);
+		gueepo::math::vec3 b(1.0f, 1.0f, 2.0f);
+		gueepo::math::vec3 cross = gueepo::math::vec3::Cross(a, b);
 
 		REQUIRE(cross.x == 2.0f);
 		REQUIRE(cross.y == 0.0f);
 		REQUIRE(cross.z == -1.0f);
 
-		gueepo::math::Vector3 c(3.0f, 2.0f, 1.0f);
-		gueepo::math::Vector3 d(1.0f, 2.0f, 3.0f);
-		gueepo::math::Vector3 cross2 = gueepo::math::Vector3::Cross(c, d);
+		gueepo::math::vec3 c(3.0f, 2.0f, 1.0f);
+		gueepo::math::vec3 d(1.0f, 2.0f, 3.0f);
+		gueepo::math::vec3 cross2 = gueepo::math::vec3::Cross(c, d);
 
 		REQUIRE(cross2.x == 4.0f);
 		REQUIRE(cross2.y == -8.0f);
@@ -222,55 +222,55 @@ TEST_CASE("VECTOR3", "[math]") {
 	}
 
 	SECTION("theorem 2.7") {
-		gueepo::math::Vector3 p(3.0f, 2.0f, 1.0f);
-		gueepo::math::Vector3 q(1.0f, 2.0f, 3.0f);
+		gueepo::math::vec3 p(3.0f, 2.0f, 1.0f);
+		gueepo::math::vec3 q(1.0f, 2.0f, 3.0f);
 
-		REQUIRE(gueepo::math::Vector3::Dot((gueepo::math::Vector3::Cross(p, q)), p) == 0);
-		REQUIRE(gueepo::math::Vector3::Dot((gueepo::math::Vector3::Cross(p, q)), q) == 0);
+		REQUIRE(gueepo::math::vec3::Dot((gueepo::math::vec3::Cross(p, q)), p) == 0);
+		REQUIRE(gueepo::math::vec3::Dot((gueepo::math::vec3::Cross(p, q)), q) == 0);
 	}
 
 	SECTION("theorem 2.9") {
-		gueepo::math::Vector3 p(3.0f, 2.0f, 1.0f);
-		gueepo::math::Vector3 q(1.0f, 2.0f, 3.0f);
-		gueepo::math::Vector3 r(2.0f, 1.0f, 1.0f);
+		gueepo::math::vec3 p(3.0f, 2.0f, 1.0f);
+		gueepo::math::vec3 q(1.0f, 2.0f, 3.0f);
+		gueepo::math::vec3 r(2.0f, 1.0f, 1.0f);
 		float a = static_cast<float>(gueepo::test::RandomInt(1, 5));
 
 		// (a)
 		REQUIRE(
-			gueepo::math::Vector3::Cross(q, p) ==
-			( -1 * gueepo::math::Vector3::Cross(p,q))
+			gueepo::math::vec3::Cross(q, p) ==
+			( -1 * gueepo::math::vec3::Cross(p,q))
 		);
 		// (b)
 		REQUIRE(
-			gueepo::math::Vector3::Cross(a*p, q) ==
-			(a * gueepo::math::Vector3::Cross(p, q))
+			gueepo::math::vec3::Cross(a*p, q) ==
+			(a * gueepo::math::vec3::Cross(p, q))
 		);
 		// (c)
 		REQUIRE(
-			gueepo::math::Vector3::Cross(p, (q + r)) ==
-			gueepo::math::Vector3::Cross(p, q) + gueepo::math::Vector3::Cross(p, r)
+			gueepo::math::vec3::Cross(p, (q + r)) ==
+			gueepo::math::vec3::Cross(p, q) + gueepo::math::vec3::Cross(p, r)
 		);
 		// (d)
 		REQUIRE(
-			gueepo::math::Vector3::Cross(p, p) == gueepo::math::Vector3(0.0f)
+			gueepo::math::vec3::Cross(p, p) == gueepo::math::vec3(0.0f)
 		);
 		// (e)
 		REQUIRE(
-			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(p,q), r) ==
-			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(r, p), q)
+			gueepo::math::vec3::Dot(gueepo::math::vec3::Cross(p,q), r) ==
+			gueepo::math::vec3::Dot(gueepo::math::vec3::Cross(r, p), q)
 		);
 		REQUIRE(
-			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(p, q), r) ==
-			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(q, r), p)
+			gueepo::math::vec3::Dot(gueepo::math::vec3::Cross(p, q), r) ==
+			gueepo::math::vec3::Dot(gueepo::math::vec3::Cross(q, r), p)
 		);
 		REQUIRE(
-			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(r, p), q) ==
-			gueepo::math::Vector3::Dot(gueepo::math::Vector3::Cross(q, r), p)
+			gueepo::math::vec3::Dot(gueepo::math::vec3::Cross(r, p), q) ==
+			gueepo::math::vec3::Dot(gueepo::math::vec3::Cross(q, r), p)
 		);
 		// (f)
 		REQUIRE(
-			gueepo::math::Vector3::Cross(p, gueepo::math::Vector3::Cross(q, p)) == 
-			gueepo::math::Vector3::Cross(gueepo::math::Vector3::Cross(p, q), p)
+			gueepo::math::vec3::Cross(p, gueepo::math::vec3::Cross(q, p)) ==
+			gueepo::math::vec3::Cross(gueepo::math::vec3::Cross(p, q), p)
 		);
 		
 	}

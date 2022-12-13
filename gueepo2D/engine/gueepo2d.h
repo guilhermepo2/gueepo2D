@@ -9,18 +9,21 @@
 #include "core/EntryPoint.h"
 #endif
 
+
 #include "core/Application.h"
 #include "core/Common.h"
 #include "core/Log.h"
 #include "core/ImGuiLayer.h"
 #include "core/Window.h"
 
+#include "core/Debug/Profiler.h"
+// #include "core/Debug/MemoryTracker.h"
+
 #include "core/audio/Audio.h"
 
 #include "core/Containers/hashed_string.h"
 #include "core/Containers/string.h"
 #include "core/Containers/vector.h"
-#include "core/Debug/Profiler.h"
 
 #include "core/events/Event.h"
 #include "core/events/EventDispatcher.h"

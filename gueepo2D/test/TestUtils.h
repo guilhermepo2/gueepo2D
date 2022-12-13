@@ -1,7 +1,7 @@
 #pragma once
 #include <stdlib.h>
 #include <time.h>
-#include "core/math/Vector3.h"
+#include "core/math/vec3.h"
 
 namespace gueepo::test {
 	void ResetRandomSeed() {
@@ -9,15 +9,15 @@ namespace gueepo::test {
 	}
 
 	int RandomInt() {
-		return rand();
+		return std::rand();
 	}
 
 	int RandomInt(int min, int max) {
-		return (rand() % max) + min;
+		return (std::rand() % max) + min;
 	}
 
-	gueepo::math::Vector3 RandomVector() {
-		return gueepo::math::Vector3(
+	gueepo::math::vec3 RandomVector() {
+		return gueepo::math::vec3(
 			static_cast<float>(RandomInt()),
 			static_cast<float>(RandomInt()),
 			static_cast<float>(RandomInt())

@@ -11,4 +11,17 @@ namespace gueepo {
 		}
 
 	}
+
+	void SpriteAnimation::AddAnimationFrame(TextureRegion* texRegion, float timeOnFrame) {
+		AnimationFrame frame;
+		frame.sprite.textureRegion = texRegion;
+		frame.timeOnThisFrame = timeOnFrame;
+
+		animationFrames.add(frame);
+	}
+
+	gueepo::TextureRegion* SpriteAnimation::GetCurrentFrameTextureRegion() {
+		return animationFrames[currentFrame].sprite.textureRegion;
+	}
+
 }
