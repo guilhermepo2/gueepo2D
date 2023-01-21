@@ -1,9 +1,10 @@
 #include "OpenGLVertexArray.h"
-#include <glad/glad.h>
 #include "core/renderer/BufferLayout.h"
 
 #include "platform/OpenGL/OpenGLVertexBuffer.h"
 #include "platform/OpenGL/OpenGLIndexBuffer.h"
+
+#include <glad/glad.h>
 
 namespace gueepo {
 

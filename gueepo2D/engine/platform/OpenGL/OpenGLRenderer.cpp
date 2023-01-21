@@ -1,12 +1,12 @@
 #include "OpenGLRenderer.h"
-#include <SDL.h>
-#include <glad/glad.h>
 
 #include "core/renderer/SpriteBatcher.h"
 #include "platform/OpenGL/OpenGLShader.h"
 #include "platform/OpenGL/OpenGLVertexBuffer.h"
 #include "platform/OpenGL/OpenGLVertexArray.h"
 #include "platform/OpenGL/OpenGLIndexBuffer.h"
+#include <SDL.h>
+#include <glad/glad.h>
 
 const char* spriteVertexShader =
 	"# version 330 core\n"

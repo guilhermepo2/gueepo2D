@@ -1,8 +1,8 @@
 #include "core/Common.h"
 #include "OpenGLTexture.h"
-#include <glad/glad.h>
 #include "core/Log.h"
 #include "core/math/math.h"
+#include <glad/glad.h>
 
 namespace gueepo {
 	OpenGLTexture::OpenGLTexture(texture_data_t textureData) {
