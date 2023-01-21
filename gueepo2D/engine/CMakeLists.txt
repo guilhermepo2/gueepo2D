@@ -37,11 +37,9 @@ set (SOURCES
     "core/renderer/Texture.cpp"
     "core/renderer/FontSprite.cpp"
 
-    "platform/SDL2/imgui_impl_sdl.cpp"
     "platform/SDL2/SDL2Input.cpp"
     "platform/SDL2/SDL2TimeStep.cpp"
     "platform/SDL2/SDL2Window.cpp"
-    "platform/OpenGL/imgui_impl_opengl3.cpp"
     "platform/OpenGL/OpenGLIndexBuffer.cpp"
     "platform/OpenGL/OpenGLRenderer.cpp"
     "platform/OpenGL/OpenGLShader.cpp"
@@ -109,15 +107,12 @@ set(HEADERS
     "core/renderer/Texture.h"
     "core/renderer/FontSprite.h"
 
-    "platform/OpenGL/imgui_impl_opengl3_loader.h"
-    "platform/OpenGL/imgui_impl_opengl3.h"
     "platform/OpenGL/OpenGLIndexBuffer.h"
     "platform/OpenGL/OpenGLRenderer.h"
     "platform/OpenGL/OpenGLShader.h"
     "platform/OpenGL/OpenGLTexture.h"
     "platform/OpenGL/OpenGLVertexArray.h"
     "platform/OpenGL/OpenGLVertexBuffer.h"
-    "platform/SDL2/imgui_impl_sdl.h"
     "platform/SDL2/SDL2Input.h"
     "platform/SDL2/SDL2Window.h"
 
@@ -139,13 +134,12 @@ target_include_directories (${PROJECT_NAME}
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/spdlog-1.9.2/include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/glad/include>
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/imgui-docking>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/nlohmann>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/stb>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/miniaudio>
 )
 
-target_link_libraries(${PROJECT_NAME} glad dearimgui)
+target_link_libraries(${PROJECT_NAME} glad)
 
 if(WIN32)
     add_compile_definitions(GUEEPO2D_WINDOWS)

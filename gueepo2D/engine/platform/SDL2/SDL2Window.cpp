@@ -8,11 +8,6 @@
 #include "core/events/MouseEvent.h"
 #include "core/renderer/Renderer.h"
 
-
-// #todo: is there a better way to do this?
-#include "imgui.h"
-#include "platform/SDL2/imgui_impl_sdl.h"
-
 // #todo maybe move this to a "OpenGLIncludes.h" ?
 #if GUEEPO2D_MACOS
 static const int OPENGL_MAJOR_VERSION = 4;
