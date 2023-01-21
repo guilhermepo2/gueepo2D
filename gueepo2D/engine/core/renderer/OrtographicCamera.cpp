@@ -1,4 +1,3 @@
-#include "gueepo2Dpch.h"
 #include "OrtographicCamera.h"
 
 namespace gueepo {

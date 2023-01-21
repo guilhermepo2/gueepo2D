@@ -6,8 +6,6 @@ set(GRAPHICS_OPENGL true CACHE BOOL "Use OpenGL Graphics Backend")
 # optional: SDL2_PATH can be defined here, it has to be an absolute path to SDL2 root folder (i.e. D:/workspace/SDL2-2.0.18)
 
 set (SOURCES
-    "gueepo2Dpch.cpp"
-
     "core/Application.cpp"
     "core/Log.cpp"
 
@@ -53,7 +51,6 @@ set (SOURCES
 
 set(HEADERS
     "gueepo2d.h"
-    "gueepo2Dpch.h"
 
     "core/macos_common.h"
 
@@ -191,10 +188,6 @@ if(GRAPHICS_OPENGL)
 
     add_compile_definitions(GUEEPO2D_GRAPHICS_OPENGL)
 endif()
-
-target_precompile_headers(${PROJECT_NAME}
-    PUBLIC gueepo2Dpch.h
-)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DGUEEPO2D_DEBUG")
 

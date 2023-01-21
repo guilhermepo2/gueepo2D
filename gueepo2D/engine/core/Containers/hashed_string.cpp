@@ -7,7 +7,6 @@
 // and to aid in localization.
 // ==========================================================================
 
-#include "gueepo2Dpch.h"
 #include "hashed_string.h"
 
 static unsigned reverse(unsigned x) {

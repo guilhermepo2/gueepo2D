@@ -1,6 +1,5 @@
-#include "gueepo2Dpch.h"
 #include "string.h"
-#include <string.h>
+#include <string.h> // strcmp, memcpy, strlen
 
 namespace gueepo {
 

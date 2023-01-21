@@ -1,4 +1,3 @@
-#include "gueepo2Dpch.h"
 #include "core/Common.h"
 #include "OpenGLTexture.h"
 #include <glad/glad.h>

@@ -1,4 +1,3 @@
-#include <gueepo2Dpch.h>
 #include "TextureRegion.h"
 #include "core/Log.h"
 

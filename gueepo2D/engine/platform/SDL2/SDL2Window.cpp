@@ -1,4 +1,3 @@
-#include "gueepo2Dpch.h"
 #include "SDL2Window.h"
 #include <SDL.h>
 

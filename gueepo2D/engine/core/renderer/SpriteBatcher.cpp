@@ -1,4 +1,3 @@
-#include "gueepo2Dpch.h"
 #include "SpriteBatcher.h"
 
 #include "core/Log.h"
