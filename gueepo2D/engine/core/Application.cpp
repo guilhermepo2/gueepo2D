@@ -23,7 +23,7 @@ namespace gueepo {
 		s_Instance = this;
 
 		WindowConfiguration c = { _Title, _Width, _Height };
-		m_Window = std::unique_ptr<Window>(Window::CreateNewWindow(c));
+		m_Window = Window::CreateNewWindow(c);
 		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
 
 		Renderer::Initialize();

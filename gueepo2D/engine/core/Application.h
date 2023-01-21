@@ -40,7 +40,7 @@ namespace gueepo {
 		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:
-		std::unique_ptr<Window> m_Window;
+		Window* m_Window;
 		bool m_bIsRunning;
 
 	private:
