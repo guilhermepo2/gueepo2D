@@ -13,7 +13,8 @@ namespace gueepo {
 	class WindowCloseEvent;
 	class WindowResizeEvent;
 	class Layer;
-	class InputState;
+
+	struct InputState;
 
 	class Application {
 	public:
