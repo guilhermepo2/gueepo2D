@@ -7,8 +7,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(BUILD_TEST ON) # turn this on to build the test projects
 
 add_subdirectory(gueepo2D/thirdparty/glad)
-add_subdirectory(gueepo2D/thirdparty/imgui-docking)
-set_target_properties (glad dearimgui PROPERTIES FOLDER thirdparty)
+set_target_properties (glad PROPERTIES FOLDER thirdparty)
 
 add_subdirectory(gueepo2D/engine)
 
