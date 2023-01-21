@@ -13,10 +13,8 @@ set (SOURCES
 
     "core/audio/Audio.cpp"
 
-    "core/Containers/hashed_string.cpp"
-    "core/Containers/string.cpp"
-
-    "core/Debug/MemoryTracker.cpp"
+    "core/containers/hashed_string.cpp"
+    "core/containers/string.cpp"
 
     "core/filesystem/File.cpp"
     "core/filesystem/Filesystem.cpp"
@@ -68,12 +66,11 @@ set(HEADERS
 
     "core/audio/Audio.h"
 
-    "core/Containers/hashed_string.h"
-    "core/Containers/string.h"
-    "core/Containers/vector.h"
+    "core/containers/hashed_string.h"
+    "core/containers/string.h"
+    "core/containers/vector.h"
 
-    "core/Debug/Profiler.h"
-    "core/Debug/MemoryTracker.h"
+    "core/debug/Profiler.h"
 
     "core/events/ApplicationEvent.h"
     "core/events/Event.h"
