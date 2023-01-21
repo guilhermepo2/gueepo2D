@@ -1,6 +1,7 @@
 #include "gueepo2Dpch.h"
 #include "SpriteBatcher.h"
 
+#include "core/Log.h"
 #include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
 #include "core/math/math.h"
@@ -155,7 +156,7 @@ namespace gueepo {
 	// ------------------------------------------------------
 	// Drawing Text
 	// ------------------------------------------------------
-	void SpriteBatcher::DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
+	void SpriteBatcher::DrawString(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
 
 		math::vec2 offset = math::vec2(0, 0);
 		uint32_t last = 0;

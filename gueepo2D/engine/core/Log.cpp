@@ -15,7 +15,7 @@ namespace gueepo {
 		std::string logsDir = "logs";
 
 		if (!gueepo::filesystem::DirectoryExists(logsDir)) {
-			gueepo::filesystem::CreateDirectory(logsDir);
+			gueepo::filesystem::CreateNewDirectory(logsDir);
 		}
 
 		std::vector<spdlog::sink_ptr> loggerSinks = {

@@ -2,6 +2,8 @@
 #include "Shader.h"
 #include "Renderer.h"
 #include "platform/OpenGL/OpenGLShader.h"
+
+#include "core/Log.h"
 #include "core/filesystem/File.h"
 #include "core/Containers/hashed_string.h"
 #include "core/Containers/string.h"

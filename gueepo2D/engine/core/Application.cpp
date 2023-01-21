@@ -1,6 +1,7 @@
 #include "gueepo2Dpch.h"
 #include "Application.h"
 
+#include "core/Log.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/EventDispatcher.h"
 #include "core/input/Input.h"

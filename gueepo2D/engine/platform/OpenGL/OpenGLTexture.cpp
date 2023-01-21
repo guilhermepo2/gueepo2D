@@ -2,6 +2,7 @@
 #include "core/Common.h"
 #include "OpenGLTexture.h"
 #include <glad/glad.h>
+#include "core/Log.h"
 #include "core/math/math.h"
 
 namespace gueepo {

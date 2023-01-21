@@ -4,7 +4,7 @@
 namespace gueepo {
 	class filesystem {
 	public:
-		static bool CreateDirectory(const std::string& path);
+		static bool CreateNewDirectory(const std::string& path);
 		static bool DirectoryExists(const std::string& path);
 	};
 }

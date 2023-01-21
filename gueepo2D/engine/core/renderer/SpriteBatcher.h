@@ -2,6 +2,7 @@
 #include "core/math/mat4.h"
 #include "core/math/vec2.h"
 #include "core/renderer/Color.h"
+#include <array>
 
 namespace gueepo {
 
@@ -70,7 +71,7 @@ namespace gueepo {
 		void Draw(TextureRegion* texRegion, int x, int y);
 
 		// Drawing Text
-		void DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color);
+		void DrawString(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color);
 
 		int GetDrawCalls();
 

@@ -25,7 +25,7 @@ namespace gueepo {
 		Font();
 		~Font();
 
-		static Font* CreateFont(const std::string& path);
+		static Font* CreateNewFont(const std::string& path);
 
 		const gueepo::string& GetFamilyName() const { return m_familyName; }
 		const gueepo::string& GetStyleName() const { return m_styleName; }

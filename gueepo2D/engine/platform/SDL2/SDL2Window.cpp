@@ -2,6 +2,7 @@
 #include "SDL2Window.h"
 #include <SDL.h>
 
+#include "core/Log.h"
 #include "core/Common.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/KeyEvent.h"

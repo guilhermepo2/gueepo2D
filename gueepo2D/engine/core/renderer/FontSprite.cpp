@@ -7,6 +7,7 @@
 
 #include "gueepo2Dpch.h"
 #include "FontSprite.h"
+#include "core/Log.h"
 #include "core/renderer/Texture.h"
 #include "core/renderer/Renderer.h"
 

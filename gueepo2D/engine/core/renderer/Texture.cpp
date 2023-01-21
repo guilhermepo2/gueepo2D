@@ -3,6 +3,7 @@
 #include "platform/OpenGL/OpenGLTexture.h"
 #include "Renderer.h"
 #include "utils/ImageUtils.h"
+#include "core/Log.h"
 
 namespace gueepo {
 
