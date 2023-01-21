@@ -39,10 +39,6 @@ namespace gueepo {
 	void SDL2Window::Update() {
 		SDL_Event SDLEvent;
 		while (SDL_PollEvent(&SDLEvent)) {
-			
-			// #todo: hmm.... if we are using SDL window I can assume that Dear ImGui will also be using SDL, right?
-			// #todo: is there a way to check if it's initialized or something?
-			ImGui_ImplSDL2_ProcessEvent(&SDLEvent);
 
 			switch (SDLEvent.type) {
 			case SDL_WINDOWEVENT: {

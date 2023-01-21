@@ -9,7 +9,6 @@ set (SOURCES
     "gueepo2Dpch.cpp"
 
     "core/Application.cpp"
-    "core/ImGuiLayer.cpp"
     "core/Log.cpp"
 
     "core/audio/Audio.cpp"
@@ -25,8 +24,6 @@ set (SOURCES
     "core/filesystem/json.cpp"
 
     "core/input/Input.cpp"
-    "core/layer/Layer.cpp"
-    "core/layer/LayerStack.cpp"
 
     "core/math/mat4.cpp"
     "core/math/rand.cpp"
@@ -67,7 +64,6 @@ set(HEADERS
     "core/Application.h"
     "core/Common.h"
     "core/EntryPoint.h"
-    "core/ImGuiLayer.h"
     "core/Log.h"
     "core/TimeStep.h"
     "core/Window.h"
@@ -95,8 +91,6 @@ set(HEADERS
     "core/input/Input.h"
     "core/input/KeyboardCodes.h"
     "core/input/MouseCodes.h"
-    "core/layer/Layer.h"
-    "core/layer/LayerStack.h"
 
     "core/math/math.h"
     "core/math/endian.h"

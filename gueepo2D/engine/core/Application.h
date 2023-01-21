@@ -7,14 +7,13 @@
 #pragma once
 
 #include "Window.h"
-#include "core/layer/LayerStack.h"
 
 namespace gueepo {
 	
 	class WindowCloseEvent;
 	class WindowResizeEvent;
 	class Layer;
-	class ImGuiLayer;
+	class InputState;
 
 	class Application {
 	public:
@@ -23,20 +22,25 @@ namespace gueepo {
 		void Run();
 		void OnEvent(Event& e);
 
-		void PushLayer(Layer* l);
-		void PushOverlay(Layer* l);
-
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
+
+	protected:
+		// These should be overriden by the Application!
+		virtual void Application_OnInitialize() {}
+		virtual void Application_OnDeinitialize() {}
+		virtual void Application_OnUpdate(float DeltaTime) { unreferenced(DeltaTime); }
+		virtual void Application_OnInput(const InputState& currentInputState) { unreferenced(currentInputState); }
+		virtual void Application_OnRender() {}
+		virtual void Application_OnEvent(Event& e) { unreferenced(e); }
+
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:
 		std::unique_ptr<Window> m_Window;
-		ImGuiLayer* m_ImGuiLayer;
 		bool m_bIsRunning;
-		LayerStack m_LayerStack;
 
 	private:
 		static Application* s_Instance;

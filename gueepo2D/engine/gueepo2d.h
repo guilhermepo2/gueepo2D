@@ -13,11 +13,9 @@
 #include "core/Application.h"
 #include "core/Common.h"
 #include "core/Log.h"
-#include "core/ImGuiLayer.h"
 #include "core/Window.h"
 
 #include "core/Debug/Profiler.h"
-// #include "core/Debug/MemoryTracker.h"
 
 #include "core/audio/Audio.h"
 
@@ -37,9 +35,6 @@
 #include "core/filesystem/json.h"
 
 #include "core/input/Input.h"
-
-#include "core/layer/Layer.h"
-#include "core/layer/LayerStack.h"
 
 #include "core/math/math.h"
 #include "core/math/mat4.h"
