@@ -7,6 +7,7 @@
 #pragma once
 #include "core/Containers/string.h"
 #include "core/math/vec2.h"
+#include <string>
 
 namespace gueepo {
 	struct Character {

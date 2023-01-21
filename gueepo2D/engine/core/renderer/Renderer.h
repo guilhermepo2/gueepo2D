@@ -1,6 +1,7 @@
 #pragma once
 #include "core/math/vec3.h"
 #include "core/math/mat4.h"
+#include <stdint.h>
 
 namespace gueepo {
 
