@@ -61,6 +61,7 @@ namespace gueepo {
 
 		// Drawing Textures
 		void Draw(Texture* texture, const math::vec2& position, const math::vec2& scale);
+		void Draw(Texture* texture, int x, int y, int w, int h, Color color);
 		void Draw(Texture* texture, int x, int y, int w, int h);
 		void Draw(Texture* texture, int x, int y);
 		void Draw(Texture* texture);
