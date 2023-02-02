@@ -2,7 +2,6 @@
 
 #include "core/renderer/Renderer.h"
 #include "core/renderer/Texture.h"
-#include "core/renderer/SpriteBatcher.h"
 
 gueepo::PixelBuffer::~PixelBuffer() {
 	if (m_data != nullptr) {
@@ -40,9 +39,9 @@ bool gueepo::PixelBuffer::SetColor(uint32_t x, uint32_t y, uint8_t r, uint8_t g,
 	return SetColor(x, y, r, g, b, 255);
 }
 
-void gueepo::PixelBuffer::Render(SpriteBatcher* batch) {
+void gueepo::PixelBuffer::Render() {
 	m_textureReference->SetData(m_data, m_width * m_height * sizeof(uint32_t));
-	batch->Draw(m_textureReference);
+	gueepo::Renderer::Draw(m_textureReference);
 }
 
 
