@@ -1,9 +1,8 @@
-#include "gueepo2Dpch.h"
 #include "Filesystem.h"
 #include <filesystem>
 
 namespace gueepo {
-	bool filesystem::CreateDirectory(const std::string& path) {
+	bool filesystem::CreateNewDirectory(const std::string& path) {
 		return std::filesystem::create_directories(path);
 	}
 

@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 #include "core/renderer/Texture.h"
 
 namespace gueepo {

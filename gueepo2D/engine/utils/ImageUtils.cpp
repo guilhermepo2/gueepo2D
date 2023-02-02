@@ -1,4 +1,3 @@
-#include "gueepo2Dpch.h"
 #include "ImageUtils.h"
 #include "core/Log.h"
 #define STB_IMAGE_IMPLEMENTATION

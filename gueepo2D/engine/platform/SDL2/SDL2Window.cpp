@@ -1,17 +1,12 @@
-#include "gueepo2Dpch.h"
 #include "SDL2Window.h"
 #include <SDL.h>
 
+#include "core/Log.h"
 #include "core/Common.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/KeyEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/renderer/Renderer.h"
-
-
-// #todo: is there a better way to do this?
-#include "imgui.h"
-#include "platform/SDL2/imgui_impl_sdl.h"
 
 // #todo maybe move this to a "OpenGLIncludes.h" ?
 #if GUEEPO2D_MACOS
@@ -39,10 +34,6 @@ namespace gueepo {
 	void SDL2Window::Update() {
 		SDL_Event SDLEvent;
 		while (SDL_PollEvent(&SDLEvent)) {
-			
-			// #todo: hmm.... if we are using SDL window I can assume that Dear ImGui will also be using SDL, right?
-			// #todo: is there a way to check if it's initialized or something?
-			ImGui_ImplSDL2_ProcessEvent(&SDLEvent);
 
 			switch (SDLEvent.type) {
 			case SDL_WINDOWEVENT: {

@@ -6,6 +6,7 @@
 
 #include "Font.h"
 #include "File.h"
+#include "core/Log.h"
 #include "core/math/math.h"
 
 #pragma warning(push, 0)
@@ -57,7 +58,7 @@ namespace gueepo {
 		}
 	}
 
-	Font* Font::CreateFont(const std::string& path) {
+	Font* Font::CreateNewFont(const std::string& path) {
 		File fontFile(path, std::ios_base::in | std::ios_base::binary);
 		unsigned char* fontBuffer = fontFile.GetAsUnsignedChar();
 

@@ -1,11 +1,10 @@
-#include "gueepo2Dpch.h"
-
 #define MINIAUDIO_IMPLEMENTATION
 #pragma warning(push, 0)
 #include "miniaudio.h"
 #pragma warning(pop)
 
 #include "Audio.h"
+#include "core/Log.h"
 #include "core/Containers/string.h"
 
 namespace gueepo {

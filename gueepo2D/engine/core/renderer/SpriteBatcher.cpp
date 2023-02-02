@@ -1,6 +1,6 @@
-#include "gueepo2Dpch.h"
 #include "SpriteBatcher.h"
 
+#include "core/Log.h"
 #include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
 #include "core/math/math.h"
@@ -111,6 +111,15 @@ namespace gueepo {
 		Draw(texture, transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One);
 	}
 
+	void SpriteBatcher::Draw(Texture* texture, int x, int y, int w, int h, Color color) {
+		math::mat4 transformMatrix =
+			math::mat4::CreateScale(math::vec2(static_cast<float>(w), static_cast<float>(h))) *
+			math::mat4::CreateTranslation(math::vec2(x, y)
+			);
+
+		Draw(texture, transformMatrix, math::vec2(0.0f), math::vec2(1.0f), color);
+	}
+
 	void SpriteBatcher::Draw(Texture* texture, int x, int y, int w, int h) {
 		Draw(texture, math::vec2(x, y), math::vec2(w, h));
 	}
@@ -155,7 +164,7 @@ namespace gueepo {
 	// ------------------------------------------------------
 	// Drawing Text
 	// ------------------------------------------------------
-	void SpriteBatcher::DrawText(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
+	void SpriteBatcher::DrawString(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
 
 		math::vec2 offset = math::vec2(0, 0);
 		uint32_t last = 0;

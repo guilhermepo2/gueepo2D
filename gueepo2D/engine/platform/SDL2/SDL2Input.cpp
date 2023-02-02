@@ -1,4 +1,3 @@
-#include "gueepo2Dpch.h"
 #include "SDL2Input.h"
 #include <SDL.h>
 #include <SDL_scancode.h>

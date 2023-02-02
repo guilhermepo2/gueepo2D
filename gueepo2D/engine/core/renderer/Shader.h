@@ -2,6 +2,7 @@
 #include <string>
 #include "core/math/mat4.h"
 #include "core/Containers/hashed_string.h"
+#include <unordered_map>
 
 namespace gueepo {
 	

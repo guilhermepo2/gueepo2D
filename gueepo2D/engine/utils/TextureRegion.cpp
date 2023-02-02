@@ -1,5 +1,5 @@
-#include <gueepo2Dpch.h>
 #include "TextureRegion.h"
+#include "core/Log.h"
 
 namespace gueepo {
 	TextureRegion::TextureRegion(Texture* texture, int x, int y, int w, int h) {

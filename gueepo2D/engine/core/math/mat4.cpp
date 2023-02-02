@@ -1,4 +1,3 @@
-#include "gueepo2Dpch.h"
 #include "mat4.h"
 #include "math.h"
 

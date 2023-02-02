@@ -3,6 +3,7 @@
 #include "MouseCodes.h"
 #include "core/math/vec2.h"
 #include "core/Common.h"
+#include <stdint.h>
 
 namespace gueepo {
 

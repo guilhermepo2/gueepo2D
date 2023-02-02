@@ -1,4 +1,3 @@
-#include "gueepo2Dpch.h"
 #include "vec2.h"
 
 namespace gueepo::math {

@@ -1,6 +1,6 @@
-#include "gueepo2Dpch.h"
 #include "Renderer.h"
 
+#include "core/Log.h"
 #include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
 #include "core/renderer/OrtographicCamera.h"

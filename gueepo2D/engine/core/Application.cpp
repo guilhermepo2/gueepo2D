@@ -1,9 +1,8 @@
-#include "gueepo2Dpch.h"
 #include "Application.h"
 
+#include "core/Log.h"
 #include "core/events/ApplicationEvent.h"
 #include "core/events/EventDispatcher.h"
-#include "core/ImGuiLayer.h"
 #include "core/input/Input.h"
 #include "core/TimeStep.h"
 #include "core/renderer/Renderer.h"
@@ -24,18 +23,17 @@ namespace gueepo {
 		s_Instance = this;
 
 		WindowConfiguration c = { _Title, _Width, _Height };
-		m_Window = std::unique_ptr<Window>(Window::CreateNewWindow(c));
+		m_Window = Window::CreateNewWindow(c);
 		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
 
 		Renderer::Initialize();
 		Audio::Init();
 		m_Window->AddPlatformToTitle();
-
-		m_ImGuiLayer = new ImGuiLayer();
-		PushOverlay(m_ImGuiLayer);
 	}
 
-	Application::~Application() {}
+	Application::~Application() {
+		Application_OnDeinitialize();
+	}
 
 	void Application::Run() {
 
@@ -45,6 +43,7 @@ namespace gueepo {
 		InputSystem* inputSystem = InputSystem::s_Instance;
 		inputSystem->Initialize();
 
+		Application_OnInitialize();
 		LOG_INFO("application is running!");
 		while (m_bIsRunning) {
 			float DeltaTime = static_cast<float>((timestep::GetTicks() - TicksLastFrame)) / 1000.0f;
@@ -53,27 +52,9 @@ namespace gueepo {
 			m_Window->Update();
 			inputSystem->Update();
 
-			for (Layer* l : m_LayerStack) {
-				l->OnInput(inputSystem->GetState());
-			}
-
-			for (Layer* l : m_LayerStack) {
-				l->OnUpdate(DeltaTime);
-			}
-
-			// RenderCommand::SetClearColor(gueepo::math::Vector3(0.1f, 0.1f, 0.1f));
-			// RenderCommand::Clear();
-			for (Layer* l : m_LayerStack) {
-				// Renderer::BeginScene(cam);
-				l->OnRender();
-				// Renderer::EndScene();
-			}
-
-			m_ImGuiLayer->Begin();
-			for (Layer* l : m_LayerStack) {
-				l->OnImGuiRender();
-			}
-			m_ImGuiLayer->End();
+			Application_OnInput(inputSystem->GetState());
+			Application_OnUpdate(DeltaTime);
+			Application_OnRender();
 
 			m_Window->Swap();
 
@@ -92,23 +73,7 @@ namespace gueepo {
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT(Application::OnWindowResize));
 
-		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
-			if (e.Handled()) {
-				break;
-			}
-
-			(*it)->OnEvent(e);
-		}
-	}
-
-	void Application::PushLayer(Layer* l) {
-		m_LayerStack.PushLayer(l);
-		l->OnAttach();
-	}
-
-	void Application::PushOverlay(Layer* l) {
-		m_LayerStack.PushOverlay(l);
-		l->OnAttach();
+		Application_OnEvent(e);
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {

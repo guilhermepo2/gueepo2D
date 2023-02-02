@@ -7,6 +7,7 @@
 #pragma once
 #include "core/Containers/string.h"
 #include "core/math/vec2.h"
+#include <string>
 
 namespace gueepo {
 	struct Character {
@@ -25,7 +26,7 @@ namespace gueepo {
 		Font();
 		~Font();
 
-		static Font* CreateFont(const std::string& path);
+		static Font* CreateNewFont(const std::string& path);
 
 		const gueepo::string& GetFamilyName() const { return m_familyName; }
 		const gueepo::string& GetStyleName() const { return m_styleName; }

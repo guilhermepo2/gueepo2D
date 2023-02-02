@@ -6,18 +6,13 @@ set(GRAPHICS_OPENGL true CACHE BOOL "Use OpenGL Graphics Backend")
 # optional: SDL2_PATH can be defined here, it has to be an absolute path to SDL2 root folder (i.e. D:/workspace/SDL2-2.0.18)
 
 set (SOURCES
-    "gueepo2Dpch.cpp"
-
     "core/Application.cpp"
-    "core/ImGuiLayer.cpp"
     "core/Log.cpp"
 
     "core/audio/Audio.cpp"
 
-    "core/Containers/hashed_string.cpp"
-    "core/Containers/string.cpp"
-
-    "core/Debug/MemoryTracker.cpp"
+    "core/containers/hashed_string.cpp"
+    "core/containers/string.cpp"
 
     "core/filesystem/File.cpp"
     "core/filesystem/Filesystem.cpp"
@@ -25,8 +20,6 @@ set (SOURCES
     "core/filesystem/json.cpp"
 
     "core/input/Input.cpp"
-    "core/layer/Layer.cpp"
-    "core/layer/LayerStack.cpp"
 
     "core/math/mat4.cpp"
     "core/math/rand.cpp"
@@ -40,11 +33,9 @@ set (SOURCES
     "core/renderer/Texture.cpp"
     "core/renderer/FontSprite.cpp"
 
-    "platform/SDL2/imgui_impl_sdl.cpp"
     "platform/SDL2/SDL2Input.cpp"
     "platform/SDL2/SDL2TimeStep.cpp"
     "platform/SDL2/SDL2Window.cpp"
-    "platform/OpenGL/imgui_impl_opengl3.cpp"
     "platform/OpenGL/OpenGLIndexBuffer.cpp"
     "platform/OpenGL/OpenGLRenderer.cpp"
     "platform/OpenGL/OpenGLShader.cpp"
@@ -60,26 +51,23 @@ set (SOURCES
 
 set(HEADERS
     "gueepo2d.h"
-    "gueepo2Dpch.h"
 
     "core/macos_common.h"
 
     "core/Application.h"
     "core/Common.h"
     "core/EntryPoint.h"
-    "core/ImGuiLayer.h"
     "core/Log.h"
     "core/TimeStep.h"
     "core/Window.h"
 
     "core/audio/Audio.h"
 
-    "core/Containers/hashed_string.h"
-    "core/Containers/string.h"
-    "core/Containers/vector.h"
+    "core/containers/hashed_string.h"
+    "core/containers/string.h"
+    "core/containers/vector.h"
 
-    "core/Debug/Profiler.h"
-    "core/Debug/MemoryTracker.h"
+    "core/debug/Profiler.h"
 
     "core/events/ApplicationEvent.h"
     "core/events/Event.h"
@@ -95,8 +83,6 @@ set(HEADERS
     "core/input/Input.h"
     "core/input/KeyboardCodes.h"
     "core/input/MouseCodes.h"
-    "core/layer/Layer.h"
-    "core/layer/LayerStack.h"
 
     "core/math/math.h"
     "core/math/endian.h"
@@ -115,15 +101,12 @@ set(HEADERS
     "core/renderer/Texture.h"
     "core/renderer/FontSprite.h"
 
-    "platform/OpenGL/imgui_impl_opengl3_loader.h"
-    "platform/OpenGL/imgui_impl_opengl3.h"
     "platform/OpenGL/OpenGLIndexBuffer.h"
     "platform/OpenGL/OpenGLRenderer.h"
     "platform/OpenGL/OpenGLShader.h"
     "platform/OpenGL/OpenGLTexture.h"
     "platform/OpenGL/OpenGLVertexArray.h"
     "platform/OpenGL/OpenGLVertexBuffer.h"
-    "platform/SDL2/imgui_impl_sdl.h"
     "platform/SDL2/SDL2Input.h"
     "platform/SDL2/SDL2Window.h"
 
@@ -145,13 +128,12 @@ target_include_directories (${PROJECT_NAME}
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/spdlog-1.9.2/include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/glad/include>
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/imgui-docking>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/nlohmann>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/stb>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/../thirdparty/miniaudio>
 )
 
-target_link_libraries(${PROJECT_NAME} glad dearimgui)
+target_link_libraries(${PROJECT_NAME} glad)
 
 if(WIN32)
     add_compile_definitions(GUEEPO2D_WINDOWS)
@@ -206,10 +188,6 @@ if(GRAPHICS_OPENGL)
 
     add_compile_definitions(GUEEPO2D_GRAPHICS_OPENGL)
 endif()
-
-target_precompile_headers(${PROJECT_NAME}
-    PUBLIC gueepo2Dpch.h
-)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DGUEEPO2D_DEBUG")
 
