@@ -1,11 +1,10 @@
 #include "Renderer.h"
 
 #include "core/Log.h"
-#include "core/Containers/string.h"
 #include "core/filesystem/Filesystem.h"
 #include "core/renderer/OrtographicCamera.h"
-#include "core/renderer/Shader.h"
-#include "core/renderer/SpriteBatcher.h"
+#include "core/renderer/Texture.h"
+#include "utils/TextureRegion.h"
 	
 // Specific Renderer APIs
 #include "platform/OpenGL/OpenGLRenderer.h"
@@ -48,7 +47,10 @@ namespace gueepo {
 
 	}
 
-	void Renderer::Shutdown() {}
+	void Renderer::Shutdown() {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+		renderer_internal->Shutdown_Internal();
+	}
 
 	void Renderer::Clear(float r, float g, float b, float a) {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
@@ -57,16 +59,51 @@ namespace gueepo {
 		renderer_internal->Clear();
 	}
 
-	void Renderer::DrawIndexed(math::mat4 viewProjectionMatrix) {
+	// ==========================================================================
+	// Drawing
+	// ==========================================================================
+	void Renderer::BeginFrame(const OrtographicCamera& camera) {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
-
-		renderer_internal->DrawIndexed_Internal(viewProjectionMatrix);
+		renderer_internal->BeginFrame_Internal(camera);
 	}
 
-	void Renderer::DrawIndexed(math::mat4 viewProjectionMatrix, uint32_t count) {
+	void Renderer::EndFrame() {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+		renderer_internal->EndFrame_Internal();
+	}
 
-		renderer_internal->DrawIndexed_Internal(viewProjectionMatrix, count);
+	void Renderer::Draw(Texture* texture) { Draw(texture, 0, 0); }
+	void Renderer::Draw(Texture* texture, int x, int y) { Draw(texture, x, y, static_cast<int>(texture->GetWidth()), static_cast<int>(texture->GetHeight())); }
+	void Renderer::Draw(Texture* texture, int x, int y, int w, int h) { Draw(texture, x, y, w, h, Color(1.0f, 1.0f, 1.0f, 1.0f)); }
+
+	void Renderer::Draw(Texture* texture, int x, int y, int w, int h, Color color) {
+		math::vec2 scale(static_cast<float>(w), static_cast<float>(h));
+		math::vec2 position(x, y);
+		math::mat4 transformMatrix = math::mat4::CreateScale(scale) * math::mat4::CreateTranslation(position);
+		Draw(texture, transformMatrix, math::vec2::Zero, math::vec2::One, color);
+	}
+
+	void Renderer::Draw(TextureRegion* texture) { Draw(texture, 0, 0); }
+	void Renderer::Draw(TextureRegion* texture, int x, int y) { Draw(texture, x, y, texture->GetTexture()->GetWidth(), texture->GetTexture()->GetHeight()); }
+	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h) { Draw(texture, x, y, w, h, Color(1.0f, 1.0f, 1.0f, 1.0f)); }
+	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h, Color color) {
+		Texture* tex = texture->GetTexture();
+		math::vec2 scale(w, h);
+		math::vec2 position(x, y);
+		math::mat4 transformMatrix = math::mat4::CreateScale(scale) * math::mat4::CreateTranslation(position);
+
+		math::rect coords = texture->GetCoordinates();
+		Draw(tex, transformMatrix, coords.bottomLeft, coords.topRight, color);
+	}
+
+	void Renderer::Draw(Texture* texture, const math::mat4& transform, const math::vec2& texCoordMin, const math::vec2& texCoordMax, Color color) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+		renderer_internal->Draw_Internal(texture, transform, texCoordMin, texCoordMax, color);
+	}
+
+	void Renderer::DrawString(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
+		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
+		renderer_internal->DrawString(fontSprite, text, position, scale, color);
 	}
 
 	std::string Renderer::GraphicsContextString() {
@@ -77,11 +114,6 @@ namespace gueepo {
 
 	void Renderer::SetUnpackAlignment(int value) {
 		renderer_internal->SetUnpackAlignment_Internal(value);
-	}
-
-	void Renderer::SetBufferData(const void* data, uint32_t size) {
-		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
-		renderer_internal->SetBufferData_Internal(data, size);
 	}
 
 	gueepo::Renderer* Renderer::GetRendererAPI() { return renderer_internal; }
