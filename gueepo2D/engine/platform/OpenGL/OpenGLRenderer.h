@@ -59,7 +59,6 @@ namespace gueepo {
 		void Shutdown_Internal() override;
 		std::string GraphicsContextString_Internal() override;
 		void SetUnpackAlignment_Internal(int value) override;
-		virtual void SetBufferData_Internal(const void* data, uint32_t size) override;
 
 		// Effectively Drawing
 		void BeginFrame_Internal(const OrtographicCamera& camera) override;

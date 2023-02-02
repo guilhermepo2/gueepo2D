@@ -163,10 +163,6 @@ namespace gueepo {
 		glPixelStorei(GL_UNPACK_ALIGNMENT, value);
 	}
 
-	void OpenGLRenderer::SetBufferData_Internal(const void* data, uint32_t size) {
-		m_vertexBuffer->SetData(data, size);
-	}
-
 	void OpenGLRenderer::BeginFrame_Internal(const OrtographicCamera& camera) {
 		m_renderData.ViewProjection = camera.GetViewProjectionMatrix();
 		m_renderData.RenderStats.DrawCalls = 0;

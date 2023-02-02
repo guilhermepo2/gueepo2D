@@ -103,7 +103,7 @@ namespace gueepo {
 
 	void Renderer::DrawString(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
-		renderer_internal->DrawString(fontSprite, text, position, scale, color);
+		renderer_internal->DrawString_Internal(fontSprite, text, position, scale, color);
 	}
 
 	std::string Renderer::GraphicsContextString() {

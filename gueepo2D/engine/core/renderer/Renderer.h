@@ -66,7 +66,6 @@ namespace gueepo {
 		virtual void Shutdown_Internal() = 0;
 		virtual std::string GraphicsContextString_Internal() = 0;
 		virtual void SetUnpackAlignment_Internal(int value) = 0;
-		virtual void SetBufferData_Internal(const void* data, uint32_t size) = 0;
 
 		// Effectively Drawing
 		virtual void BeginFrame_Internal(const OrtographicCamera& camera) = 0;
