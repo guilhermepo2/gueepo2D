@@ -45,7 +45,6 @@
 
 #include "core/renderer/Renderer.h"
 #include "core/renderer/Shader.h"
-#include "core/renderer/SpriteBatcher.h"
 #include "core/renderer/Texture.h"
 #include "core/renderer/Color.h"
 #include "core/renderer/OrtographicCamera.h"
