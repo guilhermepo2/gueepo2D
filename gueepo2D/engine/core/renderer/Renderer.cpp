@@ -80,7 +80,7 @@ namespace gueepo {
 		math::vec2 scale(static_cast<float>(w), static_cast<float>(h));
 		math::vec2 position(x, y);
 		math::mat4 transformMatrix = math::mat4::CreateScale(scale) * math::mat4::CreateTranslation(position);
-		Draw(texture, transformMatrix, math::vec2::Zero, math::vec2::One, color);
+		Draw(texture, transformMatrix * math::mat4::m4Identity, math::vec2::Zero, math::vec2::One, color);
 	}
 
 	void Renderer::Draw(TextureRegion* texture) { Draw(texture, 0, 0); }

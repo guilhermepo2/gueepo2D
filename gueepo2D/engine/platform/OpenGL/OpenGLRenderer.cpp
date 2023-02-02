@@ -288,9 +288,9 @@ namespace gueepo {
 		size_t quadVertexCount = 4;
 
 		math::vec2 textureCoords[] = {
-			{ texCoordMin.x, texCoordMax.y },
-			{ texCoordMin.x, texCoordMax.y },
-			{ texCoordMin.x, texCoordMax.y },
+			{ texCoordMin.x, texCoordMin.y },
+			{ texCoordMax.x, texCoordMin.y },
+			{ texCoordMax.x, texCoordMax.y },
 			{ texCoordMin.x, texCoordMax.y }
 		};
 
