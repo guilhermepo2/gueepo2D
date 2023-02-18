@@ -18,6 +18,11 @@ namespace gueepo::math {
 
 		void Normalize() {
 			float l = Magnitude();
+
+			if (l == 0.0f) {
+				return;
+			}
+
 			x /= l;
 			y /= l;
 		}
