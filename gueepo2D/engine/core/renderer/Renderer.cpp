@@ -15,7 +15,7 @@ namespace gueepo {
 	Renderer* renderer_internal;
 
 	static Renderer* InitRendererAPI() {
-		
+
 		switch (Renderer::GetAPI()) {
 		case Renderer::API::None:
 			LOG_ERROR("RENDERER API 'NONE' NOT IMPLEMENTED!");
@@ -28,17 +28,17 @@ namespace gueepo {
 		case Renderer::API::Metal:
 			LOG_ERROR("RENDERER API NOT IMPLEMENTED!");
 			break;
-			
+
 		}
 
 		return nullptr;
 	}
-	
+
 	// ========================================================================
 	// ========================================================================
 
 	void Renderer::Initialize() {
-		
+
 		renderer_internal = InitRendererAPI();
 
 		g2dassert(renderer_internal != nullptr, "error initializing renderer API!");
@@ -50,6 +50,10 @@ namespace gueepo {
 	void Renderer::Shutdown() {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
 		renderer_internal->Shutdown_Internal();
+	}
+
+	void Renderer::Clear(float rgba[4]) {
+		Clear(rgba[0], rgba[1], rgba[2], rgba[3]);
 	}
 
 	void Renderer::Clear(float r, float g, float b, float a) {
