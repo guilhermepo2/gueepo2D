@@ -28,6 +28,8 @@ namespace gueepo {
 
 		Renderer::Initialize();
 		Audio::Init();
+		
+		// this should only be done on Debug
 		m_Window->AddPlatformToTitle();
 	}
 
