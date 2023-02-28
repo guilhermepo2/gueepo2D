@@ -28,9 +28,15 @@ namespace gueepo {
 
 		Renderer::Initialize();
 		Audio::Init();
-		
-		// this should only be done on Debug
+
+#if GUEEPO2D_DEBUG
+        LOG_INFO("DEBUG BUILD");
 		m_Window->AddPlatformToTitle();
+#endif
+
+#if GUEEPO2D_RELEASE
+        LOG_INFO("RELEASE BUILD");
+#endif
 	}
 
 	Application::~Application() {

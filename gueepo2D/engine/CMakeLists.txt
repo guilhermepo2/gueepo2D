@@ -134,7 +134,7 @@ target_include_directories (${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} glad)
 
 if(WIN32)
-    add_compile_definitions(GUEEPO2D_WINDOWS)
+    add_compile_definitions(PLATFORM_WINDOWS)
     if(PLATFORM_SDL2)
 
         if(EXISTS SDL2_PATH)
@@ -188,6 +188,7 @@ if(GRAPHICS_OPENGL)
 endif()
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DGUEEPO2D_DEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DGUEEPO2D_RELEASE")
 
 if(APPLE)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lGL -lSDL2 -framework OpenGL")
