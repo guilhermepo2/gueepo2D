@@ -13,19 +13,19 @@ namespace gueepo {
 
 	union Sprite {
 		Texture* texture;
-		TextureRegion* textureRegion;
+		TextureRegion* textureRegion = nullptr;
 	};
 
 	struct AnimationFrame {
 		Sprite sprite;
-		float timeOnThisFrame;
+		float timeOnThisFrame = 0.0f;
 	};
 
 	struct SpriteAnimation {
 	public:
 		vector<AnimationFrame> animationFrames;
-		int currentFrame;
-		float timeElapsed;
+		int currentFrame = 0;
+		float timeElapsed = 0.0f;
 
 		void AddAnimationFrame(TextureRegion* texRegion, float timeOnFrame);
 		TextureRegion* GetCurrentFrameTextureRegion();

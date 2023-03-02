@@ -2,6 +2,10 @@
 
 namespace gueepo {
 	void SpriteAnimation_Update(SpriteAnimation& anim, float DeltaTime) {
+		if (anim.animationFrames.size() == 0) {
+			return;
+		}
+
 		anim.timeElapsed += DeltaTime;
 
 		if (anim.timeElapsed >= anim.animationFrames[anim.currentFrame].timeOnThisFrame) {
