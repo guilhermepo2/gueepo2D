@@ -64,8 +64,8 @@ namespace gueepo {
 	}
 
     float FontSprite::GetWidthOf(const gueepo::string &text) {
-        float width;
-        float lineWidth;
+        float width = .0f;
+        float lineWidth = .0f;
         uint32_t last = 0;
 
         for(int i = 0, l = text.length(); i < l; i += text.utf8_length(i)) {
