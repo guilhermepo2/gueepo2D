@@ -10,7 +10,17 @@ namespace gueepo {
 
 		if (anim.timeElapsed >= anim.animationFrames[anim.currentFrame].timeOnThisFrame) {
 			anim.timeElapsed -= anim.animationFrames[anim.currentFrame].timeOnThisFrame;
-			anim.currentFrame = (anim.currentFrame + 1) % anim.animationFrames.size();
+
+			if (anim.shouldLoop) {
+				anim.currentFrame = (anim.currentFrame + 1) % anim.animationFrames.size();
+			}
+			else {
+				anim.currentFrame += 1;
+				if (anim.currentFrame >= anim.animationFrames.size()) {
+					anim.currentFrame = anim.animationFrames.size() - 1;
+					anim.animationEnded = true;
+				}
+			}
 		}
 
 	}
@@ -25,6 +35,12 @@ namespace gueepo {
 
 	gueepo::TextureRegion* SpriteAnimation::GetCurrentFrameTextureRegion() {
 		return animationFrames[currentFrame].sprite.textureRegion;
+	}
+
+	void SpriteAnimation::Reset() {
+		currentFrame = 0;
+		timeElapsed = 0.0f;
+		animationEnded = false;
 	}
 
 }

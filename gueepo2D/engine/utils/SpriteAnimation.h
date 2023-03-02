@@ -26,9 +26,12 @@ namespace gueepo {
 		vector<AnimationFrame> animationFrames;
 		int currentFrame = 0;
 		float timeElapsed = 0.0f;
+		bool shouldLoop = true;
+		bool animationEnded = false;
 
 		void AddAnimationFrame(TextureRegion* texRegion, float timeOnFrame);
 		TextureRegion* GetCurrentFrameTextureRegion();
+		void Reset();
 	};
 
 	// ----------------------------------------------
