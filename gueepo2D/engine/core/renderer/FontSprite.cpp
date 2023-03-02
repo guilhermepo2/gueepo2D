@@ -63,4 +63,30 @@ namespace gueepo {
 		Renderer::SetUnpackAlignment(4);
 	}
 
+    float FontSprite::GetWidthOf(const gueepo::string &text) {
+        float width;
+        float lineWidth;
+        uint32_t last = 0;
+
+        for(int i = 0, l = text.length(); i < l; i += text.utf8_length(i)) {
+            uint32_t next = text.utf8_at(i);
+
+            if(next == '\n') {
+                lineWidth = .0f;
+            } else {
+                const SpriteCharacter& ch = GetSpriteCharacter(next);
+                lineWidth += ch.advance;
+                if(last) {
+                    lineWidth += kerning(last, next);
+                }
+                if(lineWidth > width) {
+                    width = lineWidth;
+                }
+            }
+
+        }
+
+        return width;
+    }
+
 }

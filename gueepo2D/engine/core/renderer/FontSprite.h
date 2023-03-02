@@ -47,6 +47,8 @@ namespace gueepo {
 		const float lineHeight() const { return ascent() - descent() + lineGap(); }
 		const float kerning(int glyph1, int glyph2) const { return m_internalFontRef->GetKerning(glyph1, glyph2, m_scale); }
 
+        float GetWidthOf(const gueepo::string& text);
+
 		void SetLineGap(float value) { m_lineGap = value; }
 
 	private:
