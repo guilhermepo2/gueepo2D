@@ -46,7 +46,7 @@ namespace gueepo {
 	}
 
 	Application::~Application() {
-		Application_OnDeinitialize();
+		// todo: delete window
 	}
 
 #if __EMSCRIPTEN__
@@ -117,6 +117,7 @@ namespace gueepo {
         inputSystem->Shutdown();
 #endif
 
+        Application_OnDeinitialize();
         LOG_INFO("Finished application loop!");
 	}
 
