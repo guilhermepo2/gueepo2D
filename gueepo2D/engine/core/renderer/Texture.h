@@ -25,6 +25,7 @@ namespace gueepo {
 
 		static Texture* Create(const std::string& path);
 		static Texture* Create(uint32_t width, uint32_t height);
+        static Texture* CreateFontSprite(uint32_t width, uint32_t height);
 
 	protected:
 		std::string m_path;

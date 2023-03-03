@@ -40,7 +40,7 @@ namespace gueepo {
 		for (uint32_t i = CharacterRange::ASCII.from; i < CharacterRange::ASCII.to; i++) {
 			int glyph = m_internalFontRef->GetGlyphIndex(i);
 			Character ch = m_internalFontRef->GetCharacter(glyph, m_scale);
-			Texture* characterTexture = Texture::Create(
+			Texture* characterTexture = Texture::CreateFontSprite(
 				static_cast<uint32_t>(ch.size.x), 
 				static_cast<uint32_t>(ch.size.y)
 			);
