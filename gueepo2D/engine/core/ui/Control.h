@@ -6,13 +6,16 @@
 
 namespace gueepo {
 
-	class InputState;
+	struct InputState;
 
 	class Control {
 	public:
-		virtual bool ProcessInput(const InputState& CurrentInputState) { unreferenced(CurrentInputState); }
+		virtual bool ProcessInput(const InputState& CurrentInputState) { unreferenced(CurrentInputState); return false; }
 		virtual void Update(float DeltaTime) {}	// Controls should update themselves
 		virtual void Render() {}					// Controls should render themselves
+
+		gueepo::math::vec2 GetPosition() const { return position; }
+		inline void SetPosition(gueepo::math::vec2 pos) { position = pos; }
 
 	protected:
 		gueepo::math::vec2 position;

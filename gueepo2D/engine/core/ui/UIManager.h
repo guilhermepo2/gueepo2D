@@ -4,10 +4,16 @@
 #include "core/ui/Container.h"
 
 namespace gueepo {
+	struct InputState;
+
 	class UIManager {
 	public:
 		UIManager(int width, int height);
 		~UIManager();
+
+		bool ProcessInput(const InputState& CurrentInputState);
+		void Update(float DeltaTime);
+		void Render();
 
 		void Push(Control* uiElement);
 		void Pop();
