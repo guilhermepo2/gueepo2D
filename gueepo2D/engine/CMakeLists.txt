@@ -175,6 +175,10 @@ if(APPLE)
     message("- sdl2 dir: ${SDL2_INCLUDE_DIR}")
 endif()
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-s USE_SDL=2")
+endif()
+
 if(GRAPHICS_OPENGL)
     if(WIN32)
         target_link_libraries(${PROJECT_NAME} opengl32.lib)

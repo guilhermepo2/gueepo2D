@@ -12,7 +12,7 @@ namespace gueepo {
 	
 	class WindowCloseEvent;
 	class WindowResizeEvent;
-	class Layer;
+    class InputSystem;
 
 	struct InputState;
 
@@ -26,7 +26,7 @@ namespace gueepo {
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
 
-	protected:
+	public:
 		// These should be overriden by the Application!
 		virtual void Application_OnInitialize() {}
 		virtual void Application_OnDeinitialize() {}
@@ -39,13 +39,13 @@ namespace gueepo {
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
-	private:
+	public:
 		Window* m_Window;
 		bool m_bIsRunning;
 
 	private:
 		static Application* s_Instance;
-	};
+    };
 
 	// This is to be defined on the client
 	Application* CreateApplication();
