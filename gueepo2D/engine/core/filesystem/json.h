@@ -23,6 +23,7 @@ namespace gueepo {
 		bool GetFloat(const std::string& property, float& outFloat);
 		bool GetString(const std::string& property, std::string& outString);
 		bool GetBool(const std::string& property, bool& outBool);
+        bool GetObject(const std::string& property, json& outJson);
 
         // Array Stuff
         bool IsArray();

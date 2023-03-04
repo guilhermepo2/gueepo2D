@@ -88,7 +88,7 @@ namespace gueepo {
 	}
 
 	void Renderer::Draw(TextureRegion* texture) { Draw(texture, 0, 0); }
-	void Renderer::Draw(TextureRegion* texture, int x, int y) { Draw(texture, x, y, texture->GetTexture()->GetWidth(), texture->GetTexture()->GetHeight()); }
+	void Renderer::Draw(TextureRegion* texture, int x, int y) { Draw(texture, x, y, texture->GetWidth(), texture->GetHeight()); }
 	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h) { Draw(texture, x, y, w, h, Color(1.0f, 1.0f, 1.0f, 1.0f)); }
 	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h, Color color) {
 		Texture* tex = texture->GetTexture();

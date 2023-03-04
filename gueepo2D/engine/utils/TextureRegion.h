@@ -13,8 +13,12 @@ namespace gueepo {
 
 		inline Texture* GetTexture() const { return m_TextureRef; }
 		inline math::rect GetCoordinates() const { return m_texCoords; }
+        inline int GetWidth() const { return m_width; }
+        inline int GetHeight() const { return m_height; }
 	private:
 		Texture* m_TextureRef;
 		math::rect m_texCoords;
+        int m_width;
+        int m_height;
 	};
 }

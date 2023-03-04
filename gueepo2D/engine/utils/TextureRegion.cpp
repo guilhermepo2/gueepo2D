@@ -6,6 +6,8 @@ namespace gueepo {
 		g2dassert(texture != nullptr, "can't create a texture region with a null texture!");
 
 		m_TextureRef = texture;
+        m_width = w;
+        m_height = h;
 
 		uint32_t textureWidth = m_TextureRef->GetWidth();
 		uint32_t textureHeight = m_TextureRef->GetHeight();
