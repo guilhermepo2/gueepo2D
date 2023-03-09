@@ -60,13 +60,15 @@ namespace gueepo {
 
 	Font* Font::CreateNewFont(const std::string& path) {
 		File fontFile(path, std::ios_base::in | std::ios_base::binary);
+
+		if (!fontFile.IsValid()) {
+			return nullptr;
+		}
+
 		unsigned char* fontBuffer = fontFile.GetAsUnsignedChar();
 
-		//
-		Font* font = new Font();
-		
+		Font* font = new Font();		
 
-		//
 		stbtt_fontinfo* fontInfo = new stbtt_fontinfo();
 
 		if (stbtt_InitFont(fontInfo, fontBuffer, 0) == 0) {
