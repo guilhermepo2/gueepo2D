@@ -72,7 +72,7 @@ namespace gueepo {
 	}
 
 
-    bool json::GetObject(const std::string &property, json &outJson) {
+    bool json::GetJsonObject(const std::string &property, json &outJson) {
         if(m_json.find(property.c_str()) != m_json.end()) {
             auto element = m_json.at(property.c_str());
             if(element.is_object()) {
