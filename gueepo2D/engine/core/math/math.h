@@ -7,8 +7,9 @@
 #include "endian.h"
 #include <cmath>
 
-#define max_def(a,b)            (((a) > (b)) ? (a) : (b))
-#define min_def(a,b)            (((a) < (b)) ? (a) : (b))
+#define max_def(a,b)                (((a) > (b)) ? (a) : (b))
+#define min_def(a,b)                (((a) < (b)) ? (a) : (b))
+#define clamp_def(val, min, max)    min_def(max, max_def(min, val))
 
 namespace gueepo {
 	namespace math {
@@ -29,7 +30,7 @@ namespace gueepo {
 		}
 
 		static float clamp(float value, float min, float max) {
-			return std::clamp(value, min, max);
+			return clamp_def(value, min, max);
 		}
 
 		static float floor(float value) {
