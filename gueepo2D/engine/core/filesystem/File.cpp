@@ -27,7 +27,7 @@ namespace gueepo {
 	}
 
 	unsigned char* File::GetAsUnsignedChar() {
-		LOG_WARN("using get as unsigned char! this function currently leaks memory!");
+		LOG_WARN("(File::GetAsUnsignedChar) the application is responsible for freeing the memory that is allocated here.");
 
 		std::filebuf* pbuf = m_File.rdbuf();
 		std::size_t size = pbuf->pubseekoff(0, m_File.end, m_File.in);
