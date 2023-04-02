@@ -54,6 +54,7 @@
 #include "core/ui/Control.h"
 #include "core/ui/Container.h"
 #include "core/ui/Label.h"
+#include "core/ui/PixelPanel.h"
 
 // ============================================================
 // ============================================================

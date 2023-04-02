@@ -34,6 +34,7 @@ set (SOURCES
 
     "core/ui/Container.cpp"
     "core/ui/Label.cpp"
+    "core/ui/PixelPanel.cpp"
     "core/ui/UIManager.cpp"
 
     "platform/SDL2/SDL2Input.cpp"
@@ -105,6 +106,7 @@ set(HEADERS
 
     "core/ui/Control.h"
     "core/ui/Container.h"
+    "core/ui/PixelPanel.h"
     "core/ui/Label.h"
     "core/ui/UIManager.h"
 
