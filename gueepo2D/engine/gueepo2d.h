@@ -65,3 +65,4 @@
 #include "utils/TextureRegion.h"
 #include "utils/PixelBuffer.h"
 #include "utils/SpriteAnimation.h"
+#include "utils/Tilemap.h"

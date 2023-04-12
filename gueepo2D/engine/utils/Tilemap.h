@@ -23,8 +23,16 @@ namespace gueepo {
     };
 
     class Tilemap {
+    public:
         Tilemap(const TILEMAP_PARAMS& params);
         void AddLayer(TilemapLayer* layer);
+        inline int GetNumberOfLayers() const { return m_map.size(); }
+        inline TilemapLayer* GetLayer(int idx) { return m_map[idx]; }
+
+        inline int GetWidth() const { return m_width; }
+        inline int GetHeight() const { return m_height; }
+        inline int GetTileWidth() const { return m_tileWidth; }
+        inline int GetTileHeight() const { return m_tileHeight; }
 
     private:
         gueepo::vector<TilemapLayer*> m_map;
