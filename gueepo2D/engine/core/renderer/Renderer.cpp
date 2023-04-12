@@ -15,7 +15,7 @@ namespace gueepo {
 	Renderer* renderer_internal;
 
 	static Renderer* InitRendererAPI() {
-		
+
 		switch (Renderer::GetAPI()) {
 		case Renderer::API::None:
 			LOG_ERROR("RENDERER API 'NONE' NOT IMPLEMENTED!");
@@ -28,17 +28,17 @@ namespace gueepo {
 		case Renderer::API::Metal:
 			LOG_ERROR("RENDERER API NOT IMPLEMENTED!");
 			break;
-			
+
 		}
 
 		return nullptr;
 	}
-	
+
 	// ========================================================================
 	// ========================================================================
 
 	void Renderer::Initialize() {
-		
+
 		renderer_internal = InitRendererAPI();
 
 		g2dassert(renderer_internal != nullptr, "error initializing renderer API!");
@@ -50,6 +50,10 @@ namespace gueepo {
 	void Renderer::Shutdown() {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
 		renderer_internal->Shutdown_Internal();
+	}
+
+	void Renderer::Clear(float rgba[4]) {
+		Clear(rgba[0], rgba[1], rgba[2], rgba[3]);
 	}
 
 	void Renderer::Clear(float r, float g, float b, float a) {
@@ -84,7 +88,7 @@ namespace gueepo {
 	}
 
 	void Renderer::Draw(TextureRegion* texture) { Draw(texture, 0, 0); }
-	void Renderer::Draw(TextureRegion* texture, int x, int y) { Draw(texture, x, y, texture->GetTexture()->GetWidth(), texture->GetTexture()->GetHeight()); }
+	void Renderer::Draw(TextureRegion* texture, int x, int y) { Draw(texture, x, y, texture->GetWidth(), texture->GetHeight()); }
 	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h) { Draw(texture, x, y, w, h, Color(1.0f, 1.0f, 1.0f, 1.0f)); }
 	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h, Color color) {
 		Texture* tex = texture->GetTexture();
@@ -103,7 +107,7 @@ namespace gueepo {
 
 	void Renderer::DrawString(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color) {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
-		renderer_internal->DrawString(fontSprite, text, position, scale, color);
+		renderer_internal->DrawString_Internal(fontSprite, text, position, scale, color);
 	}
 
 	std::string Renderer::GraphicsContextString() {

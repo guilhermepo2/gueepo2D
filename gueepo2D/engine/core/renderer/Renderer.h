@@ -27,6 +27,7 @@ namespace gueepo {
 		static void Shutdown();
 
 		// Messages to the Renderer
+		static void Clear(float rgba[4]);
 		static void Clear(float r, float g, float b, float a);
 
 		// AFAIK these two are OpenGL specific...
@@ -66,7 +67,6 @@ namespace gueepo {
 		virtual void Shutdown_Internal() = 0;
 		virtual std::string GraphicsContextString_Internal() = 0;
 		virtual void SetUnpackAlignment_Internal(int value) = 0;
-		virtual void SetBufferData_Internal(const void* data, uint32_t size) = 0;
 
 		// Effectively Drawing
 		virtual void BeginFrame_Internal(const OrtographicCamera& camera) = 0;

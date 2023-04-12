@@ -32,6 +32,11 @@ set (SOURCES
     "core/renderer/Texture.cpp"
     "core/renderer/FontSprite.cpp"
 
+    "core/ui/Container.cpp"
+    "core/ui/Label.cpp"
+    "core/ui/PixelPanel.cpp"
+    "core/ui/UIManager.cpp"
+
     "platform/SDL2/SDL2Input.cpp"
     "platform/SDL2/SDL2TimeStep.cpp"
     "platform/SDL2/SDL2Window.cpp"
@@ -46,6 +51,7 @@ set (SOURCES
     "utils/TextureRegion.cpp"
     "utils/PixelBuffer.cpp"
     "utils/SpriteAnimation.cpp"
+    "utils/Tilemap.cpp"
 )
 
 set(HEADERS
@@ -99,6 +105,12 @@ set(HEADERS
     "core/renderer/Texture.h"
     "core/renderer/FontSprite.h"
 
+    "core/ui/Control.h"
+    "core/ui/Container.h"
+    "core/ui/PixelPanel.h"
+    "core/ui/Label.h"
+    "core/ui/UIManager.h"
+
     "platform/OpenGL/OpenGLIndexBuffer.h"
     "platform/OpenGL/OpenGLRenderer.h"
     "platform/OpenGL/OpenGLShader.h"
@@ -111,6 +123,7 @@ set(HEADERS
     "utils/ImageUtils.h"
     "utils/TextureRegion.h"
     "utils/PixelBuffer.h"
+    "utils/Tilemap.h"
     "utils/SpriteAnimation.h"
 )
 
@@ -134,7 +147,7 @@ target_include_directories (${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} glad)
 
 if(WIN32)
-    add_compile_definitions(GUEEPO2D_WINDOWS)
+    add_compile_definitions(PLATFORM_WINDOWS)
     if(PLATFORM_SDL2)
 
         if(EXISTS SDL2_PATH)
@@ -175,6 +188,10 @@ if(APPLE)
     message("- sdl2 dir: ${SDL2_INCLUDE_DIR}")
 endif()
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-s USE_SDL=2")
+endif()
+
 if(GRAPHICS_OPENGL)
     if(WIN32)
         target_link_libraries(${PROJECT_NAME} opengl32.lib)
@@ -188,6 +205,7 @@ if(GRAPHICS_OPENGL)
 endif()
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DGUEEPO2D_DEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DGUEEPO2D_RELEASE")
 
 if(APPLE)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lGL -lSDL2 -framework OpenGL")

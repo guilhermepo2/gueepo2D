@@ -40,7 +40,7 @@ namespace gueepo {
 		for (uint32_t i = CharacterRange::ASCII.from; i < CharacterRange::ASCII.to; i++) {
 			int glyph = m_internalFontRef->GetGlyphIndex(i);
 			Character ch = m_internalFontRef->GetCharacter(glyph, m_scale);
-			Texture* characterTexture = Texture::Create(
+			Texture* characterTexture = Texture::CreateFontSprite(
 				static_cast<uint32_t>(ch.size.x), 
 				static_cast<uint32_t>(ch.size.y)
 			);
@@ -62,5 +62,31 @@ namespace gueepo {
 
 		Renderer::SetUnpackAlignment(4);
 	}
+
+    float FontSprite::GetWidthOf(const gueepo::string &text) {
+        float width = .0f;
+        float lineWidth = .0f;
+        uint32_t last = 0;
+
+        for(int i = 0, l = text.length(); i < l; i += text.utf8_length(i)) {
+            uint32_t next = text.utf8_at(i);
+
+            if(next == '\n') {
+                lineWidth = .0f;
+            } else {
+                const SpriteCharacter& ch = GetSpriteCharacter(next);
+                lineWidth += ch.advance;
+                if(last) {
+                    lineWidth += kerning(last, next);
+                }
+                if(lineWidth > width) {
+                    width = lineWidth;
+                }
+            }
+
+        }
+
+        return width;
+    }
 
 }

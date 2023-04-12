@@ -5,7 +5,7 @@
 
 #include "Audio.h"
 #include "core/Log.h"
-#include "core/Containers/string.h"
+#include "core/containers/string.h"
 
 namespace gueepo {
 

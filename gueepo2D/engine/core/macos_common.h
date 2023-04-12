@@ -4,3 +4,7 @@
 #define strcat_s strcat
 #define sprintf_s snprintf
 #endif
+
+#if __EMSCRIPTEN__
+#define sprintf_s snprintf
+#endif

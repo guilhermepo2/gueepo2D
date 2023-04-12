@@ -10,11 +10,14 @@
 
 // #todo maybe move this to a "OpenGLIncludes.h" ?
 #if GUEEPO2D_MACOS
-static const int OPENGL_MAJOR_VERSION = 4;
-static const int OPENGL_MINOR_VERSION = 1;
+static const int OPENGL_MAJOR_VERSION = 3;
+static const int OPENGL_MINOR_VERSION = 3;
+#elif __EMSCRIPTEN__
+static const int OPENGL_MAJOR_VERSION = 3;
+static const int OPENGL_MINOR_VERSION = 0;
 #else
-static const int OPENGL_MAJOR_VERSION = 4;
-static const int OPENGL_MINOR_VERSION = 5;
+static const int OPENGL_MAJOR_VERSION = 3;
+static const int OPENGL_MINOR_VERSION = 3;
 #endif
 
 namespace gueepo {
@@ -113,8 +116,11 @@ namespace gueepo {
 
 		if (IsSDLInitialized == 0) {
 			SDL_Init(SDL_INIT_VIDEO);
-			// #todo: maybe this should be on some sort of renderer backend?
+#ifdef __EMSCRIPTEN__
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+#else
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+#endif
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OPENGL_MAJOR_VERSION);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OPENGL_MINOR_VERSION);
 			SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);

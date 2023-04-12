@@ -7,7 +7,7 @@ namespace gueepo {
 	public:
 
 		OpenGLTexture(texture_data_t textureData);
-		OpenGLTexture(uint32_t width, uint32_t height);
+		OpenGLTexture(uint32_t width, uint32_t height, bool bIsFont = false);
 		~OpenGLTexture();
 
 		uint32_t GetWidth() const override { return m_width; }

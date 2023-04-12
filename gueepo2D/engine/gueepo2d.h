@@ -15,13 +15,13 @@
 #include "core/Log.h"
 #include "core/Window.h"
 
-#include "core/Debug/Profiler.h"
+#include "core/debug/Profiler.h"
 
 #include "core/audio/Audio.h"
 
-#include "core/Containers/hashed_string.h"
-#include "core/Containers/string.h"
-#include "core/Containers/vector.h"
+#include "core/containers/hashed_string.h"
+#include "core/containers/string.h"
+#include "core/containers/vector.h"
 
 #include "core/events/Event.h"
 #include "core/events/EventDispatcher.h"
@@ -50,6 +50,12 @@
 #include "core/renderer/OrtographicCamera.h"
 #include "core/renderer/FontSprite.h"
 
+#include "core/ui/UIManager.h"
+#include "core/ui/Control.h"
+#include "core/ui/Container.h"
+#include "core/ui/Label.h"
+#include "core/ui/PixelPanel.h"
+
 // ============================================================
 // ============================================================
 //				UTILS INCLUDES
@@ -59,3 +65,4 @@
 #include "utils/TextureRegion.h"
 #include "utils/PixelBuffer.h"
 #include "utils/SpriteAnimation.h"
+#include "utils/Tilemap.h"
