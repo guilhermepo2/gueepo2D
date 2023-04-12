@@ -1,17 +1,16 @@
-#pragma once
-#include <stdint.h>
 // =====================================================================================
 // PixelBuffer.h
 // 
-// A Pixel Buffer is an utility class that aims to facilitate creating and manipulating
-// textures using your own code. Think of it as a canvas that you can choose the color
-// for each single pixel
+//  @description A Pixel Buffer is an utility class that aims to facilitate creating and manipulating
+// textures using code. Think of it as a canvas that you can choose the color for each single pixel
 // =====================================================================================
+
+#pragma once
+#include <stdint.h>
 
 namespace gueepo {
 
 	class Texture;
-	class SpriteBatcher;
 
 	class PixelBuffer {
 	public:

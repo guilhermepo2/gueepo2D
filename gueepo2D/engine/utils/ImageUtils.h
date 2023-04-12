@@ -1,3 +1,8 @@
+//
+// ImageUtils.h
+// Helper functions to deal images, it uses stb libraries to do that
+//
+
 #pragma once
 
 namespace gueepo {
