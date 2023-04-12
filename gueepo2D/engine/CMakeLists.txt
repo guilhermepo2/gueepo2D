@@ -51,6 +51,7 @@ set (SOURCES
     "utils/TextureRegion.cpp"
     "utils/PixelBuffer.cpp"
     "utils/SpriteAnimation.cpp"
+    "utils/Tilemap.cpp"
 )
 
 set(HEADERS
@@ -122,6 +123,7 @@ set(HEADERS
     "utils/ImageUtils.h"
     "utils/TextureRegion.h"
     "utils/PixelBuffer.h"
+    "utils/Tilemap.h"
     "utils/SpriteAnimation.h"
 )
 
