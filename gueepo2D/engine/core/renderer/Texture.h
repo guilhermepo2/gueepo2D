@@ -4,11 +4,23 @@
 
 namespace gueepo {
 
-	struct texture_data_t {
-		unsigned char* texture_data;
+
+	enum class TextureFilter { NONE, LINEAR, NEAREST };
+	enum class TextureWrap	 { NONE, CLAMP, REPEAT };
+	enum class TextureFormat { NONE, R8, RED, RGB, RGBA };
+
+	struct TEXTURE_DESCRIPTION {
+		unsigned char* data;
 		int width;
 		int height;
 		int channels;
+
+		TextureFilter minFilter;
+		TextureFilter maxFilter;
+		TextureWrap wrapS;
+		TextureWrap wrapT;
+		TextureFormat internalFormat;
+		TextureFormat textureFormat;
 	};
 
 	class Texture {
@@ -29,9 +41,6 @@ namespace gueepo {
 
 	protected:
 		std::string m_path;
-
-	private:
-		static texture_data_t LoadTexture(const std::string& path);
 
 	};
 }
