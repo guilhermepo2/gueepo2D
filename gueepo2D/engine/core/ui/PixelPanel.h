@@ -14,17 +14,17 @@ namespace gueepo {
         int heightInTiles;
         gueepo::math::vec2 startPosition;
 
-        TextureRegion* topLeft;
-        TextureRegion* middleLeft;
-        TextureRegion* bottomLeft;
+        TextureRegion* topLeft      = nullptr;
+        TextureRegion* middleLeft   = nullptr;
+        TextureRegion* bottomLeft   = nullptr;
 
-		TextureRegion* topMiddle;
-		TextureRegion* middleMiddle;
-		TextureRegion* bottomMiddle;
+		TextureRegion* topMiddle    = nullptr;
+		TextureRegion* middleMiddle = nullptr;
+		TextureRegion* bottomMiddle = nullptr;
 
-		TextureRegion* topRight;
-		TextureRegion* middleRight;
-		TextureRegion* bottomRight;
+		TextureRegion* topRight     = nullptr;
+		TextureRegion* middleRight  = nullptr;
+		TextureRegion* bottomRight  = nullptr;
         
     };
 

@@ -84,6 +84,7 @@ namespace gueepo {
 	// ************************************************************************
 	void ResourceManager::AddFontSprite(gueepo::string fontSpriteId, int fontSize, std::string filepath){
 		Font* fontFile = nullptr;
+		float fFontSize = static_cast<float>(fontSize);
 
 		if (m_fontFiles.count(filepath.c_str()) != 0) {
 			fontFile = m_fontFiles[filepath];
@@ -94,10 +95,10 @@ namespace gueepo {
 		}
 
 		if (fontFile != nullptr) {
-			FontSprite* fontSprite = new FontSprite(fontFile, fontSize);
+			FontSprite* fontSprite = new FontSprite(fontFile, fFontSize);
 
 			if (fontSprite != nullptr) {
-				fontSprite->SetLineGap(fontSize);
+				fontSprite->SetLineGap(fFontSize);
 				AddFontSprite(fontSpriteId, fontSprite);
 			}
 		}
