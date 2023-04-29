@@ -44,7 +44,8 @@ namespace gueepo {
 		static void Draw(TextureRegion* texture);
 		static void Draw(TextureRegion* texture, int x, int y);
 		static void Draw(TextureRegion* texture, int x, int y, int w, int h);
-		static void Draw(TextureRegion* texture, int x, int y, int w, int h, Color color);
+		static void Draw(TextureRegion* texture, int x, int y, int w, int h, float rotation);
+		static void Draw(TextureRegion* texture, int x, int y, int w, int h, float rotation, Color color);
 
 		static void Draw(Texture* texture, const math::mat4& transform, const math::vec2& texCoordMin, const math::vec2& texCoordMax, Color color);
 		static void DrawString(FontSprite* fontSprite, gueepo::string text, const math::vec2& position, float scale, Color color);

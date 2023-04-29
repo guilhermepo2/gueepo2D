@@ -89,12 +89,18 @@ namespace gueepo {
 
 	void Renderer::Draw(TextureRegion* texture) { Draw(texture, 0, 0); }
 	void Renderer::Draw(TextureRegion* texture, int x, int y) { Draw(texture, x, y, texture->GetWidth(), texture->GetHeight()); }
-	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h) { Draw(texture, x, y, w, h, Color(1.0f, 1.0f, 1.0f, 1.0f)); }
-	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h, Color color) {
+	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h) { Draw(texture, x, y, w, h, 0.0f, Color(1.0f, 1.0f, 1.0f, 1.0f)); }
+	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h, float rotation) {
+		Draw(texture, x, y, w, h, rotation, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	}
+	void Renderer::Draw(TextureRegion* texture, int x, int y, int w, int h, float rotation, Color color) {
 		Texture* tex = texture->GetTexture();
 		math::vec2 scale(w, h);
 		math::vec2 position(x, y);
-		math::mat4 transformMatrix = math::mat4::CreateScale(scale) * math::mat4::CreateTranslation(position);
+		math::mat4 transformMatrix = 
+			math::mat4::CreateScale(scale) * 
+			math::mat4::CreateRotation(rotation) *
+			math::mat4::CreateTranslation(position);
 
 		math::rect coords = texture->GetCoordinates();
 		Draw(tex, transformMatrix, coords.bottomLeft, coords.topRight, color);
