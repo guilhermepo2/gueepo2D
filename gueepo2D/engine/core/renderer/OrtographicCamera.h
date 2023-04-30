@@ -13,6 +13,7 @@ namespace gueepo {
 
 		OrtographicCamera(float width, float height);
 
+		const math::vec2 GetSize() const { return m_cameraSize; }
 		const math::vec3& GetPosition() const { return m_cameraPosition; }
 		void SetPosition(const math::vec3 position) { m_cameraPosition = position; RecalculateViewMatrix(); }
 
@@ -33,6 +34,7 @@ namespace gueepo {
 		void RecalculateViewMatrix();
 	private:
 		Color m_cameraBackgroundColor;
+		math::vec2 m_cameraSize;
 		math::vec3 m_cameraPosition;
 		math::mat4 m_cameraTransform;
 
