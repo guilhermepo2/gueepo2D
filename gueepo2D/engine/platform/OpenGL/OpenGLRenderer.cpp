@@ -205,7 +205,7 @@ const char* spriteFragmentShader =
 
 // I DONT LIKE THIS
 // THIS SHOULD BE DEFINED ON THE SPRITE BATCHER??
-static const uint32_t MAX_QUADS = 1000;
+static const uint32_t MAX_QUADS = 5000;
 static const uint32_t MAX_VERTS = MAX_QUADS * 4;
 static const uint32_t MAX_INDICES = MAX_QUADS * 6;
 
