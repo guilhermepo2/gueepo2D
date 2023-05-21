@@ -32,7 +32,6 @@ namespace gueepo {
 		// Defaults
 		math::vec3 quadVertexPosition[4];
 
-		std::array<Texture*, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 0;
 
 		// Quad Vertex Counting

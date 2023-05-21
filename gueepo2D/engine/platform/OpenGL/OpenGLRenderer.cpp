@@ -373,10 +373,6 @@ namespace gueepo {
 	}
 
 	void OpenGLRenderer::DrawIndexed(math::mat4 viewProjectionMatrix, uint32_t count) {
-		for (uint32_t i = 0; i < m_renderData.TextureSlotIndex; i++) {
-			m_material->Set(m_renderData.TextureSlots[i], i);
-		}
-
 		m_material->Set("u_ViewProjection", viewProjectionMatrix);
 		m_material->Bind();
 
@@ -403,8 +399,8 @@ namespace gueepo {
 		float textureSlot = -1.0f;
 
 		// searching for the texture on the array
-		for (size_t i = 0; i < m_renderData.TextureSlotIndex; i++) {
-			if (m_renderData.TextureSlots[i] == texture) {
+		for (int i = 0; i < m_renderData.TextureSlotIndex; i++) {
+			if (m_material->GetTextureOnIndex(i) == texture) {
 				textureSlot = (float)i;
 				break;
 			}
@@ -414,7 +410,7 @@ namespace gueepo {
 		if (textureSlot == -1.0f) {
 			// #todo: check if we are not over the maximum texture slots, if we are we have to flush
 			textureSlot = (float)m_renderData.TextureSlotIndex;
-			m_renderData.TextureSlots[m_renderData.TextureSlotIndex] = texture;
+			m_material->SetTextureToIndex(texture, m_renderData.TextureSlotIndex);
 			m_renderData.TextureSlotIndex++;
 		}
 

@@ -11,6 +11,12 @@
 
 namespace gueepo {
     
+	OpenGLMaterial::~OpenGLMaterial() {
+		if (m_Textures != nullptr) {
+			delete[] m_Textures;
+		}
+	}
+
 	void OpenGLMaterial::Set(const gueepo::string& name, math::mat4 mat) const {
 		ASSERT_MATERIAL();
 
@@ -47,7 +53,7 @@ namespace gueepo {
 		glBindTexture(GL_TEXTURE_2D, texID);
 	}
 
-	void OpenGLMaterial::SetupTextureSamplerArray(const gueepo::string& name, int size) const {
+	void OpenGLMaterial::SetupTextureSamplerArray(const gueepo::string& name, int size)  {
 		ASSERT_MATERIAL();
 
 		uint32_t ShaderProgramID = m_Shader->GetShaderProgramID();
@@ -55,8 +61,13 @@ namespace gueepo {
 		auto loc = glGetUniformLocation(ShaderProgramID, name.c_str());
 
 		int* samplers = new int[size];
+		
+		m_Textures = new Texture * [size];
+		m_maxTextures = size;
+
 		for (int i = 0; i < size; i++) {
 			samplers[i] = i;
+			m_Textures[i] = nullptr;
 		}
 
 		glUniform1iv(loc, size, samplers);
@@ -66,6 +77,14 @@ namespace gueepo {
 
 	void OpenGLMaterial::Bind() const {
 		ASSERT_MATERIAL_BIND();
+
+		for (int i = 0; i < m_maxTextures; i++) {
+			if (m_Textures[i] == nullptr) {
+				continue;
+			}
+
+			Set(m_Textures[i], i);
+		}
 		
 		uint32_t ShaderProgramID = m_Shader->GetShaderProgramID();
 		glUseProgram(ShaderProgramID);

@@ -18,15 +18,21 @@ namespace gueepo {
         virtual void Set(Texture* tex) const { unref(tex); }
         virtual void Set(Texture* tex, int index) const { unref(tex, index); }
 
-        virtual void SetupTextureSamplerArray(const gueepo::string& name, int size) const { unref(name, size); }
+        virtual void SetupTextureSamplerArray(const gueepo::string& name, int size) { unref(name, size); }
+        virtual void SetTextureToIndex(Texture* tex, int index);
+        virtual Texture* GetTextureOnIndex(int index);
+        virtual void ClearTextures();
 
         virtual void Bind() const = 0;
         virtual void Unbind() const = 0;
 
     protected:
-        Shader* m_Shader;
+        Shader* m_Shader = nullptr;
+
+        Texture** m_Textures = nullptr;
+        int m_maxTextures = 0;
+
         // #todo: store uniforms data, instead of just having functions to set them
-        // #todo: store textures
         // #todo: flags
     };
 }
