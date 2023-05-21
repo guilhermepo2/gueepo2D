@@ -16,6 +16,8 @@ namespace gueepo {
 		case TextureFilter::NEAREST:
 			return GL_NEAREST;
 		}
+
+		return GL_NONE;
 	}
 
 	static int GetOpenGLWrap(TextureWrap wrap) {
@@ -27,6 +29,8 @@ namespace gueepo {
 		case TextureWrap::REPEAT:
 			return GL_REPEAT;
 		}
+
+		return GL_NONE;
 	}
 
 	static int GetOpenGLFormat(TextureFormat format) {
@@ -42,6 +46,8 @@ namespace gueepo {
 		case TextureFormat::RGBA:
 			return GL_RGBA;
 		}
+
+		return GL_NONE;
 	}
 
 	OpenGLTexture::OpenGLTexture(TEXTURE_DESCRIPTION textureDescription) {
@@ -110,11 +116,6 @@ namespace gueepo {
 			GL_UNSIGNED_BYTE,
 			data
 		);
-	}
-
-	void OpenGLTexture::Bind(uint32_t slot /*= 0*/) const {
-		glActiveTexture(GL_TEXTURE0 + slot);
-		glBindTexture(GL_TEXTURE_2D, m_textureID);
 	}
 
 }

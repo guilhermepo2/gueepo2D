@@ -28,6 +28,7 @@ set (SOURCES
 
     "core/renderer/OrtographicCamera.cpp"
     "core/renderer/Renderer.cpp"
+    "core/renderer/Material.cpp"
     "core/renderer/Shader.cpp"
     "core/renderer/Texture.cpp"
     "core/renderer/FontSprite.cpp"
@@ -41,6 +42,7 @@ set (SOURCES
     "platform/SDL2/SDL2TimeStep.cpp"
     "platform/SDL2/SDL2Window.cpp"
     "platform/OpenGL/OpenGLIndexBuffer.cpp"
+    "platform/OpenGL/OpenGLMaterial.cpp"
     "platform/OpenGL/OpenGLRenderer.cpp"
     "platform/OpenGL/OpenGLShader.cpp"
     "platform/OpenGL/OpenGLTexture.cpp"
@@ -102,6 +104,7 @@ set(HEADERS
     "core/renderer/Color.h"
     "core/renderer/OrtographicCamera.h"
     "core/renderer/Renderer.h"
+    "core/renderer/Material.h"
     "core/renderer/Shader.h"
     "core/renderer/Texture.h"
     "core/renderer/FontSprite.h"
@@ -113,6 +116,7 @@ set(HEADERS
     "core/ui/UIManager.h"
 
     "platform/OpenGL/OpenGLIndexBuffer.h"
+    "platform/OpenGL/OpenGLMaterial.h"
     "platform/OpenGL/OpenGLRenderer.h"
     "platform/OpenGL/OpenGLShader.h"
     "platform/OpenGL/OpenGLTexture.h"

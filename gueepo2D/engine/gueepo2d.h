@@ -44,6 +44,7 @@
 #include "core/math/vec3.h"
 
 #include "core/renderer/Renderer.h"
+#include "core/renderer/Material.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/Texture.h"
 #include "core/renderer/Color.h"

@@ -5,6 +5,7 @@
 
 #include "platform/OpenGL/OpenGLTexture.h"
 
+#include "platform/OpenGL/OpenGLMaterial.h"
 #include "platform/OpenGL/OpenGLShader.h"
 #include "platform/OpenGL/OpenGLVertexBuffer.h"
 #include "platform/OpenGL/OpenGLVertexArray.h"
@@ -25,7 +26,6 @@ const char* spriteVertexShader =
 	"layout(location = 4) in float a_ShaderType;\n"
 	"\n"
 	"uniform mat4 u_ViewProjection;\n"
-	"uniform mat4 u_Transform;\n"
 	"\n"
 	"out vec3 v_Position;\n"
 	"out vec2 v_TexCoord;\n"
@@ -203,12 +203,6 @@ const char* spriteFragmentShader =
         "}\n";
 #endif
 
-// I DONT LIKE THIS
-// THIS SHOULD BE DEFINED ON THE SPRITE BATCHER??
-static const uint32_t MAX_QUADS = 5000;
-static const uint32_t MAX_VERTS = MAX_QUADS * 4;
-static const uint32_t MAX_INDICES = MAX_QUADS * 6;
-
 namespace gueepo {
 
 	void OpenGLRenderer::Initialize_Internal() {
@@ -221,9 +215,13 @@ namespace gueepo {
 		// (1) Initializing Shader.
 		m_shader = new OpenGLShader(spriteVertexShader, spriteFragmentShader);
 
+		// (1.5) Initializing our material
+		m_material = new OpenGLMaterial(m_shader);
+		m_material->SetupTextureSamplerArray("u_textureSampler", RenderData::MaxTextureSlots);
+
 		// (2) Initializing Buffers
 		m_vertexArray = new OpenGLVertexArray();
-		m_vertexBuffer = new OpenGLVertexBuffer(MAX_VERTS * sizeof(QuadVertex));
+		m_vertexBuffer = new OpenGLVertexBuffer(RenderData::MaxVertices * sizeof(QuadVertex));
 		m_vertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float2, "a_TexCoords" },
@@ -233,9 +231,9 @@ namespace gueepo {
 			});
 		m_vertexArray->AddVertexBuffer(m_vertexBuffer);
 
-		uint32_t* quadIndices = new uint32_t[MAX_INDICES];
+		uint32_t* quadIndices = new uint32_t[RenderData::MaxIndices];
 		uint32_t offset = 0;
-		for (uint32_t i = 0; i < MAX_INDICES; i += 6) {
+		for (uint32_t i = 0; i < RenderData::MaxIndices; i += 6) {
 			quadIndices[i + 0] = offset + 0;
 			quadIndices[i + 1] = offset + 1;
 			quadIndices[i + 2] = offset + 2;
@@ -246,7 +244,7 @@ namespace gueepo {
 			offset += 4;
 		}
 
-		OpenGLIndexBuffer* quadIndexBuffer = new OpenGLIndexBuffer(quadIndices, MAX_INDICES);
+		OpenGLIndexBuffer* quadIndexBuffer = new OpenGLIndexBuffer(quadIndices, RenderData::MaxIndices);
 		m_vertexArray->SetIndexBuffer(quadIndexBuffer);
 		delete[] quadIndices;
 
@@ -362,8 +360,8 @@ namespace gueepo {
 	}
 
 	void OpenGLRenderer::DrawIndexed(math::mat4 viewProjectionMatrix) {
-		m_shader->Bind();
-		m_shader->SetMat4("u_ViewProjection", viewProjectionMatrix);
+		m_material->Set("u_ViewProjection", viewProjectionMatrix);
+		m_material->Bind();
 		m_vertexArray->Bind();
 
 		glDrawElements(
@@ -375,8 +373,13 @@ namespace gueepo {
 	}
 
 	void OpenGLRenderer::DrawIndexed(math::mat4 viewProjectionMatrix, uint32_t count) {
-		m_shader->Bind();
-		m_shader->SetMat4("u_ViewProjection", viewProjectionMatrix);
+		for (uint32_t i = 0; i < m_renderData.TextureSlotIndex; i++) {
+			m_material->Set(m_renderData.TextureSlots[i], i);
+		}
+
+		m_material->Set("u_ViewProjection", viewProjectionMatrix);
+		m_material->Bind();
+
 		m_vertexArray->Bind();
 
 		glDrawElements(
@@ -448,10 +451,6 @@ namespace gueepo {
 	}
 
 	void OpenGLRenderer::Flush() {
-		for (uint32_t i = 0; i < m_renderData.TextureSlotIndex; i++) {
-			m_renderData.TextureSlots[i]->Bind(i);
-		}
-
 		uint32_t dataSize = (uint32_t)((uint8_t*)m_renderData.quadVertexPtrPosition - (uint8_t*)m_renderData.quadVertexBase);
 		SetBufferData(m_renderData.quadVertexBase, dataSize);
 		DrawIndexed(m_renderData.ViewProjection, m_renderData.quadIndexCount);

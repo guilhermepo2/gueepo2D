@@ -7,6 +7,7 @@
 
 namespace gueepo {
 
+	class OpenGLMaterial;
 	class OpenGLShader;
 	class OpenGLVertexArray;
 	class OpenGLVertexBuffer;
@@ -16,7 +17,7 @@ namespace gueepo {
 		math::vec2 TexCoord;
 		float TextureSlot = 0.0f;
 		Color color;
-		float shaderType;
+		float shaderType = 0.0;
 	};
 
 	struct RenderData {
@@ -67,9 +68,10 @@ namespace gueepo {
 		void EndFrame_Internal() override;
 
 	private:
-		OpenGLShader* m_shader;
-		OpenGLVertexArray* m_vertexArray;
-		OpenGLVertexBuffer* m_vertexBuffer;
+		OpenGLMaterial* m_material = nullptr;
+		OpenGLShader* m_shader = nullptr;
+		OpenGLVertexArray* m_vertexArray = nullptr;
+		OpenGLVertexBuffer* m_vertexBuffer = nullptr;
 
 		// Private OpenGL Specifics
 		void SetBufferData(const void* data, uint32_t size);

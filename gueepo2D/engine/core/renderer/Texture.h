@@ -28,11 +28,10 @@ namespace gueepo {
 		virtual ~Texture() {}
 		virtual uint32_t GetWidth() const = 0;
 		virtual uint32_t GetHeight() const = 0;
-		virtual uint32_t GetTextureID() const = 0;
+		inline uint32_t GetTextureID() const { return m_textureID; }
 
 		virtual void SetData(uint32_t* data, uint32_t size) = 0;
 		virtual void SetData(unsigned char* data, uint32_t size) = 0;
-		virtual void Bind(uint32_t slot = 0) const = 0;
 		virtual bool IsLoaded() const = 0;
 
 		static Texture* Create(const std::string& path);
@@ -40,6 +39,7 @@ namespace gueepo {
         static Texture* CreateFontSprite(uint32_t width, uint32_t height);
 
 	protected:
+		uint32_t m_textureID;
 		std::string m_path;
 
 	};
