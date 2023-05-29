@@ -399,7 +399,7 @@ namespace gueepo {
 		float textureSlot = -1.0f;
 
 		// searching for the texture on the array
-		for (int i = 0; i < m_renderData.TextureSlotIndex; i++) {
+		for (unsigned int i = 0; i < m_renderData.TextureSlotIndex; i++) {
 			if (m_material->GetTextureOnIndex(i) == texture) {
 				textureSlot = (float)i;
 				break;

@@ -71,6 +71,10 @@ namespace gueepo {
 		renderer_internal->BeginFrame_Internal(camera);
 	}
 
+	void Renderer::BeginFrame(const OrtographicCamera* camera) {
+		BeginFrame(*camera);
+	}
+
 	void Renderer::EndFrame() {
 		assert(renderer_internal != nullptr, "renderer wasn't initialized!");
 		renderer_internal->EndFrame_Internal();

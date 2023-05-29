@@ -6,15 +6,14 @@
 #pragma once
 #include "core/math/rect.h"
 #include "core/renderer/Texture.h"
-// A texture region is... a texture region
-// A piece of a texture if you wanna think that way
 
+enum TEXTURE_ORIGIN { TOP_LEFT, BOTTOM_LEFT };
 
 namespace gueepo {
 
 	class TextureRegion {
 	public:
-		TextureRegion(Texture* texture, int x, int y, int w, int h);
+		TextureRegion(Texture* texture, int x, int y, int w, int h, TEXTURE_ORIGIN origin = BOTTOM_LEFT);
 
 		inline Texture* GetTexture() const { return m_TextureRef; }
 		inline math::rect GetCoordinates() const { return m_texCoords; }

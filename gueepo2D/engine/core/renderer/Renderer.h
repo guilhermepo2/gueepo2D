@@ -34,6 +34,7 @@ namespace gueepo {
 		static void SetUnpackAlignment(int value);
 
 		static void BeginFrame(const OrtographicCamera& camera);
+		static void BeginFrame(const OrtographicCamera* camera);
 		static void EndFrame();
 
 		static void Draw(Texture* texture);
