@@ -15,6 +15,8 @@ namespace gueepo {
 			return GL_LINEAR;
 		case TextureFilter::NEAREST:
 			return GL_NEAREST;
+		default:
+			return GL_NONE;
 		}
 
 		return GL_NONE;
@@ -28,6 +30,8 @@ namespace gueepo {
 			return GL_CLAMP_TO_EDGE;
 		case TextureWrap::REPEAT:
 			return GL_REPEAT;
+		default:
+			return GL_NONE;
 		}
 
 		return GL_NONE;
@@ -45,6 +49,8 @@ namespace gueepo {
 			return GL_RGB;
 		case TextureFormat::RGBA:
 			return GL_RGBA;
+		default:
+			return GL_NONE;
 		}
 
 		return GL_NONE;
