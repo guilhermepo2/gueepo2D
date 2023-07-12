@@ -51,12 +51,6 @@
 #include "core/renderer/OrtographicCamera.h"
 #include "core/renderer/FontSprite.h"
 
-#include "core/ui/UIManager.h"
-#include "core/ui/Control.h"
-#include "core/ui/Container.h"
-#include "core/ui/Label.h"
-#include "core/ui/PixelPanel.h"
-
 // ============================================================
 // ============================================================
 //				UTILS INCLUDES

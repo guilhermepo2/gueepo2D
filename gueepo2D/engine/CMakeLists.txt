@@ -33,11 +33,6 @@ set (SOURCES
     "core/renderer/Texture.cpp"
     "core/renderer/FontSprite.cpp"
 
-    "core/ui/Container.cpp"
-    "core/ui/Label.cpp"
-    "core/ui/PixelPanel.cpp"
-    "core/ui/UIManager.cpp"
-
     "platform/SDL2/SDL2Input.cpp"
     "platform/SDL2/SDL2TimeStep.cpp"
     "platform/SDL2/SDL2Window.cpp"
@@ -108,12 +103,6 @@ set(HEADERS
     "core/renderer/Shader.h"
     "core/renderer/Texture.h"
     "core/renderer/FontSprite.h"
-
-    "core/ui/Control.h"
-    "core/ui/Container.h"
-    "core/ui/PixelPanel.h"
-    "core/ui/Label.h"
-    "core/ui/UIManager.h"
 
     "platform/OpenGL/OpenGLIndexBuffer.h"
     "platform/OpenGL/OpenGLMaterial.h"
