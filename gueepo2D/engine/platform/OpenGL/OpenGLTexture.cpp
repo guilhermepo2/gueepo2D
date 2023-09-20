@@ -88,7 +88,6 @@ namespace gueepo {
 	}
 
 	OpenGLTexture::~OpenGLTexture() {
-		LOG_INFO("destroying texture: (id:{0})/(path:{1})", m_textureID, m_path);
 		glDeleteTextures(1, &m_textureID);
 	}
 
