@@ -52,6 +52,7 @@ namespace gueepo {
 			tex = m_textures[textureId];
 		}
 
+		g2dassert(tex != nullptr, "texture doesn't exist!");
 		return tex;
 	}
 
@@ -73,6 +74,7 @@ namespace gueepo {
 			tex = m_textureRegions[textureRegionId];
 		}
 
+		g2dassert(tex != nullptr, "texture region doesn't exist!");
 		return tex;
 	}
 
@@ -112,6 +114,7 @@ namespace gueepo {
 			fontSprite = m_fontSprites[fontSpriteId];
 		}
 
+		g2dassert(fontSprite != nullptr, "font sprite doesn't exist!");
 		return fontSprite;
 
 	}
