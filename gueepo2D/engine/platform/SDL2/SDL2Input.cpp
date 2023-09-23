@@ -3,12 +3,24 @@
 #include <SDL_scancode.h>
 #include <SDL_gamecontroller.h>
 #include <SDL_mouse.h>
+
+#include "core/Log.h"
+
 namespace gueepo {
 
 	InputSystem* InputSystem::s_Instance = new SDL2Input();
 
 	bool SDL2Input::Implementation_Initialize() {
+		m_Controller = nullptr;
 		m_State.Keyboard.CurrentState = SDL_GetKeyboardState(nullptr);
+
+		m_Controller = SDL_GameControllerOpen(0);
+		m_State.Controller.IsConnected = (m_Controller != nullptr);
+
+		if (m_State.Controller.IsConnected) {
+			LOG_INFO("[SDL2] Controller Connected!");
+		}
+		
 		return true;
 	}
 
@@ -23,6 +35,10 @@ namespace gueepo {
 
 		m_State.Mouse.MousePosition.x = static_cast<float>(x);
 		m_State.Mouse.MousePosition.y = static_cast<float>(y);
+
+		for (int i = 0; i < gueepo::ControllerCode::CONTROLLER_BUTTON_MAX; i++) {
+			m_State.Controller.CurrentButtons[i] = SDL_GameControllerGetButton(m_Controller, SDL_GameControllerButton(i));
+		}
 	}
 
 	void SDL2Input::Implementation_SetRelativeMouseMode(bool Value) {

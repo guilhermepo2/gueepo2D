@@ -115,7 +115,7 @@ namespace gueepo {
 		unsigned int IsSDLInitialized = SDL_WasInit(SDL_INIT_VIDEO);
 
 		if (IsSDLInitialized == 0) {
-			SDL_Init(SDL_INIT_VIDEO);
+			SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
 #ifdef __EMSCRIPTEN__
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 #else

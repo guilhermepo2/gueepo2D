@@ -51,12 +51,45 @@ namespace gueepo {
 	bool MouseState::WasKMouseKeyReleasedThisFrame(Mousecode code) const { return (GetButtonState(code) == Released); }
 
 	// -------------------------------------------
+	// Controller State
+	// -------------------------------------------
+	bool ControllerState::GetButtonValue(gueepo::ControllerCode button) const {
+		return CurrentButtons[button] == 1;
+	}
+
+	gueepo::EButtonState ControllerState::GetButtonState(gueepo::ControllerCode button) const {
+		if (PreviousButtons[button] == 0) {
+			if (CurrentButtons[button] == 0) { return None; }
+			else { return Pressed; }
+		}
+		else {
+			if (CurrentButtons[button] == 0) { return Released; }
+			else { return Held; }
+		}
+	}
+
+	bool ControllerState::IsButtonDown(gueepo::ControllerCode button) const {
+		return GetButtonState(button) == Pressed || GetButtonState(button) == Held;
+	}
+
+	bool ControllerState::WasButtonPressedThisFrame(gueepo::ControllerCode button) const {
+		return GetButtonState(button) == Pressed;
+	}
+
+	bool ControllerState::WasButtonReleasedThisFrame(gueepo::ControllerCode button) const {
+		return GetButtonState(button) == Released;
+	}
+
+	// -------------------------------------------
 	// Input System
 	// -------------------------------------------
 	bool InputSystem::Initialize() { 
 		memset(m_State.Keyboard.PreviousState, 0, NUM_KEYCODES);
 		m_State.Mouse.MouseButtons = 0;
 		m_State.Mouse.MouseButtonsLastFrame = 0;
+
+		memset(m_State.Controller.PreviousButtons, 0, gueepo::ControllerCode::CONTROLLER_BUTTON_MAX);
+		memset(m_State.Controller.CurrentButtons, 0, gueepo::ControllerCode::CONTROLLER_BUTTON_MAX);
 
 		s_Instance->Implementation_Initialize();
 		LOG_INFO("[input] input system initialized");
@@ -69,6 +102,7 @@ namespace gueepo {
 	
 	void InputSystem::PrepareForUpdate() { 
 		memcpy(m_State.Keyboard.PreviousState, m_State.Keyboard.CurrentState, NUM_KEYCODES);
+		memcpy(m_State.Controller.PreviousButtons, m_State.Controller.CurrentButtons, gueepo::ControllerCode::CONTROLLER_BUTTON_MAX);
 
 		m_State.Mouse.MouseButtonsLastFrame = m_State.Mouse.MouseButtons;
 		m_State.Mouse.IsRelative = false;

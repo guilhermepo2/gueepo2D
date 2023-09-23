@@ -86,6 +86,7 @@ set(HEADERS
     "core/input/Input.h"
     "core/input/KeyboardCodes.h"
     "core/input/MouseCodes.h"
+    "core/input/ControllerCodes.h"
 
     "core/math/math.h"
     "core/math/endian.h"
