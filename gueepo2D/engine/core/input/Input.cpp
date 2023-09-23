@@ -1,5 +1,6 @@
 #include "Input.h"
 #include "core/Log.h"
+#include "core/math/math.h"
 #include <cstring>
 
 namespace gueepo {
@@ -119,4 +120,42 @@ namespace gueepo {
 		s_Instance->Implementation_SetRelativeMouseMode(Value);
 		m_State.Mouse.IsRelative = Value;
 	}
+
+	float InputSystem::Filter1D(int input) {
+		const int DeadZone = 250;
+		const int MaxValue = 30000;
+		float retVal = 0.0f;
+
+		int absValue = input > 0 ? input : -input;
+		if (absValue > DeadZone) {
+			retVal = static_cast<float>(absValue - DeadZone) / (MaxValue - DeadZone);
+			retVal = input > 0 ? retVal : -1.0f * retVal;
+			retVal = gueepo::math::clamp(retVal, -1.0f, 1.0f);
+		}
+
+		return retVal;
+	}
+
+	gueepo::math::vec2 InputSystem::Filter2D(int inputX, int inputY) {
+		const float DeadZone = 8000.0f;
+		const float MaxValue = 30000.0f;
+
+		gueepo::math::vec2 Direction;
+		Direction.x = static_cast<float>(inputX);
+		Direction.y = static_cast<float>(inputY);
+		float length = Direction.GetLength();
+
+		if (length < DeadZone) {
+			Direction = gueepo::math::vec2::Zero;
+		}
+		else {
+			float f = (length - DeadZone) / (MaxValue - DeadZone);
+			f = gueepo::math::clamp(f, 0.0f, 1.0f);
+			Direction.x *= f / length;
+			Direction.y *= f / length;
+		}
+
+		return Direction;
+	}
+
 }

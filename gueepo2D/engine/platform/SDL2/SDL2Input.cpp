@@ -36,8 +36,27 @@ namespace gueepo {
 		m_State.Mouse.MousePosition.x = static_cast<float>(x);
 		m_State.Mouse.MousePosition.y = static_cast<float>(y);
 
-		for (int i = 0; i < gueepo::ControllerCode::CONTROLLER_BUTTON_MAX; i++) {
-			m_State.Controller.CurrentButtons[i] = SDL_GameControllerGetButton(m_Controller, SDL_GameControllerButton(i));
+		if (m_Controller != nullptr) {
+			for (int i = 0; i < gueepo::ControllerCode::CONTROLLER_BUTTON_MAX; i++) {
+				m_State.Controller.CurrentButtons[i] = SDL_GameControllerGetButton(m_Controller, SDL_GameControllerButton(i));
+			}
+
+			// Controller Triggers
+			m_State.Controller.LeftTrigger = Filter1D(SDL_GameControllerGetAxis(m_Controller, SDL_CONTROLLER_AXIS_TRIGGERLEFT));
+			m_State.Controller.RightTrigger = Filter1D(SDL_GameControllerGetAxis(m_Controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT));
+
+			// Controller Sticks
+			x = SDL_GameControllerGetAxis(m_Controller,
+				SDL_CONTROLLER_AXIS_LEFTX);
+			y = -SDL_GameControllerGetAxis(m_Controller,
+				SDL_CONTROLLER_AXIS_LEFTY);
+			m_State.Controller.LeftStick = Filter2D(x, y);
+
+			x = SDL_GameControllerGetAxis(m_Controller,
+				SDL_CONTROLLER_AXIS_RIGHTX);
+			y = -SDL_GameControllerGetAxis(m_Controller,
+				SDL_CONTROLLER_AXIS_RIGHTY);
+			m_State.Controller.RightStick = Filter2D(x, y);
 		}
 	}
 

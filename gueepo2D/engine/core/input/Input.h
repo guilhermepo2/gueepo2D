@@ -70,6 +70,10 @@ namespace gueepo {
 	public:
 		uint8_t CurrentButtons[gueepo::ControllerCode::CONTROLLER_BUTTON_MAX];
 		uint8_t PreviousButtons[gueepo::ControllerCode::CONTROLLER_BUTTON_MAX];
+		float LeftTrigger;
+		float RightTrigger;
+		gueepo::math::vec2 LeftStick;
+		gueepo::math::vec2 RightStick;
 		bool IsConnected;
 	};
 
@@ -101,6 +105,10 @@ namespace gueepo {
 		virtual void Implementation_Update() {}
 		virtual void Implementation_SetRelativeMouseMode(bool Value) { unreferenced(Value); }
 		InputState m_State;
+
+	protected:
+		float Filter1D(int input);
+		gueepo::math::vec2 Filter2D(int inputX, int inputY);
 
 	public:
 		static InputSystem* s_Instance;
