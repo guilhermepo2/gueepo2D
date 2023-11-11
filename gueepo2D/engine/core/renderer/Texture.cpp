@@ -7,15 +7,21 @@
 namespace gueepo {
 
 	gueepo::Texture* Texture::Create(const std::string& path) {
-		// loading texture here and sending it to the platform specific texture.
-		texture_data_t textureData = LoadTexture(path);
+		TEXTURE_DESCRIPTION desc;
+		desc.data = g_LoadImage(path.c_str(), desc.width, desc.height, desc.channels);
+		desc.minFilter = TextureFilter::NEAREST;
+		desc.maxFilter = TextureFilter::NEAREST;
+		desc.wrapS = TextureWrap::CLAMP;
+		desc.wrapT = TextureWrap::CLAMP;
+		desc.internalFormat = desc.channels == 4 ? TextureFormat::RGBA : TextureFormat::RGB;
+		desc.textureFormat = desc.internalFormat;
+
 
 		switch (Renderer::GetAPI()) {
 		case Renderer::API::OpenGL: {
-			OpenGLTexture* tex = new OpenGLTexture(textureData);
+			OpenGLTexture* tex = new OpenGLTexture(desc);
 			tex->m_path = path;
-			// I don't like having this here... ideally this should be outside the switch-case
-			g_FreeImage(textureData.texture_data);
+			g_FreeImage(desc.data);
 			return tex;
 		} break;
 		case Renderer::API::DirectX:
@@ -31,9 +37,20 @@ namespace gueepo {
 
 
 	gueepo::Texture* Texture::Create(uint32_t width, uint32_t height) {
+		TEXTURE_DESCRIPTION desc;
+		desc.data = nullptr;
+		desc.width = width;
+		desc.height = height;
+		desc.minFilter = TextureFilter::NEAREST;
+		desc.maxFilter = TextureFilter::NEAREST;
+		desc.wrapS = TextureWrap::CLAMP;
+		desc.wrapT = TextureWrap::CLAMP;
+		desc.internalFormat = TextureFormat::RGBA;
+		desc.textureFormat = TextureFormat::RGBA;
+
 		switch (Renderer::GetAPI()) {
 		case Renderer::API::OpenGL: {
-			return new OpenGLTexture(width, height);
+			return new OpenGLTexture(desc);
 		} break;
 		case Renderer::API::DirectX:
 		case Renderer::API::Metal:
@@ -46,26 +63,31 @@ namespace gueepo {
 		}
 	}
 
-    gueepo::Texture* Texture::CreateFontSprite(uint32_t width, uint32_t height) {
-        switch (Renderer::GetAPI()) {
-            case Renderer::API::OpenGL: {
-                return new OpenGLTexture(width, height, true);
-            } break;
-            case Renderer::API::DirectX:
-            case Renderer::API::Metal:
-            case Renderer::API::Vulkan:
-            case Renderer::API::None:
-            default:
-                LOG_ERROR("API NOT SUPPORTED!");
-                return nullptr;
-                break;
-        }
-    }
+	gueepo::Texture* Texture::CreateFontSprite(uint32_t width, uint32_t height) {
 
-	gueepo::texture_data_t Texture::LoadTexture(const std::string& path) {
-		texture_data_t tex;
-		tex.texture_data = g_LoadImage(path.c_str(), tex.width, tex.height, tex.channels);
-		return tex;
+		TEXTURE_DESCRIPTION desc;
+		desc.data = nullptr;
+		desc.width = width;
+		desc.height = height;
+		desc.minFilter = TextureFilter::NEAREST;
+		desc.maxFilter = TextureFilter::NEAREST;
+		desc.wrapS = TextureWrap::CLAMP;
+		desc.wrapT = TextureWrap::CLAMP;
+		desc.internalFormat = TextureFormat::R8;
+		desc.textureFormat = TextureFormat::RED;
+
+		switch (Renderer::GetAPI()) {
+		case Renderer::API::OpenGL: {
+			return new OpenGLTexture(desc);
+		} break;
+		case Renderer::API::DirectX:
+		case Renderer::API::Metal:
+		case Renderer::API::Vulkan:
+		case Renderer::API::None:
+		default:
+			LOG_ERROR("API NOT SUPPORTED!");
+			return nullptr;
+			break;
+		}
 	}
-
 }

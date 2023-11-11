@@ -44,17 +44,12 @@
 #include "core/math/vec3.h"
 
 #include "core/renderer/Renderer.h"
+#include "core/renderer/Material.h"
 #include "core/renderer/Shader.h"
 #include "core/renderer/Texture.h"
 #include "core/renderer/Color.h"
 #include "core/renderer/OrtographicCamera.h"
 #include "core/renderer/FontSprite.h"
-
-#include "core/ui/UIManager.h"
-#include "core/ui/Control.h"
-#include "core/ui/Container.h"
-#include "core/ui/Label.h"
-#include "core/ui/PixelPanel.h"
 
 // ============================================================
 // ============================================================
@@ -62,6 +57,7 @@
 // ============================================================
 // ============================================================
 #include "utils/ImageUtils.h"
+#include "utils/ResourceManager.h"
 #include "utils/TextureRegion.h"
 #include "utils/PixelBuffer.h"
 #include "utils/SpriteAnimation.h"

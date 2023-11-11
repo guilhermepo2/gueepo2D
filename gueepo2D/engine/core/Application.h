@@ -48,5 +48,5 @@ namespace gueepo {
     };
 
 	// This is to be defined on the client
-	Application* CreateApplication();
+	Application* CreateApplication(int argc, char** argv);
 }

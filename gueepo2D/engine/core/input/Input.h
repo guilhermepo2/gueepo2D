@@ -1,6 +1,7 @@
 #pragma once
 #include "KeyboardCodes.h"
 #include "MouseCodes.h"
+#include "ControllerCodes.h"
 #include "core/math/vec2.h"
 #include "core/Common.h"
 #include <stdint.h>
@@ -56,12 +57,33 @@ namespace gueepo {
 		uint32_t MouseButtonsLastFrame = 0;
 	};
 
+	class ControllerState {
+	public:
+		friend class InputSystem;
+
+		bool GetButtonValue(gueepo::ControllerCode button) const;
+		EButtonState GetButtonState(gueepo::ControllerCode button) const;
+		bool IsButtonDown(gueepo::ControllerCode button) const;
+		bool WasButtonPressedThisFrame(gueepo::ControllerCode button) const;
+		bool WasButtonReleasedThisFrame(gueepo::ControllerCode button) const;
+
+	public:
+		uint8_t CurrentButtons[gueepo::ControllerCode::CONTROLLER_BUTTON_MAX];
+		uint8_t PreviousButtons[gueepo::ControllerCode::CONTROLLER_BUTTON_MAX];
+		float LeftTrigger;
+		float RightTrigger;
+		gueepo::math::vec2 LeftStick;
+		gueepo::math::vec2 RightStick;
+		bool IsConnected;
+	};
+
 	// -------------------------------------------
 	// Input State
 	// -------------------------------------------
 	struct InputState {
 		KeyboardState	Keyboard;
 		MouseState		Mouse;
+		ControllerState Controller;
 	};
 
 	// -------------------------------------------
@@ -83,6 +105,10 @@ namespace gueepo {
 		virtual void Implementation_Update() {}
 		virtual void Implementation_SetRelativeMouseMode(bool Value) { unreferenced(Value); }
 		InputState m_State;
+
+	protected:
+		float Filter1D(int input);
+		gueepo::math::vec2 Filter2D(int inputX, int inputY);
 
 	public:
 		static InputSystem* s_Instance;

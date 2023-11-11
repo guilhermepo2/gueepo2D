@@ -28,19 +28,16 @@ set (SOURCES
 
     "core/renderer/OrtographicCamera.cpp"
     "core/renderer/Renderer.cpp"
+    "core/renderer/Material.cpp"
     "core/renderer/Shader.cpp"
     "core/renderer/Texture.cpp"
     "core/renderer/FontSprite.cpp"
-
-    "core/ui/Container.cpp"
-    "core/ui/Label.cpp"
-    "core/ui/PixelPanel.cpp"
-    "core/ui/UIManager.cpp"
 
     "platform/SDL2/SDL2Input.cpp"
     "platform/SDL2/SDL2TimeStep.cpp"
     "platform/SDL2/SDL2Window.cpp"
     "platform/OpenGL/OpenGLIndexBuffer.cpp"
+    "platform/OpenGL/OpenGLMaterial.cpp"
     "platform/OpenGL/OpenGLRenderer.cpp"
     "platform/OpenGL/OpenGLShader.cpp"
     "platform/OpenGL/OpenGLTexture.cpp"
@@ -48,6 +45,7 @@ set (SOURCES
     "platform/OpenGL/OpenGLVertexBuffer.cpp"
 
     "utils/ImageUtils.cpp"
+    "utils/ResourceManager.cpp"
     "utils/TextureRegion.cpp"
     "utils/PixelBuffer.cpp"
     "utils/SpriteAnimation.cpp"
@@ -88,6 +86,7 @@ set(HEADERS
     "core/input/Input.h"
     "core/input/KeyboardCodes.h"
     "core/input/MouseCodes.h"
+    "core/input/ControllerCodes.h"
 
     "core/math/math.h"
     "core/math/endian.h"
@@ -101,17 +100,13 @@ set(HEADERS
     "core/renderer/Color.h"
     "core/renderer/OrtographicCamera.h"
     "core/renderer/Renderer.h"
+    "core/renderer/Material.h"
     "core/renderer/Shader.h"
     "core/renderer/Texture.h"
     "core/renderer/FontSprite.h"
 
-    "core/ui/Control.h"
-    "core/ui/Container.h"
-    "core/ui/PixelPanel.h"
-    "core/ui/Label.h"
-    "core/ui/UIManager.h"
-
     "platform/OpenGL/OpenGLIndexBuffer.h"
+    "platform/OpenGL/OpenGLMaterial.h"
     "platform/OpenGL/OpenGLRenderer.h"
     "platform/OpenGL/OpenGLShader.h"
     "platform/OpenGL/OpenGLTexture.h"
@@ -121,6 +116,7 @@ set(HEADERS
     "platform/SDL2/SDL2Window.h"
 
     "utils/ImageUtils.h"
+    "utils/ResourceManager.h"
     "utils/TextureRegion.h"
     "utils/PixelBuffer.h"
     "utils/Tilemap.h"

@@ -3,6 +3,9 @@
 namespace gueepo {
 
 	OrtographicCamera::OrtographicCamera(float width, float height) {
+		m_cameraSize.x = width;
+		m_cameraSize.y = height;
+
 		m_cameraProjection = math::mat4::CreateOrtographicProjection(-(width / 2.0f), (width / 2.0f), -(height / 2.0f), (height / 2.0f), -1, 1);
 		// m_cameraProjection = math::Matrix4::m4Identity;
 		m_cameraPosition = math::vec3(0.0f, 0.0f, 0.0f);

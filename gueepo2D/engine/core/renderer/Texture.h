@@ -4,11 +4,23 @@
 
 namespace gueepo {
 
-	struct texture_data_t {
-		unsigned char* texture_data;
+
+	enum class TextureFilter { NONE, LINEAR, NEAREST };
+	enum class TextureWrap	 { NONE, CLAMP, REPEAT };
+	enum class TextureFormat { NONE, R8, RED, RGB, RGBA };
+
+	struct TEXTURE_DESCRIPTION {
+		unsigned char* data;
 		int width;
 		int height;
 		int channels;
+
+		TextureFilter minFilter;
+		TextureFilter maxFilter;
+		TextureWrap wrapS;
+		TextureWrap wrapT;
+		TextureFormat internalFormat;
+		TextureFormat textureFormat;
 	};
 
 	class Texture {
@@ -16,11 +28,10 @@ namespace gueepo {
 		virtual ~Texture() {}
 		virtual uint32_t GetWidth() const = 0;
 		virtual uint32_t GetHeight() const = 0;
-		virtual uint32_t GetTextureID() const = 0;
+		inline uint32_t GetTextureID() const { return m_textureID; }
 
 		virtual void SetData(uint32_t* data, uint32_t size) = 0;
 		virtual void SetData(unsigned char* data, uint32_t size) = 0;
-		virtual void Bind(uint32_t slot = 0) const = 0;
 		virtual bool IsLoaded() const = 0;
 
 		static Texture* Create(const std::string& path);
@@ -28,10 +39,8 @@ namespace gueepo {
         static Texture* CreateFontSprite(uint32_t width, uint32_t height);
 
 	protected:
+		uint32_t m_textureID;
 		std::string m_path;
-
-	private:
-		static texture_data_t LoadTexture(const std::string& path);
 
 	};
 }

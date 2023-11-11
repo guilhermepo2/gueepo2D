@@ -3,17 +3,15 @@
 #include "core/Log.h"
 #include "core/Application.h"
 
-extern gueepo::Application* gueepo::CreateApplication();
+extern gueepo::Application* gueepo::CreateApplication(int argc, char** argv);
 
 #if 1
 int main(int argc, char** argv) {
-	unreferenced(argc);
-	unreferenced(argv);
 
 	gueepo::Log::Initialize();
 	LOG_INFO("log initialized");
 
-	gueepo::Application* app = gueepo::CreateApplication();
+	gueepo::Application* app = gueepo::CreateApplication(argc, argv);
 
 	if (app != nullptr) {
 		app->Run();

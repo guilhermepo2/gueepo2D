@@ -21,33 +21,33 @@ namespace gueepo {
 
 #define BIND_EVENT(x) std::bind(&x, this, std::placeholders::_1)
 
-	Application* Application::s_Instance = nullptr;
+    Application* Application::s_Instance = nullptr;
 
-	Application::Application(const std::string& _Title, unsigned int _Width, unsigned int _Height) {
+    Application::Application(const std::string& _Title, unsigned int _Width, unsigned int _Height) {
 
-		g2dassert(s_Instance == nullptr, "application already exists!");
-		s_Instance = this;
+        g2dassert(s_Instance == nullptr, "application already exists!");
+        s_Instance = this;
 
-		WindowConfiguration c = { _Title, _Width, _Height };
-		m_Window = Window::CreateNewWindow(c);
-		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
+        WindowConfiguration c = { _Title, _Width, _Height };
+        m_Window = Window::CreateNewWindow(c);
+        m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
 
-		Renderer::Initialize();
-		Audio::Init();
+        Renderer::Initialize();
+        Audio::Init();
 
 #if GUEEPO2D_DEBUG
         LOG_INFO("DEBUG BUILD");
-		m_Window->AddPlatformToTitle();
+        m_Window->AddPlatformToTitle();
 #endif
 
 #if GUEEPO2D_RELEASE
         LOG_INFO("RELEASE BUILD");
 #endif
-	}
+    }
 
-	Application::~Application() {
-		// todo: delete window
-	}
+    Application::~Application() {
+        // todo: delete window
+    }
 
 #if __EMSCRIPTEN__
     static int TicksLastFrame = 0;
@@ -77,10 +77,10 @@ namespace gueepo {
     }
 #endif
 
-	void Application::Run() {
-		Application_OnInitialize();
+    void Application::Run() {
+        Application_OnInitialize();
 
-		LOG_INFO("application is running!");
+        LOG_INFO("application is running!");
         LOG_INFO("Starting application loop.");
 #ifdef __EMSCRIPTEN__
         LOG_INFO("EMSCRIPTEN MAIN LOOP");
@@ -93,7 +93,7 @@ namespace gueepo {
         inputSystem->Initialize();
         m_bIsRunning = true;
         int TicksLastFrame = 0;
-		while (m_bIsRunning) {
+        while (m_bIsRunning) {
 
             float DeltaTime = static_cast<float>((timestep::GetTicks() - TicksLastFrame)) / 1000.0f;
             TicksLastFrame = timestep::GetTicks();
@@ -112,32 +112,32 @@ namespace gueepo {
             if (TimeToWait > 0.0f && TimeToWait <= FRAME_TARGET_TIME) {
                 timestep::Sleep(TimeToWait);
             }
-		}
+        }
 
         inputSystem->Shutdown();
 #endif
 
         Application_OnDeinitialize();
         LOG_INFO("Finished application loop!");
-	}
+    }
 
-	void Application::OnEvent(Event& e) {
-		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT(Application::OnWindowClose));
-		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT(Application::OnWindowResize));
+    void Application::OnEvent(Event& e) {
+        EventDispatcher dispatcher(e);
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT(Application::OnWindowResize));
 
-		Application_OnEvent(e);
-	}
+        Application_OnEvent(e);
+    }
 
-	bool Application::OnWindowClose(WindowCloseEvent& e) {
-		unreferenced(e);
-		m_bIsRunning = false;
-		return true;
-	}
+    bool Application::OnWindowClose(WindowCloseEvent& e) {
+        unreferenced(e);
+        m_bIsRunning = false;
+        return true;
+    }
 
-	bool Application::OnWindowResize(WindowResizeEvent& e) {
-		LOG_INFO(e);
-		return true;
-	}
+    bool Application::OnWindowResize(WindowResizeEvent& e) {
+        LOG_INFO(e);
+        return true;
+    }
 
 }

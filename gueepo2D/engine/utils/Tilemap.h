@@ -15,6 +15,8 @@ namespace gueepo {
     struct Tile {
         int x, y;
         TextureRegion* texture;
+
+        Tile(int _x, int _y) : x(_x), y(_y), texture(nullptr) {}
     };
 
     struct TilemapLayer {
@@ -34,7 +36,7 @@ namespace gueepo {
         inline int GetTileWidth() const { return m_tileWidth; }
         inline int GetTileHeight() const { return m_tileHeight; }
 
-    private:
+    protected:
         gueepo::vector<TilemapLayer*> m_map;
         int m_width = 0, m_height = 0, m_tileWidth = 0, m_tileHeight = 0;
     };
