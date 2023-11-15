@@ -12,6 +12,7 @@ namespace gueepo {
 		}
 
 		OrtographicCamera(float width, float height);
+        void TranslateCameraInPixels(int x, int y);
 
 		const math::vec2 GetSize() const { return m_cameraSize; }
 		const math::vec3& GetPosition() const { return m_cameraPosition; }
