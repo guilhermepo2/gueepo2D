@@ -36,4 +36,20 @@ namespace gueepo {
         SetPosition(CameraPosition);
     }
 
+    gueepo::math::vec2 OrtographicCamera::MouseToWorldPosition(gueepo::math::vec2 MousePosition) {
+        gueepo::math::vec2 worldPosition(MousePosition.x, MousePosition.y);
+        worldPosition.x -= (m_cameraSize.x / 2);
+        worldPosition.y -= (m_cameraSize.y / 2);
+        worldPosition.y = -worldPosition.y; // inverting because world is bottom up, mouse is originally top down
+
+        // We have to account for having moved the camera
+        gueepo::math::vec3 cameraPosition = GetPosition();
+        int xInPixels = static_cast<int>((m_cameraSize.x * cameraPosition.x) / 2);
+        int yInPixels = static_cast<int>((m_cameraSize.y * cameraPosition.y) / 2);
+        worldPosition.x += xInPixels;
+        worldPosition.y += yInPixels;
+
+        return worldPosition;
+    }
+
 }
