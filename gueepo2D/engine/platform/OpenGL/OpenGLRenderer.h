@@ -48,8 +48,6 @@ namespace gueepo {
 	class OpenGLRenderer : public Renderer {
 	public:
 		OpenGLRenderer() {}
-
-
 	protected:
 		void SetClearColor(const math::vec3& color) override;
 		void SetClearColor(float r, float g, float b, float a) override;

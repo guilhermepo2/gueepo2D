@@ -1,3 +1,4 @@
+#pragma once
 // Material.h
 // A Material is a structure that holds a shader and uniform values
 

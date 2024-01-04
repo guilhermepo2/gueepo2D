@@ -30,6 +30,7 @@ set (SOURCES
     "core/renderer/Renderer.cpp"
     "core/renderer/Material.cpp"
     "core/renderer/Shader.cpp"
+        "core/renderer/Target.cpp"
     "core/renderer/Texture.cpp"
     "core/renderer/FontSprite.cpp"
 
@@ -40,6 +41,7 @@ set (SOURCES
     "platform/OpenGL/OpenGLMaterial.cpp"
     "platform/OpenGL/OpenGLRenderer.cpp"
     "platform/OpenGL/OpenGLShader.cpp"
+        "platform/OpenGL/OpenGLTarget.cpp"
     "platform/OpenGL/OpenGLTexture.cpp"
     "platform/OpenGL/OpenGLVertexArray.cpp"
     "platform/OpenGL/OpenGLVertexBuffer.cpp"
@@ -102,6 +104,7 @@ set(HEADERS
     "core/renderer/Renderer.h"
     "core/renderer/Material.h"
     "core/renderer/Shader.h"
+        "core/renderer/Target.h"
     "core/renderer/Texture.h"
     "core/renderer/FontSprite.h"
 
@@ -109,6 +112,7 @@ set(HEADERS
     "platform/OpenGL/OpenGLMaterial.h"
     "platform/OpenGL/OpenGLRenderer.h"
     "platform/OpenGL/OpenGLShader.h"
+        "platform/OpenGL/OpenGLTarget.h"
     "platform/OpenGL/OpenGLTexture.h"
     "platform/OpenGL/OpenGLVertexArray.h"
     "platform/OpenGL/OpenGLVertexBuffer.h"
