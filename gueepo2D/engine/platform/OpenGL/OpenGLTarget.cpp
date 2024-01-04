@@ -7,11 +7,12 @@ namespace gueepo {
         m_width = _width;
         m_height = _height;
         glGenFramebuffers(1, &m_framebufferId);
-
         glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferId);
 
         m_texture = Texture::Create(m_width, m_height);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture->GetTextureID(), 0);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
     OpenGLTarget::~OpenGLTarget() {

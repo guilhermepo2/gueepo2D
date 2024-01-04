@@ -9,6 +9,7 @@ namespace gueepo {
 
 	class OpenGLMaterial;
 	class OpenGLShader;
+        class OpenGLTarget;
 	class OpenGLVertexArray;
 	class OpenGLVertexBuffer;
 
@@ -65,6 +66,7 @@ namespace gueepo {
 		void EndFrame_Internal() override;
 
 	private:
+                OpenGLTarget* m_target = nullptr;
 		OpenGLMaterial* m_material = nullptr;
 		OpenGLShader* m_shader = nullptr;
 		OpenGLVertexArray* m_vertexArray = nullptr;

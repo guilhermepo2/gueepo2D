@@ -6,6 +6,7 @@
 #include "platform/OpenGL/OpenGLTexture.h"
 
 #include "platform/OpenGL/OpenGLMaterial.h"
+#include "platform/OpenGL/OpenGLTarget.h"
 #include "platform/OpenGL/OpenGLShader.h"
 #include "platform/OpenGL/OpenGLVertexBuffer.h"
 #include "platform/OpenGL/OpenGLVertexArray.h"
@@ -211,6 +212,12 @@ namespace gueepo {
 		}
 
 		glGetError();
+
+                // (0) creating the OpenGL target
+                m_target = static_cast<OpenGLTarget*>(gueepo::Target::Create(640, 360));
+                if(m_target != nullptr) {
+                    LOG_INFO("[RENDERER] Target Created!");
+                }
 
 		// (1) Initializing Shader.
 		m_shader = new OpenGLShader(spriteVertexShader, spriteFragmentShader);
