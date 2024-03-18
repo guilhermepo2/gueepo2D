@@ -142,4 +142,16 @@ namespace gueepo {
 
         return false;
     }
+
+    bool json::GetFloatAt(int index, float& outFloat) {
+        if (m_json.is_array() && index >= 0 && index < m_json.size()) {
+            nlohmann::json objectAtIndex = m_json[index];
+            if (objectAtIndex.is_number_float()) {
+                outFloat = objectAtIndex.get<float>();
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

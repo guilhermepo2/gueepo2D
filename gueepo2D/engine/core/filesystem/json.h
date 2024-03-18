@@ -13,10 +13,10 @@ namespace gueepo {
 		nlohmann::json m_json;
 
 	public:
-        json();
+		json();
 		json(const std::string& path);
 
-        void CreateFromString(const std::string& jsonContent);
+		void CreateFromString(const std::string& jsonContent);
 
 		bool IsValid();
 		bool GetInt(const std::string& property, int& outInt);
@@ -25,13 +25,14 @@ namespace gueepo {
 		bool GetBool(const std::string& property, bool& outBool);
 
 		// can't be called "GetObject" because windows already has that...
-        bool GetJsonObject(const std::string& property, json& outJson);
+		bool GetJsonObject(const std::string& property, json& outJson);
 
-        // Array Stuff
-        bool IsArray();
-        bool GetArray(const std::string& property, json& outJson);
-        int GetArraySize();
-        bool GetObjectInArray(int index, json& outJson);
-        bool GetIntAt(int index, int& outInt);
+		// Array Stuff
+		bool IsArray();
+		bool GetArray(const std::string& property, json& outJson);
+		int GetArraySize();
+		bool GetObjectInArray(int index, json& outJson);
+		bool GetIntAt(int index, int& outInt);
+		bool GetFloatAt(int index, float& outFloat);
 	};
 }
