@@ -14,12 +14,21 @@ namespace gueepo {
     public:
         Material(Shader* shader);
 
-        virtual void Set(const gueepo::string& name, math::mat4 mat) const { unref(name, mat); }
-        virtual void Set(const gueepo::string& name, float x, float y, float z, float w) const { unref(name, x, y, z, w); }
+        virtual void Set(const gueepo::string& name, math::mat4 mat) const { unref(name); unref(mat); }
+        virtual void Set(const gueepo::string& name, float x, float y, float z, float w) const {
+            unref(name);
+            unref(x);
+            unref(y);
+            unref(z);
+            unref(w);
+        }
         virtual void Set(Texture* tex) const { unref(tex); }
-        virtual void Set(Texture* tex, int index) const { unref(tex, index); }
+        virtual void Set(Texture* tex, int index) const {
+            unref(tex);
+            unref(index);
+        }
 
-        virtual void SetupTextureSamplerArray(const gueepo::string& name, int size) { unref(name, size); }
+        virtual void SetupTextureSamplerArray(const gueepo::string& name, int size) { unref(name); unref(size); }
         virtual void SetTextureToIndex(Texture* tex, int index);
         virtual Texture* GetTextureOnIndex(int index);
         virtual void ClearTextures();
